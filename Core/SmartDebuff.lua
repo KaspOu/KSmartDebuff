@@ -3114,7 +3114,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
         end
       end
 
-      if ((sbb_n ~= nil and sbb_n >= 1) or (sbb_gr ~= "NONE" and not O.SortedByRole)) then
+      if ((sbb_n ~= nil and sbb_n >= 1) or (sbb_gr ~= "NONE" and sbb_gr ~= "DAMAGER" and not O.SortedByRole)) then
         if (sbb_n ~= nil) then
           btn.raidicon:SetTexture(cRaidicons[sbb_n]);
           btn.raidicon:SetTexCoord(0, 1, 0, 1);
@@ -3122,10 +3122,6 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
           sbb_s = IconCoords[sbb_gr];
           btn.raidicon:SetTexture(Icons["ROLE"]);
           btn.raidicon:SetTexCoord(sbb_s[1], sbb_s[2], sbb_s[3], sbb_s[4]);
-          if (sbb_gr == "DAMAGER") then
-            btn.raidicon:Hide();
-            return;
-          end
         end
         --sbb_n = btn:GetHeight() / 3;
         sbb_n = O.RaidIconSize;

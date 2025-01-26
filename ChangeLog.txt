@@ -1,3 +1,6 @@
+v11.0.704
+- Fix spellguard (wasn't working for dps)
+
 v11.0.703
 - Sounds in alphabetical order
 - Classic / Cata: Unavailable sounds hidden
