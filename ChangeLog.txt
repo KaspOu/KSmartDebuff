@@ -1,3 +1,6 @@
+v11.0.705
+- Options Right Click For shortcuts
+
 v11.0.704
 - Fix spellguard (wasn't working for dps)
 
