@@ -125,6 +125,7 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
   }, 
   ["MAGE"]  = {
     { Spell_ID = 118,   Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Polymorph (1+)
+    { Spell_ID = 130,   Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Slow fall (1+)
   }, 
   ["ROGUE"]  = {
     { Spell_ID = 2094,  Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Blind (1+)
