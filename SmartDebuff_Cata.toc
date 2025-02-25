@@ -1,7 +1,7 @@
-## Interface: 40401, 40402
+## Interface: 40402
 ## Title: Smart|cffffffffDebuff|r Reloaded by |cff00ff00Kallye|r
 ## Title-frFR: Smart|cffffffffDebuff|r Reloaded, par |cff00ff00Kallye|r
-## Version: 11.0.705
+## Version: 11.1.001
 ## Author: |cff00ff00Kallye|r (EU-Elune)
 ## Notes: Show party buttons with debuffs easy tracking and dispel actions. Use << |cff00ff00/sdb|r >> for debuff frame.
 ## Notes-deDE: Benutze << |cff00ff00/sdb|r >> um das Debuff-Fenster zu offnen
@@ -16,7 +16,7 @@
 ## X-Credits: Aeldra, Semi#1287
 ## X-Category: Buffs & Debuffs
 ## X-License: All Rights Reserved: You are free to fork and modify on Bitbucket, please ask about anything else.
-## X-Website: https://bitbucket.org/KaspOu/smartdebuff/
+## X-Website: https://github.com/KaspOu/KSmartDebuff/
 ## X-Curse-Project-ID: 699994
 
 UTF8\utf8data.lua

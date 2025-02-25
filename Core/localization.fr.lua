@@ -7,6 +7,7 @@ if (GetLocale() == "frFR") then
 SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
+- Mage - Chute lente sur clic du Milieu
 
 - Options : Le clic droit sur "O" affiche les raccourcis
 

@@ -5,6 +5,7 @@
 SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhats new:|r
+- Mage - Slowfall on Middle button
 
 - Options: Right click on "O" display shortcuts
 

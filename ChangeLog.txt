@@ -1,3 +1,7 @@
+v11.1.001
+- TWW 11.0.1
+- Mage - Slowfall on Middle button
+
 v11.0.705
 - Options Right Click For shortcuts
 
