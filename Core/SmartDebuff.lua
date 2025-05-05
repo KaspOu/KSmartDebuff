@@ -459,7 +459,7 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
     isLoaded = true;
     self:UnregisterEvent("ADDON_LOADED");
   elseif(event == "CVAR_UPDATE" and arg1 == "ActionButtonUseKeyDown") then
-    SMARTDEBUFF_AddMsgErr(SMARTDEBUFF_ERR_RELOADREQUIRED)
+    SMARTDEBUFF_AddMsgErr(SMARTDEBUFF_ERR_RELOADREQUIRED, true)
   end
 
   if (isLoaded and isPlayer and isTTreeLoaded and not isInit) then
