@@ -20,10 +20,16 @@
 ## X-Website: https://github.com/KaspOu/KSmartDebuff/
 ## X-Curse-Project-ID: 699994
 
+
+### https://warcraft.wiki.gg/wiki/TOC_format
+
 UTF8\utf8data.lua
 UTF8\utf8.lua
 Core\SmartDebuff.globals.lua
-Core\SmartDebuff_spells.lua
+Core\SmartDebuff_spells_Vanilla.lua [AllowLoadGameType vanilla tbc]
+Core\SmartDebuff_spells_Wrath.lua [AllowLoadGameType wrath]
+Core\SmartDebuff_spells_Cata.lua [AllowLoadGameType cata mists]
+Core\SmartDebuff_spells.lua [AllowLoadGameType mainline]
 Core\locales.xml
 Core\SmartDebuff.polyfill.lua
 Core\SmartDebuff.lua
