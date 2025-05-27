@@ -16,6 +16,7 @@
 
 ## X-Credits: Aeldra (original version), Semi#1287
 ## X-Category: Buffs & Debuffs
+## X-Localizations: enUS, frFR, ruRU, deDE, esES, zhTW
 ## X-License: All Rights Reserved: You are free to fork and modify on Bitbucket, please ask about anything else.
 ## X-Website: https://github.com/KaspOu/KSmartDebuff/
 ## X-Curse-Project-ID: 699994

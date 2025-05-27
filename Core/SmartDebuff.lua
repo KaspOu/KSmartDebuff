@@ -1823,6 +1823,10 @@ end
 
 function SMARTDEBUFF_command(msgIn)
   if (not isInit) then
+    if (InCombatLockdown()) then
+      SMARTDEBUFF_AddMsgWarn(SMARTDEBUFF_VERS_TITLE..": You are still in combat, please wait", true);
+      return;
+    end
     SMARTDEBUFF_AddMsgWarn(SMARTDEBUFF_VERS_TITLE.." not initialized correctly!", true);
     if (not isTTreeLoaded) then
       SMARTDEBUFF_AddMsgWarn("Talent tree not loaded, have you finished the quests in the starting zone?", true);
