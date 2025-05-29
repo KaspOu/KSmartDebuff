@@ -533,7 +533,12 @@ function SMARTDEBUFF_OnUpdate(self, elapsed)
   else
     ou_time = ou_time + elapsed;
     if (not isTTreeLoaded and ou_time > 0.5) then
-      if (C_ClassTalents) then
+      if SMARTDEBUFF_NO_TALENT then
+        -- Explicit no talent use: Mist
+        SMARTDEBUFF_AddMsgD("Talent tree ready ("..ou_time.."sec) -> Init SDB")
+        isTTreeLoaded = true
+        SMARTDEBUFF_OnEvent(self, "ONUPDATE")
+      elseif (C_ClassTalents) then
         -- C_ClassTalents, Since DragonFlight (10)
         if (C_ClassTalents.CanCreateNewConfig()) then
           SMARTDEBUFF_AddMsgD("Talent tree ready ("..ou_time.."sec) -> Init SDB");
@@ -1133,7 +1138,10 @@ end
 --- @param spellID number Id of the spell or talent to check
 --- @return boolean isSpellTalented returns true if talent is available and talented
 function SDB_IsSpellTalented(spellID)
-  return not not SDB_cachePlayerTalentsList[spellID];
+  if SMARTDEBUFF_NO_TALENT then
+    return IsSpellKnownOrOverridesKnown(spellID, nil)
+  end
+  return not not SDB_cachePlayerTalentsList[spellID]
 end
 
 --- @param spellID number Id of the spell or talent to check
@@ -1213,7 +1221,7 @@ end
 function SDB_GetTalentsList()
   local list = {}
 
-  if (not isTTreeLoaded) then
+  if (SMARTDEBUFF_NO_TALENT or not isTTreeLoaded) then
     return {};
   end
 
