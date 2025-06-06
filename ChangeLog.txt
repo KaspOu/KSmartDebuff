@@ -1,3 +1,6 @@
+v11.1.503
+- Mists of Pandaria: dispels added
+
 v11.1.502
 - Minor Bugfix if loaded in combat
 
