@@ -124,7 +124,8 @@ Vérifier :
     },
     ["MONK"]  = {
       { Spell_ID = 115078, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Paralysis (5+)
-      { Spell_ID = 115151, Button = "M", Types = {SMARTDEBUFF_HEAL} }, -- Renewing Mist (5+)
+      { Spell_ID = 115175, Button = "M", Types = {SMARTDEBUFF_HEAL} }, -- Soothing Mist (5+)
+      { Spell_ID = 115151, Button = "M", Types = {SMARTDEBUFF_HEAL} }, -- Renewing Mist (5+) >= 42
       { Spell_ID = 116670, Button = "AL", Types = {SMARTDEBUFF_HEAL} }, -- Vivify (5+)
     },
     ["PALADIN"]  = {
