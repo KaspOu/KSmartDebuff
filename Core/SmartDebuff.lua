@@ -17,7 +17,7 @@ Sort actif pour le joueur ou le pet :
   >> not not ns.GetSpellInfo(GetSpellInfo(spellID))
 
 Sort actif uniquement pour le joueur :
-  IsPlayerSpell(spellID)
+  IsPlayerSpell(spellID) > C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Player)
 
 
 C_Spell.DoesSpellExist(spellID) :
@@ -26,11 +26,12 @@ ou   DoesSpellExist(spellID)    :  pour tous les sorts du jeu
 
 ## Problèmes ##
 
-  IsSpellKnown(spellID, isPet) :
+  C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Pet or Enum.SpellBookSpellBank.Player) :
     ne fonctionne pas si Spell override (Dispel avec talent...)
-    Purifier 527, avec le talent, se surcharge en 440006, et IsSpellKnown(527) renvoie false..
+    Purifier 527, avec le talent, se surcharge en 440006, et C_SpellBook.IsSpellKnown(527) renvoie false..
 
-  >>> IsSpellKnownOrOverridesKnown(spellID, isPet) ?
+  >>> IsSpellKnownOrOverridesKnown(spellID, isPet) > C_SpellBook.IsSpellInSpellBook(spellID, spellBank, includeOverrides)
+                                                   > OR C_SpellBook.IsSpellKnownOrInSpellBook ?
 
   IsUsableSpell(spellName) : (devient C_Spell.IsSpellUsable )
     false avec un talent inactif (true si actif)
@@ -129,7 +130,7 @@ local imgMenu       = nil;
 local imgMissing    = nil;
 
 local DebugChatFrame = DEFAULT_CHAT_FRAME;
-local PET_BOOK = "pet";
+local PET_BOOK ="pet";
 
 
 local Icons = {
@@ -547,7 +548,7 @@ function SMARTDEBUFF_OnUpdate(self, elapsed)
         end
       else
         -- Classic
-        local tName = GetTalentInfo(1, 1); -- Since 6.0 : _, tName = GetTalentInfo(1, 1, 1);  // GetTalentInfoByID?
+        local tName = ns.GetTalentInfo(1, 1); -- Since 6.0 : _, tName = ns.GetTalentInfo(1, 1, 1);  // GetTalentInfoByID?
         if (tName) then
           SMARTDEBUFF_AddMsgD("Talent tree ready ("..ou_time.."sec) -> Init SDB");
           isTTreeLoaded = true;
@@ -1002,7 +1003,7 @@ function SDB_FindSpellID(spellname, rank, book)
 
     skillType, spellId = GetSpellBookItemInfo(bookIndex, book);
     if (skillType == nil or spellId == nil) then return nil; end
-    if (skillType == "FUTURESPELL" or not IsSpellKnown(spellId)) then return nil; end
+    if (skillType == "FUTURESPELL" or not C_SpellBook.IsSpellKnown(spellId)) then return nil; end
   end
 
   return spellId;
@@ -1056,7 +1057,7 @@ function SMARTDEBUFF_SetSpells()
           end
 
           -- Dispel found and available for current spec
-          if IsSpellKnownOrOverridesKnown(val.Spell_ID, val.Spell_Type == "petaction" and "pet" or nil) then
+          if ns.IsSpellKnownOrInSpellBook(val.Spell_ID, val.Spell_Type == "petaction" and ns.Enum_SpellBookSpellBank_Pet or ns.Enum_SpellBookSpellBank_Player0, true) then
             sName = sSpellInfo.name;
             cSpellList[sName] = val.Spell_List;
             SMARTDEBUFF_AddMsgD("Dispel found: " .. sName.." - "..strjoin(" ",unpack(cSpellList[sName])));
@@ -1139,7 +1140,7 @@ end
 --- @return boolean isSpellTalented returns true if talent is available and talented
 function SDB_IsSpellTalented(spellID)
   if SMARTDEBUFF_NO_TALENT then
-    return IsSpellKnownOrOverridesKnown(spellID, nil)
+    return ns.IsSpellKnownOrInSpellBook(spellID, ns.Enum_SpellBookSpellBank_Player, true)
   end
   return not not SDB_cachePlayerTalentsList[spellID]
 end
@@ -1181,7 +1182,7 @@ end
 --- ! No spellID in API: I will detect at least configured talents/spells, found in SDB_cacheConfigSpellNames
 local function SDB_GetTalentsList_Fallback_Vanilla()
   local list = {};
-  local testTalentInfo = GetTalentInfo(1,1);
+  local testTalentInfo = ns.GetTalentInfo(1,1);
     if (not testTalentInfo) then isTTreeLoaded = false; return {}; end
     SDB_cacheConfigSpellNames = SDB_cacheConfigSpellNames or SDB_GetConfigSpellNames();
     if (not SDB_cacheConfigSpellNames) then return {}; end
@@ -1190,7 +1191,7 @@ local function SDB_GetTalentsList_Fallback_Vanilla()
     for t = 1, numTabs do
       local numTalents = GetNumTalents(t);
       for i = 1, numTalents do
-        local tName, _, _, _, tPoints = GetTalentInfo(t, i);
+        local tName, _, _, _, tPoints = ns.GetTalentInfo(t, i);
         for talId, talName in pairs(SDB_cacheConfigSpellNames) do
           if (tName == talName) then
             list[talId] = (tPoints > 0) or false;
@@ -1205,7 +1206,7 @@ end
 local function SDB_GetTalentsList_Fallback_WoD()
   local list = {}
   for specIndex = 1, GetNumSpecializations() do
-    -- local specId = GetSpecializationInfo(specIndex)
+    -- local specId = C_SpecializationInfo.GetSpecializationInfo(specIndex)
     for tier = 1, MAX_TALENT_TIERS do
         for column = 1, NUM_TALENT_COLUMNS do
             -- local talentID, name, texture, selected, available, spellID, unknown, row, column, known, grantedByAura = GetTalentInfoBySpecialization(specIndex, tier, column)
@@ -1301,7 +1302,7 @@ local function CleanMem()
       SMARTDEBUFF_CLASS_SKILLS_LIST_ID[class] = nil;
     end;
   end;
-  
+
 end
 
 local function ReplaceDeprecatedOptions(options)
@@ -1536,7 +1537,7 @@ function SMARTDEBUFF_Options_Init()
 
   if (O.VersionNr ~= SMARTDEBUFF_VERSIONNR) then
     -- / 1000 = major patchs, / 10000 = extensions
-    if (O.VersionNr ~= nil and 
+    if (O.VersionNr ~= nil and
       (
         math.floor(O.VersionNr / 10000) < math.floor(SMARTDEBUFF_VERSIONNR / 10000)
         or O.VersionNr < SMARTDEBUFF_BREAKINGVERSION
@@ -1550,7 +1551,7 @@ function SMARTDEBUFF_Options_Init()
     SMARTDEBUFF_AddMsg(SMARTDEBUFF_UPGRADED);
   end
 
-  if (SMARTDEBUFF_OptionsGlobal == nil) then SMARTDEBUFF_OptionsGlobal = { }; end  
+  if (SMARTDEBUFF_OptionsGlobal == nil) then SMARTDEBUFF_OptionsGlobal = { }; end
   ReplaceDeprecatedOptions(SMARTDEBUFF_OptionsGlobal)
   OG = SMARTDEBUFF_OptionsGlobal;
   if (OG.FirstStart == nil) then OG.FirstStart = "V0";  end
@@ -4608,6 +4609,22 @@ function SMARTDEBUFF_RefreshAOFKeys()
   end
 end
 
+-- Enable/disable button based on column / mode
+function SDB_ToggleBtnActionColor(btn, mode, isEnabled, isMovable)
+  local vertexColor = isEnabled and vertexColors.Enabled or (isMovable and vertexColors.Disabled or vertexColors.NotFound);
+  btn:GetNormalTexture():SetVertexColor(unpack(vertexColor));
+  btn:GetNormalTexture():SetDesaturated(not isMovable);
+  if (not isMovable) then
+    btn:GetNormalTexture():SetGradient("VERTICAL", CreateColor(1,1,1,.05), CreateColor(1,1,1,.85));
+  end
+  if ((O.TargetMode and 2 or 1) == mode) then
+    btn:SetAlpha(1)
+  else
+    btn:SetAlpha(.6)
+    btn:GetNormalTexture():SetDesaturated(true);
+  end
+end
+
 function SmartDebuffAOFKeys_OnShow(self)
   if (not self) then
     self = SmartDebuffAOFKeys;
@@ -4662,20 +4679,7 @@ function SmartDebuffAOFKeys_OnShow(self)
     else
       SetATexture(btn, imgActionSlot);
     end
-    local vertexColor = isEnabled and vertexColors.Enabled or (isMovable and vertexColors.Disabled or vertexColors.NotFound);
-    btn:GetNormalTexture():SetVertexColor(unpack(vertexColor));
-    btn:GetNormalTexture():SetDesaturated(not isMovable);
-    if (not isMovable) then
-      btn:GetNormalTexture():SetGradient("VERTICAL", CreateColor(1,1,1,.05), CreateColor(1,1,1,.85));
-    end
-
-    -- Enable/disable column buttons
-    if ((O.TargetMode and 2 or 1) == mode) then
-      btn:SetAlpha(1)
-    else
-      btn:SetAlpha(.6)
-      btn:GetNormalTexture():SetDesaturated(true);
-    end
+    SDB_ToggleBtnActionColor(btn, mode, isEnabled, isMovable)
   end
   -- Enable/disable column titles
   if (O.TargetMode) then
@@ -4746,7 +4750,7 @@ function SMARTDEBUFF_PickAction(self, button)
     SetATexture(self, imgActionSlot);
   else
     -- Left click
-    if (not aType) then      
+    if (not aType) then
         -- Slot empty: create target or menu
         resetVertexColor = true;
         if (not IsModifierKeyDown()) then
@@ -4802,8 +4806,7 @@ function SMARTDEBUFF_PickAction(self, button)
     end
   end
   if resetVertexColor then
-    self:GetNormalTexture():SetVertexColor(unpack(vertexColors.Enabled));
-    self:GetNormalTexture():SetDesaturated(false);
+    SDB_ToggleBtnActionColor(self, mode, true, true)
   end
   if resetLabel then
     self._label:SetText("");
@@ -4891,9 +4894,7 @@ function SMARTDEBUFF_DropAction(self, button)
       SMARTDEBUFF_AddMsgD("Old:"..ChkS(aTypeOld)..", "..ChkS(aNameOld)..", "..ChkS(aIdOld)..", "..ChkS(aLinkOld));
       SMARTDEBUFF_AddMsgD("Dropped: "..self:GetID().." - "..infoType.." - "..aName.." - "..infoId);
       SetATexture(self, aTexture or imgMissing);
-      local vertexColor = isEnabled and vertexColors.Enabled or (isMovable and vertexColors.Disabled or vertexColors.NotFound);
-      self:GetNormalTexture():SetVertexColor(unpack(vertexColor));
-      self:GetNormalTexture():SetDesaturated(not isMovable);
+      SDB_ToggleBtnActionColor(self, mode, isEnabled, isMovable)
       self._label:SetText(labelText);
       ClearCursor();
       GameTooltip:Hide();
