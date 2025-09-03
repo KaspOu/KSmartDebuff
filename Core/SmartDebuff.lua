@@ -1055,7 +1055,7 @@ function SMARTDEBUFF_SetSpells()
           -- Cache range detection dispel if possible (use base spell to ensure detection)
           if not SDB_cacheRangeCheckSpell and SDB_IsBaseSpellInRange(sSpellInfo.name, "player") then
             SDB_cacheRangeCheckSpell = SDB_GetBaseSpellName(sSpellInfo.spellID);
-            SMARTDEBUFF_AddMsgD("Range detection will use: "..SDB_cacheRangeCheckSpell);
+            SMARTDEBUFF_AddMsgD(ORD.."Range detection will use: "..SDB_cacheRangeCheckSpell);
           end
 
           -- Dispel found and available for current spec
@@ -1121,7 +1121,7 @@ function SMARTDEBUFF_SetSpells()
         -- Cache range detection spell if not already done
         if not SDB_cacheRangeCheckSpell and SDB_IsBaseSpellInRange(sSpellInfo.name, "player") then
           SDB_cacheRangeCheckSpell = SDB_GetBaseSpellName(sSpellInfo.spellID);
-          SMARTDEBUFF_AddMsgD("Range detection fallback: "..SDB_cacheRangeCheckSpell);
+          SMARTDEBUFF_AddMsgD(ORD.."Range detection fallback: "..SDB_cacheRangeCheckSpell);
         end
       elseif (val.Spell_Type == "item") then
         -- special: item (Warlock stone)
@@ -1809,18 +1809,30 @@ function SMARTDEBUFF_LinkSpellsToKeys()
         idx = 1;
       elseif (k == "R" or k == "SR" or k == "AR" or k == "CR") then
         idx = 2;
-      elseif (k == "M" or k == "SM" or k == "AL" or k == "CM") then
+      elseif (k == "M" or k == "SM" or k == "AM" or k == "CM") then
         idx = 3;
       end
       if (cSpellList[v[2]]) then
-        for i, s in ipairs(cSpellList[v[2]]) do
+        for _, s in ipairs(cSpellList[v[2]]) do
           if (s and not cSpells[s]) then
             cSpells[s] = {v[2], idx};
-            SMARTDEBUFF_AddMsgD(GRD.."Spell linked: "..v[2].." ("..s..") -> "..k);
+            SMARTDEBUFF_AddMsgD(GRD.."Spell binded: "..v[2].." -> "..k.." - default for '"..s.."'");
+          else
+            SMARTDEBUFF_AddMsgD(GRD.."Spell binded: "..v[2].." -> "..k);
           end
+        end
+      else
+        SMARTDEBUFF_AddMsgD(GRD.."User spell binded: "..v[2].." -> "..k);
+        if not SDB_cacheRangeCheckSpell and SDB_IsBaseSpellInRange(v[2], "player") then
+          SDB_cacheRangeCheckSpell = v[2]
+          SMARTDEBUFF_AddMsgD(ORD.."Range detection fallback on user spell: "..SDB_cacheRangeCheckSpell);
+          break
         end
       end
     end
+  end
+  if not SDB_cacheRangeCheckSpell then
+    SMARTDEBUFF_AddMsgD(ORD.."No spell found for Range detection!");
   end
 end
 
@@ -2473,9 +2485,12 @@ end
 local function DebugButtonAttributes(self)
   -- ex: type1: spell, spell1: Detox
   if not IsModifierKeyDown() then
+    SMARTDEBUFF_ButtonTooltipOnEnter(self)
     return
   end;
-  SMARTDEBUFF_AddMsgD("Hover button: "..self:GetName());
+  SMARTDEBUFF_ButtonTooltipOnEnter(self, true)
+  GameTooltip:AddLine(" ")
+  GameTooltip:AddLine("Hover: "..self:GetName());
   for preKey, pre in pairs({[""] = "", ["S"] = "shift-", ["A"] = "alt-", ["C"] = "ctrl-"}) do
     for suf = 1, 3, 1 do
       for _, attr in ipairs({"type", "spell", "macro", "macrotext", "_menu", "item", "action", "index", "pet", "petaction"}) do
@@ -2486,12 +2501,13 @@ local function DebugButtonAttributes(self)
         if (getAttr and getType) then
           if (attr ~= "type" or getAttr == "target") then
             if (type(getAttr) ~= "string" and type(getAttr) ~= "number") then getAttr = type(getAttr) end;
-            SMARTDEBUFF_AddMsgD("@"..self:GetAttribute("unit").." "..getType.." ["..pre..attr..suf.."] ("..key..") = "..getAttr);
+            GameTooltip:AddLine("@"..self:GetAttribute("unit").." "..getType.." ["..pre..attr..suf.."] ("..key..") = "..getAttr, .5, .8, 1, false)
           end
         end
       end
     end
   end
+  GameTooltip:Show();
 end
 
 function SMARTDEBUFF_SetButton(unit, idx, pet)
@@ -2729,9 +2745,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     sbs_col.b = O.ColNormal.b;
   end
 
-  if (not sbs_iv and cSpellDefault["AL"] and cSpellDefault["AL"][3] ~= nil and O.ShowHealRange and not UnitIsDeadOrGhost(unit) and UnitIsConnected(unit)) then
-
-    if (SDB_IsBaseSpellInRange(cSpellDefault["AL"][3], unit)) then
+  local healSpell = cSpells[SMARTDEBUFF_HEAL] and cSpells[SMARTDEBUFF_HEAL][1] or SDB_cacheRangeCheckSpell
+  if (not sbs_iv and healSpell ~= nil and O.ShowHealRange and not UnitIsDeadOrGhost(unit) and UnitIsConnected(unit)) then
+    if (SDB_IsBaseSpellInRange(healSpell, unit)) then
       sbs_btn:SetBackdropBorderColor(0, 0, 0, 0);
     else
       if (nr > 0) then
@@ -2808,7 +2824,6 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
 
     sbs_wd = math.floor(sbs_btn:GetWidth() / sbs_ln - 1);
     if (string.len(sbs_un) > sbs_wd) then
-      --sbs_un = string.sub(sbs_un, 1, sbs_wd);
       sbs_un = sbs_un:utf8sub(1, sbs_wd);
     end
 
@@ -2818,7 +2833,22 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     end
     sbs_st = sbs_un;
   else
-    sbs_st = "?";
+    sbs_st = "?"
+    if (iTest > 0) then
+      sbs_st = (idx % 2 == 0) and UnitName("player") or "Kallye";
+      ir = (idx % 5 == 0) and 0 or 1
+      if (string.len(sbs_st) > sbs_wd-1) then
+        --sbs_un = string.sub(sbs_un, 1, sbs_wd);
+        sbs_st = sbs_st:utf8sub(1, sbs_wd-1) .. "?";
+      end
+      if (idx % 7 == 0) then
+        ir = 1
+        nr = math.floor(idx/7)
+        nr = nr > 3 and 10 or nr
+      else
+        nr = -98
+      end
+    end
   end
 
   if (spellcd and spellcd > 0 and nr >= 1 and nr <= 3) then
@@ -2856,7 +2886,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
       sbs_btn:SetAlpha(O.ANormalOOR);
     end
   elseif (nr == 1) then
-    SMARTDEBUFF_AddMsgD("L Dispel detected "..ir)
+    if (iTest == 0) then
+      SMARTDEBUFF_AddMsgD("L Dispel detected "..ir)
+    end
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
     sbs_col.b = O.ColDebuffL.b;
@@ -2877,7 +2909,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
       sbs_fontH = O.BtnH - 2;
     end
   elseif (nr == 2) then
-    SMARTDEBUFF_AddMsgD("R Dispel detected "..ir)
+    if (iTest == 0) then
+      SMARTDEBUFF_AddMsgD("R Dispel detected "..ir)
+    end
     sbs_col.r = O.ColDebuffR.r;
     sbs_col.g = O.ColDebuffR.g;
     sbs_col.b = O.ColDebuffR.b;
@@ -2898,7 +2932,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
       sbs_fontH = O.BtnH - 2;
     end
   elseif (nr == 3) then
-    SMARTDEBUFF_AddMsgD("M Dispel detected "..ir)
+    if (iTest == 0) then
+      SMARTDEBUFF_AddMsgD("M Dispel detected "..ir)
+    end
     sbs_col.r = O.ColDebuffM.r;
     sbs_col.g = O.ColDebuffM.g;
     sbs_col.b = O.ColDebuffM.b;
@@ -2937,11 +2973,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
 
     if (nr == -99) then
       -- unit does not longer exists
-      if (iTest > 0) then
-        sbs_btn:SetAlpha(O.ANormal);
-      else
-        sbs_btn:SetAlpha(0.1);
-      end
+      sbs_btn:SetAlpha(0.1);
     elseif (sbs_iv) then
       -- unit is in a vehicle
       sbs_btn:SetAlpha(O.ANormalOOR / 2);
@@ -2977,9 +3009,11 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     sbb_upt = UnitPowerType(unit);
     sbb_cur = UnitHealth(unit);
     sbb_nmax = UnitHealthMax(unit);
-    if (sbb_nmax == 0) then
-      sbb_cur = iTest
-      sbb_nmax = 25
+    if (iTest > 0) then
+      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_nmax = iTest
+      sbb_dg = false
+      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
     end
     sbb_n = math.floor(sbb_w * (sbb_cur / sbb_nmax));
     if (O.ShowHPText) then
@@ -3024,9 +3058,9 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     -- sbb_nmax = UnitManaMax(unit);
     sbb_cur = UnitPower(unit,0);
     sbb_nmax = UnitPowerMax(unit,0);
-    if (sbb_nmax == 0) then
-      sbb_cur = iTest
-      sbb_nmax = 25
+    if (iTest > 0) then
+      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_nmax = iTest
     end
     sbb_n = math.floor(sbb_w * (sbb_cur / sbb_nmax));
     if (O.Invert) then sbb_n = sbb_w - sbb_n; end
@@ -3120,10 +3154,10 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       if (sbb_n == 0) then
         sbb_n = GetRaidTargetIndex(unit);
         if (iTest > 0) then
-          if (Round(math.random(1,5)) == 1) then
+          if (math.fmod(sbb_cur, 2) == 0 or sbb_cur > 22) then
             sbb_n = nil;
           else
-            sbb_n = Round(math.random(0,11));
+            sbb_n = math.fmod(math.floor(sbb_cur/2)+1,11);
           end
         end
       end
@@ -3147,6 +3181,11 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     if ((O.ShowRoleIcon or O.ShowRoleDpsIcon) and iGroupSetup >= 2 and not btn.raidicon:IsVisible()) then
       sbb_gr = "NONE";
       sbb_gr = UnitGroupRolesAssigned(unit);
+      if (iTest > 0) then
+        sbb_gr = "DAMAGER";
+        if (sbb_cur <= 6) then sbb_gr = "HEALER"; end
+        if (sbb_cur <= 2) then sbb_gr = "TANK"; end
+      end
       if sbb_gr ~= "NONE" and ((sbb_gr ~= "DAMAGER" and O.ShowRoleIcon) or (sbb_gr == "DAMAGER" and O.ShowRoleDpsIcon)) then
         sbb_s = IconCoords[sbb_gr];
         btn.raidicon:SetTexture(Icons["ROLE"]);
@@ -3363,8 +3402,8 @@ function SMARTDEBUFF_SetStyle()
         if (btn:IsVisible()) then
           if (iTest > 0) then
             ur = "DAMAGER";
-            if (math.fmod(j+1,3) == 0) then ur = "HEALER"; end
-            if (math.fmod(j+1,10) == 0) then ur = "TANK"; end
+            if (j+1 <= 6) then ur = "HEALER"; end
+            if (j+1 <= 2) then ur = "TANK"; end
           else
             ur = UnitGroupRolesAssigned(unit);
           end
@@ -3426,7 +3465,6 @@ function SMARTDEBUFF_SetStyle()
               sp = 0;
             else
               ln = hx + hox + math.floor(grp / O.Columns) * (btnH + O.BtnSpY + hox)
-              -- ln = math.floor(grp / O.Columns)
               i = 0;
             end
           end
@@ -3618,12 +3656,15 @@ function SMARTDEBUFF_ToggleSortedByClass()
 end
 
 
-function SMARTDEBUFF_ButtonTooltipOnEnter(self)
-  if (not self or not self:IsVisible() or InCombatLockdown() or not O.ShowTooltip) then return; end
+function SMARTDEBUFF_ButtonTooltipOnEnter(self, forceShow)
+  if (not self or not self:IsVisible() or InCombatLockdown() or (not O.ShowTooltip and not forceShow)) then return; end
 
   local sbtn = SecureButton_GetEffectiveButton(self);
   local unit = SecureButton_GetModifiedAttribute(self, "unit", sbtn, "");
   if (unit) then
+    if forceShow then
+      unit = UnitIsPlayer(unit) and unit or "player"
+    end
     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent);
     GameTooltip:SetUnit(unit);
     GameTooltip:Show();
