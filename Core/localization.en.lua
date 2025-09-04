@@ -5,11 +5,15 @@
 SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhats new:|r
-- Mage - Slowfall on Middle button
 
-- Options: Right click on "O" display shortcuts
+- Sort by Role
+- Sort by Class fixed
 
-- Sounds display enhanced (sorted & cleaned)
+- Options for displaying role icons
+
+- Font fixed for Russian names
+
+- Fix issue with cinematics
 ]];
 
 --@do-not-package@
@@ -108,6 +112,8 @@ SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacity debuff";
 SMARTDEBUFF_OFT_NOTREMOVABLE   = "Debuff Guard";
 SMARTDEBUFF_OFT_VEHICLE        = "Vehicles";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Raid icons";
+SMARTDEBUFF_OFT_SHOWROLEICON   = "Role icons (tank / heal)";
+SMARTDEBUFF_OFT_SHOWROLEDPSICON = "Role icons (dps)";
 SMARTDEBUFF_OFT_SHOWSPELLICON  = "Spell icon";
 SMARTDEBUFF_OFT_INFOROW        = "Info bar";
 SMARTDEBUFF_OFT_GLOBALSAVE     = "Save";
@@ -132,7 +138,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff Alert Sound";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- S button -|r\nLeft click: Show by classes\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R\nRight click: Background";
+SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- S button -|r\nLeft click: Show by class, role or group\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R\nRight click: Background";
 SMARTDEBUFF_TT_TARGETMODE      = "In normal mode |cff20d2ffLeft click|r dispels unit\n \nIn Target mode |cff20d2ffLeft click|r selects the unit,\nuse |cff20d2ffAlt-Left/Right click|r to dispel,\nand |cff20d2ffRight click|r casts the fastest heal spell.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Displays critical debuffs\nwhich are not removable.";
 SMARTDEBUFF_TT_HP              = "Displays actual health\npoints of the unit.";
@@ -142,7 +148,7 @@ SMARTDEBUFF_TT_INVERT          = "Displays health points\nand mana pool inverted
 SMARTDEBUFF_TT_CLASSVIEW       = "Displays the unit buttons\norder by class.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Displays the unit buttons in\ntheir corresponding class colors.";
 SMARTDEBUFF_TT_SHOWLR          = "Displays the corresponding\nmouse button (L/R/M), if\na unit has a debuff.";
-SMARTDEBUFF_TT_HEADERS         = "Displays the class name\nas header row.";
+SMARTDEBUFF_TT_HEADERS         = "Displays the group number / class name / role\nas header row.";
 SMARTDEBUFF_TT_GROUPNR         = "Displays the group number\nin front of the unit name.";
 SMARTDEBUFF_TT_SOUND           = "Plays a sound, if a\nunit gets a debuff.";
 SMARTDEBUFF_TT_TOOLTIP         = "Displays the tooltip,\nonly out of combat.";
@@ -157,6 +163,8 @@ SMARTDEBUFF_TT_INFOFRAME       = "Displays the summary frame,\nonly in group or 
 SMARTDEBUFF_TT_AUTOHIDE        = "Hides the unit buttons automatically,\nif you are out of combat and\nno one has a debuff.";
 SMARTDEBUFF_TT_VEHICLE         = "Displays in addition the vehicle of\na unit  as own button.";
 SMARTDEBUFF_TT_SHOWRAIDICON    = "Displays the raid icon\nof the unit.";
+SMARTDEBUFF_TT_SHOWROLEICON    = "Displays the role icon\nof tank/heal units\n(if no raid icon)";
+SMARTDEBUFF_TT_SHOWROLEDPSICON    = "Displays the role icon\nof dps units\n(if no raid icon)";
 SMARTDEBUFF_TT_SHOWSPELLICON   = "Displays the HoT icon\non the unit.";
 SMARTDEBUFF_TT_INFOROW         = "Displays an info bar in short style #\nPlayers/Dead/AFK/Offline\nHP/Mana\nReady check state\n(only in a raid)";
 SMARTDEBUFF_TT_GLOBALSAVE      = "settings to global template.";
@@ -210,7 +218,7 @@ SMARTDEBUFF_TT_SKILLS				= "Click to edit mouse shortcuts\n(L/R/M clicks with Al
 SMARTDEBUFF_TT_RESET_SKILLS = "Reset mouse shortcuts for your class";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD 	= "Spell Watch List";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD 		= "Click to Edit\nList of Spells to Track";
-SMARTDEBUFF_TT_SOUNDLIST 			= "Click to select Sound\n(Right Click: listen sound)";
+SMARTDEBUFF_TT_SOUNDLIST 			= "Click to select Sound.\n(Right Click: listen sound)";
 
 -- Tooltip support
 SMARTDEBUFF_FUBAR_TT           = "\nLeft Click: Open options\nShift-Left Click: On/Off";

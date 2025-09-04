@@ -1,3 +1,10 @@
+v11.2.002
+- Sort by Role
+- Sort by Class fixed
+- Options for displaying role icons
+- Font fixed for Russian names
+- Fix issue with cinematics
+
 v11.2.001
 - TWW 11.2.0
 

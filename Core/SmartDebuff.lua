@@ -55,7 +55,7 @@ local _;
 
 local maxRaid = 40;
 local maxPets = 40;
-local maxScrollBtn = 34;
+local maxScrollBtn = 39; -- FauxScrollFrame height
 local maxColumns = 14;
 local maxSpellIcons = 10;
 
@@ -1355,7 +1355,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowPetsDK == nil) then O.ShowPetsDK = O.ShowPets; end
 
   if (O.ShowClassColors == nil) then O.ShowClassColors = true; end
-  if (O.SortedByClass == nil) then O.SortedByClass = true; end
+  if (O.SortedByClass == nil) then O.SortedByClass = false; O.SortedByRole = true; end -- first loading
   if (O.SortedByRole == nil) then O.SortedByRole = false; end
   if (O.ShowLR == nil) then O.ShowLR = true; end
 
@@ -1386,7 +1386,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowInfoRow == nil) then O.ShowInfoRow = true; end
   if (O.Vertical == nil) then O.Vertical = true; end
   if (O.VerticalUp == nil) then O.VerticalUp = false; end
-  if (O.Columns == nil) then O.Columns = 12; end
+  if (O.Columns == nil) then O.Columns = 6; end
   if (O.BarH == nil) then O.BarH = 4; end
 
   if (O.BtnW == nil) then O.BtnW = 28; end
@@ -1402,6 +1402,8 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowAggro == nil) then O.ShowAggro = true; end
   if (O.ShowSpellIcon == nil) then O.ShowSpellIcon = true; end
   if (O.ShowRaidIcon == nil) then O.ShowRaidIcon = true; end
+  if (O.ShowRoleIcon == nil) then O.ShowRoleIcon = false; end
+  if (O.ShowRoleDpsIcon == nil) then O.ShowRoleDpsIcon = false; end
   if (O.RaidIconSize == nil) then O.RaidIconSize = 12; end
   if (O.ShowNotRemov == nil) then O.ShowNotRemov = false; end
   if (O.CheckInterval == nil) then O.CheckInterval = 0.1; end
@@ -2054,7 +2056,7 @@ end
 
 function SMARTDEBUFF_TestModeToggle()
   if (iTest == nil or iTest < 1) then
-    iTest = 25;
+    iTest = 30;
   else
     iTest = 0;
   end
@@ -2799,7 +2801,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
       sbs_ln = 5;
       sbs_wd = math.floor(sbs_btn:GetWidth() / sbs_ln - 1);
       if (string.len(sbs_pre) > sbs_wd) then
-        sbs_pre = string.sub(sbs_pre, 1, sbs_wd);
+        -- sbs_pre = string.sub(sbs_pre, 1, sbs_wd);
+        sbs_pre = sbs_pre:utf8sub(1, sbs_wd)
       end
     end
 
@@ -2951,7 +2954,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     end
   end
 
-  sbs_btn.text:SetFont(STANDARD_TEXT_FONT, sbs_fontH, "");
+  sbs_btn.text:SetFont("Fonts\\FRIZQT___CYR.TTF", sbs_fontH, "");
+  -- sbs_btn.text:SetFontObject("GameFontWhiteSmall");
   sbs_btn.text:SetText(sbs_st);
   sbs_btn.texture:SetAllPoints(sbs_btn);
 
@@ -3099,11 +3103,6 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
 
     if (O.ShowRaidIcon and (not sbb_dg or iTest > 0)) then
       sbb_n = 0;
-      sbb_gr = "NONE";
-
-      if (iGroupSetup == 2) then
-        sbb_gr = UnitGroupRolesAssigned(unit);
-      end
 
       if (isLeader and not InCombatLockdown()) then
         sbb_s = GetReadyCheckStatus(unit);
@@ -3129,15 +3128,9 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
         end
       end
 
-      if ((sbb_n ~= nil and sbb_n >= 1) or (sbb_gr ~= "NONE" and sbb_gr ~= "DAMAGER" and not O.SortedByRole)) then
-        if (sbb_n ~= nil) then
-          btn.raidicon:SetTexture(cRaidicons[sbb_n]);
-          btn.raidicon:SetTexCoord(0, 1, 0, 1);
-        else
-          sbb_s = IconCoords[sbb_gr];
-          btn.raidicon:SetTexture(Icons["ROLE"]);
-          btn.raidicon:SetTexCoord(sbb_s[1], sbb_s[2], sbb_s[3], sbb_s[4]);
-        end
+      if ((sbb_n ~= nil and sbb_n >= 1)) then
+        btn.raidicon:SetTexture(cRaidicons[sbb_n]);
+        btn.raidicon:SetTexCoord(0, 1, 0, 1);
         --sbb_n = btn:GetHeight() / 3;
         sbb_n = O.RaidIconSize;
         btn.raidicon:ClearAllPoints();
@@ -3150,6 +3143,22 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       end
     else
       btn.raidicon:Hide();
+    end
+    if ((O.ShowRoleIcon or O.ShowRoleDpsIcon) and iGroupSetup >= 2 and not btn.raidicon:IsVisible()) then
+      sbb_gr = "NONE";
+      sbb_gr = UnitGroupRolesAssigned(unit);
+      if sbb_gr ~= "NONE" and ((sbb_gr ~= "DAMAGER" and O.ShowRoleIcon) or (sbb_gr == "DAMAGER" and O.ShowRoleDpsIcon)) then
+        sbb_s = IconCoords[sbb_gr];
+        btn.raidicon:SetTexture(Icons["ROLE"]);
+        btn.raidicon:SetTexCoord(sbb_s[1], sbb_s[2], sbb_s[3], sbb_s[4]);
+        --sbb_n = btn:GetHeight() / 3;
+        sbb_n = O.RaidIconSize;
+        btn.raidicon:ClearAllPoints();
+        btn.raidicon:SetPoint("BOTTOMRIGHT", btn , "BOTTOMRIGHT", O.BtnSpX, -O.BtnSpY);
+        btn.raidicon:SetWidth(sbb_n);
+        btn.raidicon:SetHeight(sbb_n);
+        btn.raidicon:Show();
+      end
     end
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
     if (O.ShowSpellIcon) then
@@ -3239,7 +3248,7 @@ function SMARTDEBUFF_SetHeaderLabels(text, n, btn, icon)
       if (not text) then text = ""; end
       shl_wd = math.floor(btn:GetWidth() / 4 - 2);
       if (string.len(text) > shl_wd) then
-        text = string.sub(text, 1, shl_wd);
+        text = text:utf8sub(1, sbs_wd)
       end
       if (text ~= nil) then
         lbl:SetText(text);
@@ -3369,22 +3378,21 @@ function SMARTDEBUFF_SetStyle()
             nH = nH + 1;
             ugrp = 2;
           else
-            i = math.fmod(nD, 10);
+            i = math.fmod(nD, O.Columns);
             nD = nD + 1;
-            ugrp = 2 + math.ceil(nD/10);
-          end
-          if (i + 1 > maxR) then maxR = i + 1; end
-          sp = (ugrp - 1) * (btnW + O.BtnSpX);
-
-          if ((grp - 1) > 0 and math.fmod((grp - 1), O.Columns) == 0) then
-            ln = offY + 4 + hox;
-            sp = 0;
+            ugrp = 2 + math.ceil(nD/O.Columns);
+            grp = math.max(grp, ugrp)
           end
           btn:ClearAllPoints();
-          btn:SetPoint(anchor, frame, anchor, 4 + sp, (-hx - hox - i * (btnH + O.BtnSpY) - ln) * vu);
-          if (i == 0) then
-            grp = grp + 1;
-            --SMARTDEBUFF_AddMsgD("Set label = "..ur..", "..ugrp);
+          if (O.Vertical) then
+            sp = (ugrp - 1) * (btnW + O.BtnSpX);
+            btn:SetPoint(anchor, frame, anchor, 4 + sp, (-hx - hox - i * (btnH + O.BtnSpY) - ln) * vu);
+          else
+            ln = (ugrp - 1);
+            btn:SetPoint(anchor, frame, anchor, 4 + i * (btnW + O.BtnSpX) + sp, (-hx - hox - ln * (btnH + O.BtnSpY + hox)) * vu);
+          end
+          if (i == 0 and ugrp < 4) then
+            -- SMARTDEBUFF_AddMsgD("Set label = "..ur..", "..ugrp);
             SMARTDEBUFF_SetHeaderLabels(ur, ugrp, btn, "ROLE");
           end
         end
@@ -3406,17 +3414,30 @@ function SMARTDEBUFF_SetStyle()
             end
             lmaxR = 0;
             luc = uc;
-            i = 0;
+            if O.Vertical then
+              i = 0;
+            end
             sp = sp + btnW + O.BtnSpX;
             b = true;
           end
           if (b and grp > 0 and math.fmod(grp, O.Columns) == 0) then
-            ln = offY+hox;
-            sp = 0;
+            if O.Vertical then
+              ln = offY+hox;
+              sp = 0;
+            else
+              ln = hx + hox + math.floor(grp / O.Columns) * (btnH + O.BtnSpY + hox)
+              -- ln = math.floor(grp / O.Columns)
+              i = 0;
+            end
           end
           lmaxR = lmaxR + 1;
           btn:ClearAllPoints();
-          btn:SetPoint(anchor, frame, anchor, 4 + sp, (- i * (btnH + O.BtnSpY) - ln) * vu);
+
+          if (O.Vertical) then
+            btn:SetPoint(anchor, frame, anchor, 4 + sp, (- i * (btnH + O.BtnSpY) - ln) * vu);
+          else
+            btn:SetPoint(anchor, frame, anchor, 4 + i * (btnW + O.BtnSpX), (-ln) * vu);
+          end
           if (b) then
             grp = grp + 1;
             SMARTDEBUFF_SetHeaderLabels(SMARTDEBUFF_CLASSES[uc], grp, btn);
@@ -3581,7 +3602,18 @@ function SMARTDEBUFF_ToggleShowLR()
 end
 
 function SMARTDEBUFF_ToggleSortedByClass()
-  O.SortedByClass = SMARTDEBUFF_toggleBool(O.SortedByClass, SMARTDEBUFF_OFT_CLASSVIEW.." = ");
+  if O.SortedByClass then
+    O.SortedByClass = false
+    O.SortedByRole = true
+  elseif O.SortedByRole then
+    O.SortedByClass = false
+    O.SortedByRole = false
+  else
+    O.SortedByClass = true
+    O.SortedByRole = false
+  end
+  SMARTDEBUFF_BoolState(O.SortedByClass, SMARTDEBUFF_OFT_CLASSVIEW.." = ")
+  SMARTDEBUFF_BoolState(O.SortedByRole, SMARTDEBUFF_OFT_ROLE.." = ")
   SMARTDEBUFF_SetButtons();
 end
 
@@ -3929,7 +3961,8 @@ function SMARTDEBUFF_CheckAnchorPos(self, button)
 
   local s = self:GetName();
   --SMARTDEBUFF_AddMsgD(s);
-  s = string.sub(s, 21);
+  -- s = string.sub(s, 21);
+  s = s:utf8sub(1, 21)
   if (not s) then s = "TOPLEFT"; end
   O.SFPosP = s;
 
@@ -4025,8 +4058,8 @@ function SMARTDEBUFF_SetMoving(b)
     end
     f:StartMoving();
   else
-    f:StopMovingOrSizing();
     if (f.IsMoving) then
+      f:StopMovingOrSizing();
       SMARTDEBUFF_SetAnchorPos();
     end
   end
@@ -4101,6 +4134,8 @@ local function GlobalLoadSave(L, S)
   S.ShowAggro = L.ShowAggro;
   S.ShowSpellIcon = L.ShowSpellIcon;
   S.ShowRaidIcon = L.ShowRaidIcon;
+  S.ShowRoleIcon = L.ShowRoleIcon;
+  S.ShowRoleDpsIcon = L.ShowRoleDpsIcon;
   S.RaidIconSize = L.RaidIconSize;
   S.ShowNotRemov = L.ShowNotRemov;
   S.CheckInterval = L.CheckInterval;
@@ -4417,7 +4452,7 @@ function SMARTDEBUFF_SoundsOnScroll(self, arg1)
   end
 
   local t = { };
-  for i, v in ipairs(SMARTDEBUFF_SOUNDS) do
+  for _, v in ipairs(SMARTDEBUFF_SOUNDS) do
     if (v and #v > 1) then
       local soundName = v[1];
       if (v[2] == O.Sound) then

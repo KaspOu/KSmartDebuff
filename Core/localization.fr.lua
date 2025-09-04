@@ -7,11 +7,15 @@ if (GetLocale() ~= "frFR") then return end
 SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
-- Mage - Chute lente sur clic du Milieu
 
-- Options : Le clic droit sur "O" affiche les raccourcis
+- Tri par Rôle
+- Tri par Classe corrigé
 
-- Affichage des sons amélioré (trié & nettoyé)
+- Options pour afficher les icônes de rôle
+
+- Police corrigée pour les noms russes
+
+- Correction d'une erreur lors des cinématiques
 ]]
 
 --@do-not-package@
@@ -108,7 +112,9 @@ SMARTDEBUFF_OFT_OPACITYOOR     = "Opacit\195\169 hors de port\195\169e";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacit\195\169 des d\195\169buffs";
 SMARTDEBUFF_OFT_NOTREMOVABLE   = "D\195\169buffs prot\195\169g\195\169s";
 SMARTDEBUFF_OFT_VEHICLE        = "V\195\169hicules";
-SMARTDEBUFF_OFT_SHOWRAIDICON   = "Ic\195\180nes de raid (r\195\180le)";
+SMARTDEBUFF_OFT_SHOWRAIDICON   = "Ic\195\180nes de raid";
+SMARTDEBUFF_OFT_SHOWROLEICON   = "Ic\195\180nes de r\195\180le (tank/heal)";
+SMARTDEBUFF_OFT_SHOWROLEDPSICON = "Ic\195\180nes de r\195\180le (dps)";
 SMARTDEBUFF_OFT_SHOWSPELLICON  = "Ic\195\180ne de sort";
 SMARTDEBUFF_OFT_INFOROW        = "Barre d'informations";
 SMARTDEBUFF_OFT_GLOBALSAVE     = "Enregistrer";
@@ -131,7 +137,7 @@ SMARTDEBUFF_S_TITLE            = "Son d'alerte de d\195\169buff";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Glisser le titre avec Maj-Clic gauche : D\195\169place le cadre\n|cff20d2ff- Bouton S -|r\nClic gauche : Afficher par classes\nMaj-Clic gauche : Couleurs de classe\nAlt-Clic gauche : Mise en avant G/D/M\nClic droit : Arri\195\168re-plan";
+SMARTDEBUFF_TT                 = "Glisser le titre avec Maj-Clic gauche : D\195\169place le cadre\n|cff20d2ff- Bouton S -|r\nClic gauche : Afficher par classe, r\195\180le ou groupe\nMaj-Clic gauche : Couleurs de classe\nAlt-Clic gauche : Mise en avant G/D/M\nClic droit : Arri\195\168re-plan";
 SMARTDEBUFF_TT_TARGETMODE      = "En mode normal, |cff20d2ffClic gauche|r dissipe l'unit\195\169...\n \nEn mode cible, |cff20d2ffClic gauche|r s\195\169lectionne l'unit\195\169,\ndissipez avec |cff20d2ffAlt-Clic|r\net |cff20d2ffClic droit|r lance le sort de soin le plus rapide.|r.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Affiche les d\195\169buffs critiques\nqui ne sont pas dissipables.";
 SMARTDEBUFF_TT_HP              = "Affiche les points de vie\nr\195\169els de l'unit\195\169.";
@@ -141,7 +147,7 @@ SMARTDEBUFF_TT_INVERT          = "Affiche les points de vie\net la barre de mana
 SMARTDEBUFF_TT_CLASSVIEW       = "Affiche les boutons d'unit\195\169\ntri\195\169s par classe.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Affiche les boutons d'unit\195\169 dans\nleurs couleurs de classe respectives.";
 SMARTDEBUFF_TT_SHOWLR          = "Affiche le bouton de souris correspondant (G/D/M)\nsi une unit\195\169 a un d\195\169buff.";
-SMARTDEBUFF_TT_HEADERS         = "Affiche le nom de la classe\ncomme en-t\195\170te.";
+SMARTDEBUFF_TT_HEADERS         = "Affiche le n° de groupe / classe / r\195\180le\ncomme en-t\195\170te.";
 SMARTDEBUFF_TT_GROUPNR         = "Affiche le num\195\169ro de groupe\ndevant le nom de l'unit\195\169.";
 SMARTDEBUFF_TT_SOUND           = "Joue un son si une\nunit\195\169 re\195\167oit un d\195\169buff.";
 SMARTDEBUFF_TT_TOOLTIP         = "Affiche l'infobulle\nseulement hors combat.";
@@ -156,6 +162,8 @@ SMARTDEBUFF_TT_INFOFRAME       = "Affiche le cadre r\195\169capitulatif\nseuleme
 SMARTDEBUFF_TT_AUTOHIDE        = "Masque automatiquemt les boutons\nd'unit\195\169 si vous \195\170tes hors combat\net que personne n'a de d\195\169buff.";
 SMARTDEBUFF_TT_VEHICLE         = "Affiche \195\169galement le v\195\169hicule\nd'une unit\195\169 comme un bouton distinct.";
 SMARTDEBUFF_TT_SHOWRAIDICON    = "Affiche l'ic\195\180ne de raid\nde l'unit\195\169.";
+SMARTDEBUFF_TT_SHOWROLEICON    = "Affiche l'ic\195\180ne de r\195\180le des tanks / heals.\n(si pas d'ic\195\180ne de raid)";
+SMARTDEBUFF_TT_SHOWROLEDPSICON    = "Affiche l'ic\195\180ne de r\195\180le des dps.\n(si pas d'ic\195\180ne de raid)";
 SMARTDEBUFF_TT_SHOWSPELLICON   = "Affiche l'ic\195\180ne de HoT\nsur l'unit\195\169.";
 SMARTDEBUFF_TT_INFOROW         = "Affiche une barre d'informations concise (uniquement en raid) :\nJoueurs/Morts/AFK/Hors ligne\nVie/Mana\nJoueur pr\195\170t\n(seulement en raid)";
 SMARTDEBUFF_TT_GLOBALSAVE      = "Param\195\168tres enregistr\195\169s dans la sauvegarde globale.";
@@ -209,7 +217,7 @@ SMARTDEBUFF_TT_SKILLS           = "Cliquez pour modifier les raccourcis\n(Clic G
 SMARTDEBUFF_TT_RESET_SKILLS     = "R\195\169initialise les raccourcis pour votre classe";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Liste de suivi des sorts";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Cliquez pour modifier\nla liste des sorts \195\160 suivre";
-SMARTDEBUFF_TT_SOUNDLIST        = "Cliquez pour s\195\169lectionner le son\nClic droit pour \195\169couter uniquement";
+SMARTDEBUFF_TT_SOUNDLIST        = "Cliquez pour s\195\169lectionner le son.\n(Clic droit pour \195\169couter uniquement)";
 
 -- Tooltip support
 SMARTDEBUFF_FUBAR_TT           = "\nClic gauche : Ouvrir les options\nMaj-Clic gauche : On/Off";
