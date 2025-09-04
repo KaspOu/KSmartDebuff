@@ -2,7 +2,7 @@
 -- Chinese localization (Taiwan)
 -------------------------------------------------------------------------------
 
-if (GetLocale() == "zhTW" or GetLocale() == "zhCN") then
+if (GetLocale() ~= "zhTW" and GetLocale() ~= "zhCN") then return end
 
 -- Creatures
 SMARTDEBUFF_HUMANOID  = "人形";
@@ -143,4 +143,3 @@ SMARTDEBUFF_TT_SOUNDLIST 			= "Click to Select Sound";
 SMARTDEBUFF_FUBAR_TT           = "\n左點擊: 打開選項\nShift-左點擊: On/Off";
 
 -- izayoi 2009-5-30
-end

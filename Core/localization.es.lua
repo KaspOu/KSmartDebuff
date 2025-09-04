@@ -2,7 +2,7 @@
 -- Spanish localization
 -------------------------------------------------------------------------------
 
-if (GetLocale() == "esES") then
+if (GetLocale() ~= "esES") then return end
 
 
 --@do-not-package@
@@ -104,7 +104,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff alarma tono";
 
 -- Tooltip text
 SMARTDEBUFF_TT                 = "May\195\186sculas-arrastrar izquierdo: Mover marco\n|cff20d2ff- S bot\195\179n -|r\nClick Izquierdo: Mostrar por clases\nMay\195\186scuals-Click Izquierdo: Colores de clase\nAlt-Click izquierdo: Destacar L/R\nClick derecho: Fondo";
-SMARTDEBUFF_TT_TARGETMODE      = "En modo objetivo |cff20d2ffClick izquierdo|r selecciona la unidad y |cff20d2ffClick derecho|r lanza el hechizo m\195\161s r\195\161pido de curaci\195\179n.\nUsar |cff20d2ffAlt-Click derecho/izquierdo|r para debuff.";
+SMARTDEBUFF_TT_TARGETMODE      = "En modo objetivo |cff20d2ffClick izquierdo|r selecciona la unidad\ny |cff20d2ffClick derecho|r lanza el hechizo m\195\161s r\195\161pido de curaci\195\179n.\nUsar |cff20d2ffAlt-Click derecho/izquierdo|r para debuff.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Muestra debuffs críticos\nque no son removibles.";
 SMARTDEBUFF_TT_HP              = "Muestra los puntos de salud\nactuales de la unidad.";
 SMARTDEBUFF_TT_MANA            = "Muestra la cantidad de mana\nactual de la unidad.";
@@ -163,5 +163,3 @@ SMARTDEBUFF_TT_SHOWRAIDICON    = "Muestra el icono de raid\nde la unidad.";
 -- Tooltip support
 SMARTDEBUFF_FUBAR_TT           = "\nClick izquierdo: Abrir opciones\nMay\195\186sulas-Click izquierdo: On/Off";
 SMARTDEBUFF_BROKER_TT          = "\nClick izquierdo: Abrir opciones\nClick derecho: On/Off";
-
-end

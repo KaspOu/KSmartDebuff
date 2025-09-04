@@ -2,7 +2,7 @@
 -- German localization
 -------------------------------------------------------------------------------
 
-if (GetLocale() == "deDE") then
+if (GetLocale() ~= "deDE") then return end
 
 
 --@do-not-package@
@@ -117,7 +117,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff Warnton";
 
 -- Tooltip text
 SMARTDEBUFF_TT                 = "Shift-Links ziehen: Fenster verschieben\n|cff20d2ff- S Knopf -|r\nLinks Klick: Ordne nach Klassen\nShift-Links Klick: Klassen-Farben\nAlt-Links Klick: Zeige L/R\nRechts Klick: Hintergrund";
-SMARTDEBUFF_TT_TARGETMODE      = "Im Ziel-Modus w\195\164hlt |cff20d2fflinks klick|r die Einheit aus und |cff20d2ffrechts klick|r zaubert den schnellsten Heilspruch.\n|cff20d2ffAlt-Links/Rechts klick|r wird zum Debuffen benutzt.";
+SMARTDEBUFF_TT_TARGETMODE      = "Im Ziel-Modus w\195\164hlt |cff20d2fflinks klick|r die Einheit aus\nund |cff20d2ffrechts klick|r zaubert den schnellsten Heilspruch.\n|cff20d2ffAlt-Links/Rechts klick|r wird zum Debuffen benutzt.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Zeigt kritische Debuffs an,\nauch wenn sie nicht entfernt\nwerden k\195\182nnen.";
 SMARTDEBUFF_TT_HP              = "Zeigt die aktuellen Lebenspunkte\nder Einheit an.";
 SMARTDEBUFF_TT_MANA            = "Zeigt das aktuelle Mana\nder Einheit an.";
@@ -194,5 +194,3 @@ SMARTDEBUFF_TT_SOUNDLIST 			= "Click to Select Sound";
 -- Tooltip support
 SMARTDEBUFF_FUBAR_TT           = "\nLinks Klick: Optionen Men\195\188\nShift-Links Klick: An/Aus";
 SMARTDEBUFF_BROKER_TT          = "\nLinks Klick: Optionen Men\195\188\nRechts Klick: An/Aus";
-
-end

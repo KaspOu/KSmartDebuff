@@ -7,6 +7,8 @@
 
 --@do-not-package@
 --[[
+https://warcraft.wiki.gg/wiki/Category:API_systems/Spell
+https://warcraft.wiki.gg/wiki/Category:API_systems/SpellBook
 https://wowpedia.fandom.com/wiki/World_of_Warcraft_API
 https://github.com/Gethe/wow-ui-source/blob/beta/Interface/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua
 PickupSpellBookItem(aIdOld, aLinkOld, BOOKTYPE_PET); > C_SpellBook.PickupSpellBookItem(index, spellBank)
@@ -3563,7 +3565,7 @@ end
 
 
 function SMARTDEBUFF_ToggleClassColors()
-  O.ShowClassColors = SMARTDEBUFF_toggleBool(O.ShowClassColors, "Use class colors = ");
+  O.ShowClassColors = SMARTDEBUFF_toggleBool(O.ShowClassColors, SMARTDEBUFF_OFT_CLASSCOLOR.." = ");
   if (SmartDebuffOF:IsVisible()) then
     SmartDebuffOF_cbClassColors:SetChecked(O.ShowClassColors);
   end
@@ -3571,7 +3573,7 @@ function SMARTDEBUFF_ToggleClassColors()
 end
 
 function SMARTDEBUFF_ToggleShowLR()
-  O.ShowLR = SMARTDEBUFF_toggleBool(O.ShowLR, "Show L/R = ");
+  O.ShowLR = SMARTDEBUFF_toggleBool(O.ShowLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
   if (SmartDebuffOF:IsVisible()) then
     SmartDebuffOF_cbShowLR:SetChecked(O.ShowLR);
   end
@@ -3579,7 +3581,7 @@ function SMARTDEBUFF_ToggleShowLR()
 end
 
 function SMARTDEBUFF_ToggleSortedByClass()
-  O.SortedByClass = SMARTDEBUFF_toggleBool(O.SortedByClass, "Sorted by class = ");
+  O.SortedByClass = SMARTDEBUFF_toggleBool(O.SortedByClass, SMARTDEBUFF_OFT_CLASSVIEW.." = ");
   SMARTDEBUFF_SetButtons();
 end
 
@@ -3863,10 +3865,11 @@ end
 
 function SMARTDEBUFF_SetGameTooltip(self, title, text, anchor)
   if (not anchor) then anchor = "ANCHOR_LEFT"; end
+  GameTooltip:Hide()
   GameTooltip:SetOwner(self, anchor);
   GameTooltip:SetText(WH..title);
-  GameTooltip:AddLine(text, SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, 1);
-  GameTooltip:AppendText("");
+  GameTooltip:AddLine(text, SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, false)
+  GameTooltip:Show()
 end
 
 function SMARTDEBUFF_ToggleOF()
