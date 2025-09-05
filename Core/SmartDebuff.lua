@@ -134,22 +134,24 @@ local imgMissing    = nil;
 local DebugChatFrame = DEFAULT_CHAT_FRAME;
 local PET_BOOK ="pet";
 
-
+local GetAddOnInfo = C_AddOns.GetAddOnInfo or GetAddOnInfo
+local addonFolder = GetAddOnInfo("SmartDebuff")
+addonFolder = "Interface\\AddOns\\"..addonFolder
 local Icons = {
-  ["DRUID"]       = "Interface\\AddOns\\SmartDebuff\\Icons\\Druid",
-  ["HUNTER"]      = "Interface\\AddOns\\SmartDebuff\\Icons\\Hunter",
-  ["MAGE"]        = "Interface\\AddOns\\SmartDebuff\\Icons\\Mage",
-  ["PALADIN"]     = "Interface\\AddOns\\SmartDebuff\\Icons\\Paladin",
-  ["PRIEST"]      = "Interface\\AddOns\\SmartDebuff\\Icons\\Priest",
-  ["ROGUE"]       = "Interface\\AddOns\\SmartDebuff\\Icons\\Rogue",
-  ["SHAMAN"]      = "Interface\\AddOns\\SmartDebuff\\Icons\\Shaman",
-  ["WARLOCK"]     = "Interface\\AddOns\\SmartDebuff\\Icons\\Warlock",
-  ["WARRIOR"]     = "Interface\\AddOns\\SmartDebuff\\Icons\\Warrior",
-  ["DEATHKNIGHT"] = "Interface\\AddOns\\SmartDebuff\\Icons\\Deathknight",
-  ["MONK"]        = "Interface\\AddOns\\SmartDebuff\\Icons\\Monk",
-  ["DEMONHUNTER"] = "Interface\\AddOns\\SmartDebuff\\Icons\\Demonhunter",
-  ["EVOKER"] 	  = "Interface\\AddOns\\SmartDebuff\\Icons\\Evoker",
-  --["PET"]         = "Interface\\AddOns\\SmartDebuff\\Icons\\HunterPet",
+  ["DRUID"]       = addonFolder.."\\Icons\\Druid",
+  ["HUNTER"]      = addonFolder.."\\Icons\\Hunter",
+  ["MAGE"]        = addonFolder.."\\Icons\\Mage",
+  ["PALADIN"]     = addonFolder.."\\Icons\\Paladin",
+  ["PRIEST"]      = addonFolder.."\\Icons\\Priest",
+  ["ROGUE"]       = addonFolder.."\\Icons\\Rogue",
+  ["SHAMAN"]      = addonFolder.."\\Icons\\Shaman",
+  ["WARLOCK"]     = addonFolder.."\\Icons\\Warlock",
+  ["WARRIOR"]     = addonFolder.."\\Icons\\Warrior",
+  ["DEATHKNIGHT"] = addonFolder.."\\Icons\\Deathknight",
+  ["MONK"]        = addonFolder.."\\Icons\\Monk",
+  ["DEMONHUNTER"] = addonFolder.."\\Icons\\Demonhunter",
+  ["EVOKER"] 	    = addonFolder.."\\Icons\\Evoker",
+  --["PET"]         = addonFolder.."\\Icons\\HunterPet",
   ["PET"]         = "Interface\\Icons\\spell_nature_spiritwolf", --spell_nature_spiritwolf --Ability_Tracking
   ["ROLE"]        = "Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES",
   ["CLASSES"]     = "Interface\\WorldStateFrame\\Icons-Classes",
@@ -2055,7 +2057,7 @@ function SMARTDEBUFF_CheckSFBackdrop()
     if (O.ShowBackdrop) then
       --"Interface\\Tooltips\\UI-Tooltip-Background"
       f:SetBackdrop( {
-        bgFile = "Interface\\AddOns\\SmartDebuff\\Icons\\white16x16", edgeFile = nil, tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", edgeFile = nil, tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
       f:SetBackdropColor(O.ColBack.r, O.ColBack.g, O.ColBack.b, O.ColBack.a);
     else
@@ -2149,7 +2151,7 @@ function SMARTDEBUFF_CreateButtons()
 
       if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
       button:SetBackdrop( {
-        bgFile = nil, edgeFile = "Interface\\AddOns\\SmartDebuff\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = nil, edgeFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
       --button:SetBackdropColor(0,0,0,0);
 
@@ -2234,7 +2236,7 @@ function SMARTDEBUFF_CreateButtons()
 
       if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
       button:SetBackdrop( {
-        bgFile = nil, edgeFile = "Interface\\AddOns\\SmartDebuff\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = nil, edgeFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
 
       -- create bg texture
@@ -2491,7 +2493,9 @@ local function DebugButtonAttributes(self)
   SMARTDEBUFF_ButtonTooltipOnEnter(self, true)
   GameTooltip:AddLine(" ")
   GameTooltip:AddLine("Hover: "..self:GetName());
-  for preKey, pre in pairs({[""] = "", ["S"] = "shift-", ["A"] = "alt-", ["C"] = "ctrl-"}) do
+  for _, item in ipairs({ {preKey = "", pre = ""}, {preKey = "S", pre = "shift-"}, {preKey = "A", pre = "alt-"}, {preKey = "C", pre = "ctrl-"} }) do
+    local preKey = item.preKey;
+    local pre = item.pre;
     for suf = 1, 3, 1 do
       for _, attr in ipairs({"type", "spell", "macro", "macrotext", "_menu", "item", "action", "index", "pet", "petaction"}) do
         local getAttr = self:GetAttribute(pre, attr, suf);
@@ -3307,8 +3311,8 @@ function SMARTDEBUFF_SetHeaderLabels(text, n, btn, icon)
       end
     end
   else
-    lbl:SetText("");
-    if (lbl:IsVisible()) then
+    if (lbl ~= nil and lbl:IsVisible()) then
+      lbl:SetText("");
       lbl:Hide();
     end
   end
