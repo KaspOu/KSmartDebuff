@@ -238,7 +238,9 @@
       <OnShow>
       </OnShow>
       <OnHide>
-        self:StopMovingOrSizing();
+        if (not InCombatLockdown() and self.IsMoving) then
+          self:StopMovingOrSizing();
+        end
       </OnHide>
       <OnDragStart>
         if (button == "LeftButton" and IsShiftKeyDown()) then
@@ -332,7 +334,9 @@
       <OnShow>
       </OnShow>
       <OnHide>
-        self:StopMovingOrSizing();
+        if (not InCombatLockdown() and self.IsMoving) then
+          self:StopMovingOrSizing();
+        end
       </OnHide>
       <OnDragStart>
         if (button == "LeftButton" and IsShiftKeyDown()) then
@@ -340,7 +344,9 @@
         end
       </OnDragStart>
       <OnDragStop>
-        self:StopMovingOrSizing();
+        if (not InCombatLockdown() and self.IsMoving) then
+          self:StopMovingOrSizing();
+        end
       </OnDragStop>
       <OnMouseDown>
       </OnMouseDown>
@@ -3113,7 +3119,9 @@
       </OnShow>
       <OnHide>
         SMARTDEBUFF_OFOnHide();
-        self:StopMovingOrSizing();
+        if (not InCombatLockdown() and self.IsMoving) then
+          self:StopMovingOrSizing();
+        end
       </OnHide>
       <OnMouseDown>
         if (button == "LeftButton") then
@@ -4326,7 +4334,9 @@
         end
       </OnShow>
       <OnHide>
-        self:StopMovingOrSizing();
+        if (not InCombatLockdown() and self.IsMoving) then
+          self:StopMovingOrSizing();
+        end
       </OnHide>
       <OnDragStart>
       </OnDragStart>
