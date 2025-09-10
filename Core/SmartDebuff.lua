@@ -2679,7 +2679,15 @@ end
 
 local sbs_btn, sbs_un, sbs_uc, sbs_st, sbs_fontH, sbs_pre, sbs_ln, sbs_wd, sbs_io, sbs_uv, sbs_iv, sbs_rc, sbs_cd;
 local sbs_col = { r = 0.39, g = 0.42, b = 0.64 };
-function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
+--- Sets the visual state of a SmartDebuff button.
+--- @param unit string The unit ID (e.g., "raid1", "player", "pet1").
+--- @param idx number The index of the button.
+--- @param nr number The debuff type: `1 - 3`: Used for LRM spells / `0`: Normal / `10`: Not removable / `-99`: Unit no longer exists.
+--- @param isInRange number In range status (`1` if in range, `0` otherwise).
+--- @param remains number Time remaining for the debuff (in seconds).
+--- @param isPet boolean True if it's a pet button, false otherwise.
+--- @param spellCD number Spell cooldown (in seconds).
+function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, spellCD)
   sbs_btn = nil;
   sbs_un = "";
   sbs_uc = "";
@@ -2687,7 +2695,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
   sbs_uv = unit;
   sbs_iv = false;
 
-  if (pet) then
+  if (isPet) then
     sbs_btn = _G["SmartDebuffPetBtn"..idx];
   else
     sbs_btn = _G["SmartDebuffBtn"..idx];
@@ -2697,7 +2705,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
 
   sbs_col.r = O.ColNormal.r; sbs_col.g = O.ColNormal.g; sbs_col.b = O.ColNormal.b;
   if (unit and LUnitExists(unit)) then
-    if (not pet) then
+    if (not isPet) then
       if (UnitInVehicle(unit) or UnitHasVehicleUI(unit)) then
         sbs_iv = true;
       end
@@ -2737,7 +2745,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
         sbs_un = UnitName(unit);
       end
 
-      if (pet and O.ShowClassColors) then
+      if (isPet and O.ShowClassColors) then
         sbs_col.r = 0.39; sbs_col.g = 0.42; sbs_col.b = 0.64;
       end
     end
@@ -2776,7 +2784,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     sbs_ln = 5.5;
     sbs_wd = 0;
 
-    if (iGroupSetup == 3 and O.ShowGrpNr and not pet) then
+    if (iGroupSetup == 3 and O.ShowGrpNr and not isPet) then
       sbs_un = cUnits[unit].Subgroup .. ":" .. sbs_un;
     end
 
@@ -2793,8 +2801,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
 
     if (UnitIsDeadOrGhost(unit) or sbs_io) then
       if (sbs_io) then
-        ir = 1;
-        if (not pet) then
+        isInRange = 1;
+        if (not isPet) then
           sbs_pre = "OFF";
           iTotOFF = iTotOFF + 1;
         else
@@ -2811,7 +2819,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
           else
             sbs_pre = "DEAD";
           end
-          ir = 1;
+          isInRange = 1;
           sbs_col.r = 0; sbs_col.g = 0; sbs_col.b = 0;
           iTotDead = iTotDead + 1;
         end
@@ -2840,13 +2848,13 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     sbs_st = "?"
     if (iTest > 0) then
       sbs_st = (idx % 2 == 0) and UnitName("player") or "Kallye";
-      ir = (idx % 5 == 0) and 0 or 1
+      isInRange = (idx % 5 == 0) and 0 or 1
       if (string.len(sbs_st) > sbs_wd-1) then
         --sbs_un = string.sub(sbs_un, 1, sbs_wd);
         sbs_st = sbs_st:utf8sub(1, sbs_wd-1) .. "?";
       end
       if (idx % 7 == 0) then
-        ir = 1
+        isInRange = 1
         nr = math.floor(idx/7)
         nr = nr > 3 and 10 or nr
       else
@@ -2855,20 +2863,20 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     end
   end
 
-  if (spellcd and spellcd > 0 and nr >= 1 and nr <= 3) then
-    sbs_cd = string.format("%.0f", math.floor(spellcd + 0.5));
+  if (spellCD and spellCD > 0 and nr >= 1 and nr <= 3) then
+    sbs_cd = string.format("%.0f", math.floor(spellCD + 0.5));
   else
     sbs_cd = "";
   end
 
-  if (ti and ti > 0) then
-    if (ti > 60) then
+  if (remains and remains > 0) then
+    if (remains > 60) then
       --sbs_st = string.format("%.0fm", Round(ti/60, 0));
-      sbs_st = string.format("%.0fm", math.floor((ti/60) + 0.5));
+      sbs_st = string.format("%.0fm", math.floor((remains/60) + 0.5));
       --sbs_fontH = O.BtnH - 8;
     else
       --sbs_st = string.format("%.0f", Round(ti, 0));
-      sbs_st = string.format("%.0f", math.floor(ti + 0.5));
+      sbs_st = string.format("%.0f", math.floor(remains + 0.5));
       --sbs_fontH = O.BtnH - 6;
     end
     sbs_st = sbs_un.."\n"..sbs_st;
@@ -2884,7 +2892,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     else
       sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
     end
-    if (ir == 1) then
+    if (isInRange == 1) then
       sbs_btn:SetAlpha(O.ANormal);
     else
       sbs_btn:SetAlpha(O.ANormalOOR);
@@ -2896,7 +2904,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
     sbs_col.b = O.ColDebuffL.b;
-    if (ir == 1) then
+    if (isInRange == 1) then
       sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
       if (O.ShowLR) then
         sbs_st = SMARTDEBUFF_KEY_L;
@@ -2919,7 +2927,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     sbs_col.r = O.ColDebuffR.r;
     sbs_col.g = O.ColDebuffR.g;
     sbs_col.b = O.ColDebuffR.b;
-    if (ir == 1) then
+    if (isInRange == 1) then
       sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
       if (O.ShowLR) then
         sbs_st = SMARTDEBUFF_KEY_R;
@@ -2942,7 +2950,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     sbs_col.r = O.ColDebuffM.r;
     sbs_col.g = O.ColDebuffM.g;
     sbs_col.b = O.ColDebuffM.b;
-    if (ir == 1) then
+    if (isInRange == 1) then
       sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
       if (O.ShowLR) then
         sbs_st = SMARTDEBUFF_KEY_M;
@@ -2981,7 +2989,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, ir, ti, pet, spellcd)
     elseif (sbs_iv) then
       -- unit is in a vehicle
       sbs_btn:SetAlpha(O.ANormalOOR / 2);
-    elseif (ir == 1 or UnitInRange(unit)) then
+    elseif (isInRange == 1 or UnitInRange(unit)) then
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
     else
@@ -3772,7 +3780,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
             --SMARTDEBUFF_AddMsgD("Unit found: " .. unit .. ", " .. UnitName(unit) .. ", " .. i);
             SMARTDEBUFF_CheckUnitDebuffs(cd_spell, cd_unit, cd_i, isSpellActive);
           else
-            SMARTDEBUFF_SetButtonState(cd_unit, cd_i, -99, 0, -1);
+            SMARTDEBUFF_SetButtonState(cd_unit, cd_i, -99, 0, -1, false, 0);
           end
         end
       end
@@ -3822,7 +3830,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
               --SMARTDEBUFF_AddMsgD("Pet found: " .. unit .. ", " .. UnitName(unit) .. ", " .. i);
               SMARTDEBUFF_CheckUnitDebuffs(cd_spell, cd_unit, cd_i, isSpellActive, 1);
             else
-              SMARTDEBUFF_SetButtonState(cd_unit, cd_i, -99, 0, -1, 1);
+              SMARTDEBUFF_SetButtonState(cd_unit, cd_i, -99, 0, -1, true, 0);
             end
           end
         end
@@ -3916,14 +3924,14 @@ function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
 
     if (cud_nrd) then
       hasDebuff = true;
-      SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet);
+      SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
       SMARTDEBUFF_PlaySound();
       return;
     end
 
-    SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet);
+    SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
   else
-    SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet);
+    SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
   end
 
 end
