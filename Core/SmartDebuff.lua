@@ -283,7 +283,8 @@ end
 local function GetSpellCD(spell)
   if (not spell) then return -1 end
   local scd = ns.GetSpellCooldown(spell);
-  if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5 and scd.isEnabled) then
+  -- FIXME
+  if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5) then -- and scd.isEnabled) then
     return (scd.startTime + scd.duration) - GetTime();
   end
   return -1;
@@ -2896,7 +2897,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 1) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("L Dispel detected "..ir)
+      -- FIXME
+      SMARTDEBUFF_AddMsg("L Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
@@ -2919,7 +2921,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 2) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("R Dispel detected "..ir)
+      -- FIXME
+      SMARTDEBUFF_AddMsg("R Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffR.r;
     sbs_col.g = O.ColDebuffR.g;
@@ -2942,7 +2945,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 3) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("M Dispel detected "..ir)
+      -- FIXME
+      SMARTDEBUFF_AddMsg("M Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffM.r;
     sbs_col.g = O.ColDebuffM.g;
@@ -2964,6 +2968,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       sbs_fontH = O.BtnH - 2;
     end
   elseif (nr == 10 and not UnitIsDeadOrGhost(unit)) then
+    SMARTDEBUFF_AddMsg("Not removable Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
     sbs_col.r = O.ColDebuffNR.r;
     sbs_col.g = O.ColDebuffNR.g;
     sbs_col.b = O.ColDebuffNR.b;
@@ -2989,9 +2994,17 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     elseif (isInRange == 1 or UnitInRange(unit)) then
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
+      -- FIXME
+      if nr ~= -1 then
+      SMARTDEBUFF_AddMsg("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
+      end
     else
       -- unit is oor
       sbs_btn:SetAlpha(O.ANormalOOR);
+      -- FIXME
+      if nr ~= -1 then
+      SMARTDEBUFF_AddMsg("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
+      end
     end
   end
 
