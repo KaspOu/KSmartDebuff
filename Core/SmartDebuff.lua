@@ -3029,7 +3029,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       sbb_dg = false
       sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
     end
-    sbb_n = math.floor(sbb_w * (sbb_cur / sbb_nmax));
+    sbb_n = sbb_nmax > 0 and math.floor(sbb_w * (sbb_cur / sbb_nmax)) or 0;
     if (O.ShowHPText) then
       sbb_col.r = 0; sbb_col.g = 0.9; sbb_col.b = 0;
     else
@@ -3038,7 +3038,9 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
 
     if UnitIsPlayer(unit) then
       iTotPlayers = iTotPlayers + 1;
-      iTotHP = iTotHP + (sbb_cur * 100 / sbb_nmax);
+      if sbb_nmax > 0 then
+        iTotHP = iTotHP + (sbb_cur * 100 / sbb_nmax);
+      end
     end
 
     if (O.Invert) then sbb_n = sbb_w - sbb_n; end
@@ -3076,7 +3078,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       sbb_cur = tonumber(string.match(unit, "%d+"))
       sbb_nmax = iTest
     end
-    sbb_n = math.floor(sbb_w * (sbb_cur / sbb_nmax));
+    sbb_n = sbb_nmax > 0 and math.floor(sbb_w * (sbb_cur / sbb_nmax)) or 0
     if (O.Invert) then sbb_n = sbb_w - sbb_n; end
     if (sbb_nmax == 1 or sbb_n < 1 or sbb_n > sbb_w or sbb_upt ~= 0 or sbb_dg or not O.ShowMana) then sbb_n = 0; end
     --if (n == max) then n = w; end;
@@ -3117,7 +3119,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       btn.mana:SetGradient("HORIZONTAL", CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
     end
 
-    sbb_n = math.ceil(sbb_cur / sbb_nmax * 100)
+    sbb_n = sbb_nmax > 0 and math.ceil(sbb_cur / sbb_nmax * 100) or 0
     if (not sbb_dg and sbb_upt == 0 and sbb_n < 100 and O.ShowHPText) then
       btn.manatext:ClearAllPoints();
       btn.manatext:SetPoint("TOPLEFT", btn , "BOTTOMLEFT", 1, sbb_h);
