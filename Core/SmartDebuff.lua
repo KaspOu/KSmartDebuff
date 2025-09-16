@@ -283,7 +283,8 @@ end
 local function GetSpellCD(spell)
   if (not spell) then return -1 end
   local scd = ns.GetSpellCooldown(spell);
-  if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5 and scd.isEnabled) then
+  -- FIXME:
+  if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5) then -- and scd.isEnabled) then
     return (scd.startTime + scd.duration) - GetTime();
   end
   return -1;
@@ -2674,6 +2675,8 @@ function SMARTDEBUFF_ButtonDropDown_Initialize(self)
 	end
 end
 
+-- FIXME: DEBG
+local SMARTDEBUFF_DEBUG_DISPELS = {}
 local sbs_btn, sbs_un, sbs_uc, sbs_st, sbs_fontH, sbs_pre, sbs_ln, sbs_wd, sbs_io, sbs_uv, sbs_iv, sbs_rc, sbs_cd;
 local sbs_col = { r = 0.39, g = 0.42, b = 0.64 };
 --- Sets the visual state of a SmartDebuff button.
@@ -2882,6 +2885,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   end
 
+  local debugShown = false
   if (nr == 0) then
     sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 0.6);
     if (not sbs_pre and O.ShowGradient) then
@@ -2894,9 +2898,22 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     else
       sbs_btn:SetAlpha(O.ANormalOOR);
     end
+    -- FIXME:
+    if (SMARTDEBUFF_DEBUG_DISPELS[sbs_st] and iTest == 0 and spellCD ~= 0) then
+      debugShown = true
+      SMARTDEBUFF_AddMsg("UNEXPECTED, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
+    end
   elseif (nr == 1) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("L Dispel detected "..isInRange)
+      -- FIXME: AddMsg replaces AddMsgD
+      if not SMARTDEBUFF_DEBUG_DISPELS[sbs_st] then
+        debugShown = true
+        SMARTDEBUFF_AddMsg("L Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
+        SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = true;
+        spellCD = tonumber(spellCD) or 1
+        spellCD = math.max(spellCD, 1)
+        C_Timer.After(spellCD, function() SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = nil; end);
+      end
     end
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
@@ -2919,7 +2936,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 2) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("R Dispel detected "..isInRange)
+      -- FIXME: AddMsg replaces AddMsgD
+      debugShown = true
+      SMARTDEBUFF_AddMsg("R Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffR.r;
     sbs_col.g = O.ColDebuffR.g;
@@ -2942,7 +2961,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 3) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("M Dispel detected "..isInRange)
+      -- FIXME: AddMsg replaces AddMsgD
+      debugShown = true
+      SMARTDEBUFF_AddMsg("M Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffM.r;
     sbs_col.g = O.ColDebuffM.g;
@@ -2964,6 +2985,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       sbs_fontH = O.BtnH - 2;
     end
   elseif (nr == 10 and not UnitIsDeadOrGhost(unit)) then
+    debugShown = true
+    SMARTDEBUFF_AddMsg("Not removable Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
     sbs_col.r = O.ColDebuffNR.r;
     sbs_col.g = O.ColDebuffNR.g;
     sbs_col.b = O.ColDebuffNR.b;
@@ -2989,10 +3012,24 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     elseif (isInRange == 1 or UnitInRange(unit)) then
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
+      -- FIXME:
+      if nr ~= -1 then
+        debugShown = true
+        SMARTDEBUFF_AddMsg("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
+      end
     else
       -- unit is oor
       sbs_btn:SetAlpha(O.ANormalOOR);
+      -- FIXME:
+      if nr ~= -1 then
+        debugShown = true
+        SMARTDEBUFF_AddMsg("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
+      end
     end
+  end
+  if not debugShown and SMARTDEBUFF_DEBUG_DISPELS[sbs_st] then
+      SMARTDEBUFF_AddMsg("TOTALLY UNEXPECTED, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD..", nr:"..nr)
+      SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = nil
   end
 
   sbs_btn.text:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
