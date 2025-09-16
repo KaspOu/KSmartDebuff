@@ -2973,7 +2973,7 @@
 
       <Button name="$parent_btnColorSetup" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_COLORSETUP">
         <Size>
-          <AbsDimension x="120" y="20" />
+          <AbsDimension x="140" y="20" />
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldSpaceX">

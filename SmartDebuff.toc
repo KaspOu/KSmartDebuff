@@ -1,4 +1,4 @@
-## Interface: 110200, 50500
+## Interface: 110200, 110205, 50500, 50501
 ## Title: Smart|cffffffffDebuff|r Reloaded by |cff00ff00Kallye|r
 ## Title-frFR: Smart|cffffffffDebuff|r Reloaded, par |cff00ff00Kallye|r
 ## Version: 11.2.003
