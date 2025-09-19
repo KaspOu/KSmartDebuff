@@ -1351,7 +1351,7 @@ function SMARTDEBUFF_Options_Init()
 
   if (O.Toggle == nil) then  O.Toggle = true; end
   if (O.ShowSF == nil) then O.ShowSF = true; end
-  if (O.ShowIF == nil) then O.ShowIF = true; end
+  if (O.ShowIF == nil) then O.ShowIF = true; end -- ShowInfoFrame
   if (O.ShowPets == nil) then O.ShowPets = not SMARTDEBUFF_IS_RETAIL; end
   if (O.ShowPetsWL == nil) then O.ShowPetsWL = O.ShowPets; end
   if (O.ShowPetsDK == nil) then O.ShowPetsDK = O.ShowPets; end
@@ -1385,7 +1385,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowHeaders == nil) then O.ShowHeaders = true; end
   if (O.ShowGrpNr == nil) then O.ShowGrpNr = false; end
   if (O.ShowHeaderRow == nil) then O.ShowHeaderRow = true; end
-  if (O.ShowInfoRow == nil) then O.ShowInfoRow = true; end
+  if (O.ShowInfoRow == nil) then O.ShowInfoRow = false; end
   if (O.Vertical == nil) then O.Vertical = true; end
   if (O.VerticalUp == nil) then O.VerticalUp = false; end
   if (O.Columns == nil) then O.Columns = 6; end
@@ -1412,9 +1412,9 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowBackdrop == nil) then O.ShowBackdrop = true; end
   if (O.ShowGradient == nil) then O.ShowGradient = true; end
   if (O.AutoHide == nil) then O.AutoHide = false; end
-  if (O.ShowVehicles == nil) then O.ShowVehicles = true; end
+  if (O.ShowVehicles == nil) then O.ShowVehicles = false; end
   if (O.AdvAnchors == nil) then O.AdvAnchors = false; end
-  if (O.StopCast == nil) then O.StopCast = false; end
+  if (O.StopCast == nil) then O.StopCast = true; end
   if (O.IgnoreDebuff == nil) then O.IgnoreDebuff = true; end
   if (O.ChatNotif == nil) then O.ChatNotif = true; end
   --O.AutoHide = false;
@@ -2071,8 +2071,10 @@ end
 function SMARTDEBUFF_TestModeToggle()
   if (iTest == nil or iTest < 1) then
     iTest = 30;
+    SmartDebuffOF_btnTestModeText:SetTextColor(0, .9, 0)
   else
     iTest = 0;
+    SmartDebuffOF_btnTestModeText:SetTextColor(1, .82, 0)
   end
   SMARTDEBUFF_SetUnits();
 end
