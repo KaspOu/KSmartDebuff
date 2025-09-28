@@ -127,6 +127,7 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
   },
   ["WARLOCK"]  = {
     { Spell_ID = 5232, Spell_Type = "item", Button = "R", Types = {SMARTDEBUFF_UTIL} }, -- Soulstone (1+)
+    { Spell_ID = 5697,  Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Unending Breath (1+)
   },
   ["WARRIOR"]  = {
     { Spell_ID = 3411,  Button = "R", Types = {SMARTDEBUFF_UTIL} }, -- Intervene (2+)

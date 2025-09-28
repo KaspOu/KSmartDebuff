@@ -1,3 +1,12 @@
+v11.2.004
+- Russian added
+- Translations fixed
+- Warlock Unending Breathe (M)
+
+v11.2.003
+- Test mode fully functional
+- Debug enhanced
+
 v11.2.002
 - Sort by Role
 - Sort by Class fixed

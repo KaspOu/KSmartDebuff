@@ -1310,11 +1310,6 @@ local function CleanMem()
 end
 
 local function ReplaceDeprecatedOptions(options)
-  if options then
-    if options.Sound and options.Sound < 50 then
-      options.Sound = SMARTDEBUFF_SOUNDS[options.Sound][2]
-    end
-  end
 end
 -- Init the SmartDebuff variables ---------------------------------------------------------------------------------------
 function SMARTDEBUFF_Options_Init()
@@ -2684,7 +2679,7 @@ local sbs_col = { r = 0.39, g = 0.42, b = 0.64 };
 --- Sets the visual state of a SmartDebuff button.
 --- @param unit string The unit ID (e.g., "raid1", "player", "pet1").
 --- @param idx number The index of the button.
---- @param nr number The debuff type: `1 - 3`: Used for LRM spells / `0`: Normal / `10`: Not removable / `-99`: Unit no longer exists.
+--- @param nr number The debuff type: `1 - 3`: Used for LRM spells / `0`: Normal / `10`: Not removable / `-99`: Unit no longer exists. / `-1`: Force No dispel
 --- @param isInRange number In range status (`1` if in range, `0` otherwise).
 --- @param remains number Time remaining for the debuff (in seconds).
 --- @param isPet boolean True if it's a pet button, false otherwise.
@@ -3934,9 +3929,10 @@ function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
     end
 
     SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
-  else
-    SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
+    return;
   end
+  -- No remove available, or O.ShowNotRemov false
+  SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
 
 end
 

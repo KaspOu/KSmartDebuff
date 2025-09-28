@@ -20,6 +20,9 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." 選項";
 
+SMARTDEBUFF_KEY_L = "左";
+SMARTDEBUFF_KEY_R = "右";
+SMARTDEBUFF_KEY_M = "中";
 SMARTDEBUFF_KEYS = {["L"]  = "左",
                     ["R"]  = "右",
                     ["M"]  = "中",
@@ -54,7 +57,7 @@ SMARTDEBUFF_OFT_MANA           = "魔法";
 SMARTDEBUFF_OFT_INVERT         = "反轉";
 SMARTDEBUFF_OFT_CLASSVIEW      = "職業視圖";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "職業顏色";
-SMARTDEBUFF_OFT_SHOWLR         = "L / R / M";
+SMARTDEBUFF_OFT_SHOWLR         = "左 / 右 / 中";
 SMARTDEBUFF_OFT_HEADERS        = "標題";
 SMARTDEBUFF_OFT_GROUPNR        = "組號";
 SMARTDEBUFF_OFT_SOUND          = "聲音";
@@ -130,14 +133,14 @@ SMARTDEBUFF_TT_TARGETACTIONS   = "單位點擊:\n刪除";
 SMARTDEBUFF_TT_PETACTIONS      = "寵物行動:\n不能刪除!";
 
 --Tooltips added by Semi#1287
-SMARTDEBUFF_TT_OPTIONS		   		= "Left click: Open options\n|cff20d2ff- O button -|r";
-SMARTDEBUFF_OFT_NOTREMOVABLE_LIST 	= "Debuff Guard List";
-SMARTDEBUFF_TT_NOTREMOVABLE_LIST 	= "Click to Edit List";
-SMARTDEBUFF_OFT_SKILLS 				= "Skill Menu";
-SMARTDEBUFF_TT_SKILLS				= "Click to Edit Skill Quick Slots";
-SMARTDEBUFF_OFT_SHOWDEBUFFGUARD 	= "Spell Guard List";
-SMARTDEBUFF_TT_SHOWDEBUFFGUARD 		= "Click to Edit\nList of Spells to Track";
-SMARTDEBUFF_TT_SOUNDLIST 			= "Click to Select Sound";
+SMARTDEBUFF_TT_OPTIONS		   		= "左鍵點擊: 開啟選項\n|cff20d2ff- O 按鈕 -|r";
+SMARTDEBUFF_OFT_NOTREMOVABLE_LIST 	= "不可移除 Debuff 列表";
+SMARTDEBUFF_TT_NOTREMOVABLE_LIST 	= "點擊編輯列表";
+SMARTDEBUFF_OFT_SKILLS 				= "技能選單";
+SMARTDEBUFF_TT_SKILLS				= "點擊編輯技能快捷欄";
+SMARTDEBUFF_OFT_SHOWDEBUFFGUARD 	= "法術守護列表";
+SMARTDEBUFF_TT_SHOWDEBUFFGUARD 		= "點擊編輯\n追蹤法術列表";
+SMARTDEBUFF_TT_SOUNDLIST 			= "點擊選擇音效";
 
 -- Tooltip support
 SMARTDEBUFF_FUBAR_TT           = "\n左點擊: 打開選項\nShift-左點擊: On/Off";

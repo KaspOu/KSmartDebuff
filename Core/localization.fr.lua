@@ -10,12 +10,8 @@ SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
 - Tri par Rôle
 - Tri par Classe corrigé
-
-- Options pour afficher les icônes de rôle
-
-- Police corrigée pour les noms russes
-
-- Correction d'une erreur lors des cinématiques
+- Traductions
+- Démoniste: Respiration interminable
 ]]
 
 --@do-not-package@
@@ -31,10 +27,10 @@ SMARTDEBUFF_CHARMED = "Contr\195\180le mental";
 
 
 -- Creatures
-SMARTDEBUFF_HUMANOID  = "Humano\195\175de";
-SMARTDEBUFF_DEMON     = "D\195\169mon";
-SMARTDEBUFF_BEAST     = "B\195\170te";
-SMARTDEBUFF_ELEMENTAL = "\195\137l\195\169mentaire";
+SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
+SMARTDEBUFF_DEMON     = PET_TYPE_DEMON;
+SMARTDEBUFF_BEAST     = BATTLE_PET_NAME_8;
+SMARTDEBUFF_ELEMENTAL = BATTLE_PET_NAME_7;
 SMARTDEBUFF_IMP       = "Diablotin";
 SMARTDEBUFF_FELHUNTER = "Chasseur corrompu";
 SMARTDEBUFF_DOOMGUARD = "Garde funeste";
@@ -48,8 +44,8 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Options";
 
 SMARTDEBUFF_KEY_L = "G";
-SMARTDEBUFF_KEY_M = "M";
 SMARTDEBUFF_KEY_R = "D";
+SMARTDEBUFF_KEY_M = "M";
 SMARTDEBUFF_KEYS = {["L"]  = "Gauche (G)",
                     ["R"]  = "Droite (D)",
                     ["M"]  = "Milieu (M)",
@@ -119,6 +115,7 @@ SMARTDEBUFF_OFT_SHOWSPELLICON  = "Ic\195\180ne de sort";
 SMARTDEBUFF_OFT_INFOROW        = "Barre d'informations";
 SMARTDEBUFF_OFT_GLOBALSAVE     = "Enregistrer";
 SMARTDEBUFF_OFT_GLOBALLOAD     = "Charger";
+SMARTDEBUFF_OFT_RESET          = "R\195\169init";
 SMARTDEBUFF_OFT_ROLE           = "R\195\180le";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Configurer les ancres";
 SMARTDEBUFF_OFT_ICONSIZE       = "Taille des ic\195\180nes";

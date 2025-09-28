@@ -190,7 +190,11 @@
         "tContains",
         "WOW_PROJECT_ID",
         "WOW_PROJECT_MAINLINE",
-        "GetCVar"
+        "GetCVar",
+        "PET_TYPE_DEMON",
+        "BATTLE_PET_NAME_1",
+        "BATTLE_PET_NAME_8",
+        "BATTLE_PET_NAME_7"
     ],
     "Lua.diagnostics.disable": [
         "need-check-nil",

@@ -9,11 +9,8 @@ SMARTDEBUFF_WHATSNEW = [[|cffffffffWhats new:|r
 - Sort by Role
 - Sort by Class fixed
 
-- Options for displaying role icons
-
-- Font fixed for Russian names
-
-- Fix issue with cinematics
+- Translations
+- Warlock: Unending Breath
 ]];
 
 --@do-not-package@
@@ -31,10 +28,10 @@ SMARTDEBUFF_HEAL    = "Heal";
 
 
 -- Creatures
-SMARTDEBUFF_HUMANOID  = "Humanoid";
-SMARTDEBUFF_DEMON     = "Demon";
-SMARTDEBUFF_BEAST     = "Beast";
-SMARTDEBUFF_ELEMENTAL = "Elemental";
+SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
+SMARTDEBUFF_DEMON     = PET_TYPE_DEMON;
+SMARTDEBUFF_BEAST     = BATTLE_PET_NAME_8;
+SMARTDEBUFF_ELEMENTAL = BATTLE_PET_NAME_7;
 SMARTDEBUFF_IMP       = "Imp";
 SMARTDEBUFF_FELHUNTER = "Felhunter";
 SMARTDEBUFF_DOOMGUARD = "Doomguard";
@@ -47,8 +44,8 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Options";
 
 SMARTDEBUFF_KEY_L = "L";
-SMARTDEBUFF_KEY_M = "M";
 SMARTDEBUFF_KEY_R = "R";
+SMARTDEBUFF_KEY_M = "M";
 SMARTDEBUFF_KEYS = {["L"]  = "Left",
                     ["R"]  = "Right",
                     ["M"]  = "Middle",
