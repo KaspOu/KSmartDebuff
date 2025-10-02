@@ -1,3 +1,9 @@
+11.2.005
+- Italian added
+- Korean added
+- Korean / Chinese fonts (SmartDebuff frame)
+- ES / DE: Missing translations added
+
 v11.2.004
 - Russian added
 - Translations fixed

@@ -3826,7 +3826,7 @@
             self.texture:SetAllPoints(self);
             self.texture:SetBlendMode("BLEND");
             self.texture:SetAllPoints(self);
-            self:SetText("Debuff\nLeft");
+            self:SetText(SMARTDEBUFF_OFT_COLOR_LEFT);
             self:SetAlpha(1.0);
           </OnLoad>
         </Scripts>
@@ -3887,7 +3887,7 @@
             self.texture:SetAllPoints(self);
             self.texture:SetBlendMode("BLEND");
             self.texture:SetAllPoints(self);
-            self:SetText("Debuff\nRight");
+            self:SetText(SMARTDEBUFF_OFT_COLOR_RIGHT);
             self:SetAlpha(1.0);
           </OnLoad>
         </Scripts>
@@ -3948,7 +3948,7 @@
             self.texture:SetAllPoints(self);
             self.texture:SetBlendMode("BLEND");
             self.texture:SetAllPoints(self);
-            self:SetText("Debuff\nMiddle");
+            self:SetText(SMARTDEBUFF_OFT_COLOR_MIDDLE);
             self:SetAlpha(1.0);
           </OnLoad>
         </Scripts>
@@ -4009,7 +4009,7 @@
             self.texture:SetAllPoints(self);
             self.texture:SetBlendMode("BLEND");
             self.texture:SetAllPoints(self);
-            self:SetText("Not\nRemovable\nDebuff");
+            self:SetText(SMARTDEBUFF_OFT_COLOR_NOTREM);
             self:SetAlpha(1.0);
           </OnLoad>
         </Scripts>
@@ -4070,7 +4070,7 @@
             self.texture:SetAllPoints(self);
             self.texture:SetBlendMode("BLEND");
             self.texture:SetAllPoints(self);
-            self:SetText("Unit\nButton");
+            self:SetText(SMARTDEBUFF_OFT_COLOR_UNIT);
             self:SetAlpha(1.0);
           </OnLoad>
         </Scripts>
@@ -4209,7 +4209,7 @@
             self.texture:SetAllPoints(self);
             self.texture:SetBlendMode("BLEND");
             self.texture:SetAllPoints(self);
-            self:SetText("Backdrop\nClick me");
+            self:SetText(SMARTDEBUFF_OFT_COLOR_BACKDROP);
             self:SetAlpha(1.0);
           </OnLoad>
           <OnClick>

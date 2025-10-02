@@ -8,10 +8,11 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
-- Tri par Rôle
-- Tri par Classe corrigé
-- Traductions
-- Démoniste: Respiration interminable
+- Tri par Rôle / Classe
+
+- Traductions ajoutées / complètes (toutes les langues)
+
+- Support des polices Corréenne et Chinoise (frame SmartDebuff)
 ]]
 
 --@do-not-package@
@@ -103,6 +104,12 @@ SMARTDEBUFF_OFT_FONTSIZE       = "Taille de police";
 SMARTDEBUFF_OFT_WIDTH          = "Largeur";
 SMARTDEBUFF_OFT_HEIGHT         = "Hauteur";
 SMARTDEBUFF_OFT_BARHEIGHT      = "Hauteur de barre";
+SMARTDEBUFF_OFT_COLOR_LEFT     = "D\195\169buff\nGauche"
+SMARTDEBUFF_OFT_COLOR_RIGHT    = "D\195\169buff\nDroite"
+SMARTDEBUFF_OFT_COLOR_MIDDLE   = "D\195\169buff\nMilieu"
+SMARTDEBUFF_OFT_COLOR_NOTREM   = "D\195\169buff\nNon\nDissipable"
+SMARTDEBUFF_OFT_COLOR_UNIT     = "Bouton\nd'unit\195\169"
+SMARTDEBUFF_OFT_COLOR_BACKDROP = "Arri\195\168re-plan\nCliquez-moi"
 SMARTDEBUFF_OFT_OPACITYNORMAL  = "Opacit\195\169 \195\160 port\195\169e";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Opacit\195\169 hors de port\195\169e";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacit\195\169 des d\195\169buffs";
@@ -202,6 +209,9 @@ SMARTDEBUFF_TT_DROPABBLE       = "Clic de la souris :\n Gauche pour d\195\169pos
 SMARTDEBUFF_TT_DROPREPLACE     = "Clic de la souris :\n Gauche pour remplacer\n Droit pour rel\195\162cher";
 SMARTDEBUFF_TT_DROPEXCHANGE    = "Clic de la souris :\n Gauche pour \195\169changer\n Droit pour rel\195\162cher";
 SMARTDEBUFF_TT_CANTDROP        = "Clic de la souris :\n Droit pour rel\195\162cher";
+
+SMARTDEBUFF_INFO_READY         = "Joueurs:\nPV %:\nMana %:\nMorts:\nAFK:\nHors ligne:\nPr\195\170ts:";
+SMARTDEBUFF_INFO               = "Joueurs:\nPV %:\nMana %:\nMorts:\nAFK:\nHors ligne";
 
 --Tooltips added by Semi#1287
 SMARTDEBUFF_TT_OPTIONS          = "|cff20d2ff- Bouton O -|r\nClic gauche : Ouvrir les options\nClic droit : Modifier les raccourcis";

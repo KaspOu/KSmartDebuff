@@ -83,6 +83,12 @@ SMARTDEBUFF_OFT_FONTSIZE       = "Размер шрифта";
 SMARTDEBUFF_OFT_WIDTH          = "Ширина";
 SMARTDEBUFF_OFT_HEIGHT         = "Высота";
 SMARTDEBUFF_OFT_BARHEIGHT      = "Высота полосы";
+SMARTDEBUFF_OFT_COLOR_LEFT     = "Дебафф\nЛевый"
+SMARTDEBUFF_OFT_COLOR_RIGHT    = "Дебафф\nПравый"
+SMARTDEBUFF_OFT_COLOR_MIDDLE   = "Дебафф\nСредний"
+SMARTDEBUFF_OFT_COLOR_NOTREM   = "Неснимаемый\nДебафф"
+SMARTDEBUFF_OFT_COLOR_UNIT     = "Кнопка\nЮнита"
+SMARTDEBUFF_OFT_COLOR_BACKDROP = "Фон\nНажмите меня"
 SMARTDEBUFF_OFT_OPACITYNORMAL  = "Прозрачность в радиусе";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Прозрачность вне радиуса";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Прозрачность дебаффов";
@@ -182,6 +188,9 @@ SMARTDEBUFF_TT_DROPABBLE       = "Клик мыши:\n Левый для пер�
 SMARTDEBUFF_TT_DROPREPLACE     = "Клик мыши:\n Левый для замены\n Правый для отпускания";
 SMARTDEBUFF_TT_DROPEXCHANGE    = "Клик мыши:\n Левый для обмена\n Правый для отпускания";
 SMARTDEBUFF_TT_CANTDROP        = "Клик мыши:\n Правый для отпускания";
+
+SMARTDEBUFF_INFO_READY         = "Игроки:\nЗдоровье %:\nМана %:\nМертвые:\nАФК:\nОффлайн:\nГотовы:";
+SMARTDEBUFF_INFO               = "Игроки:\nЗдоровье %:\nМана %:\nМертвые:\nАФК:\nОффлайн";
 
 --Tooltips added by Semi#1287
 SMARTDEBUFF_TT_OPTIONS          = "|cff20d2ff- Кнопка O -|r\nЛевый клик: Открыть настройки\nПравый клик: Изменить горячие клавиши";
