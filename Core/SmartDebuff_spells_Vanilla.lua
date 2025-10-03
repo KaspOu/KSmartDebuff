@@ -118,6 +118,7 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
   },
   ["WARLOCK"]  = {
     { Spell_ID = 20707,  Button = "R", Types = {SMARTDEBUFF_UTIL} }, -- Soulstone (1+)
+    { Spell_ID = 5697,  Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Unending Breath (1+)
     -- 19476 - NPC Dispel Magic
   },
   ["WARRIOR"]  = {

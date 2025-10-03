@@ -99,6 +99,7 @@ ns.UnitBuff = UnitBuff or function(unitToken, index, filter)
 end
 
 ns.IsSpellInSpellBook = C_SpellBook.IsSpellInSpellBook or function (spellID, spellBank)
+  -- legit, can't coexist with C_SpellBook.IsSpellInSpellBook
   return IsSpellKnownOrOverridesKnown(spellID, spellBank == ns.Enum_SpellBookSpellBank_Pet and true or nil)
 end
 ns.IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook or ns.IsSpellInSpellBook

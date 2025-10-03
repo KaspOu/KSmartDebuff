@@ -18,10 +18,10 @@ SMARTDEBUFF_HEAL    = "Sanar";
 --@end-do-not-package@
 
 -- Creatures
-SMARTDEBUFF_HUMANOID  = "Humanoide";
-SMARTDEBUFF_DEMON     = "Demonio";
-SMARTDEBUFF_BEAST     = "Bestia";
-SMARTDEBUFF_ELEMENTAL = "Elemental";
+SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
+SMARTDEBUFF_DEMON     = PET_TYPE_DEMON;
+SMARTDEBUFF_BEAST     = BATTLE_PET_NAME_8;
+SMARTDEBUFF_ELEMENTAL = BATTLE_PET_NAME_7;
 SMARTDEBUFF_IMP       = "Diablillo";
 SMARTDEBUFF_FELHUNTER = "Man\195\161fago";
 SMARTDEBUFF_DOOMGUARD = "Guardia apocal\195\173ptico";
@@ -33,18 +33,21 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Opciones";
 
-SMARTDEBUFF_KEYS = {["L"]  = "Left",
-                    ["R"]  = "Right",
-                    ["M"]  = "Middle",
-                    ["SL"] = "Shift left",
-                    ["SR"] = "Shift right",
-                    ["SM"] = "Shift middle",
-                    ["AL"] = "Alt left",
-                    ["AR"] = "Alt right",
-                    ["AM"] = "Alt middle",
-                    ["CL"] = "Ctrl left",
-                    ["CR"] = "Ctrl right",
-                    ["CM"] = "Ctrl middle"
+SMARTDEBUFF_KEY_L = "I";
+SMARTDEBUFF_KEY_R = "D";
+SMARTDEBUFF_KEY_M = "M";
+SMARTDEBUFF_KEYS = {["L"]  = "Izquierda (I)",
+                    ["R"]  = "Derecha (D)",
+                    ["M"]  = "Medio (M)",
+                    ["SL"] = "Shift izquierda",
+                    ["SR"] = "Shift derecha",
+                    ["SM"] = "Shift medio",
+                    ["AL"] = "Alt izquierda",
+                    ["AR"] = "Alt derecha",
+                    ["AM"] = "Alt medio",
+                    ["CL"] = "Ctrl izquierda",
+                    ["CR"] = "Ctrl derecha",
+                    ["CM"] = "Ctrl medio"
                     };
 
 
@@ -53,9 +56,9 @@ SMARTDEBUFF_MSG_LOADED         = "cargado";
 SMARTDEBUFF_MSG_SDB            = "Marco de opciones de SmartDebuff";
 
 -- Frame text
-SMARTDEBUFF_FT_MODES           = "Keys/Modes";
-SMARTDEBUFF_FT_MODENORMAL      = "Norm";
-SMARTDEBUFF_FT_MODETARGET      = "Trgt";
+SMARTDEBUFF_FT_MODES           = "Teclas/Modos";
+SMARTDEBUFF_FT_MODENORMAL      = "Normal";
+SMARTDEBUFF_FT_MODETARGET      = "Objet";
 
 
 -- Options frame text
@@ -63,8 +66,8 @@ SMARTDEBUFF_OFT                = "Mostrar/ocultar Marco de opciones de SmartDebu
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotas de cazador";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotas de brujo";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotas de Caballero de la Muerte";
-SMARTDEBUFF_OFT_HP             = "HP"; -- NOT TRANSLATED
-SMARTDEBUFF_OFT_MANA           = "Mana"; -- NOT TRANSLATED
+SMARTDEBUFF_OFT_HP             = "Vida";
+SMARTDEBUFF_OFT_MANA           = "Maná";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Invertir";
 SMARTDEBUFF_OFT_CLASSVIEW      = "Ver clases";
@@ -81,9 +84,9 @@ SMARTDEBUFF_OFT_VERTICAL       = "Orden vertical";
 SMARTDEBUFF_OFT_VERTICALUP     = "Vertical arriba";
 SMARTDEBUFF_OFT_HEADERROW      = "Encabezado de fila, con botones";
 SMARTDEBUFF_OFT_BACKDROP       = "Mostrar fondo";
-SMARTDEBUFF_OFT_SHOWGRADIENT   = "Gradient"; -- NOT TRANSLATED
+SMARTDEBUFF_OFT_SHOWGRADIENT   = "Gradiente";
 SMARTDEBUFF_OFT_INFOFRAME      = "Mostrar marco de sumario";
-SMARTDEBUFF_OFT_AUTOHIDE       = "Auto hide"; -- NOT TRANSLATED
+SMARTDEBUFF_OFT_AUTOHIDE       = "Auto ocultar";
 SMARTDEBUFF_OFT_COLUMNS        = "Columnas";
 SMARTDEBUFF_OFT_INTERVAL       = "Intervalo";
 SMARTDEBUFF_OFT_FONTSIZE       = "Tama\195\177o de fuente";
@@ -93,12 +96,12 @@ SMARTDEBUFF_OFT_BARHEIGHT      = "Barra alto";
 SMARTDEBUFF_OFT_OPACITYNORMAL  = "Opacidad en rango";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Opacidad fuera de rango";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacidad al quitar debuff";
-SMARTDEBUFF_OFT_NOTREMOVABLE   = "Debuff Guard"; -- NOT TRANSLATED
+SMARTDEBUFF_OFT_NOTREMOVABLE   = "Protección de Debuffs";
 SMARTDEBUFF_OFT_VEHICLE        = "Veh\195\173culo";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Banda signo";
 
-SMARTDEBUFF_AOFT_SORTBYCLASS   = "Sort by class order";
-SMARTDEBUFF_NRDT_TITLE         = "Unremovable Debuffs";
+SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordenar por orden de clase";
+SMARTDEBUFF_NRDT_TITLE         = "Debuffs irremovibles";
 SMARTDEBUFF_S_TITLE            = "Debuff alarma tono";
 
 

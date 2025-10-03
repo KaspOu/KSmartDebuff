@@ -3047,7 +3047,7 @@
         </Scripts>
       </Button>
 
-      <Button name="$parent_btnGlobalSave" inherits="UIPanelButtonTemplate" text="Save">
+      <Button name="$parent_btnGlobalSave" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GLOBALSAVE">
         <Size>
           <AbsDimension x="68" y="20" />
         </Size>
@@ -3062,7 +3062,6 @@
           <OnLoad>
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_GLOBALSAVE);
           </OnLoad>
           <OnClick>
             SMARTDEBUFF_GlobalSave();
@@ -3076,7 +3075,7 @@
         </Scripts>
       </Button>
 
-      <Button name="$parent_btnGlobalLoad" inherits="UIPanelButtonTemplate" text="Load">
+      <Button name="$parent_btnGlobalLoad" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GLOBALLOAD">
         <Size>
           <AbsDimension x="68" y="20" />
         </Size>
@@ -3091,7 +3090,6 @@
           <OnLoad>
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_GLOBALLOAD);
           </OnLoad>
           <OnClick>
             SMARTDEBUFF_GlobalLoad();
@@ -3197,7 +3195,7 @@
         </Scripts>
       </ScrollFrame>
 
-      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="Reset">
+      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20" />
         </Size>
@@ -3335,7 +3333,7 @@
         </Scripts>
       </ScrollFrame>
 
-      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="Reset">
+      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20" />
         </Size>
@@ -3477,7 +3475,7 @@
         </Scripts>
       </ScrollFrame>
 
-      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="Reset">
+      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20" />
         </Size>
@@ -3612,7 +3610,7 @@
         </Scripts>
       </ScrollFrame>
 
-      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="Reset">
+      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20" />
         </Size>
@@ -3687,7 +3685,7 @@
 
 
     <Frames>
-      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="Reset">
+      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20" />
         </Size>
@@ -4220,7 +4218,7 @@
         </Scripts>
       </Button>
 
-      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="Reset">
+      <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20" />
         </Size>
