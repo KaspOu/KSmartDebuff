@@ -2,15 +2,18 @@
 -- English localization (Default)
 -------------------------------------------------------------------------------
 
+SMARTDEBUFF_FONT = "Fonts\\FRIZQT___CYR.TTF"
+
 SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
+
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhats new:|r
 
-- Sort by Role
-- Sort by Class fixed
+- Sort by Role / Class
 
-- Translations
-- Warlock: Unending Breath
+- Translations completed / added (all languages)
+
+- Korean / Chinese fonts (SmartDebuff frame)
 ]];
 
 --@do-not-package@
@@ -103,6 +106,12 @@ SMARTDEBUFF_OFT_FONTSIZE       = "Font size";
 SMARTDEBUFF_OFT_WIDTH          = "Width";
 SMARTDEBUFF_OFT_HEIGHT         = "Height";
 SMARTDEBUFF_OFT_BARHEIGHT      = "Bar height";
+SMARTDEBUFF_OFT_COLOR_LEFT     = "Debuff\nLeft"
+SMARTDEBUFF_OFT_COLOR_RIGHT    = "Debuff\nRight"
+SMARTDEBUFF_OFT_COLOR_MIDDLE   = "Debuff\nMiddle"
+SMARTDEBUFF_OFT_COLOR_NOTREM   = "Not\nRemovable\nDebuff"
+SMARTDEBUFF_OFT_COLOR_UNIT     = "Unit\nButton"
+SMARTDEBUFF_OFT_COLOR_BACKDROP = "Backdrop\nClick me"
 SMARTDEBUFF_OFT_OPACITYNORMAL  = "Opacity in range";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Opacity out of range";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacity debuff";
@@ -135,7 +144,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff Alert Sound";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- S button -|r\nLeft click: Show by class, role or group\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R\nRight click: Background";
+SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- S button -|r\nLeft click: Show by class, role or group\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R/M\nRight click: Background";
 SMARTDEBUFF_TT_TARGETMODE      = "In normal mode |cff20d2ffLeft click|r dispels unit\n \nIn Target mode |cff20d2ffLeft click|r selects the unit,\nuse |cff20d2ffAlt-Left/Right click|r to dispel,\nand |cff20d2ffRight click|r casts the fastest heal spell.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Displays critical debuffs\nwhich are not removable.";
 SMARTDEBUFF_TT_HP              = "Displays actual health\npoints of the unit.";
@@ -203,6 +212,10 @@ SMARTDEBUFF_TT_DROPABBLE       = "Mouse click:\n Left to drop\n Right to release
 SMARTDEBUFF_TT_DROPREPLACE     = "Mouse click:\n Left to replace\n Right to release";
 SMARTDEBUFF_TT_DROPEXCHANGE    = "Mouse click:\n Left to exchange\n Right to release";
 SMARTDEBUFF_TT_CANTDROP        = "Mouse click:\n Right to release";
+
+SMARTDEBUFF_INFO_READY         = "Players:\nHP %:\nMana %:\nDead:\nAFK:\nOffline:\nReady:";
+SMARTDEBUFF_INFO               = "Players:\nHP %:\nMana %:\nDead:\nAFK:\nOffline";
+
 
 --Tooltips added by Semi#1287
 SMARTDEBUFF_TT_OPTIONS		   		= "|cff20d2ff- O button -|r\nLeft click: Open options\nRight Click: Edit mouse shortcuts";

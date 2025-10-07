@@ -4,24 +4,13 @@
 
 if (GetLocale() ~= "deDE") then return end
 
-
---@do-not-package@
--- Debuff types, in english in game!
---[[
-SMARTDEBUFF_DISEASE = "Krankheit";
-SMARTDEBUFF_MAGIC   = "Magie";
-SMARTDEBUFF_POISON  = "Gift";
-SMARTDEBUFF_CURSE   = "Fluch";
-SMARTDEBUFF_CHARMED = "Verf\195\188hrung";
-]]--
---@end-do-not-package@
-
+SMARTDEBUFF_UPGRADED = "SmartDebuff aktualisiert: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
-SMARTDEBUFF_HUMANOID  = "Humanoid";
-SMARTDEBUFF_DEMON     = "D\195\164mon";
-SMARTDEBUFF_BEAST     = "Wildtier";
-SMARTDEBUFF_ELEMENTAL = "Elementar";
+SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
+SMARTDEBUFF_DEMON     = PET_TYPE_DEMON;
+SMARTDEBUFF_BEAST     = BATTLE_PET_NAME_8;
+SMARTDEBUFF_ELEMENTAL = BATTLE_PET_NAME_7;
 SMARTDEBUFF_IMP       = "Wichtel";
 SMARTDEBUFF_FELHUNTER = "Teufelsj\195\164ger";
 SMARTDEBUFF_DOOMGUARD = "Verdammniswache";
@@ -33,6 +22,9 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Optionen";
 
+SMARTDEBUFF_KEY_L = "L";
+SMARTDEBUFF_KEY_R = "R";
+SMARTDEBUFF_KEY_M = "M";
 SMARTDEBUFF_KEYS = {["L"]  = "Links",
                     ["R"]  = "Rechts",
                     ["M"]  = "Mitte",
@@ -90,14 +82,25 @@ SMARTDEBUFF_OFT_FONTSIZE       = "Schriftgr\195\182sse";
 SMARTDEBUFF_OFT_WIDTH          = "Breite";
 SMARTDEBUFF_OFT_HEIGHT         = "H\195\182he";
 SMARTDEBUFF_OFT_BARHEIGHT      = "Balkenh\195\182he";
+SMARTDEBUFF_OFT_COLOR_LEFT     = "Debuff\nLinks"
+SMARTDEBUFF_OFT_COLOR_RIGHT    = "Debuff\nRechts"
+SMARTDEBUFF_OFT_COLOR_MIDDLE   = "Debuff\nMitte"
+SMARTDEBUFF_OFT_COLOR_NOTREM   = "Nicht\nEntfernbarer\nDebuff"
+SMARTDEBUFF_OFT_COLOR_UNIT     = "Einheiten\nKnopf"
+SMARTDEBUFF_OFT_COLOR_BACKDROP = "Hintergrund\nKlick mich"
 SMARTDEBUFF_OFT_OPACITYNORMAL  = "In Reichweite";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Ausser Reichweite";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Debuff";
 SMARTDEBUFF_OFT_NOTREMOVABLE   = "Debuff W\195\164chter";
 SMARTDEBUFF_OFT_VEHICLE        = "Fahrzeuge";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Raidsymbole";
+SMARTDEBUFF_OFT_SHOWROLEICON   = "Rollensymbole (Tank/Heiler)"; -- ChatGPT
+SMARTDEBUFF_OFT_SHOWROLEDPSICON = "Rollensymbole (DPS)"; -- ChatGPT
 SMARTDEBUFF_OFT_SHOWSPELLICON  = "Cast Symbol";
 SMARTDEBUFF_OFT_INFOROW        = "Info-Zeile";
+SMARTDEBUFF_OFT_GLOBALSAVE     = "Speichern"; -- ChatGPT
+SMARTDEBUFF_OFT_GLOBALLOAD     = "Laden"; -- ChatGPT
+SMARTDEBUFF_OFT_RESET          = "Reset"; -- ChatGPT
 SMARTDEBUFF_OFT_ROLE           = "Rolle";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Anker Setup";
 SMARTDEBUFF_OFT_ICONSIZE       = "Symbolgr\195\182sse";
@@ -107,8 +110,8 @@ SMARTDEBUFF_OFT_SPACEY         = "Abstand Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Test Modus";
 SMARTDEBUFF_OFT_STOPCAST       = "Stoppe Zauber";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignoriere Debuffs";
+SMARTDEBUFF_OFT_CHATNOTIF      = "Chat-Benachrichtigungen"; -- ChatGPT
 SMARTDEBUFF_OFT_RESET_KEYS     = "Die SmartDebuff Zauber-Bindings zur\195\188cksetzen?\nDies ist nur n\195\182tig falls du das Gef\195\188hl hast,\ndass nicht alle Debuffs korrekt angezeigt werden.";
-
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Klassenanordnung";
 SMARTDEBUFF_NRDT_TITLE         = "Unentfernbare Debuffs";
 SMARTDEBUFF_SG_TITLE           = "Zauber-W\195\164chter";
@@ -116,7 +119,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff Warnton";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-Links ziehen: Fenster verschieben\n|cff20d2ff- S Knopf -|r\nLinks Klick: Ordne nach Klassen\nShift-Links Klick: Klassen-Farben\nAlt-Links Klick: Zeige L/R\nRechts Klick: Hintergrund";
+SMARTDEBUFF_TT                 = "Shift-Links ziehen: Fenster verschieben\n|cff20d2ff- S Knopf -|r\nLinks Klick: Ordne nach Klassen\nShift-Links Klick: Klassen-Farben\nAlt-Links Klick: Zeige L/R/M\nRechts Klick: Hintergrund";
 SMARTDEBUFF_TT_TARGETMODE      = "Im Ziel-Modus w\195\164hlt |cff20d2fflinks klick|r die Einheit aus\nund |cff20d2ffrechts klick|r zaubert den schnellsten Heilspruch.\n|cff20d2ffAlt-Links/Rechts klick|r wird zum Debuffen benutzt.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Zeigt kritische Debuffs an,\nauch wenn sie nicht entfernt\nwerden k\195\182nnen.";
 SMARTDEBUFF_TT_HP              = "Zeigt die aktuellen Lebenspunkte\nder Einheit an.";
@@ -141,12 +144,17 @@ SMARTDEBUFF_TT_INFOFRAME       = "Blendet das Status-Fenster ein,\nnur in der Gr
 SMARTDEBUFF_TT_AUTOHIDE        = "Verbirgt die Kn\195\182pfe automatisch,\nwenn man nicht mehr im Kampf\nist und niemand einen Debuff hat.";
 SMARTDEBUFF_TT_VEHICLE         = "Stellt zus\195\164tzlich das Fahrzeug der\nEinheit als eigener Knopf dar.";
 SMARTDEBUFF_TT_SHOWRAIDICON    = "Stellt das Raidsymbol\nder Einheit dar.";
+SMARTDEBUFF_TT_SHOWROLEICON    = "Zeigt das Rollensymbol f\195\188r Tanks / Heiler an.\n(falls kein Raidsymbol vorhanden)"; -- ChatGPT
+SMARTDEBUFF_TT_SHOWROLEDPSICON    = "Zeigt das Rollensymbol f\195\188r DPS an.\n(falls kein Raidsymbol vorhanden)"; -- ChatGPT
 SMARTDEBUFF_TT_SHOWSPELLICON   = "Stellt das Cast-Symbol\nauf der Einheit dar.";
 SMARTDEBUFF_TT_INFOROW         = "Zeigt in kurzform eine Infozeile #\nSpieler/Tot/AFK/Offline\nHP/Mana\nReady check Status\n(Nur im Raid)";
+SMARTDEBUFF_TT_GLOBALSAVE      = "Einstellungen wurden global gespeichert."; -- ChatGPT
+SMARTDEBUFF_TT_GLOBALLOAD      = "Einstellungen wurden global geladen."; -- ChatGPT
 SMARTDEBUFF_TT_ROLE            = "Stellt die Kn\195\182pfe nach\nRolle sortiert dar.";
 SMARTDEBUFF_TT_ADVANCHORS      = "Stellt dar und benutzt das\nerweiterte Anker-Setup\nf\195\188r das Debuff-Fenster.";
 SMARTDEBUFF_TT_STOPCAST        = "Stoppt sofort den aktuellen\nZauber, um den definierten\nZauber benutzen zu k\195\182nnen.\n(Nur Debuff-Zauber)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignoriert den Debuff auf der Einheit\nwenn der Debuff-Zauber noch Cooldown hat.";
+SMARTDEBUFF_TT_CHATNOTIF       = "Zeigt Chat-Benachrichtigungen beim Laden an."; -- ChatGPT
 
 --SMARTDEBUFF_TT_COLUMNS         = "Columns";
 --SMARTDEBUFF_TT_INTERVAL        = "Interval";
@@ -165,11 +173,11 @@ SMARTDEBUFF_TT_SPELLACTIONS    = "Zauber klick:\nLinks Aufnehmen\nShift-Links Ko
 SMARTDEBUFF_TT_ITEMACTIONS     = "Item klick\nLinks: Aufnehmen\nShift-Links: Kopieren\nRechts: Entfernen";
 SMARTDEBUFF_TT_MACROACTIONS    = "Makro klick\nLinks: Aufnehmen\nShift-Links: Kopieren\nRechts: Entfernen";
 SMARTDEBUFF_TT_TARGET          = "Ziel";
+SMARTDEBUFF_TT_TARGETINFO      = "Selektiert die gew\195\164hlte Einheit\nund nimmt diese ins Ziel."; -- ChatGPT
 SMARTDEBUFF_TT_PETACTION       = "Begleiter Zauber";
 SMARTDEBUFF_TT_NOTFOUND        = "Fehler: Zauber nicht gefunden";
 SMARTDEBUFF_TT_MISSINGINFO     = "\195\156berpr\195\188fen Sie Ihre Spezialisierung / Talent / Begleiter.";
 SMARTDEBUFF_TT_NOTMOVABLE      = "Mit Ihrer Spezialisierung nicht bewegbar";
-SMARTDEBUFF_TT_TARGETINFO      = "Selektiert die gew\195\164hlte Einheit\nund nimmt diese ins Ziel.";
 SMARTDEBUFF_TT_TARGETACTIONS   = "Mausklick\nRechts: Entfernen";
 SMARTDEBUFF_TT_PETACTIONS      = "Pet-Aktion:\nEntfernen nicht m\195\182glich!";
 SMARTDEBUFF_TT_MENU            = "Menu";
@@ -181,16 +189,24 @@ SMARTDEBUFF_TT_DROPREPLACE     = "Mausklick:\nLinks zum Ersetzen\nRechts zum Fre
 SMARTDEBUFF_TT_DROPEXCHANGE    = "Mausklick:\nLinks zum Austauschen\nRechts zum Freigeben";
 SMARTDEBUFF_TT_CANTDROP        = "Mausklick:\nRechts zum Freigeben";
 
+SMARTDEBUFF_INFO_READY         = "Spieler:\nHP %:\nMana %:\nTote:\nAFK:\nOffline:\nBereit:"; -- ChatGPT
+SMARTDEBUFF_INFO               = "Spieler:\nHP %:\nMana %:\nTote:\nAFK:\nOffline"; -- ChatGPT
+
 --Tooltips added by Semi#1287
-SMARTDEBUFF_TT_OPTIONS		   		= "Left click: Open options\n|cff20d2ff- O button -|r";
-SMARTDEBUFF_OFT_NOTREMOVABLE_LIST 	= "Debuff Guard List";
-SMARTDEBUFF_TT_NOTREMOVABLE_LIST 	= "Click to Edit List";
-SMARTDEBUFF_OFT_SKILLS 				= "Skill Menu";
-SMARTDEBUFF_TT_SKILLS				= "Click to Edit Skill Quick Slots";
-SMARTDEBUFF_OFT_SHOWDEBUFFGUARD 	= "Spell Guard List";
-SMARTDEBUFF_TT_SHOWDEBUFFGUARD 		= "Click to Edit\nList of Spells to Track";
-SMARTDEBUFF_TT_SOUNDLIST 			= "Click to Select Sound";
+SMARTDEBUFF_TT_OPTIONS		   		= "|cff20d2ff- O Knopf -|r\nLinks Klick: Optionen \195\182ffnen\nRechts Klick: Tastenk\195\188rzel bearbeiten"; -- ChatGPT
+SMARTDEBUFF_OFT_CLASSSORT       = "Klassen-Sortierliste"; -- ChatGPT
+SMARTDEBUFF_TT_CLASSSORT 	      = "Klicken, um die Klassenreihenfolge zu \195\164ndern"; -- ChatGPT
+SMARTDEBUFF_OFT_NOTREMOVABLE_LIST = "Liste der gesch\195\188tzten Debuffs"; -- ChatGPT
+SMARTDEBUFF_TT_NOTREMOVABLE_LIST 	= "Klicken, um die Liste zu bearbeiten"; -- ChatGPT
+SMARTDEBUFF_OFT_SKILLS          = "Maus-Verkn\195\188pfungen"; -- ChatGPT
+SMARTDEBUFF_TT_SKILLS           = "Klicken, um die Tastenk\195\188rzel zu bearbeiten\n(Klick L/R/M, mit Alt/Shift/Strg)"; -- ChatGPT
+SMARTDEBUFF_TT_RESET_SKILLS     = "Setzt die Tastenk\195\188rzel f\195\188r Ihre Klasse zur\195\188ck"; -- ChatGPT
+SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Zauber-Verfolgungsliste"; -- ChatGPT
+SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Klicken, um die Liste der zu verfolgenden Zauber zu bearbeiten"; -- ChatGPT
+SMARTDEBUFF_TT_SOUNDLIST        = "Klicken, um den Sound auszuw\195\164hlen.\n(Rechtsklick nur zum Anh\195\182ren)"; -- ChatGPT
 
 -- Tooltip support
 SMARTDEBUFF_FUBAR_TT           = "\nLinks Klick: Optionen Men\195\188\nShift-Links Klick: An/Aus";
 SMARTDEBUFF_BROKER_TT          = "\nLinks Klick: Optionen Men\195\188\nRechts Klick: An/Aus";
+
+SMARTDEBUFF_ERR_RELOADREQUIRED  = [[Ein Neuladen ( /reload ) k\195\182nnte erforderlich sein, damit die Klicks funktionieren]]; -- ChatGPT

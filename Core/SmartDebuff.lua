@@ -2995,7 +2995,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   end
 
-  sbs_btn.text:SetFont("Fonts\\FRIZQT___CYR.TTF", sbs_fontH, "");
+  sbs_btn.text:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
   -- sbs_btn.text:SetFontObject("GameFontWhiteSmall");
   sbs_btn.text:SetText(sbs_st);
   sbs_btn.texture:SetAllPoints(sbs_btn);
@@ -3803,7 +3803,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
       end
       if (O.ShowIF) then
         SmartDebuffIF:SetHeight(80);
-        SmartDebuffIF_lblInfo:SetText("Players:\nHP %:\nMana %:\nDead:\nAFK:\nOffline:\nReady:");
+        SmartDebuffIF_lblInfo:SetText(SMARTDEBUFF_INFO_READY);
         SmartDebuffIF_lblOut:SetText(string.format("%d\n%.1f\n%.1f\n%d\n%d\n%d\n%s%d|r/%s%d|r/%s%d|r", iTotPlayers, iTotHP/iTmp, iTotMana/iTotManaUser, iTotDead, iTotAFK, iTotOFF, GR, iTotRcRdy, RD, iTotRcNRdy, YL, iTotRcWait));
       end
     else
@@ -3812,7 +3812,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
       end
       if (O.ShowIF) then
         SmartDebuffIF:SetHeight(70);
-        SmartDebuffIF_lblInfo:SetText("Players:\nHP %:\nMana %:\nDead:\nAFK:\nOffline");
+        SmartDebuffIF_lblInfo:SetText(SMARTDEBUFF_INFO);
         SmartDebuffIF_lblOut:SetText(string.format("%d\n%.1f\n%.1f\n%d\n%d\n%d", iTotPlayers, iTotHP/iTmp, iTotMana/iTotManaUser, iTotDead, iTotAFK, iTotOFF));
       end
     end
