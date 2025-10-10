@@ -17,6 +17,7 @@
 ## Notes-itIT: Mostra i pulsanti per tracciare i debuff con azioni di rimozione. Scrivi << |cff00ff00/sdb|r >> per avere la finestra dei debuff.
 ## Notes-koKR: 디버프를 추적하고 해제하는 버튼을 표시합니다. 디버프 창을 열려면 << |cff00ff00/sdb|r >>를 입력하세요.
 ## Notes-ruRU: Показывает кнопки группы для легкого отслеживания негативных эффектов и действий по их рассеиванию. Используйте << |cff00ff00/sdb|r >> для окна негативных эффектов.
+## Notes-ptBR: Mostra os botões do grupo para fácil rastreamento de debuffs e ações de dissipar. Use << |cff00ff00/sdb|r >> para o quadro de debuffs.
 ## Notes-zhCN: 显示队伍按钮，方便追踪和驱散减益效果。使用 << |cff00ff00/sdb|r >> 打开减益框体。
 ## Notes-zhTW: 顯示隊伍按鈕，方便追蹤和驅散減益效果。使用 << |cff00ff00/sdb|r >> 開啟減益框體。
 ## DefaultState: Enabled
@@ -28,7 +29,7 @@
 
 ## X-Credits: Aeldra (original version), Semi#1287
 ## X-Category: Buffs & Debuffs
-## X-Localizations: enUS, frFR, ruRU, deDE, esES, esMX, itIT, koKR, zhCN, zhTW
+## X-Localizations: enUS, frFR, ruRU, deDE, esES, esMX, itIT, koKR, ptBR, zhCN, zhTW
 ## X-License: All Rights Reserved: You are free to fork and modify on Github, please ask about anything else.
 ## X-Website: https://github.com/KaspOu/KSmartDebuff/
 ## X-Curse-Project-ID: 699994
@@ -50,6 +51,7 @@ Core\Localization.de.lua [AllowLoadTextLocale deDE]
 Core\Localization.es.lua [AllowLoadTextLocale esES, esMX]
 Core\Localization.it.lua [AllowLoadTextLocale itIT]
 Core\Localization.ko.lua [AllowLoadTextLocale koKR]
+Core\Localization.pt.lua [AllowLoadTextLocale ptBR]
 Core\Localization.ru.lua [AllowLoadTextLocale ruRU]
 Core\Localization.tw.lua [AllowLoadTextLocale zhCN, zhTW]
 Core\SmartDebuff.polyfill.lua
