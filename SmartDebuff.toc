@@ -8,7 +8,7 @@
 ## Title-ruRU: Smart|cffffffffDebuff|r Reloaded, от |cff00ff00Kallye|r
 ## Title-zhCN: Smart|cffffffffDebuff|r Reloaded, 作者 |cff00ff00Kallye|r
 ## Title-zhTW: Smart|cffffffffDebuff|r Reloaded, 作者 |cff00ff00Kallye|r
-## Version: 11.2.005
+## Version: 11.2.501
 ## Author: |cff00ff00Kallye|r (EU-Elune)
 ## Notes: Show party buttons with debuffs easy tracking and dispel actions. Use << |cff00ff00/sdb|r >> for debuff frame.
 ## Notes-frFR: Affiche des boutons pour tracker les debuffs avec des actions de dispel. Écrivez << |cff00ff00/sdb|r >> pour avoir la fenêtre de débuff.
@@ -44,7 +44,14 @@ Core\SmartDebuff_spells_Wrath.lua [AllowLoadGameType wrath]
 Core\SmartDebuff_spells_Cata.lua [AllowLoadGameType cata]
 Core\SmartDebuff_spells_Mists.lua [AllowLoadGameType mists]
 Core\SmartDebuff_spells.lua [AllowLoadGameType mainline]
-Core\locales.xml
+Core\Localization.en.lua
+Core\Localization.fr.lua [AllowLoadTextLocale frFR]
+Core\Localization.de.lua [AllowLoadTextLocale deDE]
+Core\Localization.es.lua [AllowLoadTextLocale esES, esMX]
+Core\Localization.it.lua [AllowLoadTextLocale itIT]
+Core\Localization.ko.lua [AllowLoadTextLocale koKR]
+Core\Localization.ru.lua [AllowLoadTextLocale ruRU]
+Core\Localization.tw.lua [AllowLoadTextLocale zhCN, zhTW]
 Core\SmartDebuff.polyfill.lua
 Core\SmartDebuff.lua
 Core\SmartDebuff.xml
