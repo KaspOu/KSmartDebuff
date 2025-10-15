@@ -2896,7 +2896,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 1) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("L Dispel detected "..ir)
+      SMARTDEBUFF_AddMsgD("L Dispel detected "..isInRange)
     end
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
@@ -2919,7 +2919,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 2) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("R Dispel detected "..ir)
+      SMARTDEBUFF_AddMsgD("R Dispel detected "..isInRange)
     end
     sbs_col.r = O.ColDebuffR.r;
     sbs_col.g = O.ColDebuffR.g;
@@ -2942,7 +2942,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 3) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("M Dispel detected "..ir)
+      SMARTDEBUFF_AddMsgD("M Dispel detected "..isInRange)
     end
     sbs_col.r = O.ColDebuffM.r;
     sbs_col.g = O.ColDebuffM.g;
