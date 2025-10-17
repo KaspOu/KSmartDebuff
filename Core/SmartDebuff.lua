@@ -391,6 +391,13 @@ local function LUnitExists(unit)
   end
   return false;
 end
+local function LUnitIndex(unit)
+  local index_str = string.match(unit, "%d+$");
+  if index_str then
+    return tonumber(index_str);
+  end
+  return 0;
+end
 
 local function HideF(f)
   if (f == nil) then return; end
@@ -3009,7 +3016,19 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     elseif (sbs_iv) then
       -- unit is in a vehicle
       sbs_btn:SetAlpha(O.ANormalOOR / 2);
-    elseif (isInRange == 1 or UnitInRange(unit)) then
+      -- CompactPartyFrameMember
+    elseif (isInRange == 1
+        or (_G["CompactRaidFrame"..LUnitIndex(unit)] and _G["CompactRaidFrame"..LUnitIndex(unit)].inDistance)
+        or (_G["CompactPartyFrameMember"..LUnitIndex(unit)] and _G["CompactPartyFrameMember"..LUnitIndex(unit)].inDistance)
+      ) then -- UnitInRange(unit)) then
+      -- FIXME:12.0 UnitInRange by checking RaidNameplate
+      -- >> Garder un cache des unités lors de la boucle, si pas possible:
+      -- /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
+      -- /dump CompactPartyFrameMember1:GetAlpha()
+      -- /dump CompactPartyFrameMember1.inDistance
+      -- /dump CompactPartyFrameMember1.healPredictionDirty
+      -- /dump CompactPartyFrameMember1Debuff1:IsShown()
+      -- CompactRaidFrame1Debuff1
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
       -- FIXME:
@@ -3053,8 +3072,8 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     --sbb_h = btn:GetHeight() / 4 - 1;
     sbb_w = btn:GetWidth();
     sbb_upt = UnitPowerType(unit);
-    sbb_cur = UnitHealth(unit);
-    sbb_nmax = UnitHealthMax(unit);
+    sbb_cur = 100 -- UnitHealth(unit);
+    sbb_nmax = 100 -- UnitHealthMax(unit);
     if (iTest > 0) then
       sbb_cur = tonumber(string.match(unit, "%d+"))
       sbb_nmax = iTest
@@ -3104,8 +3123,8 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
 
     -- sbb_cur = UnitMana(unit);
     -- sbb_nmax = UnitManaMax(unit);
-    sbb_cur = UnitPower(unit,0);
-    sbb_nmax = UnitPowerMax(unit,0);
+    sbb_cur = 100 -- UnitPower(unit,0);
+    sbb_nmax = 100 -- UnitPowerMax(unit,0);
     if (iTest > 0) then
       sbb_cur = tonumber(string.match(unit, "%d+"))
       sbb_nmax = iTest
