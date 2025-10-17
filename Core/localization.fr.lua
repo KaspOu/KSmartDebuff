@@ -6,11 +6,11 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
+- Midnight: Affichage corrigé
+
 - Tri par Rôle / Classe
 
 - Traductions ajoutées / complètes (toutes les langues)
-
-- Support des polices Corréenne et Chinoise (frame SmartDebuff)
 ]]
 
 --@do-not-package@
