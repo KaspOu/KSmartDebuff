@@ -344,7 +344,7 @@
         end
       </OnDragStart>
       <OnDragStop>
-        if (not InCombatLockdown() and self.IsMoving) then
+        if (not InCombatLockdown()) then
           self:StopMovingOrSizing();
         end
       </OnDragStop>
