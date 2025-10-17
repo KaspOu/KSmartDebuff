@@ -1,4 +1,6 @@
 local _, ns = ...
+-- Since Midnight (12)
+ns.IsSecretValue = issecretvalue or function() return false end
 
 -- Since The War Within (11)
 ns.PickupSpell = C_Spell.PickupSpell or PickupSpell;
@@ -84,7 +86,7 @@ end
 
 ns.UnitAura = UnitAura or function(unitToken, index, filter)
   local auraData = C_UnitAuras.GetAuraDataByIndex(unitToken, index, filter);
-  if not auraData then
+  if ns.IsSecretValue(auraData) or not auraData then
     return nil;
   end
   return AuraUtil.UnpackAuraData(auraData);
@@ -92,7 +94,7 @@ end
 
 ns.UnitBuff = UnitBuff or function(unitToken, index, filter)
   local auraData = C_UnitAuras.GetBuffDataByIndex(unitToken, index, filter);
-  if not auraData then
+  if ns.IsSecretValue(auraData) or not auraData then
     return nil;
   end
   return AuraUtil.UnpackAuraData(auraData);

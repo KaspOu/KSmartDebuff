@@ -2060,7 +2060,7 @@ function SMARTDEBUFF_CheckSFBackdrop()
     if (O.ShowBackdrop) then
       --"Interface\\Tooltips\\UI-Tooltip-Background"
       f:SetBackdrop( {
-        bgFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", edgeFile = nil, tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = addonFolder.."\\Icons\\white16x16", edgeFile = nil, tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
       f:SetBackdropColor(O.ColBack.r, O.ColBack.g, O.ColBack.b, O.ColBack.a);
     else
@@ -2156,7 +2156,7 @@ function SMARTDEBUFF_CreateButtons()
 
       if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
       button:SetBackdrop( {
-        bgFile = nil, edgeFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
       --button:SetBackdropColor(0,0,0,0);
 
@@ -2173,9 +2173,12 @@ function SMARTDEBUFF_CreateButtons()
       button:SetFontString(button.text);
 
       -- create hp texture
-      button.hp = button:CreateTexture(nil, "BORDER");
-      button.hp:SetColorTexture(0, 1, 0);
-      button.hp:SetBlendMode("DISABLE");
+      button.hp = CreateFrame("StatusBar", nil, button)
+      button.hp:SetFrameStrata("MEDIUM")
+      button.hp:SetFrameLevel(2)
+      button.hp:SetStatusBarColor(0, 0, 1);
+      -- button.hp:SetColorTexture(0, 1, 0);
+      -- button.hp:SetBlendMode("DISABLE");
       button.hp:ClearAllPoints();
 
       -- create hp text
@@ -2185,9 +2188,11 @@ function SMARTDEBUFF_CreateButtons()
       button.hptext:ClearAllPoints();
 
       -- create mana texture
-      button.mana = button:CreateTexture(nil, "BORDER");
-      button.mana:SetColorTexture(0, 0, 1);
-      button.mana:SetBlendMode("DISABLE");
+      button.mana = CreateFrame("StatusBar", nil, button)
+      button.mana:SetFrameStrata("MEDIUM")
+      button.mana:SetFrameLevel(2)
+      button.mana:SetStatusBarColor(0, 0, 1);
+      -- button.mana:SetBlendMode("DISABLE");
       button.mana:ClearAllPoints();
 
       -- create mana text
@@ -2241,7 +2246,7 @@ function SMARTDEBUFF_CreateButtons()
 
       if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
       button:SetBackdrop( {
-        bgFile = nil, edgeFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
 
       -- create bg texture
@@ -2256,9 +2261,10 @@ function SMARTDEBUFF_CreateButtons()
       button:SetFontString(button.text);
 
       -- create hp texture
-      button.hp = button:CreateTexture(nil, "BORDER");
-      button.hp:SetColorTexture(0, 1, 0);
-      button.hp:SetBlendMode("DISABLE");
+      button.hp = CreateFrame("StatusBar", nil, button, nil, "OVERLAY")
+      button.hp:SetStatusBarColor(0, 0, 1);
+      -- button.hp:SetColorTexture(0, 1, 0);
+      -- button.hp:SetBlendMode("DISABLE");
       button.hp:ClearAllPoints();
 
       -- create hp text
@@ -2267,9 +2273,9 @@ function SMARTDEBUFF_CreateButtons()
       button.hptext:ClearAllPoints();
 
       -- create mana texture
-      button.mana = button:CreateTexture(nil, "BORDER");
-      button.mana:SetColorTexture(0, 0, 1);
-      button.mana:SetBlendMode("DISABLE");
+      button.mana =  CreateFrame("StatusBar", nil, button) -- button:CreateTexture(nil, "BORDER");
+      button.mana:SetStatusBarColor(0, 0, 1);
+      -- button.mana:SetBlendMode("DISABLE");
       button.mana:ClearAllPoints();
 
       -- create mana text
@@ -3021,14 +3027,23 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         or (_G["CompactRaidFrame"..LUnitIndex(unit)] and _G["CompactRaidFrame"..LUnitIndex(unit)].inDistance)
         or (_G["CompactPartyFrameMember"..LUnitIndex(unit)] and _G["CompactPartyFrameMember"..LUnitIndex(unit)].inDistance)
       ) then -- UnitInRange(unit)) then
-      -- FIXME:12.0 UnitInRange by checking RaidNameplate
-      -- >> Garder un cache des unités lors de la boucle, si pas possible:
-      -- /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
-      -- /dump CompactPartyFrameMember1:GetAlpha()
-      -- /dump CompactPartyFrameMember1.inDistance
-      -- /dump CompactPartyFrameMember1.healPredictionDirty
-      -- /dump CompactPartyFrameMember1Debuff1:IsShown()
-      -- CompactRaidFrame1Debuff1
+      --[[ FIXME:12.0 UnitInRange by checking RaidNameplate
+      >> Garder un cache des unités lors de la boucle, si pas possible:
+      /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
+      /dump CompactPartyFrameMember1:GetAlpha()
+      /dump CompactPartyFrameMember1.inDistance
+      /dump CompactPartyFrameMember1.hasDispelCurse
+      /dump CompactRaidFrame1.hasDispelCurse
+      /dump CompactPartyFrameMember1.healPredictionDirty
+      /dump CompactPartyFrameMember1Debuff1:IsShown()
+      /script for k, v in pairs(CompactPartyFrameMember1) do print(k, v) end
+      /script for k, v in pairs(CompactPartyFrameMember1) do if not issecretvalue(v) or not issecrettable(v) then print(k, v) end end
+      /script for k, v in pairs(CompactPartyFrameMember1) do if issecretvalue(v) or issecrettable(v) then print(k, v) end end
+      /dump CompactPartyFrameMember1.dispelDebuffFrames
+
+      /dump CompactPartyFrameMember1DispelDebuff1:IsShown()
+      CompactRaidFrame1Debuff1
+      ]]
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
       -- FIXME:
@@ -3059,7 +3074,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   SmartDebuff_SetButtonBars(sbs_btn, unit, sbs_uc);
 end
 
-local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y;
+local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_per, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y, sbb_txtr;
 local sbb_col = { r = 0, g = 1, b = 0 };
 function SmartDebuff_SetButtonBars(btn, unit, unitclass)
   if (unit) then -- and btn:IsVisible()
@@ -3068,19 +3083,27 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     else
       sbb_dg = false;
     end
-    if (O.BarH > (btn:GetHeight() / 2)) then sbb_h = btn:GetHeight() / 2; else sbb_h = O.BarH; end
+    sbb_h = O.BarH
+    if (O.BarH > (btn:GetHeight() / 2)) then sbb_h = btn:GetHeight() / 2; end
     --sbb_h = btn:GetHeight() / 4 - 1;
     sbb_w = btn:GetWidth();
-    sbb_upt = UnitPowerType(unit);
-    sbb_cur = 100 -- UnitHealth(unit);
-    sbb_nmax = 100 -- UnitHealthMax(unit);
-    if (iTest > 0) then
-      sbb_cur = tonumber(string.match(unit, "%d+"))
-      sbb_nmax = iTest
-      sbb_dg = false
-      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
+    sbb_upt = UnitPowerType(unit)
+    sbb_cur = UnitHealth(unit, 0)
+    sbb_nmax = UnitHealthMax(unit, 0)
+    if UnitHealthPercent then
+      sbb_per = string.format("%d", UnitHealthPercent(unit, nil, true))
+    else
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
-    sbb_n = sbb_nmax > 0 and math.floor(sbb_w * (sbb_cur / sbb_nmax)) or 0;
+
+    if (iTest > 0) then
+      sbb_nmax = iTest
+      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
+      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
+      sbb_dg = sbb_cur <= 0
+    end
+
     if (O.ShowHPText) then
       sbb_col.r = 0; sbb_col.g = 0.9; sbb_col.b = 0;
     else
@@ -3089,49 +3112,66 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
 
     if UnitIsPlayer(unit) then
       iTotPlayers = iTotPlayers + 1;
-      if sbb_nmax > 0 then
+      if not ns.IsSecretValue(sbb_cur) and sbb_nmax > 0 then
         iTotHP = iTotHP + (sbb_cur * 100 / sbb_nmax);
       end
     end
 
-    if (O.Invert) then sbb_n = sbb_w - sbb_n; end
-    if (sbb_nmax == 1 or sbb_n < 1 or sbb_n > sbb_w or sbb_dg or not O.ShowHP) then sbb_n = 0; end
-    btn.hp:SetColorTexture(sbb_col.r, sbb_col.g, sbb_col.b, 1);
-    if (O.ShowGradient) then
-      btn.hp:SetGradient("HORIZONTAL", CreateColor(sbb_col.r / 2, sbb_col.g / 2, sbb_col.b / 2, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
-    else
-      btn.hp:SetGradient("HORIZONTAL", CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
+    if (O.Invert) then
+      if ns.IsSecretValue(sbb_cur) then
+        sbb_cur = UnitHealthMissing(unit)
+      else
+        sbb_cur = sbb_nmax - sbb_cur
+      end
     end
+    if (sbb_dg or not O.ShowHP) then sbb_cur = 0; end
+    btn.hp:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
+    sbb_txtr = (O.ShowGradient) and "\\Icons\\gradient_left" or "\\Icons\\2d"
+    if (btn.hp._texture ~= sbb_txtr) then
+      btn.hp:SetStatusBarTexture(addonFolder..sbb_txtr)
+    end
+    btn.hp._texture = sbb_txtr
     btn.hp:ClearAllPoints();
     btn.hp:SetPoint("TOPLEFT", btn , "TOPLEFT", 0, 0);
-    btn.hp:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_n, 0);
+    btn.hp:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_w, 0);
     btn.hp:SetPoint("BOTTOMLEFT", btn , "TOPLEFT", 0, -sbb_h);
-    btn.hp:SetPoint("BOTTOMRIGHT", btn , "TOPLEFT", sbb_n, -sbb_h);
+    btn.hp:SetPoint("BOTTOMRIGHT", btn , "TOPLEFT", sbb_w, -sbb_h);
+    btn.hp:SetValue(sbb_cur);
+    btn.hp:SetMinMaxValues(0, sbb_nmax);
+    btn.hp:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
 
-    sbb_n = math.ceil(sbb_cur / sbb_nmax * 100);
-    if (not sbb_dg and sbb_n < 100 and O.ShowHPText) then
+    if (not sbb_dg and O.ShowHPText and (ns.IsSecretValue(sbb_per) or sbb_per < 100)) then
       btn.hptext:ClearAllPoints();
       btn.hptext:SetPoint("TOPLEFT", btn , "TOPLEFT", 1, 1);
       btn.hptext:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_w, 1);
       btn.hptext:SetPoint("BOTTOMLEFT", btn , "TOPLEFT", 1, -sbb_h);
       btn.hptext:SetPoint("BOTTOMRIGHT", btn , "TOPLEFT", sbb_w, -sbb_h);
       btn.hptext:SetFont(STANDARD_TEXT_FONT, sbb_h+1, "");
-      btn.hptext:SetText(sbb_n.."%");
+      btn.hptext:SetText(sbb_per.."%");
     else
       btn.hptext:SetText("");
     end
 
-    -- sbb_cur = UnitMana(unit);
-    -- sbb_nmax = UnitManaMax(unit);
-    sbb_cur = 100 -- UnitPower(unit,0);
-    sbb_nmax = 100 -- UnitPowerMax(unit,0);
-    if (iTest > 0) then
-      sbb_cur = tonumber(string.match(unit, "%d+"))
-      sbb_nmax = iTest
+    sbb_cur = UnitPower(unit,0);
+    sbb_nmax = UnitPowerMax(unit,0);
+    if UnitPowerPercent then
+      sbb_per = string.format("%d", UnitPowerPercent(unit, nil, nil, true))
+    else
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
-    sbb_n = sbb_nmax > 0 and math.floor(sbb_w * (sbb_cur / sbb_nmax)) or 0
-    if (O.Invert) then sbb_n = sbb_w - sbb_n; end
-    if (sbb_nmax == 1 or sbb_n < 1 or sbb_n > sbb_w or sbb_upt ~= 0 or sbb_dg or not O.ShowMana) then sbb_n = 0; end
+    if (iTest > 0) then
+      sbb_nmax = iTest
+      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
+    end
+    if (O.Invert) then
+      if ns.IsSecretValue(sbb_cur) then
+        sbb_cur = UnitPowerMissing(unit)
+      else
+        sbb_cur = sbb_nmax - sbb_cur
+      end
+    end
+    if (sbb_upt ~= 0 or sbb_dg or not O.ShowMana) then sbb_cur = 0; end
     --if (n == max) then n = w; end;
     if (sbb_upt == 3) then
       -- 3 for Energy
@@ -3149,36 +3189,32 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       else
         sbb_col.r = 0.2; sbb_col.g = 0.2; sbb_col.b = 1;
       end
-      if UnitIsPlayer(unit) then
-        iTotManaUser = iTotManaUser + 1;
-        iTotMana = iTotMana + (sbb_cur * 100 / sbb_nmax);
-      end
     else
       sbb_col.r = 0; sbb_col.g = 0; sbb_col.b = 0;
     end
 
-    btn.mana:SetColorTexture(sbb_col.r, sbb_col.g, sbb_col.b, 1);
-
     btn.mana:ClearAllPoints();
     btn.mana:SetPoint("TOPLEFT", btn , "BOTTOMLEFT", 0, sbb_h);
-    btn.mana:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_n, sbb_h);
+    btn.mana:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_w, sbb_h);
     btn.mana:SetPoint("BOTTOMLEFT", btn , "BOTTOMLEFT", 0, 0);
-    btn.mana:SetPoint("BOTTOMRIGHT", btn , "BOTTOMLEFT", sbb_n, 0);
-    if (O.ShowGradient) then
-      btn.mana:SetGradient("HORIZONTAL", CreateColor(sbb_col.r / 2, sbb_col.g / 2, sbb_col.b / 2, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
-    else
-      btn.mana:SetGradient("HORIZONTAL", CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
+    btn.mana:SetPoint("BOTTOMRIGHT", btn , "BOTTOMLEFT", sbb_w, 0);
+    btn.mana:SetMinMaxValues(0, sbb_nmax);
+    btn.mana:SetValue(sbb_cur);
+    btn.mana:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
+    sbb_txtr = (O.ShowGradient) and "\\Icons\\gradient_left" or "\\Icons\\2d"
+    if (btn.mana._texture ~= sbb_txtr) then
+      btn.mana:SetStatusBarTexture(addonFolder..sbb_txtr)
     end
+    btn.mana._texture = sbb_txtr
 
-    sbb_n = sbb_nmax > 0 and math.ceil(sbb_cur / sbb_nmax * 100) or 0
-    if (not sbb_dg and sbb_upt == 0 and sbb_n < 100 and O.ShowHPText) then
+    if (not sbb_dg and sbb_upt == 0 and O.ShowHPText and (ns.IsSecretValue(sbb_per) or sbb_per < 100)) then
       btn.manatext:ClearAllPoints();
       btn.manatext:SetPoint("TOPLEFT", btn , "BOTTOMLEFT", 1, sbb_h);
       btn.manatext:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_w, sbb_h);
       btn.manatext:SetPoint("BOTTOMLEFT", btn , "BOTTOMLEFT", 1, 0);
       btn.manatext:SetPoint("BOTTOMRIGHT", btn , "BOTTOMLEFT", sbb_w, 0);
       btn.manatext:SetFont(STANDARD_TEXT_FONT, sbb_h+1, "");
-      btn.manatext:SetText(sbb_n.."%");
+      btn.manatext:SetText(sbb_per.."%");
     else
       btn.manatext:SetText("");
     end
