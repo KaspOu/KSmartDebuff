@@ -2,8 +2,6 @@
 -- Russian localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "ruRU") then return end
-
 SMARTDEBUFF_UPGRADED = "SmartDebuff обновлен: "..SMARTDEBUFF_VERSION;
 
 -- Creatures

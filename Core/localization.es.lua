@@ -2,8 +2,6 @@
 -- Spanish localization
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "esES" and GetLocale() ~= "esMX") then return end
-
 SMARTDEBUFF_UPGRADED = "SmartDebuff actualizado: "..SMARTDEBUFF_VERSION;
 
 -- Creatures

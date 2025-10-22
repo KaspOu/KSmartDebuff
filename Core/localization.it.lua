@@ -2,8 +2,6 @@
 -- Italian localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "itIT") then return end
-
 SMARTDEBUFF_UPGRADED = "SmartDebuff aggiornato: "..SMARTDEBUFF_VERSION;
 
 -- Creatures

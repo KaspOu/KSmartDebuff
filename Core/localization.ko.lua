@@ -2,8 +2,6 @@
 -- Korean localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "koKR") then return end
-
 SMARTDEBUFF_FONT = "Fonts\\2002.TTF"
 
 SMARTDEBUFF_UPGRADED = "SmartDebuff 업데이트됨: "..SMARTDEBUFF_VERSION;

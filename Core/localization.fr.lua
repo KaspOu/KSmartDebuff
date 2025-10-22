@@ -2,8 +2,6 @@
 -- French localization
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "frFR") then return end
-
 SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r

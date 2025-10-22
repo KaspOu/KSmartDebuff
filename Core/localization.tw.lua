@@ -2,8 +2,6 @@
 -- Chinese localization (Taiwan)
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "zhCN" and GetLocale() ~= "zhTW") then return end
-
 SMARTDEBUFF_FONT = "Fonts\\ARKai_T.TTF"
 
 SMARTDEBUFF_UPGRADED = "SmartDebuff 已更新: "..SMARTDEBUFF_VERSION;

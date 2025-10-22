@@ -2,8 +2,6 @@
 -- Portuguese localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "ptBR") then return end
-
 SMARTDEBUFF_UPGRADED = "SmartDebuff atualizado: "..SMARTDEBUFF_VERSION;
 
 

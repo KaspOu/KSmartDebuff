@@ -1,4 +1,4 @@
-## Interface: 110200, 110205, 50500, 50501
+## Interface: 110200, 110205, 50500, 50501, 11508
 ## Title: Smart|cffffffffDebuff|r Reloaded by |cff00ff00Kallye|r
 ## Title-frFR: Smart|cffffffffDebuff|r Reloaded, par |cff00ff00Kallye|r
 ## Title-deDE: Smart|cffffffffDebuff|r Reloaded, von |cff00ff00Kallye|r
@@ -8,7 +8,7 @@
 ## Title-ruRU: Smart|cffffffffDebuff|r Reloaded, от |cff00ff00Kallye|r
 ## Title-zhCN: Smart|cffffffffDebuff|r Reloaded, 作者 |cff00ff00Kallye|r
 ## Title-zhTW: Smart|cffffffffDebuff|r Reloaded, 作者 |cff00ff00Kallye|r
-## Version: 11.2.501
+## Version: 11.2.502
 ## Author: |cff00ff00Kallye|r (EU-Elune)
 ## Notes: Show party buttons with debuffs easy tracking and dispel actions. Use << |cff00ff00/sdb|r >> for debuff frame.
 ## Notes-frFR: Affiche des boutons pour tracker les debuffs avec des actions de dispel. Écrivez << |cff00ff00/sdb|r >> pour avoir la fenêtre de débuff.
@@ -22,6 +22,7 @@
 ## Notes-zhTW: 顯示隊伍按鈕，方便追蹤和驅散減益效果。使用 << |cff00ff00/sdb|r >> 開啟減益框體。
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
+## LoadSavedVariablesFirst: 1
 ## SavedVariables: SMARTDEBUFF_OptionsGlobal
 ## SavedVariablesPerCharacter: SMARTDEBUFF_Options
 ## IconTexture: Interface\Icons\ability_shaman_cleansespirit
