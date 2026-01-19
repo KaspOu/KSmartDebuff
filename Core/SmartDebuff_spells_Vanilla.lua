@@ -24,8 +24,15 @@ Format: [pickupType] = { [pickupID] = {overridenPickupType, overridenPickupID },
 ]]--
 --@end-do-not-package@
 
-SMARTDEBUFF_SPELLS_VERSION = "Vanilla";
+SMARTDEBUFF_SPELLS_VERSION = "TBC";
 SMARTDEBUFF_MACROTEXT = true;
+
+local v = select(4, GetBuildInfo())
+if v >= 20505 then
+  SMARTDEBUFF_SPELLS_VERSION = "Anniversary"
+elseif v < 20000 then
+  SMARTDEBUFF_SPELLS_VERSION = "Vanilla"
+end
 
 -- Debuff spell IDs (for L button)
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
