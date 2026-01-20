@@ -283,7 +283,8 @@ end
 local function GetSpellCD(spell)
   if (not spell) then return -1 end
   local scd = ns.GetSpellCooldown(spell);
-  if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5 and scd.isEnabled) then
+  -- FIXME:
+  if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5) then -- and scd.isEnabled) then
     return (scd.startTime + scd.duration) - GetTime();
   end
   return -1;
@@ -389,6 +390,13 @@ local function LUnitExists(unit)
     return true;
   end
   return false;
+end
+local function LUnitIndex(unit)
+  local index_str = string.match(unit, "%d+$");
+  if index_str then
+    return tonumber(index_str);
+  end
+  return 0;
 end
 
 local function HideF(f)
@@ -2052,7 +2060,7 @@ function SMARTDEBUFF_CheckSFBackdrop()
     if (O.ShowBackdrop) then
       --"Interface\\Tooltips\\UI-Tooltip-Background"
       f:SetBackdrop( {
-        bgFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", edgeFile = nil, tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = addonFolder.."\\Icons\\white16x16", edgeFile = nil, tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
       f:SetBackdropColor(O.ColBack.r, O.ColBack.g, O.ColBack.b, O.ColBack.a);
     else
@@ -2148,7 +2156,7 @@ function SMARTDEBUFF_CreateButtons()
 
       if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
       button:SetBackdrop( {
-        bgFile = nil, edgeFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
       --button:SetBackdropColor(0,0,0,0);
 
@@ -2165,9 +2173,12 @@ function SMARTDEBUFF_CreateButtons()
       button:SetFontString(button.text);
 
       -- create hp texture
-      button.hp = button:CreateTexture(nil, "BORDER");
-      button.hp:SetColorTexture(0, 1, 0);
-      button.hp:SetBlendMode("DISABLE");
+      button.hp = CreateFrame("StatusBar", nil, button)
+      button.hp:SetFrameStrata("MEDIUM")
+      button.hp:SetFrameLevel(2)
+      button.hp:SetStatusBarColor(0, 0, 1);
+      -- button.hp:SetColorTexture(0, 1, 0);
+      -- button.hp:SetBlendMode("DISABLE");
       button.hp:ClearAllPoints();
 
       -- create hp text
@@ -2177,9 +2188,11 @@ function SMARTDEBUFF_CreateButtons()
       button.hptext:ClearAllPoints();
 
       -- create mana texture
-      button.mana = button:CreateTexture(nil, "BORDER");
-      button.mana:SetColorTexture(0, 0, 1);
-      button.mana:SetBlendMode("DISABLE");
+      button.mana = CreateFrame("StatusBar", nil, button)
+      button.mana:SetFrameStrata("MEDIUM")
+      button.mana:SetFrameLevel(2)
+      button.mana:SetStatusBarColor(0, 0, 1);
+      -- button.mana:SetBlendMode("DISABLE");
       button.mana:ClearAllPoints();
 
       -- create mana text
@@ -2233,7 +2246,7 @@ function SMARTDEBUFF_CreateButtons()
 
       if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
       button:SetBackdrop( {
-        bgFile = nil, edgeFile = "Interface\\AddOns\\"..addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
 
       -- create bg texture
@@ -2248,9 +2261,10 @@ function SMARTDEBUFF_CreateButtons()
       button:SetFontString(button.text);
 
       -- create hp texture
-      button.hp = button:CreateTexture(nil, "BORDER");
-      button.hp:SetColorTexture(0, 1, 0);
-      button.hp:SetBlendMode("DISABLE");
+      button.hp = CreateFrame("StatusBar", nil, button, nil, "OVERLAY")
+      button.hp:SetStatusBarColor(0, 0, 1);
+      -- button.hp:SetColorTexture(0, 1, 0);
+      -- button.hp:SetBlendMode("DISABLE");
       button.hp:ClearAllPoints();
 
       -- create hp text
@@ -2259,9 +2273,9 @@ function SMARTDEBUFF_CreateButtons()
       button.hptext:ClearAllPoints();
 
       -- create mana texture
-      button.mana = button:CreateTexture(nil, "BORDER");
-      button.mana:SetColorTexture(0, 0, 1);
-      button.mana:SetBlendMode("DISABLE");
+      button.mana =  CreateFrame("StatusBar", nil, button) -- button:CreateTexture(nil, "BORDER");
+      button.mana:SetStatusBarColor(0, 0, 1);
+      -- button.mana:SetBlendMode("DISABLE");
       button.mana:ClearAllPoints();
 
       -- create mana text
@@ -2674,6 +2688,8 @@ function SMARTDEBUFF_ButtonDropDown_Initialize(self)
 	end
 end
 
+-- FIXME: DEBG
+local SMARTDEBUFF_DEBUG_DISPELS = {}
 local sbs_btn, sbs_un, sbs_uc, sbs_st, sbs_fontH, sbs_pre, sbs_ln, sbs_wd, sbs_io, sbs_uv, sbs_iv, sbs_rc, sbs_cd;
 local sbs_col = { r = 0.39, g = 0.42, b = 0.64 };
 --- Sets the visual state of a SmartDebuff button.
@@ -2866,22 +2882,25 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     sbs_cd = "";
   end
 
-  if (remains and remains > 0) then
-    if (remains > 60) then
-      --sbs_st = string.format("%.0fm", Round(ti/60, 0));
-      sbs_st = string.format("%.0fm", math.floor((remains/60) + 0.5));
-      --sbs_fontH = O.BtnH - 8;
-    else
-      --sbs_st = string.format("%.0f", Round(ti, 0));
-      sbs_st = string.format("%.0f", math.floor(remains + 0.5));
-      --sbs_fontH = O.BtnH - 6;
-    end
-    sbs_st = sbs_un.."\n"..sbs_st;
-    if (sbs_cd ~= "") then
-      sbs_st = sbs_st.." | "..sbs_cd;
+  if (remains and not ns.IsSecretValue(remains)) then
+    if (remains > 0) then
+      if (remains > 60) then
+        --sbs_st = string.format("%.0fm", Round(ti/60, 0));
+        sbs_st = string.format("%.0fm", math.floor((remains/60) + 0.5));
+        --sbs_fontH = O.BtnH - 8;
+      else
+        --sbs_st = string.format("%.0f", Round(ti, 0));
+        sbs_st = string.format("%.0f", math.floor(remains + 0.5));
+        --sbs_fontH = O.BtnH - 6;
+      end
+      sbs_st = sbs_un.."\n"..sbs_st;
+      if (sbs_cd ~= "") then
+        sbs_st = sbs_st.." | "..sbs_cd;
+      end
     end
   end
 
+  local debugShown = false
   if (nr == 0) then
     sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 0.6);
     if (not sbs_pre and O.ShowGradient) then
@@ -2894,9 +2913,22 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     else
       sbs_btn:SetAlpha(O.ANormalOOR);
     end
+    -- FIXME:
+    if (SMARTDEBUFF_DEBUG_DISPELS[sbs_st] and iTest == 0 and spellCD ~= 0) then
+      debugShown = true
+      SMARTDEBUFF_AddMsgD("UNEXPECTED, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
+    end
   elseif (nr == 1) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("L Dispel detected "..isInRange)
+      -- FIXME: AddMsg replaces AddMsgD
+      if not SMARTDEBUFF_DEBUG_DISPELS[sbs_st] then
+        debugShown = true
+        SMARTDEBUFF_AddMsgD("L Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
+        SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = true;
+        spellCD = tonumber(spellCD) or 1
+        spellCD = math.max(spellCD, 1)
+        C_Timer.After(spellCD, function() SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = nil; end);
+      end
     end
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
@@ -2919,7 +2951,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 2) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("R Dispel detected "..isInRange)
+      -- FIXME: AddMsg replaces AddMsgD
+      debugShown = true
+      SMARTDEBUFF_AddMsgD("R Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffR.r;
     sbs_col.g = O.ColDebuffR.g;
@@ -2942,7 +2976,9 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     end
   elseif (nr == 3) then
     if (iTest == 0) then
-      SMARTDEBUFF_AddMsgD("M Dispel detected "..isInRange)
+      -- FIXME: AddMsg replaces AddMsgD
+      debugShown = true
+      SMARTDEBUFF_AddMsgD("M Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD)
     end
     sbs_col.r = O.ColDebuffM.r;
     sbs_col.g = O.ColDebuffM.g;
@@ -2964,6 +3000,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       sbs_fontH = O.BtnH - 2;
     end
   elseif (nr == 10 and not UnitIsDeadOrGhost(unit)) then
+    debugShown = true
+    SMARTDEBUFF_AddMsg("Not removable Dispel detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
     sbs_col.r = O.ColDebuffNR.r;
     sbs_col.g = O.ColDebuffNR.g;
     sbs_col.b = O.ColDebuffNR.b;
@@ -2986,13 +3024,48 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     elseif (sbs_iv) then
       -- unit is in a vehicle
       sbs_btn:SetAlpha(O.ANormalOOR / 2);
-    elseif (isInRange == 1 or UnitInRange(unit)) then
+      -- CompactPartyFrameMember
+    elseif (isInRange == 1
+        or (_G["CompactRaidFrame"..LUnitIndex(unit)] and _G["CompactRaidFrame"..LUnitIndex(unit)].inDistance)
+        or (_G["CompactPartyFrameMember"..LUnitIndex(unit)] and _G["CompactPartyFrameMember"..LUnitIndex(unit)].inDistance)
+      ) then -- UnitInRange(unit)) then
+      --[[ FIXME:12.0 UnitInRange by checking RaidNameplate
+      >> Garder un cache des unités lors de la boucle, si pas possible:
+      /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
+      /dump CompactPartyFrameMember1:GetAlpha()
+      /dump CompactPartyFrameMember1.inDistance
+      /dump CompactPartyFrameMember1.hasDispelCurse
+      /dump CompactRaidFrame1.hasDispelCurse
+      /dump CompactPartyFrameMember1.healPredictionDirty
+      /dump CompactPartyFrameMember1Debuff1:IsShown()
+      /script for k, v in pairs(CompactPartyFrameMember1) do print(k, v) end
+      /script for k, v in pairs(CompactPartyFrameMember1) do if not issecretvalue(v) or not issecrettable(v) then print(k, v) end end
+      /script for k, v in pairs(CompactPartyFrameMember1) do if issecretvalue(v) or issecrettable(v) then print(k, v) end end
+      /dump CompactPartyFrameMember1.dispelDebuffFrames
+
+      /dump CompactPartyFrameMember1DispelDebuff1:IsShown()
+      CompactRaidFrame1Debuff1
+      ]]
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
+      -- FIXME:
+      if nr ~= -1 then
+        debugShown = true
+        SMARTDEBUFF_AddMsgD("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
+      end
     else
       -- unit is oor
       sbs_btn:SetAlpha(O.ANormalOOR);
+      -- FIXME:
+      if nr ~= -1 then
+        debugShown = true
+        SMARTDEBUFF_AddMsgD("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
+      end
     end
+  end
+  if not debugShown and SMARTDEBUFF_DEBUG_DISPELS[sbs_st] then
+      SMARTDEBUFF_AddMsgD("TOTALLY UNEXPECTED, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_st..", spell cd: "..spellCD..", nr:"..nr)
+      SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = nil
   end
 
   sbs_btn.text:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
@@ -3003,7 +3076,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   SmartDebuff_SetButtonBars(sbs_btn, unit, sbs_uc);
 end
 
-local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y;
+local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_per, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y, sbb_txtr;
 local sbb_col = { r = 0, g = 1, b = 0 };
 function SmartDebuff_SetButtonBars(btn, unit, unitclass)
   if (unit) then -- and btn:IsVisible()
@@ -3012,19 +3085,27 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     else
       sbb_dg = false;
     end
-    if (O.BarH > (btn:GetHeight() / 2)) then sbb_h = btn:GetHeight() / 2; else sbb_h = O.BarH; end
+    sbb_h = O.BarH
+    if (O.BarH > (btn:GetHeight() / 2)) then sbb_h = btn:GetHeight() / 2; end
     --sbb_h = btn:GetHeight() / 4 - 1;
     sbb_w = btn:GetWidth();
-    sbb_upt = UnitPowerType(unit);
-    sbb_cur = UnitHealth(unit);
-    sbb_nmax = UnitHealthMax(unit);
-    if (iTest > 0) then
-      sbb_cur = tonumber(string.match(unit, "%d+"))
-      sbb_nmax = iTest
-      sbb_dg = false
-      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
+    sbb_upt = UnitPowerType(unit)
+    sbb_cur = UnitHealth(unit, 0)
+    sbb_nmax = UnitHealthMax(unit, 0)
+    if UnitHealthPercent then
+      sbb_per = string.format("%d", UnitHealthPercent(unit, nil))
+    else
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
-    sbb_n = sbb_nmax > 0 and math.floor(sbb_w * (sbb_cur / sbb_nmax)) or 0;
+
+    if (iTest > 0) then
+      sbb_nmax = iTest
+      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
+      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
+      sbb_dg = sbb_cur <= 0
+    end
+
     if (O.ShowHPText) then
       sbb_col.r = 0; sbb_col.g = 0.9; sbb_col.b = 0;
     else
@@ -3033,49 +3114,66 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
 
     if UnitIsPlayer(unit) then
       iTotPlayers = iTotPlayers + 1;
-      if sbb_nmax > 0 then
+      if not ns.IsSecretValue(sbb_cur) and sbb_nmax > 0 then
         iTotHP = iTotHP + (sbb_cur * 100 / sbb_nmax);
       end
     end
 
-    if (O.Invert) then sbb_n = sbb_w - sbb_n; end
-    if (sbb_nmax == 1 or sbb_n < 1 or sbb_n > sbb_w or sbb_dg or not O.ShowHP) then sbb_n = 0; end
-    btn.hp:SetColorTexture(sbb_col.r, sbb_col.g, sbb_col.b, 1);
-    if (O.ShowGradient) then
-      btn.hp:SetGradient("HORIZONTAL", CreateColor(sbb_col.r / 2, sbb_col.g / 2, sbb_col.b / 2, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
-    else
-      btn.hp:SetGradient("HORIZONTAL", CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
+    if (O.Invert) then
+      if ns.IsSecretValue(sbb_cur) then
+        sbb_cur = UnitHealthMissing(unit)
+      else
+        sbb_cur = sbb_nmax - sbb_cur
+      end
     end
+    if (sbb_dg or not O.ShowHP) then sbb_cur = 0; end
+    btn.hp:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
+    sbb_txtr = (O.ShowGradient) and "\\Icons\\gradient_left" or "\\Icons\\2d"
+    if (btn.hp._texture ~= sbb_txtr) then
+      btn.hp:SetStatusBarTexture(addonFolder..sbb_txtr)
+    end
+    btn.hp._texture = sbb_txtr
     btn.hp:ClearAllPoints();
     btn.hp:SetPoint("TOPLEFT", btn , "TOPLEFT", 0, 0);
-    btn.hp:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_n, 0);
+    btn.hp:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_w, 0);
     btn.hp:SetPoint("BOTTOMLEFT", btn , "TOPLEFT", 0, -sbb_h);
-    btn.hp:SetPoint("BOTTOMRIGHT", btn , "TOPLEFT", sbb_n, -sbb_h);
+    btn.hp:SetPoint("BOTTOMRIGHT", btn , "TOPLEFT", sbb_w, -sbb_h);
+    btn.hp:SetValue(sbb_cur);
+    btn.hp:SetMinMaxValues(0, sbb_nmax);
+    btn.hp:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
 
-    sbb_n = math.ceil(sbb_cur / sbb_nmax * 100);
-    if (not sbb_dg and sbb_n < 100 and O.ShowHPText) then
+    if (not sbb_dg and O.ShowHPText and (ns.IsSecretValue(sbb_per) or sbb_per < 100)) then
       btn.hptext:ClearAllPoints();
       btn.hptext:SetPoint("TOPLEFT", btn , "TOPLEFT", 1, 1);
       btn.hptext:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_w, 1);
       btn.hptext:SetPoint("BOTTOMLEFT", btn , "TOPLEFT", 1, -sbb_h);
       btn.hptext:SetPoint("BOTTOMRIGHT", btn , "TOPLEFT", sbb_w, -sbb_h);
       btn.hptext:SetFont(STANDARD_TEXT_FONT, sbb_h+1, "");
-      btn.hptext:SetText(sbb_n.."%");
+      btn.hptext:SetText(sbb_per.."%");
     else
       btn.hptext:SetText("");
     end
 
-    -- sbb_cur = UnitMana(unit);
-    -- sbb_nmax = UnitManaMax(unit);
     sbb_cur = UnitPower(unit,0);
     sbb_nmax = UnitPowerMax(unit,0);
-    if (iTest > 0) then
-      sbb_cur = tonumber(string.match(unit, "%d+"))
-      sbb_nmax = iTest
+    if UnitPowerPercent then
+      sbb_per = string.format("%d", UnitPowerPercent(unit, nil, nil))
+    else
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
-    sbb_n = sbb_nmax > 0 and math.floor(sbb_w * (sbb_cur / sbb_nmax)) or 0
-    if (O.Invert) then sbb_n = sbb_w - sbb_n; end
-    if (sbb_nmax == 1 or sbb_n < 1 or sbb_n > sbb_w or sbb_upt ~= 0 or sbb_dg or not O.ShowMana) then sbb_n = 0; end
+    if (iTest > 0) then
+      sbb_nmax = iTest
+      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
+    end
+    if (O.Invert) then
+      if ns.IsSecretValue(sbb_cur) then
+        sbb_cur = UnitPowerMissing(unit)
+      else
+        sbb_cur = sbb_nmax - sbb_cur
+      end
+    end
+    if (sbb_upt ~= 0 or sbb_dg or not O.ShowMana) then sbb_cur = 0; end
     --if (n == max) then n = w; end;
     if (sbb_upt == 3) then
       -- 3 for Energy
@@ -3093,36 +3191,32 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       else
         sbb_col.r = 0.2; sbb_col.g = 0.2; sbb_col.b = 1;
       end
-      if UnitIsPlayer(unit) then
-        iTotManaUser = iTotManaUser + 1;
-        iTotMana = iTotMana + (sbb_cur * 100 / sbb_nmax);
-      end
     else
       sbb_col.r = 0; sbb_col.g = 0; sbb_col.b = 0;
     end
 
-    btn.mana:SetColorTexture(sbb_col.r, sbb_col.g, sbb_col.b, 1);
-
     btn.mana:ClearAllPoints();
     btn.mana:SetPoint("TOPLEFT", btn , "BOTTOMLEFT", 0, sbb_h);
-    btn.mana:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_n, sbb_h);
+    btn.mana:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_w, sbb_h);
     btn.mana:SetPoint("BOTTOMLEFT", btn , "BOTTOMLEFT", 0, 0);
-    btn.mana:SetPoint("BOTTOMRIGHT", btn , "BOTTOMLEFT", sbb_n, 0);
-    if (O.ShowGradient) then
-      btn.mana:SetGradient("HORIZONTAL", CreateColor(sbb_col.r / 2, sbb_col.g / 2, sbb_col.b / 2, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
-    else
-      btn.mana:SetGradient("HORIZONTAL", CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1), CreateColor(sbb_col.r, sbb_col.g, sbb_col.b, 1) )
+    btn.mana:SetPoint("BOTTOMRIGHT", btn , "BOTTOMLEFT", sbb_w, 0);
+    btn.mana:SetMinMaxValues(0, sbb_nmax);
+    btn.mana:SetValue(sbb_cur);
+    btn.mana:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
+    sbb_txtr = (O.ShowGradient) and "\\Icons\\gradient_left" or "\\Icons\\2d"
+    if (btn.mana._texture ~= sbb_txtr) then
+      btn.mana:SetStatusBarTexture(addonFolder..sbb_txtr)
     end
+    btn.mana._texture = sbb_txtr
 
-    sbb_n = sbb_nmax > 0 and math.ceil(sbb_cur / sbb_nmax * 100) or 0
-    if (not sbb_dg and sbb_upt == 0 and sbb_n < 100 and O.ShowHPText) then
+    if (not sbb_dg and sbb_upt == 0 and O.ShowHPText and (ns.IsSecretValue(sbb_per) or sbb_per < 100)) then
       btn.manatext:ClearAllPoints();
       btn.manatext:SetPoint("TOPLEFT", btn , "BOTTOMLEFT", 1, sbb_h);
       btn.manatext:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_w, sbb_h);
       btn.manatext:SetPoint("BOTTOMLEFT", btn , "BOTTOMLEFT", 1, 0);
       btn.manatext:SetPoint("BOTTOMRIGHT", btn , "BOTTOMLEFT", sbb_w, 0);
       btn.manatext:SetFont(STANDARD_TEXT_FONT, sbb_h+1, "");
-      btn.manatext:SetText(sbb_n.."%");
+      btn.manatext:SetText(sbb_per.."%");
     else
       btn.manatext:SetText("");
     end
@@ -3211,7 +3305,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       end
     end
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
-    if (O.ShowSpellIcon) then
+    if (not SMARTDEBUFF_HASSECRETS and O.ShowSpellIcon) then
       for loop2 = 1, math.min(#O.SpellGuard, maxSpellIcons), 1 do
         local name, texture, count, debuffType, duration, expirationTime, source, _, _, spellID = AuraUtil.FindAuraByName(O.SpellGuard[loop2], unit);
         for _, target in ipairs({"HARMFUL", "NOT_CANCELABLE","CANCELABLE","RAID","PLAYER"}) do
@@ -3845,96 +3939,177 @@ function SMARTDEBUFF_CheckDebuffs(force)
   end
 end
 
--- Dectects debuffs on a single unit
-local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_nrd, cud_un, cud_tlnr, cud_cds;
-function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
-  cud_n = -1;
-  cud_nrd = false;
-  if ((spell or O.ShowNotRemov) and isActive) then
-    if (spell == nil) then
-      cud_ir = -1;
-    elseif (
-      (SDB_cacheRangeCheckSpell and ns.IsSpellInRange(SDB_cacheRangeCheckSpell, unit) == 1)
-      or SDB_IsBaseSpellInRange(spell, unit)-- type(spell) ~= "number" and ns.IsSpellInRange
-      or UnitInRange(unit)
-    ) then
-      cud_ir = 1;
-    else
-      cud_ir = 0;
-    end
-    -- SMARTDEBUFF_AddMsgD("Check unit: " .. unit .. ", " .. UnitName(unit) .. ", " .. idx.." spell: "..spell.." / In Range: "..SDB_cacheRangeCheckSpell.." : "..IsSpellInRange(SDB_cacheRangeCheckSpell, unit));
 
-    cud_n = 1;
-    while (true) do
-      --name,rank,icon,count,type = UnitDebuff("unit", id or "name"[,"rank"])
-      --cud_name, _, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
-      -- BlizzardInterfaceCode\Interface\AddOns\Blizzard_NamePlates\Blizzard_NamePlates.lua:505
-      -- local name, texture, count, debuffType, duration, expirationTime, caster, _, nameplateShowPersonal, spellId, _, _, _, nameplateShowAll = UnitAura(unit, i, filter);
-      cud_name, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
-      if (not cud_icon) then
-        break;
+if (not SMARTDEBUFF_HASSECRETS) then
+  -- Detects debuffs on a single unit
+  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_nrd, cud_un, cud_tlnr, cud_cds;
+  function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
+    cud_n = -1;
+    cud_nrd = false;
+    if ((spell or O.ShowNotRemov) and isActive) then
+      if (spell == nil) then
+        cud_ir = -1;
+      elseif (
+        (SDB_cacheRangeCheckSpell and ns.IsSpellInRange(SDB_cacheRangeCheckSpell, unit) == 1)
+        or SDB_IsBaseSpellInRange(spell, unit)-- type(spell) ~= "number" and ns.IsSpellInRange
+        or UnitInRange(unit)
+      ) then
+        cud_ir = 1;
+      else
+        cud_ir = 0;
+      end
+      -- SMARTDEBUFF_AddMsgD("Check unit: " .. unit .. ", " .. UnitName(unit) .. ", " .. idx.." spell: "..spell.." / In Range: "..SDB_cacheRangeCheckSpell.." : "..IsSpellInRange(SDB_cacheRangeCheckSpell, unit));
+
+      cud_n = 1;
+      while (true) do
+        --name,rank,icon,count,type = UnitDebuff("unit", id or "name"[,"rank"])
+        --cud_name, _, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
+        -- BlizzardInterfaceCode\Interface\AddOns\Blizzard_NamePlates\Blizzard_NamePlates.lua:505
+        -- local name, texture, count, debuffType, duration, expirationTime, caster, _, nameplateShowPersonal, spellId, _, _, _, nameplateShowAll = UnitAura(unit, i, filter);
+        cud_name, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
+        if (not cud_icon) then
+          break;
+        end
+
+        cud_tl = tonumber(cud_tl);
+        if (cud_tl == nil) then cud_tl = -1; end
+        if (not cud_tl) then cud_tl = -1; end
+        cud_tl = cud_tl - GetTime();
+
+        if (spell and cud_name and cud_dtype) then
+          -- SMARTDEBUFF_AddMsgD("Debuff found: " .. cud_dtype.." on "..unit.." (" .. cud_name .. ")");
+          _, cud_uclass = UnitClass(unit);
+
+          if (cSpells[cud_dtype] and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit)) and not SMARTDEBUFF_DEBUFFSKIPLIST[cud_name] and not (SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass] and SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass][cud_name])) then
+            cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
+            if (not O.IgnoreDebuff or cud_cds <= 0) then
+              hasDebuff = true;
+              SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
+              SMARTDEBUFF_PlaySound();
+              return;
+            end
+          end
+        end
+
+        -- Check if a player has an unremovable debuff
+        if (not cud_nrd and O.ShowNotRemov and cud_name and not cud_dtype) then
+          for _, v in ipairs(O.NotRemovableDebuffs) do
+            if (v and cud_name and v == cud_name) then
+              cud_nrd = true;
+              cud_tlnr = cud_tl;
+              break;
+            end
+          end
+        end
+
+        cud_n = cud_n + 1;
+        --SMARTDEBUFF_AddMsgD("Check debuff");
       end
 
-      cud_tl = tonumber(cud_tl);
-      if (cud_tl == nil) then cud_tl = -1; end
-      if (not cud_tl) then cud_tl = -1; end
-      cud_tl = cud_tl - GetTime();
-
-      if (spell and cud_name and cud_dtype) then
-        -- SMARTDEBUFF_AddMsgD("Debuff found: " .. cud_dtype.." on "..unit.." (" .. cud_name .. ")");
-        _, cud_uclass = UnitClass(unit);
-
-        if (cSpells[cud_dtype] and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit)) and not SMARTDEBUFF_DEBUFFSKIPLIST[cud_name] and not (SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass] and SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass][cud_name])) then
-          cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
-          if (not O.IgnoreDebuff or cud_cds <= 0) then
-            hasDebuff = true;
-            SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
-            SMARTDEBUFF_PlaySound();
-            return;
-          end
+      -- check if a player is charmed, can be attacked and is polymorphable
+      if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+        cud_cds = GetSpellCD(cSpells[SMARTDEBUFF_CHARMED][1]);
+        if (not O.IgnoreDebuff or cud_cds <= 0) then
+          hasDebuff = true;
+          SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
+          SMARTDEBUFF_PlaySound();
+          return;
         end
       end
 
-      -- Check if a player has an unremovable debuff
-      if (not cud_nrd and O.ShowNotRemov and cud_name and not cud_dtype) then
-        for _, v in ipairs(O.NotRemovableDebuffs) do
-          if (v and cud_name and v == cud_name) then
-            cud_nrd = true;
-            cud_tlnr = cud_tl;
-            break;
-          end
-        end
-      end
-
-      cud_n = cud_n + 1;
-      --SMARTDEBUFF_AddMsgD("Check debuff");
-    end
-
-    -- check if a player is charmed, can be attacked and is polymorphable
-    if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
-      cud_cds = GetSpellCD(cSpells[SMARTDEBUFF_CHARMED][1]);
-      if (not O.IgnoreDebuff or cud_cds <= 0) then
+      if (cud_nrd) then
         hasDebuff = true;
-        SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
+        SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
         SMARTDEBUFF_PlaySound();
         return;
       end
-    end
 
-    if (cud_nrd) then
-      hasDebuff = true;
-      SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
-      SMARTDEBUFF_PlaySound();
+      SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
       return;
     end
+    -- No remove available, or O.ShowNotRemov false
+    SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
 
-    SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
-    return;
   end
-  -- No remove available, or O.ShowNotRemov false
-  SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
 
+else
+
+  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_nrd, cud_un, cud_tlnr, cud_cds;
+  function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
+    cud_n = -1;
+    cud_nrd = false;
+    if (spell and isActive) then
+        if (spell == nil) then
+            cud_ir = -1;
+        elseif (
+            (SDB_cacheRangeCheckSpell and ns.IsSpellInRange(SDB_cacheRangeCheckSpell, unit) == 1)
+            or SDB_IsBaseSpellInRange(spell, unit)
+            or UnitInRange(unit)
+        ) then
+            cud_ir = 1;
+        else
+            cud_ir = 0;
+        end
+
+        -- Utiliser la nouvelle API pour obtenir les debuffs
+        local debuffs = SMARTDEBUFF_GetUnitDebuffs(unit, "ALL", 40)
+
+        for _, auraData in ipairs(debuffs) do
+            cud_name = auraData.name
+            cud_icon = auraData.icon
+            cud_dtype = auraData.dispelName
+            cud_dur = auraData.duration
+            cud_tl = auraData.expirationTime
+
+            cud_tl = tonumber(cud_tl);
+            if (ns.IsSecretValue(cud_tl)) then cud_tl = -1; end
+            if (cud_tl == nil) then cud_tl = -1; end
+            if (not cud_tl) then cud_tl = -1; end
+            if (cud_tl > 0) then
+                cud_tl = cud_tl - GetTime();
+            end
+
+            if (spell and cud_name and cud_dtype) then
+                _, cud_uclass = UnitClass(unit);
+
+                if (cSpells[cud_dtype] and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit)) and not SMARTDEBUFF_DEBUFFSKIPLIST[cud_name] and not (SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass] and SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass][cud_name])) then
+                    cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
+                    if (not O.IgnoreDebuff or cud_cds <= 0) then
+                        hasDebuff = true;
+                        SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
+                        SMARTDEBUFF_PlaySound();
+                        return;
+                    end
+                end
+            end
+        end
+
+        -- check if a player is charmed, can be attacked and is polymorphable
+        if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+            cud_cds = GetSpellCD(cSpells[SMARTDEBUFF_CHARMED][1]);
+            if (not O.IgnoreDebuff or cud_cds <= 0) then
+                hasDebuff = true;
+                SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
+                SMARTDEBUFF_PlaySound();
+                return;
+            end
+        end
+
+        if (cud_nrd) then
+            hasDebuff = true;
+            SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
+            SMARTDEBUFF_PlaySound();
+            return;
+        end
+
+        SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
+        return;
+    end
+    -- No remove available
+    SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
+  end
 end
+
 
 function SMARTDEBUFF_PlaySound()
   if (O.UseSound and not isSoundPlayed) then
@@ -5165,3 +5340,7 @@ end
 function SMARTDEBUFF_BtnActionOnLeave(self, motion)
   GameTooltip:Hide();
 end
+
+
+ns.O = O
+ns.cSpells = cSpells

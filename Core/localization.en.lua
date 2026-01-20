@@ -9,11 +9,13 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhats new:|r
 
+- Midnight: Disable
+   Debuff Guard
+   Spell Watch List
+
+- Midnight: Bars fixed
+
 - Sort by Role / Class
-
-- Translations completed / added (all languages)
-
-- Korean / Chinese fonts (SmartDebuff frame)
 ]];
 
 --@do-not-package@
