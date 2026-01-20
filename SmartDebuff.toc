@@ -1,4 +1,4 @@
-## Interface: 110205, 110207, 50501, 50502, 38000, 20505, 11508
+## Interface: 120000, 120001, 110207, 50502, 38000, 20505, 11508
 ## Title: Smart|cffffffffDebuff|r Reloaded by |cff00ff00Kallye|r
 ## Title-frFR: Smart|cffffffffDebuff|r Reloaded, par |cff00ff00Kallye|r
 ## Title-deDE: Smart|cffffffffDebuff|r Reloaded, von |cff00ff00Kallye|r
@@ -8,7 +8,7 @@
 ## Title-ruRU: Smart|cffffffffDebuff|r Reloaded, от |cff00ff00Kallye|r
 ## Title-zhCN: Smart|cffffffffDebuff|r Reloaded, 作者 |cff00ff00Kallye|r
 ## Title-zhTW: Smart|cffffffffDebuff|r Reloaded, 作者 |cff00ff00Kallye|r
-## Version: 11.2.702
+## Version: 12.0.001
 ## Author: |cff00ff00Kallye|r (EU-Elune)
 ## Notes: Show party buttons with debuffs easy tracking and dispel actions. Use << |cff00ff00/sdb|r >> for debuff frame.
 ## Notes-frFR: Affiche des boutons pour tracker les debuffs avec des actions de dispel. Écrivez << |cff00ff00/sdb|r >> pour avoir la fenêtre de débuff.

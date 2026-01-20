@@ -6,11 +6,13 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
+- Midnight: Désactivation des
+   Débuffs protégés
+   Icônes de sort
+
 - Midnight: Affichage corrigé
 
 - Tri par Rôle / Classe
-
-- Traductions ajoutées / complètes (toutes les langues)
 ]]
 
 --@do-not-package@
