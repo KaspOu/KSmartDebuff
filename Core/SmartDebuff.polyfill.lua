@@ -8,8 +8,15 @@ ns.GetSpellLink = C_Spell.GetSpellLink or GetSpellLink;
 ns.Enum_SpellBookSpellBank_Pet = (Enum and Enum.SpellBookSpellBank and Enum.SpellBookSpellBank.Pet) or 1
 ns.Enum_SpellBookSpellBank_Player = (Enum and Enum.SpellBookSpellBank and Enum.SpellBookSpellBank.Player) or 0
 
-ns.IsSpellInRange = C_Spell.IsSpellInRange or function (spellnameOrId)
-  return IsSpellInRange(spellnameOrId) == 1
+ns.IsSpellInRange = C_Spell.IsSpellInRange or function (spellnameOrId, unit)
+  return IsSpellInRange(spellnameOrId, unit) == 1
+end
+ns.UnitInRange = function (unit)
+    local result = UnitInRange(unit)
+    if (ns.IsSecretValue(result)) then
+        result = ns.C_Spell.IsSpellInRange(1229376, unit)
+    end
+    return result
 end
 
 ns.GetSpellCooldown = C_Spell.GetSpellCooldown or function (spellnameOrId)
@@ -86,10 +93,11 @@ end
 
 ns.UnitAura = UnitAura or function(unitToken, index, filter)
   local auraData = C_UnitAuras.GetAuraDataByIndex(unitToken, index, filter);
-  if ns.IsSecretValue(auraData) or not auraData then
-    return nil;
-  end
-  return AuraUtil.UnpackAuraData(auraData);
+  return auraData
+--   if ns.IsSecretValue(auraData) or not auraData then
+--     return nil;
+--   end
+--   return AuraUtil.UnpackAuraData(auraData);
 end
 
 ns.UnitBuff = UnitBuff or function(unitToken, index, filter)
@@ -107,74 +115,16 @@ end
 ns.IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook or ns.IsSpellInSpellBook
 
 
-if (not SMARTDEBUFF_HASSECRETS) then return end
--- ============================================================
--- SmartDebuff - Nouvelle API pour les debuffs (WoW 12.0+)
--- Utilise C_UnitAuras au lieu de l'ancienne API UnitAura/UnitDebuff
--- ============================================================
-
 -- Cache local des API WoW pour performance
 local C_UnitAuras = C_UnitAuras
-local UnitAuraSlots = UnitAuraSlots
-local UnitIsUnit = UnitIsUnit
-local GetTime = GetTime
 local pcall = pcall
 
--- ============================================================
--- TYPES DE DISPEL (Enum WoW 12.0+)
--- ============================================================
 
-local Enum_DispelType = {
-    None = 0,
-    Magic = 1,
-    Curse = 2,
-    Disease = 3,
-    Poison = 4,
-    Enrage = 9,
-    Bleed = 11,
-}
-
--- ============================================================
--- DÉTECTION DES TYPES DE DISPEL DU JOUEUR
--- ============================================================
-
-local playerClass = nil
-local playerDispelTypes = nil
-
-local function GetPlayerDispelTypes()
-    if playerDispelTypes then
-        return playerDispelTypes
-    end
-
-    if not playerClass then
-        playerClass = select(2, UnitClass("player"))
-    end
-
-    local canDispel = {
-        PRIEST = {Magic = true, Disease = true},
-        SHAMAN = {Magic = true, Curse = true},
-        PALADIN = {Magic = true, Disease = true, Poison = true},
-        MAGE = {Curse = true},
-        DRUID = {Magic = true, Curse = true, Poison = true},
-        MONK = {Magic = true, Disease = true, Poison = true},
-        EVOKER = {Magic = true, Curse = true, Disease = true, Poison = true, Bleed = true},
-        WARLOCK = {Magic = true},  -- Felhunter
-        HUNTER = {Enrage = true, Magic = true},  -- Tranquilizing Shot + Spirit Mend (pet)
-        WARRIOR = {},
-        DEATHKNIGHT = {},
-        ROGUE = {},
-        DEMONHUNTER = {},
-    }
-
-    playerDispelTypes = canDispel[playerClass] or {}
-    return playerDispelTypes
-end
-
--- ============================================================
--- VÉRIFICATION SI DISPELLABLE PAR LE JOUEUR
--- ============================================================
-
-local function IsDispellableByPlayer(auraData)
+---Is dispellabl by player
+---@param auraData AuraData
+---@param canDispel Array of available dispel_type canDispel['Magic'] , ...
+---@return boolean true if available in canDispel
+local function IsDispellableByPlayer(auraData, canDispel)
     if not auraData then return false end
 
     -- Gestion des valeurs secrètes (secret values) dans WoW 12.0+
@@ -182,41 +132,18 @@ local function IsDispellableByPlayer(auraData)
     pcall(function()
         local dispelName = auraData.dispelName
         if dispelName then
-            local canDispel = GetPlayerDispelTypes()
-            isDispellable = canDispel[dispelName] == true
+            isDispellable = (not not canDispel[dispelName])
         end
     end)
 
     return isDispellable
 end
 
--- ============================================================
--- DÉTECTION DES AURAS BOSS
--- ============================================================
-
-local function IsBossAura(auraData)
-    if not auraData then return false end
-
-    -- Gestion des valeurs secrètes
-    local isBoss = false
-    pcall(function()
-        if auraData.isBossAura then
-            isBoss = true
-        end
-    end)
-
-    return isBoss
-end
-
--- ============================================================
--- FONCTION PRINCIPALE : CHECK UNIT DEBUFFS
--- Remplace l'ancienne SMARTDEBUFF_GetUnitDebuffs
--- ============================================================
 
 --[[
     SMARTDEBUFF_GetUnitDebuffs(unit, filterMode, maxDebuffs)
 
-    Paramètres:
+    Params:
         unit         - unitID (e.g., "player", "party1", "raid5", "target")
         filterMode   - Mode de filtrage:
                        "SMART"      - Debuffs boss + dispellables par le joueur
@@ -226,7 +153,7 @@ end
                        nil/autre    - Par défaut: "SMART"
         maxDebuffs   - Nombre maximum de debuffs à retourner (défaut: 40)
 
-    Retour:
+    Return:
         Table de debuffs, chaque entrée contient:
         {
             name          - Nom du sort (peut être secret)
@@ -250,100 +177,22 @@ end
             slot          - Numéro de slot (1-40)
         }
 ]]
-
-function SMARTDEBUFF_GetUnitDebuffs(unit, filterMode, maxDebuffs)
+function SMARTDEBUFF_GetUnitDebuffs(unit, filterMode, maxDebuffs, canDispel)
     if not unit then return {} end
 
     filterMode = filterMode or "SMART"
     maxDebuffs = maxDebuffs or 40
 
     local debuffs = {}
-    local filter = "HARMFUL"  -- On ne récupère que les debuffs
-
-    -- Vérifier que l'API est disponible
-    if not C_UnitAuras or not C_UnitAuras.GetAuraDataBySlot then
-        -- Fallback: retourner table vide si nouvelle API non disponible
-        return debuffs
-    end
-
-    -- Obtenir les slots d'auras pour cette unité
-    local slots = UnitAuraSlots and UnitAuraSlots(unit, filter)
-    if not slots then
-        -- Fallback: scanner manuellement les slots 1-40
-        for slot = 1, maxDebuffs do
-            local auraData = C_UnitAuras.GetAuraDataBySlot(unit, slot, filter)
-
-            if auraData then
-                local shouldInclude = false
-
-                -- Appliquer le filtre selon le mode
-                if filterMode == "ALL" then
-                    shouldInclude = true
-
-                elseif filterMode == "BOSS" then
-                    shouldInclude = IsBossAura(auraData)
-
-                elseif filterMode == "DISPEL" then
-                    shouldInclude = IsDispellableByPlayer(auraData)
-
-                else  -- "SMART" ou défaut
-                    -- Boss OU dispellable
-                    shouldInclude = IsBossAura(auraData) or IsDispellableByPlayer(auraData)
-                end
-
-                if shouldInclude then
-                    -- Ajouter le numéro de slot pour référence
-                    auraData.slot = slot
-                    table.insert(debuffs, auraData)
-
-                    -- Arrêter si on a atteint le maximum
-                    if #debuffs >= maxDebuffs then
-                        break
-                    end
-                end
-            end
-        end
-
-        return debuffs
-    end
-
-    -- Nouvelle méthode: utiliser UnitAuraSlots (plus efficace)
-    local ContinueOnSlot = true
-    for i = 1, #slots do
-        if not ContinueOnSlot then
-            break
-        end
-
-        local slot = slots[i]
-        local auraData = C_UnitAuras.GetAuraDataBySlot(unit, slot, filter)
-
-        if auraData then
-            local shouldInclude = false
-
-            -- Appliquer le filtre selon le mode
-            if filterMode == "ALL" then
-                shouldInclude = true
-
-            elseif filterMode == "BOSS" then
-                shouldInclude = IsBossAura(auraData)
-
-            elseif filterMode == "DISPEL" then
-                shouldInclude = IsDispellableByPlayer(auraData)
-
-            else  -- "SMART" ou défaut
-                -- Boss OU dispellable
-                shouldInclude = IsBossAura(auraData) or IsDispellableByPlayer(auraData)
-            end
-
-            if shouldInclude then
-                -- Ajouter le numéro de slot pour référence
-                auraData.slot = slot
+    for slot = 1, maxDebuffs do
+        local auraData = C_UnitAuras.GetAuraDataBySlot(unit, slot)
+        if auraData and not auraData.isHarmful  then
+            -- auraData.isBossAura
+            if IsDispellableByPlayer(auraData, canDispel) then
+                auraData.slot = slot -- pour référence
                 table.insert(debuffs, auraData)
 
-                -- Arrêter si on a atteint le maximum
-                if #debuffs >= maxDebuffs then
-                    ContinueOnSlot = false
-                end
+                break
             end
         end
     end
@@ -351,180 +200,5 @@ function SMARTDEBUFF_GetUnitDebuffs(unit, filterMode, maxDebuffs)
     return debuffs
 end
 
--- ============================================================
--- FONCTION UTILITAIRE : Obtenir un debuff spécifique par auraInstanceID
--- ============================================================
-
---[[
-    SMARTDEBUFF_GetDebuffByInstanceID(unit, auraInstanceID)
-
-    Paramètres:
-        unit           - unitID
-        auraInstanceID - ID unique de l'instance d'aura
-
-    Retour:
-        auraData ou nil si non trouvé
-]]
-
-function SMARTDEBUFF_GetDebuffByInstanceID(unit, auraInstanceID)
-    if not unit or not auraInstanceID then return nil end
-    if not C_UnitAuras or not C_UnitAuras.GetAuraDataByAuraInstanceID then
-        return nil
-    end
-
-    return C_UnitAuras.GetAuraDataByAuraInstanceID(unit, auraInstanceID)
-end
-
--- ============================================================
--- FONCTION UTILITAIRE : Compter les debuffs d'un type spécifique
--- ============================================================
-
---[[
-    SMARTDEBUFF_CountDebuffsByType(unit, dispelType)
-
-    Paramètres:
-        unit       - unitID
-        dispelType - Type de dispel à compter ("Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed")
-
-    Retour:
-        Nombre de debuffs de ce type
-]]
-
-function SMARTDEBUFF_CountDebuffsByType(unit, dispelType)
-    if not unit or not dispelType then return 0 end
-
-    local count = 0
-    local filter = "HARMFUL"
-
-    if not C_UnitAuras or not C_UnitAuras.GetAuraDataBySlot then
-        return 0
-    end
-
-    -- Scanner tous les slots
-    for slot = 1, 40 do
-        local auraData = C_UnitAuras.GetAuraDataBySlot(unit, slot, filter)
-
-        if auraData then
-            -- Vérifier le type de dispel (avec gestion des secret values)
-            local success = pcall(function()
-                if auraData.dispelName == dispelType then
-                    count = count + 1
-                end
-            end)
-        else
-            -- Plus de debuffs à scanner
-            break
-        end
-    end
-
-    return count
-end
-
--- ============================================================
--- FONCTION UTILITAIRE : Vérifier si une unité a un debuff dispellable
--- ============================================================
-
---[[
-    SMARTDEBUFF_HasDispellableDebuff(unit)
-
-    Paramètres:
-        unit - unitID
-
-    Retour:
-        true si l'unité a au moins un debuff que le joueur peut dispell
-]]
-
-function SMARTDEBUFF_HasDispellableDebuff(unit)
-    if not unit then return false end
-
-    local filter = "HARMFUL"
-
-    if not C_UnitAuras or not C_UnitAuras.GetAuraDataBySlot then
-        return false
-    end
-
-    -- Scanner jusqu'à trouver un debuff dispellable
-    for slot = 1, 40 do
-        local auraData = C_UnitAuras.GetAuraDataBySlot(unit, slot, filter)
-
-        if auraData then
-            if IsDispellableByPlayer(auraData) then
-                return true
-            end
-        else
-            -- Plus de debuffs
-            break
-        end
-    end
-
-    return false
-end
-
--- ============================================================
--- FONCTION UTILITAIRE : Vérifier si une unité a un debuff boss
--- ============================================================
-
---[[
-    SMARTDEBUFF_HasBossDebuff(unit)
-
-    Paramètres:
-        unit - unitID
-
-    Retour:
-        true si l'unité a au moins un debuff boss
-]]
-
-function SMARTDEBUFF_HasBossDebuff(unit)
-    if not unit then return false end
-
-    local filter = "HARMFUL"
-
-    if not C_UnitAuras or not C_UnitAuras.GetAuraDataBySlot then
-        return false
-    end
-
-    -- Scanner jusqu'à trouver un debuff boss
-    for slot = 1, 40 do
-        local auraData = C_UnitAuras.GetAuraDataBySlot(unit, slot, filter)
-
-        if auraData then
-            if IsBossAura(auraData) then
-                return true
-            end
-        else
-            -- Plus de debuffs
-            break
-        end
-    end
-
-    return false
-end
-
--- ============================================================
--- EXEMPLE D'UTILISATION
--- ============================================================
-
---[[
-    -- Obtenir tous les debuffs importants (boss + dispellables)
-    local debuffs = SMARTDEBUFF_GetUnitDebuffs("target", "SMART", 8)
-    for i, debuff in ipairs(debuffs) do
-        print(string.format("%d. %s (slot %d) - %s",
-            i,
-            debuff.name or "Unknown",
-            debuff.slot,
-            debuff.dispelName or "None"))
-    end
-
-    -- Obtenir uniquement les debuffs dispellables
-    local dispellableDebuffs = SMARTDEBUFF_GetUnitDebuffs("player", "DISPEL")
-
-    -- Compter les debuffs Magic sur la cible
-    local magicCount = SMARTDEBUFF_CountDebuffsByType("target", "Magic")
-
-    -- Vérifier si le joueur a un debuff dispellable
-    if SMARTDEBUFF_HasDispellableDebuff("player") then
-        print("Vous avez un debuff que vous pouvez dispel !")
-    end
-]]
 
 

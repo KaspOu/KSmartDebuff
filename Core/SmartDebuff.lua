@@ -284,6 +284,9 @@ local function GetSpellCD(spell)
   if (not spell) then return -1 end
   local scd = ns.GetSpellCooldown(spell);
   -- FIXME:
+  if (scd and ns.IsSecretValue(scd.startTime)) then
+    return scd.isOnGCD and -1 or 100
+  end
   if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5) then -- and scd.isEnabled) then
     return (scd.startTime + scd.duration) - GetTime();
   end
@@ -3966,10 +3969,11 @@ if (not SMARTDEBUFF_HASSECRETS) then
         --cud_name, _, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
         -- BlizzardInterfaceCode\Interface\AddOns\Blizzard_NamePlates\Blizzard_NamePlates.lua:505
         -- local name, texture, count, debuffType, duration, expirationTime, caster, _, nameplateShowPersonal, spellId, _, _, _, nameplateShowAll = UnitAura(unit, i, filter);
-        cud_name, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
-        if (not cud_icon) then
+        local auraData = ns.UnitAura(unit, cud_n, "HARMFUL")
+        if (not auraData) then
           break;
         end
+        cud_name, cud_icon, cud_dtype, cud_dur, cud_tl, _ = auraData.name, auraData.icon, auraData.dispelName, auraData.duration, auraData.expirationTime;
 
         cud_tl = tonumber(cud_tl);
         if (cud_tl == nil) then cud_tl = -1; end
@@ -4039,74 +4043,94 @@ else
     cud_n = -1;
     cud_nrd = false;
     if (spell and isActive) then
-        if (spell == nil) then
-            cud_ir = -1;
-        elseif (
-            (SDB_cacheRangeCheckSpell and ns.IsSpellInRange(SDB_cacheRangeCheckSpell, unit) == 1)
-            or SDB_IsBaseSpellInRange(spell, unit)
-            or UnitInRange(unit)
-        ) then
-            cud_ir = 1;
-        else
-            cud_ir = 0;
+      if (spell == nil) then
+        cud_ir = -1;
+      elseif (
+        (SDB_cacheRangeCheckSpell and ns.IsSpellInRange(SDB_cacheRangeCheckSpell, unit) == 1)
+        or SDB_IsBaseSpellInRange(spell, unit)-- type(spell) ~= "number" and ns.IsSpellInRange
+        or ns.UnitInRange(unit)
+      ) then
+        cud_ir = 1;
+      else
+        cud_ir = 0;
+      end
+      -- SMARTDEBUFF_AddMsgD("Check unit: " .. unit .. ", " .. UnitName(unit) .. ", " .. idx.." spell: "..spell.." / In Range: "..SDB_cacheRangeCheckSpell.." : "..IsSpellInRange(SDB_cacheRangeCheckSpell, unit));
+
+      cud_n = 1;
+      while (true) do
+        --name,rank,icon,count,type = UnitDebuff("unit", id or "name"[,"rank"])
+        --cud_name, _, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
+        -- BlizzardInterfaceCode\Interface\AddOns\Blizzard_NamePlates\Blizzard_NamePlates.lua:505
+        -- local name, texture, count, debuffType, duration, expirationTime, caster, _, nameplateShowPersonal, spellId, _, _, _, nameplateShowAll = UnitAura(unit, i, filter);
+
+        local auraData = ns.UnitAura(unit, cud_n, "HARMFUL")
+        if (not auraData) then
+          break;
         end
+        cud_name, cud_icon, cud_dtype, cud_dur, cud_tl, _ = auraData.name, auraData.icon, auraData.dispelName, auraData.duration, auraData.expirationTime;
 
-        -- Utiliser la nouvelle API pour obtenir les debuffs
-        local debuffs = SMARTDEBUFF_GetUnitDebuffs(unit, "ALL", 40)
 
-        for _, auraData in ipairs(debuffs) do
-            cud_name = auraData.name
-            cud_icon = auraData.icon
-            cud_dtype = auraData.dispelName
-            cud_dur = auraData.duration
-            cud_tl = auraData.expirationTime
-
-            cud_tl = tonumber(cud_tl);
-            if (ns.IsSecretValue(cud_tl)) then cud_tl = -1; end
-            if (cud_tl == nil) then cud_tl = -1; end
-            if (not cud_tl) then cud_tl = -1; end
-            if (cud_tl > 0) then
-                cud_tl = cud_tl - GetTime();
+        if (ns.IsSecretValue(cud_tl)) then cud_tl = -1 end
+        cud_tl = tonumber(cud_tl);
+        if (cud_tl == nil) then cud_tl = -1; end
+        if (not cud_tl) then cud_tl = -1; end
+        cud_tl = cud_tl - GetTime();
+        if (ns.IsSecretValue(cud_name)) then
+          cud_dtype = nil
+          local types = { SMARTDEBUFF_DISEASE, SMARTDEBUFF_POISON, SMARTDEBUFF_CURSE, SMARTDEBUFF_MAGIC }
+          for _, t in ipairs(types) do
+            if cSpells[t] then
+              cud_dtype = t;
+              break;
             end
-
-            if (spell and cud_name and cud_dtype) then
-                _, cud_uclass = UnitClass(unit);
-
-                if (cSpells[cud_dtype] and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit)) and not SMARTDEBUFF_DEBUFFSKIPLIST[cud_name] and not (SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass] and SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass][cud_name])) then
-                    cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
-                    if (not O.IgnoreDebuff or cud_cds <= 0) then
-                        hasDebuff = true;
-                        SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
-                        SMARTDEBUFF_PlaySound();
-                        return;
-                    end
-                end
-            end
+          end
         end
+        if (spell and cud_name and cud_dtype) then
+          -- SMARTDEBUFF_AddMsgD("Debuff found: " .. cud_dtype.." on "..unit.." (" .. cud_name .. ")");
+          _, cud_uclass = UnitClass(unit);
 
-        -- check if a player is charmed, can be attacked and is polymorphable
-        if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
-            cud_cds = GetSpellCD(cSpells[SMARTDEBUFF_CHARMED][1]);
-            if (not O.IgnoreDebuff or cud_cds <= 0) then
-                hasDebuff = true;
-                SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
-                SMARTDEBUFF_PlaySound();
-                return;
-            end
-        end
-
-        if (cud_nrd) then
+          if (cSpells[cud_dtype] and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit))) then
             hasDebuff = true;
-            SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
-            SMARTDEBUFF_PlaySound();
-            return;
+            -- print(cSpells[cud_dtype])
+            cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
+            if (not O.IgnoreDebuff or cud_cds <= 0) then
+              -- FIXME: dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(auraInstanceUnit, auraInstanceID, curve)
+              hasDebuff = true;
+              SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
+              SMARTDEBUFF_PlaySound();
+              return;
+            end
+          end
         end
 
-        SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
+        cud_n = cud_n + 1;
+        --SMARTDEBUFF_AddMsgD("Check debuff");
+      end
+
+      -- check if a player is charmed, can be attacked and is polymorphable
+      if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+        cud_cds = GetSpellCD(cSpells[SMARTDEBUFF_CHARMED][1]);
+        if (not O.IgnoreDebuff or cud_cds <= 0) then
+          hasDebuff = true;
+          SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
+          SMARTDEBUFF_PlaySound();
+          return;
+        end
+      end
+
+      if (cud_nrd) then
+        hasDebuff = true;
+        SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
+        SMARTDEBUFF_PlaySound();
         return;
+      end
+
+      SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, -1, pet, 0);
+      return;
     end
-    -- No remove available
+    -- No remove available, or O.ShowNotRemov false
     SMARTDEBUFF_SetButtonState(unit, idx, -1, 0, -1, pet, 0);
+
   end
 end
 
