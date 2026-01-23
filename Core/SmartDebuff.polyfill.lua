@@ -14,7 +14,7 @@ end
 ns.UnitInRange = function (unit)
     local result = UnitInRange(unit)
     if (ns.IsSecretValue(result)) then
-        result = ns.C_Spell.IsSpellInRange(1229376, unit)
+        result = ns.IsSpellInRange(1229376, unit)
     end
     return result
 end
@@ -202,3 +202,42 @@ end
 
 
 
+
+local function getColor(cSpell, colors)
+    if not cSpell then
+        return colors.NONE
+    elseif cSpell[2] == "L" then
+        return colors.LEFT
+    elseif cSpell[2] == "R" then
+        return colors.RIGHT
+    elseif cSpell[2] == "M" then
+        return colors.MIDDLE
+    end
+    return colors.UNKNOWN
+end
+
+-- Since Midnight (12)
+-- C_UnitAuras.GetAuraDispelTypeColor(auraInstanceUnit, auraInstanceID, curve)
+-- https://warcraft.wiki.gg/wiki/API_C_UnitAuras.GetAuraDispelTypeColor
+-- https://github.com/Tercioo/Plater-Nameplates/blob/master/Plater_Auras.lua
+local cachedCurve
+ns.getCurve = function(cSpells, colors, reset)
+    if (reset or not cachedCurve) then
+        cachedCurve = C_CurveUtil.CreateColorCurve();
+        cachedCurve:SetType(Enum.LuaCurveType.Step)
+        local colorInfo = {
+             [0] = colors.NONE,
+             [1] = getColor(cSpells[SMARTDEBUFF_MAGIC], colors),
+             [2] = getColor(cSpells[SMARTDEBUFF_CURSE], colors),
+             [3] = getColor(cSpells[SMARTDEBUFF_DISEASE], colors),
+             [4] = getColor(cSpells[SMARTDEBUFF_POISON], colors),
+             [9] = getColor(cSpells[SMARTDEBUFF_BLEED], colors), -- enrage
+            [11] = getColor(cSpells[SMARTDEBUFF_BLEED], colors),
+
+        }
+        for i, c in pairs(colorInfo) do
+            cachedCurve:AddPoint(i, c)
+        end
+    end
+    return cachedCurve
+end

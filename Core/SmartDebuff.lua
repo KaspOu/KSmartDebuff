@@ -2804,7 +2804,8 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       sbs_un = cUnits[unit].Subgroup .. ":" .. sbs_un;
     end
 
-    if (UnitIsAFK(unit)) then
+    local isAFK UnitIsAFK(unit)
+    if (not ns.IsSecretValue(isAFK) and isAFK) then
       sbs_pre = "AFK";
       sbs_col.r = 0.2; sbs_col.g = 0.1; sbs_col.b = 0;
       iTotAFK = iTotAFK + 1;
@@ -4094,7 +4095,7 @@ else
             -- print(cSpells[cud_dtype])
             cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
             if (not O.IgnoreDebuff or cud_cds <= 0) then
-              -- FIXME: dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(auraInstanceUnit, auraInstanceID, curve)
+              -- FIXME: dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraData.auraInstanceID, curve)
               hasDebuff = true;
               SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
               SMARTDEBUFF_PlaySound();

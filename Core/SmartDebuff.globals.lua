@@ -58,12 +58,12 @@ SMARTDEBUFF_OF_HEIGHT = 500;
 SMARTDEBUFF_OF_WIDTH = 500;
 
 -- Debuff types
-SMARTDEBUFF_DISEASE = "Disease";
 SMARTDEBUFF_MAGIC   = "Magic";
-SMARTDEBUFF_POISON  = "Poison";
 SMARTDEBUFF_CURSE   = "Curse";
-SMARTDEBUFF_CHARMED = "Mind Control";
+SMARTDEBUFF_DISEASE = "Disease";
+SMARTDEBUFF_POISON  = "Poison";
 SMARTDEBUFF_BLEEDING   = "Bleeding"; -- Not a really debuff type
+SMARTDEBUFF_CHARMED = "Mind Control";
 
 SMARTDEBUFF_HEAL    = "Heal";
 SMARTDEBUFF_UTIL    = "Utility";
