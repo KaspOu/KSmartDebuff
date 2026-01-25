@@ -91,13 +91,10 @@ ns.GetTalentInfo = GetTalentInfo or function(tabIndex, talentIndex, isInspect, i
     talentInfo.talentID;
 end
 
+-- WARNING, can't be used with secrets
 ns.UnitAura = UnitAura or function(unitToken, index, filter)
   local auraData = C_UnitAuras.GetAuraDataByIndex(unitToken, index, filter);
-  return auraData
---   if ns.IsSecretValue(auraData) or not auraData then
---     return nil;
---   end
---   return AuraUtil.UnpackAuraData(auraData);
+  return AuraUtil.UnpackAuraData(auraData);
 end
 
 ns.UnitBuff = UnitBuff or function(unitToken, index, filter)

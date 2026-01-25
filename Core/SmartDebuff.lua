@@ -93,6 +93,7 @@ local cSpells = { };
 local cSpellName = { };
 local cSpellList = nil;
 local cSpellDefault = { };
+local curves = {}
 --- Cache name of spell used for range check
 local SDB_cacheRangeCheckSpell = nil;
 --- table<number, string> Computed cached restricted list of talents id / name (format: {[spellID] = spellName, ..})
@@ -400,6 +401,37 @@ local function LUnitIndex(unit)
     return tonumber(index_str);
   end
   return 0;
+end
+local function BlizzUnitFrame(unit)
+  local lUnitIndex = LUnitIndex(unit)
+  if lUnitIndex > 0 then
+    if (_G["CompactRaidFrame"..lUnitIndex] and _G["CompactRaidFrame"..lUnitIndex]:IsVisible()) then
+      return _G["CompactRaidFrame"..lUnitIndex]
+    end
+    if (_G["CompactPartyFrameMember"..lUnitIndex] and _G["CompactPartyFrameMember"..lUnitIndex]:IsVisible()) then
+      return _G["CompactPartyFrameMember"..lUnitIndex]
+    end
+    SMARTDEBUFF_AddMsgD(RD.."BlizzUnitFrame "..unit.." not found")
+    return nil
+  end
+  if unit == "player" then
+    local nMax = 1
+    if (iGroupSetup == 3) then
+      nMax = maxRaid;
+    elseif (iGroupSetup == 2) then
+      nMax = 5;
+    end
+    for j = 1, nMax, 1 do
+      if _G["CompactRaidFrame"..j] and _G["CompactRaidFrame"..j].unit and UnitIsUnit(_G["CompactRaidFrame"..j].unit, "player") and _G["CompactRaidFrame"..j]:IsVisible() then
+        return _G["CompactRaidFrame"..j]
+      end
+      if _G["CompactPartyFrameMember"..j] and _G["CompactPartyFrameMember"..j].unit and UnitIsUnit(_G["CompactPartyFrameMember"..j].unit, "player") and _G["CompactPartyFrameMember"..j]:IsVisible() then
+        return _G["CompactPartyFrameMember"..j]
+      end
+    end
+  end
+  SMARTDEBUFF_AddMsgD(RD.."BlizzUnitFrame "..unit.." not found")
+  return nil
 end
 
 local function HideF(f)
@@ -1842,6 +1874,7 @@ function SMARTDEBUFF_LinkSpellsToKeys()
   if not SDB_cacheRangeCheckSpell then
     SMARTDEBUFF_AddMsgD(ORD.."No spell found for Range detection!");
   end
+  SMARTDEBUFF_InitCurves()
 end
 
 
@@ -2174,6 +2207,14 @@ function SMARTDEBUFF_CreateButtons()
       button.text:SetJustifyH("CENTER");
       button.text:SetAllPoints(button);
       button:SetFontString(button.text);
+      button.text2 = button:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text2:SetJustifyH("CENTER");
+      button.text2:SetAllPoints(button);
+      button.text2:SetAlpha(0)
+      button.text3 = button:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text3:SetJustifyH("CENTER");
+      button.text3:SetAllPoints(button);
+      button.text3:SetAlpha(0)
 
       -- create hp texture
       button.hp = CreateFrame("StatusBar", nil, button)
@@ -2262,6 +2303,12 @@ function SMARTDEBUFF_CreateButtons()
       button.text:SetJustifyH("CENTER");
       button.text:SetAllPoints(button);
       button:SetFontString(button.text);
+      button.text2 = button:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text2:SetJustifyH("CENTER");
+      button.text2:SetAllPoints(button);
+      button.text3 = button:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text3:SetJustifyH("CENTER");
+      button.text3:SetAllPoints(button);
 
       -- create hp texture
       button.hp = CreateFrame("StatusBar", nil, button, nil, "OVERLAY")
@@ -2934,6 +2981,10 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         C_Timer.After(spellCD, function() SMARTDEBUFF_DEBUG_DISPELS[sbs_st] = nil; end);
       end
     end
+    -- FIXME Set C_CurveUtil HERE
+    -- 3 textes, avec chacun leur curve transparent / Blanc
+    -- 3 background, avec O.ColDebuffL - O.ColDebuffR - O.ColDebuffM
+    -- dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraData.auraInstanceID, curve)
     sbs_col.r = O.ColDebuffL.r;
     sbs_col.g = O.ColDebuffL.g;
     sbs_col.b = O.ColDebuffL.b;
@@ -3022,6 +3073,10 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
 
     sbs_btn:SetAlpha(O.ANormalOOR);
 
+    if isInRange ~= 1 and nr ~= -99 then
+      local blizzUnit = BlizzUnitFrame(unit)
+      isInRange = blizzUnit.inDistance and 1 or isInRange
+    end
     if (nr == -99) then
       -- unit does not longer exists
       sbs_btn:SetAlpha(0.1);
@@ -3029,27 +3084,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       -- unit is in a vehicle
       sbs_btn:SetAlpha(O.ANormalOOR / 2);
       -- CompactPartyFrameMember
-    elseif (isInRange == 1
-        or (_G["CompactRaidFrame"..LUnitIndex(unit)] and _G["CompactRaidFrame"..LUnitIndex(unit)].inDistance)
-        or (_G["CompactPartyFrameMember"..LUnitIndex(unit)] and _G["CompactPartyFrameMember"..LUnitIndex(unit)].inDistance)
-      ) then -- UnitInRange(unit)) then
-      --[[ FIXME:12.0 UnitInRange by checking RaidNameplate
-      >> Garder un cache des unités lors de la boucle, si pas possible:
-      /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
-      /dump CompactPartyFrameMember1:GetAlpha()
-      /dump CompactPartyFrameMember1.inDistance
-      /dump CompactPartyFrameMember1.hasDispelCurse
-      /dump CompactRaidFrame1.hasDispelCurse
-      /dump CompactPartyFrameMember1.healPredictionDirty
-      /dump CompactPartyFrameMember1Debuff1:IsShown()
-      /script for k, v in pairs(CompactPartyFrameMember1) do print(k, v) end
-      /script for k, v in pairs(CompactPartyFrameMember1) do if not issecretvalue(v) or not issecrettable(v) then print(k, v) end end
-      /script for k, v in pairs(CompactPartyFrameMember1) do if issecretvalue(v) or issecrettable(v) then print(k, v) end end
-      /dump CompactPartyFrameMember1.dispelDebuffFrames
-
-      /dump CompactPartyFrameMember1DispelDebuff1:IsShown()
-      CompactRaidFrame1Debuff1
-      ]]
+    elseif (isInRange == 1) then -- UnitInRange(unit)) then
       -- unit is in range
       sbs_btn:SetAlpha(O.ANormal);
       -- FIXME:
@@ -3073,11 +3108,105 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   end
 
   sbs_btn.text:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
+  sbs_btn.text2:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
+  sbs_btn.text3:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
   -- sbs_btn.text:SetFontObject("GameFontWhiteSmall");
   sbs_btn.text:SetText(sbs_st);
+  sbs_btn.text:SetAlpha(1);
+  sbs_btn.text2:SetAlpha(0);
+  sbs_btn.text3:SetAlpha(0);
   sbs_btn.texture:SetAllPoints(sbs_btn);
 
   SmartDebuff_SetButtonBars(sbs_btn, unit, sbs_uc);
+end
+
+function SMARTDEBUFF_InitCurves()
+  if not C_CurveUtil then
+    return
+  end
+  local white = CreateColor(1, 1, 1, 1)
+  local invis = CreateColor(1, 1, 1, 0)
+  local colorL = CreateColor(O.ColDebuffL.r, O.ColDebuffL.g, O.ColDebuffL.b, 1)
+  local colorM = CreateColor(O.ColDebuffM.r, O.ColDebuffM.g, O.ColDebuffM.b, 1)
+  local colorR = CreateColor(O.ColDebuffR.r, O.ColDebuffR.g, O.ColDebuffR.b, 1)
+  local colors = { colorL, colorR, colorM };
+  local defaultColor = colorL
+  if #cSpellDefault["L"] == 0 then
+    if #cSpellDefault["R"] > 0 then
+      defaultColor = colorR
+    elseif #cSpellDefault["M"] > 0 then
+      defaultColor = colorM
+    end
+  end
+  local DEBUFF_DISPLAY_COLOR_INFO = {
+     [0] = defaultColor, -- DEBUFF_TYPE_NONE_COLOR,
+     [1] = cSpells[SMARTDEBUFF_MAGIC] and colors[cSpells[SMARTDEBUFF_MAGIC][2]] or defaultColor, -- DEBUFF_TYPE_MAGIC_COLOR,
+     [2] = cSpells[SMARTDEBUFF_CURSE] and colors[cSpells[SMARTDEBUFF_CURSE][2]] or defaultColor, -- DEBUFF_TYPE_CURSE_COLOR,
+     [3] = cSpells[SMARTDEBUFF_DISEASE] and colors[cSpells[SMARTDEBUFF_DISEASE][2]] or defaultColor, -- DEBUFF_TYPE_DISEASE_COLOR,
+     [4] = cSpells[SMARTDEBUFF_POISON] and colors[cSpells[SMARTDEBUFF_POISON][2]] or defaultColor, -- DEBUFF_TYPE_POISON_COLOR,
+     [9] = cSpells[SMARTDEBUFF_BLEEDING] and colors[cSpells[SMARTDEBUFF_BLEEDING][2]] or defaultColor, -- DEBUFF_TYPE_BLEED_COLOR, -- enrage
+    [11] = cSpells[SMARTDEBUFF_BLEEDING] and colors[cSpells[SMARTDEBUFF_BLEEDING][2]] or defaultColor, -- DEBUFF_TYPE_BLEED_COLOR,
+  }
+  local L_DISPLAY_INFO, M_DISPLAY_INFO, R_DISPLAY_INFO = {}, {}, {}
+  for i, c in pairs(DEBUFF_DISPLAY_COLOR_INFO) do
+    L_DISPLAY_INFO[i] = (c == colorL) and white or invis
+    M_DISPLAY_INFO[i] = (c == colorM) and white or invis
+    R_DISPLAY_INFO[i] = (c == colorR) and white or invis
+  end
+  curves.dispelBG = C_CurveUtil.CreateColorCurve()
+  curves.dispelTextL = C_CurveUtil.CreateColorCurve()
+  curves.dispelTextM = C_CurveUtil.CreateColorCurve()
+  curves.dispelTextR = C_CurveUtil.CreateColorCurve()
+  curves.dispelBG:SetType(Enum.LuaCurveType.Step)
+  curves.dispelTextL:SetType(Enum.LuaCurveType.Step)
+  curves.dispelTextM:SetType(Enum.LuaCurveType.Step)
+  curves.dispelTextR:SetType(Enum.LuaCurveType.Step)
+  for i, c in pairs(DEBUFF_DISPLAY_COLOR_INFO) do
+    curves.dispelBG:AddPoint(i, c)
+    curves.dispelTextL:AddPoint(i, L_DISPLAY_INFO[i])
+    curves.dispelTextM:AddPoint(i, M_DISPLAY_INFO[i])
+    curves.dispelTextR:AddPoint(i, R_DISPLAY_INFO[i])
+  end
+end
+
+-- https://warcraft.wiki.gg/wiki/ScriptObject_ColorCurveObject
+function SMARTDEBUFF_SetButtonState_Curve(unit, idx, nr, isInRange, remains, isPet, spellCD, auraInstanceID, overlay)
+  if (auraInstanceID) then
+    if (O.ShowLR) then
+      sbs_btn.text:SetText(SMARTDEBUFF_KEY_L);
+      sbs_btn.text2:SetText(SMARTDEBUFF_KEY_M);
+      sbs_btn.text3:SetText(SMARTDEBUFF_KEY_R);
+    end
+    local dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelBG)
+    local txtLColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextL)
+    local txtMColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextM)
+    local txtRColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextR)
+    sbs_btn.texture:SetVertexColor( dispelTypeColor:GetRGBA())
+    sbs_btn.texture:SetColorTexture(dispelTypeColor:GetRGBA())
+    sbs_btn.text:SetVertexColor( txtLColor:GetRGBA())
+    sbs_btn.text2:SetVertexColor(txtMColor:GetRGBA())
+    sbs_btn.text3:SetVertexColor(txtRColor:GetRGBA())
+  else
+    sbs_btn.text:SetText("");
+    sbs_btn.texture:SetVertexColor(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
+    sbs_btn.texture:SetColorTexture(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
+    sbs_btn.text:SetVertexColor(1, 1, 1, 1)
+    sbs_btn.text2:SetVertexColor(1, 1, 1, 0)
+    sbs_btn.text3:SetVertexColor(1, 1, 1, 0)
+  end
+  if (isInRange ~= 1) then
+    sbs_btn.texture:SetVertexColor(.5, .5, .5, 1);
+    if (O.ShowLR) then
+      sbs_btn.text:SetText("-")
+      sbs_btn.text2:SetText("-")
+      sbs_btn.text3:SetText("-")
+    end
+  end
+  -- sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
+  sbs_btn:SetAlpha(O.ADebuff);
+  if (O.ShowLR) then
+    sbs_fontH = O.BtnH - 2;
+  end
 end
 
 local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_per, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y, sbb_txtr;
@@ -3271,9 +3400,21 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
         end
       end
 
-      if ((sbb_n ~= nil and sbb_n >= 1)) then
+      local showRaidIcon = false
+      -- Prepare raid icon
+      if ns.IsSecretValue(sbb_n) then
+        if type(sbb_n) ~= "nil" then
+          btn.raidicon:SetTexture("Interface/TargetingFrame/UI-RaidTargetingIcons")
+          SetRaidTargetIconTexture(btn.raidicon, sbb_n)
+          showRaidIcon = true
+        end
+      elseif (sbb_n ~= nil and sbb_n >= 1) then
         btn.raidicon:SetTexture(cRaidicons[sbb_n]);
         btn.raidicon:SetTexCoord(0, 1, 0, 1);
+        showRaidIcon = true
+      end
+      -- Raid icon ready
+      if showRaidIcon then
         --sbb_n = btn:GetHeight() / 3;
         sbb_n = O.RaidIconSize;
         btn.raidicon:ClearAllPoints();
@@ -4039,7 +4180,7 @@ if (not SMARTDEBUFF_HASSECRETS) then
 
 else
 
-  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_nrd, cud_un, cud_tlnr, cud_cds;
+  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_id, cud_nrd, cud_un, cud_tlnr, cud_cds;
   function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
     cud_n = -1;
     cud_nrd = false;
@@ -4057,54 +4198,74 @@ else
       end
       -- SMARTDEBUFF_AddMsgD("Check unit: " .. unit .. ", " .. UnitName(unit) .. ", " .. idx.." spell: "..spell.." / In Range: "..SDB_cacheRangeCheckSpell.." : "..IsSpellInRange(SDB_cacheRangeCheckSpell, unit));
 
-      cud_n = 1;
+      cud_n = 0;
       while (true) do
+        cud_n = cud_n + 1;
         --name,rank,icon,count,type = UnitDebuff("unit", id or "name"[,"rank"])
         --cud_name, _, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
         -- BlizzardInterfaceCode\Interface\AddOns\Blizzard_NamePlates\Blizzard_NamePlates.lua:505
         -- local name, texture, count, debuffType, duration, expirationTime, caster, _, nameplateShowPersonal, spellId, _, _, _, nameplateShowAll = UnitAura(unit, i, filter);
-
-        local auraData = ns.UnitAura(unit, cud_n, "HARMFUL")
+        local auraData = C_UnitAuras.GetAuraDataByIndex(unit, cud_n, "HARMFUL") -- HELPFUL / "HARMFUL")
         if (not auraData) then
           break;
         end
-        cud_name, cud_icon, cud_dtype, cud_dur, cud_tl, _ = auraData.name, auraData.icon, auraData.dispelName, auraData.duration, auraData.expirationTime;
+        cud_name, cud_icon, cud_dtype, cud_dur, cud_tl, cud_id = auraData.name, auraData.icon, auraData.dispelName, auraData.duration, auraData.expirationTime, auraData.auraInstanceID;
 
 
-        if (ns.IsSecretValue(cud_tl)) then cud_tl = -1 end
-        cud_tl = tonumber(cud_tl);
-        if (cud_tl == nil) then cud_tl = -1; end
-        if (not cud_tl) then cud_tl = -1; end
-        cud_tl = cud_tl - GetTime();
-        if (ns.IsSecretValue(cud_name)) then
-          cud_dtype = nil
-          local types = { SMARTDEBUFF_DISEASE, SMARTDEBUFF_POISON, SMARTDEBUFF_CURSE, SMARTDEBUFF_MAGIC }
-          for _, t in ipairs(types) do
-            if cSpells[t] then
-              cud_dtype = t;
-              break;
+        if type(cud_dtype) ~= "nil" then
+          -- Only if dispelType available
+          if (ns.IsSecretValue(cud_tl)) then cud_tl = -1 end
+          cud_tl = tonumber(cud_tl);
+          if (cud_tl == nil) then cud_tl = -1; end
+          if (not cud_tl) then cud_tl = -1; end
+          cud_tl = cud_tl - GetTime();
+
+          if (ns.IsSecretValue(cud_name)) then
+            cud_dtype = nil
+            local types = { SMARTDEBUFF_DISEASE, SMARTDEBUFF_POISON, SMARTDEBUFF_CURSE, SMARTDEBUFF_MAGIC }
+            for _, t in ipairs(types) do
+              if cSpells[t] then
+                cud_dtype = t;
+                cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
+                break;
+              end
             end
           end
+
+          local blizzFrame = BlizzUnitFrame(unit)
+          local dispelOverlay = blizzFrame and blizzFrame.DispelOverlay
+          if (dispelOverlay and dispelOverlay:IsVisible()) then
+            hasDebuff = true;
+            SMARTDEBUFF_SetButtonState(unit, idx, 2, cud_ir, cud_tl, pet, -1);
+            SMARTDEBUFF_SetButtonState_Curve(unit, idx, 2, cud_ir, cud_tl, pet, cud_cds, cud_id, dispelOverlay);
+            SMARTDEBUFF_PlaySound();
+            return;
+          end
         end
+        --[[
         if (spell and cud_name and cud_dtype) then
           -- SMARTDEBUFF_AddMsgD("Debuff found: " .. cud_dtype.." on "..unit.." (" .. cud_name .. ")");
           _, cud_uclass = UnitClass(unit);
 
           if (cSpells[cud_dtype] and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit))) then
-            hasDebuff = true;
+            -- hasDebuff = true;
             -- print(cSpells[cud_dtype])
             cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
             if (not O.IgnoreDebuff or cud_cds <= 0) then
               -- FIXME: dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraData.auraInstanceID, curve)
-              hasDebuff = true;
-              SMARTDEBUFF_SetButtonState(unit, idx, cSpells[cud_dtype][2], cud_ir, cud_tl, pet, cud_cds);
-              SMARTDEBUFF_PlaySound();
-              return;
+              if ((_G["CompactRaidFrame"..LUnitIndex(unit)] and _G["CompactRaidFrame"..LUnitIndex(unit)].DispelOverlay:IsVisible())
+                  or (_G["CompactPartyFrameMember"..LUnitIndex(unit)] and _G["CompactPartyFrameMember"..LUnitIndex(unit)].DispelOverlay:IsVisible())) then
+                hasDebuff = true;
+                SMARTDEBUFF_SetButtonState(unit, idx, 1, cud_ir, cud_tl, pet, cud_cds);
+                SMARTDEBUFF_SetButtonState_Curve(unit, idx, 1, cud_ir, cud_tl, pet, cud_cds, cud_id);
+                SMARTDEBUFF_PlaySound();
+                return;
+              end
             end
           end
         end
+        ]]
 
-        cud_n = cud_n + 1;
         --SMARTDEBUFF_AddMsgD("Check debuff");
       end
 
@@ -5369,3 +5530,25 @@ end
 
 ns.O = O
 ns.cSpells = cSpells
+
+
+--@do-not-package@
+--[[ FIXME:12.0 UnitInRange by checking RaidNameplate
+>> Garder un cache des unités lors de la boucle, si pas possible:
+/dump CompactPartyFrameMember1.DispelOverlay:IsVisible()
+/dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
+/dump CompactPartyFrameMember1:GetAlpha()
+/dump CompactPartyFrameMember1.inDistance
+/dump CompactPartyFrameMember1.hasDispelCurse
+/dump CompactRaidFrame1.hasDispelCurse
+/dump CompactPartyFrameMember1.healPredictionDirty
+/dump CompactPartyFrameMember1Debuff1:IsVisible()
+/script for k, v in pairs(CompactPartyFrameMember1) do print(k, v) end
+/script for k, v in pairs(CompactPartyFrameMember1) do if not issecretvalue(v) or not issecrettable(v) then print(k, v) end end
+/script for k, v in pairs(CompactPartyFrameMember1) do if issecretvalue(v) or issecrettable(v) then print(k, v) end end
+/dump CompactPartyFrameMember1.dispelDebuffFrames
+
+/dump CompactPartyFrameMember1DispelDebuff1:IsVisible()
+CompactRaidFrame1Debuff1
+]]
+--@end-do-not-package@
