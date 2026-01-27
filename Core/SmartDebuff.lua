@@ -3075,7 +3075,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
 
     if isInRange ~= 1 and nr ~= -99 then
       local blizzUnit = BlizzUnitFrame(unit)
-      isInRange = blizzUnit.inDistance and 1 or isInRange
+      isInRange = (blizzUnit and blizzUnit.inDistance) and 1 or isInRange
     end
     if (nr == -99) then
       -- unit does not longer exists
