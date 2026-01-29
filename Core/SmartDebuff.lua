@@ -3459,22 +3459,51 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       end
     end
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
-    if (not SMARTDEBUFF_HASSECRETS and O.ShowSpellIcon) then
+    if (O.ShowSpellIcon) then
       for loop2 = 1, math.min(#O.SpellGuard, maxSpellIcons), 1 do
+        -- C_UnitAuras.GetAuraDataBySpellName(unit, spellName, "RAID_IN_COMBAT") -- FIXME: 
+        -- FIXME: ERREUR 
+--[[
+5x Blizzard_FrameXMLUtil/AuraUtil.lua:25: attempt to call field '?' (a nil value)
+[Blizzard_FrameXMLUtil/AuraUtil.lua]:25: in function <Blizzard_FrameXMLUtil/AuraUtil.lua:24>
+[Blizzard_FrameXMLUtil/AuraUtil.lua]:81: in function 'FindAuraByName'
+[SmartDebuff/Core/SmartDebuff.lua]:3456: in function 'SmartDebuff_SetButtonBars'
+[SmartDebuff/Core/SmartDebuff.lua]:3120: in function 'SMARTDEBUFF_SetButtonState'
+[SmartDebuff/Core/SmartDebuff.lua]:4295: in function 'SMARTDEBUFF_CheckUnitDebuffs'
+[SmartDebuff/Core/SmartDebuff.lua]:4024: in function 'SMARTDEBUFF_CheckDebuffs'
+[SmartDebuff/Core/SmartDebuff.lua]:580: in function 'SMARTDEBUFF_OnUpdate'
+[*SmartDebuff.xml:33_OnUpdate]:1: in function <[string "*SmartDebuff.xml:33_OnUpdate"]:1>
+
+Locals:
+methodName = "GetAuraDataBySpellName"
+(*temporary) = nil
+(*temporary) = nil
+(*temporary) = "party1"
+(*temporary) = "Rétablissement"
+(*temporary) = nil
+(*temporary) = "attempt to call field '?' (a nil value)"
+AuraUtilDataProvider = <table> {
+}
+
+--]]
         local name, texture, count, debuffType, duration, expirationTime, source, _, _, spellID = AuraUtil.FindAuraByName(O.SpellGuard[loop2], unit);
         for _, target in ipairs({"HARMFUL", "NOT_CANCELABLE","CANCELABLE","RAID","PLAYER"}) do
-          if name ~= nil then
+          if type(name) ~= "nil" then
             break;
           end
           name, texture, _, _, _, expirationTime, _, _, _, _ = AuraUtil.FindAuraByName(O.SpellGuard[loop2], unit, target);
         end
-        if name ~= nil then
-            sbb_s = texture;
-            sbb_exp = math.max(0, tonumber(expirationTime) or 0);
-            if sbb_exp > 0 then
-              sbb_exp = (sbb_exp - GetTime()) / 10 + 0.1;
+        if type(name) ~= "nil" then
+            if ns.IsSecretValue(expirationTime) then
+              sbb_exp = expirationTime
+            else
+              sbb_exp = math.max(0, tonumber(expirationTime) or 0);
+              if sbb_exp > 0 then
+                sbb_exp = (sbb_exp - GetTime()) / 10 + 0.1;
+              end
+              sbb_exp = math.max(0, math.min(sbb_exp, 0.9)); -- 0 <= alpha expiration <= 0.9
             end
-            sbb_exp = math.max(0, math.min(sbb_exp, 0.9)); -- 0 <= alpha expiration <= 0.9
+            sbb_s = texture;
 
             btn.spellicon[loop2]:SetTexture(sbb_s);
             sbb_n = btn:GetHeight() / 3;
@@ -4214,7 +4243,7 @@ else
         --cud_name, _, cud_icon, _, cud_dtype, cud_dur, cud_tl, _ = ns.UnitAura(unit, cud_n, "HARMFUL");
         -- BlizzardInterfaceCode\Interface\AddOns\Blizzard_NamePlates\Blizzard_NamePlates.lua:505
         -- local name, texture, count, debuffType, duration, expirationTime, caster, _, nameplateShowPersonal, spellId, _, _, _, nameplateShowAll = UnitAura(unit, i, filter);
-        local auraData = C_UnitAuras.GetAuraDataByIndex(unit, cud_n, "HARMFUL") -- HELPFUL / "HARMFUL")
+        local auraData = C_UnitAuras.GetAuraDataByIndex(unit, cud_n, "HARMFUL") -- "RAID_PLAYER_DISPELLABLE" HELPFUL / "HARMFUL")
         if (not auraData) then
           break;
         end
