@@ -402,6 +402,15 @@ local function LUnitIndex(unit)
   end
   return 0;
 end
+local function GetUnitFrame(type, group, member) -- FIXME: à réutiliser
+	if type == "raid" then
+		return _G["CompactRaidFrame"..(((group-1)*5) + member )]
+	elseif type == "party" then
+		return _G["CompactPartyFrameMember".. member]
+	else
+		return _G["CompactRaidGroup"..group.."Member"..member]
+	end
+end
 local function BlizzUnitFrame(unit)
   local lUnitIndex = LUnitIndex(unit)
   if lUnitIndex > 0 then
@@ -2252,7 +2261,7 @@ function SMARTDEBUFF_CreateButtons()
       button.aggro:ClearAllPoints();
 
       -- create raid icon texture
-      button.raidicon = button:CreateTexture(nil, "ARTWORK");
+      button.raidicon = button:CreateTexture(nil, "OVERLAY");
       button.raidicon:SetTexture(nil);
       button.raidicon:SetBlendMode("BLEND");
       button.raidicon:ClearAllPoints();
@@ -4444,11 +4453,17 @@ function SMARTDEBUFF_SetAutoHide(b)
     SmartDebuffSF:EnableMouse(b);
     for i = 1, maxRaid, 1 do
       btn = _G["SmartDebuffBtn"..i];
-      if (btn) then btn:EnableMouse(b); end
+      if (btn) then
+          btn:EnableMouse(b);
+          btn.texture:SetShown(b)
+      end
     end
     for i = 1, maxPets, 1 do
       btn = _G["SmartDebuffPetBtn"..i];
-      if (btn) then btn:EnableMouse(b); end
+      if (btn) then
+        btn:EnableMouse(b);
+        btn.texture:SetShown(b)
+      end
     end
 
     if (b) then

@@ -1,3 +1,14 @@
+v12.0.004
+- Fix: Auto Hide (textures)
+
+v12.0.003
+- Stable version
+- Mop Classic
+
+v12.0.002
+- Midnight: Enhance detection, filtering
+- Midnight: L / R / M colors fixed
+
 v12.0.001
 - Midnight prepatch fixes
 - Midnight: Disable Debuff Guard / Spell Watch List
