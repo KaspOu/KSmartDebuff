@@ -7,17 +7,22 @@ SMARTDEBUFF_FONT = "Fonts\\FRIZQT___CYR.TTF"
 SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 
 -- Whats new info
-SMARTDEBUFF_WHATSNEW = [[|cffffffffWhats new:|r
+SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
+
+Midnight :
+
+- Enhanced detection
+
+- Fixed: Ignore debuff
 
 - Fixed: Auto Hide
 
-- Midnight: Disable
-   Debuff Guard
-   Spell Watch List
+- In progress: Spell Watch List
 
-- Midnight: Bars fixed
+- Disabled : Debuff Guard
 
-- Sort by Role / Class
+
+Sort by Role / Class
 ]];
 
 --@do-not-package@

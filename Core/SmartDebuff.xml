@@ -1930,12 +1930,6 @@
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWSPELLICON);
           </OnLoad>
           <OnShow>
-            if (SMARTDEBUFF_HASSECRETS) then
-              self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
-              return
-            end
             if (SMARTDEBUFF_Options) then
               self:SetChecked(SMARTDEBUFF_Options.ShowSpellIcon);
             end
@@ -1968,11 +1962,6 @@
         </Anchors>
         <Scripts>
           <OnLoad>
-            if (SMARTDEBUFF_HASSECRETS) then
-              self:Disable()
-              self:SetAlpha(.5)
-              return
-            end
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
           </OnLoad>
