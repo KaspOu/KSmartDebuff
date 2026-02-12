@@ -194,7 +194,8 @@
         "PET_TYPE_DEMON",
         "BATTLE_PET_NAME_1",
         "BATTLE_PET_NAME_8",
-        "BATTLE_PET_NAME_7"
+        "BATTLE_PET_NAME_7",
+        "C_CurveUtil"
     ],
     "Lua.diagnostics.disable": [
         "need-check-nil",
