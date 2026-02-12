@@ -1,6 +1,7 @@
 v12.0.102
 - Enhance dispel detection (Blizz RAID_PLAYER_DISPELLABLE filter)
 - Ignore debuff fixed
+- Show HoT icons reworked for Midnight (all hot displayed, no filtering)
 
 v12.0.101
 - Midnight 12.0.1

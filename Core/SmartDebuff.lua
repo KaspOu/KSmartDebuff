@@ -3214,9 +3214,9 @@ function SMARTDEBUFF_InitCurves()
     curves.dispelTextR:AddPoint(i, R_DISPLAY_INFO[i])
   end
   curves.showSpell = C_CurveUtil.CreateColorCurve();
-  curves.showSpell:SetType(Enum.LuaCurveType.Step);
+  curves.showSpell:SetType(Enum.LuaCurveType.Linear);
   curves.showSpell:AddPoint(0, CreateColor(1, 1, 1, 0));
-  curves.showSpell:AddPoint(.1, CreateColor(1, 1, 1, 1));
+  curves.showSpell:AddPoint(3, CreateColor(1, 1, 1, 1));
 end
 
 -- https://warcraft.wiki.gg/wiki/ScriptObject_ColorCurveObject
@@ -3512,92 +3512,101 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     end
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
     if (O.ShowSpellIcon) then
-      for loop2 = 1, math.min(#O.SpellGuard, maxSpellIcons), 1 do
-        -- C_UnitAuras.GetAuraDataBySpellName(unit, spellName, "RAID_IN_COMBAT") -- FIXME: 
-        -- FIXME: ERREUR 
---[[
-5x Blizzard_FrameXMLUtil/AuraUtil.lua:25: attempt to call field '?' (a nil value)
-[Blizzard_FrameXMLUtil/AuraUtil.lua]:25: in function <Blizzard_FrameXMLUtil/AuraUtil.lua:24>
-[Blizzard_FrameXMLUtil/AuraUtil.lua]:81: in function 'FindAuraByName'
-[SmartDebuff/Core/SmartDebuff.lua]:3456: in function 'SmartDebuff_SetButtonBars'
-[SmartDebuff/Core/SmartDebuff.lua]:3120: in function 'SMARTDEBUFF_SetButtonState'
-[SmartDebuff/Core/SmartDebuff.lua]:4295: in function 'SMARTDEBUFF_CheckUnitDebuffs'
-[SmartDebuff/Core/SmartDebuff.lua]:4024: in function 'SMARTDEBUFF_CheckDebuffs'
-[SmartDebuff/Core/SmartDebuff.lua]:580: in function 'SMARTDEBUFF_OnUpdate'
-[*SmartDebuff.xml:33_OnUpdate]:1: in function <[string "*SmartDebuff.xml:33_OnUpdate"]:1>
-
-Locals:
-methodName = "GetAuraDataBySpellName"
-(*temporary) = nil
-(*temporary) = nil
-(*temporary) = "party1"
-(*temporary) = "Rétablissement"
-(*temporary) = nil
-(*temporary) = "attempt to call field '?' (a nil value)"
-AuraUtilDataProvider = <table> {
-}
-
---]]
-        -- TODO  C_UnitAuras.GetAuraDataBySpellName(unit, spellName, "RAID_IN_COMBAT")
-        local name, texture, count, debuffType, duration, expirationTime, source, _, _, spellID = AuraUtil.FindAuraByName(O.SpellGuard[loop2], unit);
-        for _, target in ipairs({"HARMFUL", "NOT_CANCELABLE","CANCELABLE","RAID","PLAYER"}) do
-          if type(name) ~= "nil" then
-            break;
+      if (issecretvalue) then
+        -- Since Midnight (12)
+        local i = 0
+        while i < maxSpellIcons do
+          i = i + 1
+          local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "PLAYER|HELPFUL|RAID_IN_COMBAT")
+          if not auraData then
+            break
           end
-          name, texture, _, _, duration, expirationTime, _, _, _, _ = AuraUtil.FindAuraByName(O.SpellGuard[loop2], unit, target);
+          if auraData.icon then
+            if btn.spellicon and btn.spellicon[i] then
+              sbb_n = btn:GetHeight() / 3;
+              --sbb_n = O.RaidIconSize;
+              sbb_ach = "TOPLEFT";
+              sbb_y = 2;
+              if (i % 2 == 0) then
+                sbb_ach = "BOTTOMLEFT";
+                sbb_y = -2+sbb_n;
+              end
+              if (i <= 2) then
+                sbb_x = sbb_w/2;
+              else
+                sbb_xo = math.ceil(i/2);
+                if (sbb_xo % 2 == 0) then
+                  sbb_x = sbb_w/2 - sbb_xo*sbb_n/2;
+                else
+                  sbb_x = sbb_w/2 + sbb_xo*sbb_n/2 - sbb_n/2;
+                end
+              end
+              sbb_xo = sbb_n/2;
+              btn.spellicon[i]:ClearAllPoints();
+              btn.spellicon[i]:SetPoint("TOPLEFT", btn , sbb_ach, sbb_x - sbb_xo, sbb_y);
+              btn.spellicon[i]:SetPoint("TOPRIGHT", btn , sbb_ach, sbb_x + sbb_xo, sbb_y);
+              btn.spellicon[i]:SetPoint("BOTTOMLEFT", btn , sbb_ach, sbb_x - sbb_xo, sbb_y-sbb_n);
+              btn.spellicon[i]:SetPoint("BOTTOMRIGHT", btn , sbb_ach, sbb_x + sbb_xo, sbb_y-sbb_n);
+              btn.spellicon[i]:SetTexture(auraData.icon)
+              local cdur = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
+              btn.spellicon[i]:SetVertexColor(cdur:EvaluateRemainingDuration(curves.showSpell, 1):GetRGBA())
+              btn.spellicon[i]:Show()
+            end
+          end
         end
-        if type(name) ~= "nil" then
-            if ns.IsSecretValue(expirationTime) then
-              sbb_exp = expirationTime
-            else
-              sbb_exp = math.max(0, tonumber(expirationTime) or 0);
+        for j = i, maxSpellIcons, 1 do
+          btn.spellicon[j]:Hide()
+        end
+      else
+        -- Classic // Doesn't work on Midnight:  auraData = C_UnitAuras.GetAuraDataBySpellName(unit, spellName, "PLAYER|HELPFUL|RAID_IN_COMBAT")
+        for loop2 = 1, math.min(#O.SpellGuard, maxSpellIcons), 1 do
+          local auraData = nil
+          for _, target in ipairs({"HELPFUL", "HARMFUL", "NOT_CANCELABLE","CANCELABLE","RAID","PLAYER"}) do
+            auraData = C_UnitAuras.GetAuraDataBySpellName(unit, O.SpellGuard[loop2], target)
+            if auraData then
+              break;
+            end
+          end
+          if auraData then
+              sbb_exp = math.max(0, tonumber(auraData.expirationTime) or 0);
               if sbb_exp > 0 then
                 sbb_exp = (sbb_exp - GetTime()) / 10 + 0.1;
               end
               sbb_exp = math.max(0, math.min(sbb_exp, 0.9)); -- 0 <= alpha expiration <= 0.9
-            end
-            sbb_s = texture;
 
-            btn.spellicon[loop2]:SetTexture(sbb_s);
-            sbb_n = btn:GetHeight() / 3;
-            --sbb_n = O.RaidIconSize;
+              sbb_s = auraData.icon;
+              btn.spellicon[loop2]:SetTexture(sbb_s);
+              sbb_n = btn:GetHeight() / 3;
+              --sbb_n = O.RaidIconSize;
 
-            sbb_ach = "TOPLEFT";
-            sbb_y = 2;
-            if (loop2 % 2 == 0) then
-              sbb_ach = "BOTTOMLEFT";
-              sbb_y = -2+sbb_n;
-            end
-
-            if (loop2 <= 2) then
-              sbb_x = sbb_w/2;
-            else
-              sbb_xo = math.ceil(loop2/2);
-              if (sbb_xo % 2 == 0) then
-                sbb_x = sbb_w/2 - sbb_xo*sbb_n/2;
-              else
-                sbb_x = sbb_w/2 + sbb_xo*sbb_n/2 - sbb_n/2;
+              sbb_ach = "TOPLEFT";
+              sbb_y = 2;
+              if (loop2 % 2 == 0) then
+                sbb_ach = "BOTTOMLEFT";
+                sbb_y = -2+sbb_n;
               end
-            end
-            sbb_xo = sbb_n/2;
-            btn.spellicon[loop2]:ClearAllPoints();
-            btn.spellicon[loop2]:SetPoint("TOPLEFT", btn , sbb_ach, sbb_x - sbb_xo, sbb_y);
-            btn.spellicon[loop2]:SetPoint("TOPRIGHT", btn , sbb_ach, sbb_x + sbb_xo, sbb_y);
-            btn.spellicon[loop2]:SetPoint("BOTTOMLEFT", btn , sbb_ach, sbb_x - sbb_xo, sbb_y-sbb_n);
-            btn.spellicon[loop2]:SetPoint("BOTTOMRIGHT", btn , sbb_ach, sbb_x + sbb_xo, sbb_y-sbb_n);
-            if ns.IsSecretValue(expirationTime) then
-              local cdur = C_DurationUtil.CreateDuration()
-              cdur:SetTimeFromEnd(expirationTime, duration)
-              btn.spellicon[loop2]:SetAlpha(1)
-              btn.spellicon[loop2]:SetVertexColor(cdur:EvaluateRemainingDuration(curves.showSpell, 1):GetRGBA())
-              -- dummyTexture:SetDesaturation(expirationTime)
-              -- btn.spellicon[loop2]:SetAlphaFromBoolean(dummyTexture:IsDesaturated(), 1, 0)
-            else
+
+              if (loop2 <= 2) then
+                sbb_x = sbb_w/2;
+              else
+                sbb_xo = math.ceil(loop2/2);
+                if (sbb_xo % 2 == 0) then
+                  sbb_x = sbb_w/2 - sbb_xo*sbb_n/2;
+                else
+                  sbb_x = sbb_w/2 + sbb_xo*sbb_n/2 - sbb_n/2;
+                end
+              end
+              sbb_xo = sbb_n/2;
+              btn.spellicon[loop2]:ClearAllPoints();
+              btn.spellicon[loop2]:SetPoint("TOPLEFT", btn , sbb_ach, sbb_x - sbb_xo, sbb_y);
+              btn.spellicon[loop2]:SetPoint("TOPRIGHT", btn , sbb_ach, sbb_x + sbb_xo, sbb_y);
+              btn.spellicon[loop2]:SetPoint("BOTTOMLEFT", btn , sbb_ach, sbb_x - sbb_xo, sbb_y-sbb_n);
+              btn.spellicon[loop2]:SetPoint("BOTTOMRIGHT", btn , sbb_ach, sbb_x + sbb_xo, sbb_y-sbb_n);
               btn.spellicon[loop2]:SetAlpha(sbb_exp);
-            end
-            btn.spellicon[loop2]:Show();
-        else
-            btn.spellicon[loop2]:Hide();
+              btn.spellicon[loop2]:Show();
+          else
+              btn.spellicon[loop2]:Hide();
+          end
         end
       end
     else

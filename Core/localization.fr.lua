@@ -10,6 +10,8 @@ Midnight :
 
 - Détection améliorée
 
+- Icônes de HoT pour Midnight, sans filtrage
+
 - Corrigé : Ignorer les débuffs
 
 - Corrigé : Masquage auto.
@@ -125,7 +127,7 @@ SMARTDEBUFF_OFT_VEHICLE        = "V\195\169hicules";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Ic\195\180nes de raid";
 SMARTDEBUFF_OFT_SHOWROLEICON   = "Ic\195\180nes de r\195\180le (tank/heal)";
 SMARTDEBUFF_OFT_SHOWROLEDPSICON = "Ic\195\180nes de r\195\180le (dps)";
-SMARTDEBUFF_OFT_SHOWSPELLICON  = "Ic\195\180ne de sort";
+SMARTDEBUFF_OFT_SHOWSPELLICON  = "Ic\195\180nes de HoT";
 SMARTDEBUFF_OFT_INFOROW        = "Barre d'informations";
 SMARTDEBUFF_OFT_GLOBALSAVE     = "Enregistrer";
 SMARTDEBUFF_OFT_GLOBALLOAD     = "Charger";
@@ -175,7 +177,7 @@ SMARTDEBUFF_TT_VEHICLE         = "Affiche \195\169galement le v\195\169hicule\nd
 SMARTDEBUFF_TT_SHOWRAIDICON    = "Affiche l'ic\195\180ne de raid\nde l'unit\195\169.";
 SMARTDEBUFF_TT_SHOWROLEICON    = "Affiche l'ic\195\180ne de r\195\180le des tanks / heals.\n(si pas d'ic\195\180ne de raid)";
 SMARTDEBUFF_TT_SHOWROLEDPSICON    = "Affiche l'ic\195\180ne de r\195\180le des dps.\n(si pas d'ic\195\180ne de raid)";
-SMARTDEBUFF_TT_SHOWSPELLICON   = "Affiche l'ic\195\180ne de HoT\nsur l'unit\195\169.";
+SMARTDEBUFF_TT_SHOWSPELLICON   = "Affiche les ic\195\180nes de HoT\nsur l'unit\195\169.";
 SMARTDEBUFF_TT_INFOROW         = "Affiche une barre d'informations concise (uniquement en raid) :\nJoueurs/Morts/AFK/Hors ligne\nVie/Mana\nJoueur pr\195\170t\n(seulement en raid)";
 SMARTDEBUFF_TT_GLOBALSAVE      = "Param\195\168tres enregistr\195\169s dans la sauvegarde globale.";
 SMARTDEBUFF_TT_GLOBALLOAD      = "Param\195\168tres charg\195\169s depuis la sauvegarde globale.";

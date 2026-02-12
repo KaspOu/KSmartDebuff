@@ -1962,6 +1962,10 @@
         </Anchors>
         <Scripts>
           <OnLoad>
+            if (issecretvalue) then
+              self:Hide()
+              return
+            end
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
           </OnLoad>

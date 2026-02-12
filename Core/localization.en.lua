@@ -13,6 +13,8 @@ Midnight :
 
 - Enhanced detection
 
+- Show HoT icons reworked for Midnight (all hot displayed, no filtering)
+
 - Fixed: Ignore debuff
 
 - Fixed: Auto Hide
@@ -129,7 +131,7 @@ SMARTDEBUFF_OFT_VEHICLE        = "Vehicles";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Raid icons";
 SMARTDEBUFF_OFT_SHOWROLEICON   = "Role icons (tank / heal)";
 SMARTDEBUFF_OFT_SHOWROLEDPSICON = "Role icons (dps)";
-SMARTDEBUFF_OFT_SHOWSPELLICON  = "Spell icon";
+SMARTDEBUFF_OFT_SHOWSPELLICON  = "HoT icons";
 SMARTDEBUFF_OFT_INFOROW        = "Info bar";
 SMARTDEBUFF_OFT_GLOBALSAVE     = "Save";
 SMARTDEBUFF_OFT_GLOBALLOAD     = "Load";
@@ -180,7 +182,7 @@ SMARTDEBUFF_TT_VEHICLE         = "Displays in addition the vehicle of\na unit  a
 SMARTDEBUFF_TT_SHOWRAIDICON    = "Displays the raid icon\nof the unit.";
 SMARTDEBUFF_TT_SHOWROLEICON    = "Displays the role icon\nof tank/heal units\n(if no raid icon)";
 SMARTDEBUFF_TT_SHOWROLEDPSICON    = "Displays the role icon\nof dps units\n(if no raid icon)";
-SMARTDEBUFF_TT_SHOWSPELLICON   = "Displays the HoT icon\non the unit.";
+SMARTDEBUFF_TT_SHOWSPELLICON   = "Displays the HoT icons\non the unit.";
 SMARTDEBUFF_TT_INFOROW         = "Displays an info bar in short style #\nPlayers/Dead/AFK/Offline\nHP/Mana\nReady check state\n(only in a raid)";
 SMARTDEBUFF_TT_GLOBALSAVE      = "settings to global template.";
 SMARTDEBUFF_TT_GLOBALLOAD      = "settings from global template.";
