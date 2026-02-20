@@ -286,7 +286,7 @@ local function GetSpellCD(spell)
   local scd = ns.GetSpellCooldown(spell);
   -- FIXME:
   if (scd and ns.IsSecretValue(scd.startTime)) then
-    return scd.isOnGCD and -1 or 100 -- Doesn't work (isOnGCD true every time a spell is cast) --> Use C_Spell.GetSpellCooldownDuration(spell)
+    return scd.isOnGCD == false and 100 or -1 -- is on cooldown: isOnGCD == false
   end
   if (scd and scd.startTime and scd.startTime > 0 and scd.duration > 1.5) then -- and scd.isEnabled) then
     return (scd.startTime + scd.duration) - GetTime();
@@ -5637,7 +5637,12 @@ ns.cSpells = cSpells
 
 
 --@do-not-package@
---[[ FIXME:12.0 UnitInRange by checking RaidNameplate
+--[[
+Not in CD while not in GCD: .isOnGCD == nil
+Not in CD while in GCD: .isOnGCD == true
+In CD (while in GCD or not): .isOnGCD == false
+
+FIXME:12.0 UnitInRange by checking RaidNameplate
 >> Garder un cache des unités lors de la boucle, si pas possible:
 /dump CompactPartyFrameMember1.DispelOverlay:IsVisible()
 /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
