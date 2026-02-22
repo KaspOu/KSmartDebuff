@@ -3255,7 +3255,8 @@ function SMARTDEBUFF_SetButtonState_Curve(unit, idx, nr, isInRange, remains, isP
   end
   -- sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
   sbs_btn:SetAlpha(O.ADebuff);
-  if (O.IgnoreDebuff and iTest == 0) then
+   -- TODO: si durationObject == nil, doit-on afficher un overlay?
+  if (O.IgnoreDebuff and iTest == 0 and durationObject ~= nil) then
     sbs_btn.dispelOverlay:SetAlphaFromBoolean(durationObject:IsZero(), 1, 0)
     sbs_btn.text:SetAlphaFromBoolean(durationObject:IsZero(), 0, 1)
   else
