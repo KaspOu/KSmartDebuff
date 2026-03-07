@@ -5,48 +5,6 @@
 -- Supports you to cast debuff spells on friendly units
 -------------------------------------------------------------------------------
 
---@do-not-package@
---[[
-https://warcraft.wiki.gg/wiki/Category:API_systems/Spell
-https://warcraft.wiki.gg/wiki/Category:API_systems/SpellBook
-https://wowpedia.fandom.com/wiki/World_of_Warcraft_API
-https://github.com/Gethe/wow-ui-source/blob/beta/Interface/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua
-PickupSpellBookItem(aIdOld, aLinkOld, BOOKTYPE_PET); > C_SpellBook.PickupSpellBookItem(index, spellBank)
-
-Sort actif pour le joueur ou le pet :
-  not not FindSpellBookSlotBySpellID(spellID)
-  not not ns.GetSpellInfo(spellName)  > uniqt avec le nom (sinon renvoie l'info de toute façon)
-  >> not not ns.GetSpellInfo(GetSpellInfo(spellID))
-
-Sort actif uniquement pour le joueur :
-  IsPlayerSpell(spellID) > C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Player)
-
-
-C_Spell.DoesSpellExist(spellID) :
-ou   DoesSpellExist(spellID)    :  pour tous les sorts du jeu
-
-
-## Problèmes ##
-
-  C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Pet or Enum.SpellBookSpellBank.Player) :
-    ne fonctionne pas si Spell override (Dispel avec talent...)
-    Purifier 527, avec le talent, se surcharge en 440006, et C_SpellBook.IsSpellKnown(527) renvoie false..
-
-  >>> IsSpellKnownOrOverridesKnown(spellID, isPet) > C_SpellBook.IsSpellInSpellBook(spellID, spellBank, includeOverrides)
-                                                   > OR C_SpellBook.IsSpellKnownOrInSpellBook ?
-
-  IsUsableSpell(spellName) : (devient C_Spell.IsSpellUsable )
-    false avec un talent inactif (true si actif)
-    mais true avec un pet inactif ?
-
-  C_SpellBook.IsSpellDisabled(spellID) : Ne fonctionne pas (renvoie toujours false?)
-
-  GetMacroInfo:
-    toujours utiliser l'ID (souci si le nom de macro est "111")
-    y compris pour l'action sur un bouton type macro
-
-]]--
---@end-do-not-package@
 local _, ns = ...
 
 local OG = nil;
@@ -315,7 +273,7 @@ end
 --- @return string link
 local function GetActionKeyInfo(mode, i, extractDataOnly)
   local aType, aName, aRank, aId, aLink = nil, nil, nil, nil, nil;
-  if (O.Keys[mode] and SMARTDEBUFF_ORDER_KEYS[i] and O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]]) then
+  if (O.Keys and O.Keys[mode] and SMARTDEBUFF_ORDER_KEYS[i] and O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]]) then
     aType = O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]][1];
     if (aType) then
       aName = O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]][2];
@@ -993,80 +951,6 @@ function SMARTDEBUFF_IsFeignDeath(unit)
 end
 -- END SMARTDEBUFF_IsFeignDeath
 
-
-
---@do-not-package@
---[[
--- Search Spell in spellbook : returns spellId, bookIndex, book
---- @param spellNameOrID string|number
---- @param rank string
---- @param book string
---- @return number spellID
---- @return number bookIndex
---- @return string book
-function SDB_FindSpellInBook(spellNameOrID, rank, book)
-  if (type(spellNameOrID) == "number") then
-    id, index, book = spellNameOrID, FindSpellBookSlotBySpellID(spellNameOrID), book;
-    if not id then
-      id, index, book = spellNameOrID, FindSpellBookSlotBySpellID(spellNameOrID, true), book;
-    end
-    return id, index, book;
-    -- spellNameOrID = ns.GetSpellInfo(spellNameOrID).name;
-  end
-  if (not spellNameOrID) then
-    return nil;
-  end
-
-  if (not book) then
-    book = BOOKTYPE_SPELL;
-  end
-
-  local i = 0;
-  local nSpells = 0;
-  local id, index = nil, nil;
-  local spellN, isPassive, isKnown, skillType;
-
-  for i = 1, GetNumSpellTabs() do
-    local name, _, _, n = GetSpellTabInfo(i);
-    nSpells = nSpells + n;
-  end
-
-  -- Inverted: find better rank
-  i = nSpells - 1;
-  while (i >= nSpells) do
-    i = i - 1;
-    spellN = GetSpellBookItemName(i, book);
-    -- print(spellN, i, book)
-    if (spellN == spellNameOrID) then
-      _, id = GetSpellBookItemInfo(i, book);
-      index = i;
-      break;
-    end
-  end
-
-  if (index) then
-    return id, index, book;
-  end
-  return nil;
-end
-
--- Search Spell ID in spellbook - necessary for pets
-function SDB_FindSpellID(spellname, rank, book)
-  local spellId, bookIndex, book = SDB_FindSpellInBook(spellname, rank, book);
-  local skillType;
-  if (bookIndex) then
-    if (IsPassiveSpell(bookIndex, book)) then return nil; end
-
-    skillType, spellId = GetSpellBookItemInfo(bookIndex, book);
-    if (skillType == nil or spellId == nil) then return nil; end
-    if (skillType == "FUTURESPELL" or not C_SpellBook.IsSpellKnown(spellId)) then return nil; end
-  end
-
-  return spellId;
-end
--- END SDB_FindSpellID
-]]--
---@end-do-not-package@
 
 -- Return if spell is passive, by ID
 --- @param spellID number
@@ -5636,9 +5520,49 @@ end
 ns.O = O
 ns.cSpells = cSpells
 
-
 --@do-not-package@
 --[[
+https://warcraft.wiki.gg/wiki/Category:API_systems/Spell
+https://warcraft.wiki.gg/wiki/Category:API_systems/SpellBook
+https://wowpedia.fandom.com/wiki/World_of_Warcraft_API
+https://github.com/Gethe/wow-ui-source/blob/beta/Interface/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua
+PickupSpellBookItem(aIdOld, aLinkOld, BOOKTYPE_PET); > C_SpellBook.PickupSpellBookItem(index, spellBank)
+
+Sort actif pour le joueur ou le pet :
+  not not FindSpellBookSlotBySpellID(spellID)
+  not not ns.GetSpellInfo(spellName)  > uniqt avec le nom (sinon renvoie l'info de toute façon)
+  >> not not ns.GetSpellInfo(GetSpellInfo(spellID))
+
+Sort actif uniquement pour le joueur :
+  IsPlayerSpell(spellID) > C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Player)
+
+
+C_Spell.DoesSpellExist(spellID) :
+ou   DoesSpellExist(spellID)    :  pour tous les sorts du jeu
+
+
+## Problèmes ##
+
+  C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Pet or Enum.SpellBookSpellBank.Player) :
+    ne fonctionne pas si Spell override (Dispel avec talent...)
+    Purifier 527, avec le talent, se surcharge en 440006, et C_SpellBook.IsSpellKnown(527) renvoie false..
+
+  >>> IsSpellKnownOrOverridesKnown(spellID, isPet) > C_SpellBook.IsSpellInSpellBook(spellID, spellBank, includeOverrides)
+                                                   > OR C_SpellBook.IsSpellKnownOrInSpellBook ?
+
+  IsUsableSpell(spellName) : (devient C_Spell.IsSpellUsable )
+    false avec un talent inactif (true si actif)
+    mais true avec un pet inactif ?
+
+  C_SpellBook.IsSpellDisabled(spellID) : Ne fonctionne pas (renvoie toujours false?)
+
+  GetMacroInfo:
+    toujours utiliser l'ID (souci si le nom de macro est "111")
+    y compris pour l'action sur un bouton type macro
+
+
+
+
 Not in CD while not in GCD: .isOnGCD == nil
 Not in CD while in GCD: .isOnGCD == true
 In CD (while in GCD or not): .isOnGCD == false
