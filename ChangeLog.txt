@@ -1,3 +1,6 @@
+v12.0.103
+- Range check Errors in instances fixed
+
 v12.0.102
 - Enhance dispel detection (Blizz RAID_PLAYER_DISPELLABLE filter)
 - Ignore debuff fixed

@@ -99,7 +99,8 @@ end
 
 ns.UnitBuff = UnitBuff or function(unitToken, index, filter)
   local auraData = C_UnitAuras.GetBuffDataByIndex(unitToken, index, filter);
-  if ns.IsSecretValue(auraData) or not auraData then
+  -- Since Midnight (12): doesn't work in raids
+  if issecretvalue or not auraData then
     return nil;
   end
   return AuraUtil.UnpackAuraData(auraData);

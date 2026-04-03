@@ -242,7 +242,10 @@ end
 local function GetSpellCD(spell)
   if (not spell) then return -1 end
   local scd = ns.GetSpellCooldown(spell);
-  -- FIXME:
+  -- Since Midnight (12)
+  if (scd and scd.isActive ~= nil) then
+    return scd.isActive and -1 or 100
+  end
   if (scd and ns.IsSecretValue(scd.startTime)) then
     return scd.isOnGCD == false and 100 or -1 -- is on cooldown: isOnGCD == false
   end
