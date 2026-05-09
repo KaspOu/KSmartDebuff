@@ -1249,6 +1249,10 @@ local function CleanMem()
 end
 
 local function ReplaceDeprecatedOptions(options)
+  if (SMARTDEBUFF_HASSECRETS and options.IgnoreDebuff_Old == nil) then
+    options.IgnoreDebuff_Old = options.IgnoreDebuff
+    options.IgnoreDebuff = false
+  end
 end
 -- Init the SmartDebuff variables ---------------------------------------------------------------------------------------
 function SMARTDEBUFF_Options_Init()

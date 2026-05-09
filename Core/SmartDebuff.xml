@@ -1894,6 +1894,7 @@
             if (SMARTDEBUFF_HASSECRETS) then
               self:Disable()
               self:SetAlpha(.5)
+              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
               return
             end
             self:SetNormalFontObject("GameFontNormalSmall");
@@ -1962,7 +1963,7 @@
         </Anchors>
         <Scripts>
           <OnLoad>
-            if (issecretvalue) then
+            if (SMARTDEBUFF_HASSECRETS) then
               self:Hide()
               return
             end
@@ -2553,6 +2554,12 @@
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_IGNOREDEBUFF);
+            if (SMARTDEBUFF_HASSECRETS) then
+              self:Disable()
+              self:SetAlpha(.5)
+              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+              return
+            end
           </OnLoad>
           <OnShow>
             if (SMARTDEBUFF_Options) then
