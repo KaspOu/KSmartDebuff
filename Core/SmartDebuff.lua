@@ -3228,7 +3228,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     btn.hp:SetMinMaxValues(0, sbb_nmax);
     btn.hp:SetStatusBarColor(sbb_col.r, sbb_col.g, sbb_col.b);
 
-    if (not sbb_dg and O.ShowHPText and (ns.IsSecretValue(sbb_per) or sbb_per < 100)) then
+    if (not sbb_dg and O.ShowHPText and (ns.IsSecretValue(sbb_per) or tonumber(sbb_per) < 100)) then
       btn.hptext:ClearAllPoints();
       btn.hptext:SetPoint("TOPLEFT", btn , "TOPLEFT", 1, 1);
       btn.hptext:SetPoint("TOPRIGHT", btn , "TOPLEFT", sbb_w, 1);
@@ -3295,7 +3295,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     end
     btn.mana._texture = sbb_txtr
 
-    if (not sbb_dg and sbb_upt == 0 and O.ShowHPText and (ns.IsSecretValue(sbb_per) or sbb_per < 100)) then
+    if (not sbb_dg and sbb_upt == 0 and O.ShowHPText and (ns.IsSecretValue(sbb_per) or tonumber(sbb_per) < 100)) then
       btn.manatext:ClearAllPoints();
       btn.manatext:SetPoint("TOPLEFT", btn , "BOTTOMLEFT", 1, sbb_h);
       btn.manatext:SetPoint("TOPRIGHT", btn , "BOTTOMLEFT", sbb_w, sbb_h);
@@ -3404,7 +3404,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     end
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
     if (O.ShowSpellIcon) then
-      if (issecretvalue) then
+      if (SMARTDEBUFF_HASSECRETS) then
         -- Since Midnight (12)
         local i = 0
         while i < maxSpellIcons do
