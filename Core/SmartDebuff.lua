@@ -5540,6 +5540,10 @@ Sort actif pour le joueur ou le pet :
   not not ns.GetSpellInfo(spellName)  > uniqt avec le nom (sinon renvoie l'info de toute façon)
   >> not not ns.GetSpellInfo(GetSpellInfo(spellID))
 
+  !!: GetSpellInfo returns any spells in the cache
+  The correct version is GetSpellInfo((GetSpellInfo(id))) anyway.
+  name resolution broadly matches "can I cast this?" with some occasional fuck ups.
+
 Sort actif uniquement pour le joueur :
   IsPlayerSpell(spellID) > C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Player)
 
