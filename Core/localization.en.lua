@@ -9,22 +9,15 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-Midnight :
+All flavors :
 
-- Enhanced detection
+- Modern detection for all versions
 
-- Show HoT icons reworked for Midnight (all hot displayed, no filtering)
+- Show HoT icons, without filtering
 
-- Fixed: Ignore debuff
-
-- Fixed: Auto Hide
-
-- In progress: Spell Watch List
+- Disabled : Ignore debuffs
 
 - Disabled : Debuff Guard
-
-
-Sort by Role / Class
 ]];
 
 --@do-not-package@

@@ -1,3 +1,6 @@
+v12.0.703
+- Modern detection for all versions
+
 v12.0.502
 - Disable ignore debuff option for Midnight
 

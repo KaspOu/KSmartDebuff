@@ -4117,6 +4117,10 @@ if (not SMARTDEBUFF_HASSECRETS) then
           break;
         end
         cud_name, cud_icon, cud_dtype, cud_dur, cud_tl, _ = auraData.name, auraData.icon, auraData.dispelName, auraData.duration, auraData.expirationTime;
+        if ( cud_name == nil) then
+          SMARTDEBUFF_HASSECRETS = true; -- No aura data found, so we need to use secrets
+          break;
+        end
 
         cud_tl = tonumber(cud_tl);
         if (cud_tl == nil) then cud_tl = -1; end
