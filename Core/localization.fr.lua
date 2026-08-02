@@ -6,15 +6,18 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
-Toutes les versions :
+> Options de retour :
 
-- Détection moderne pour toutes les versions
+  - Ignorer les débuffs
+  - Débuffs protégés (PTR)
+  - Icônes de HoT filtrées (PTR)
 
-- Icônes de HoT, sans filtrage
+> Options supprimées :
 
-- Désactivé : Ignorer les débuffs
+  - Cadre récapitulatif
+  - Son (PTR)
 
-- Désactivé : Débuffs protégés
+> Compatible 12.1.0 RPT
 
 ]]
 

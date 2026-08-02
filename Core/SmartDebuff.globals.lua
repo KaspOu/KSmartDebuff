@@ -15,7 +15,7 @@ SMARTDEBUFF_OPTIONS_TITLE = SMARTDEBUFF_VERS_TITLE .. " Options";
 SMARTDEBUFF_IS_RETAIL = (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE);
 SMARTDEBUFF_MACROTEXT = false;
 SMARTDEBUFF_HASSECRETS =  true -- not not C_UnitAuras.AddAuraSoundtrue --secretwrap and issecretvalue(secretwrap(true)) or false
-SMARTDEBUFF_OLDAPI = not AuraContainerSortDirection
+SMARTDEBUFF_AURACONTAINERS = not not AuraContainerSortDirection
 SMARTDEBUFF_KEYFORCLICK = GetCVar("ActionButtonUseKeyDown") == "0" and "AnyUp" or "AnyDown"
 
 BINDING_HEADER_SMARTDEBUFF = SMARTDEBUFF_TITLE;

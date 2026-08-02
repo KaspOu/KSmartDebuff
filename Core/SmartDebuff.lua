@@ -68,7 +68,6 @@ local cRaidicons = {};
 local canDebuff = false;
 local hasDebuff = false;
 
-local HAS_AURACONTAINERS = not SMARTDEBUFF_OLDAPI;
 local auraContainerInitFailed = false;
 local auraContainerByIndex = {};
 auraSlotByName = {};
@@ -1263,11 +1262,19 @@ local function CleanMem()
 end
 
 local function ReplaceDeprecatedOptions(options)
-  if (SMARTDEBUFF_HASSECRETS and options.IgnoreDebuff_Old == nil) then
-    options.IgnoreDebuff_Old = options.IgnoreDebuff
-    options.IgnoreDebuff = false
+  -- Options rollbacked
+  if options.IgnoreDebuff_Old ~= nil then
+    options.IgnoreDebuff = options.IgnoreDebuff_Old
+    options.IgnoreDebuff_Old = nil
   end
+  -- Remove Deprecated options
+  if options.ShowIF_Old == nil then
+    options.ShowIF_Old = options.ShowIF
+    options.ShowIF = false
+  end
+  -- options.UseSound: no code support
 end
+
 -- Init the SmartDebuff variables ---------------------------------------------------------------------------------------
 function SMARTDEBUFF_Options_Init()
   if (isInit or InCombatLockdown()) then return; end
@@ -2394,7 +2401,7 @@ function SMARTDEBUFF_CreateButtons()
 end
 
 function SMARTDEBUFF_UseAuraContainerPath()
-  return HAS_AURACONTAINERS and not auraContainerInitFailed;
+  return SMARTDEBUFF_AURACONTAINERS and not auraContainerInitFailed;
 end
 
 local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
@@ -3224,12 +3231,6 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       else
         nr = -98
       end
-      -- if not SMARTDEBUFF_OLDAPI then -- FIXME
-      --   if sbs_btn.auraContainer.sdbAuraSlots[nr] then
-      --     sbs_btn.auraContainer.sdbAuraSlots[nr]:Show()
-      --   end
-      --   nr = 0
-      -- end
     end
   end
 
@@ -3424,10 +3425,6 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   sbs_btn.text1:SetAlpha(1);
   sbs_btn.text2:SetAlpha(0);
   sbs_btn.text3:SetAlpha(0);
-  if (dispelShown and O.IgnoreDebuff and ST.iTest == 0 and spellDuration) then
-    sbs_btn.dispelOverlay:SetAlphaFromBoolean(spellDuration:IsZero(), 1, 0)
-    sbs_btn.text:SetAlphaFromBoolean(spellDuration:IsZero(), 0, 1)
-  end
   sbs_btn.texture:SetAllPoints(sbs_btn);
   sbs_btn.dispelOverlay:SetAllPoints(sbs_btn);
   sbs_btn.textureDispel:SetAllPoints(sbs_btn);
@@ -3524,14 +3521,8 @@ function SMARTDEBUFF_SetButtonState_Curve(unit, idx, nr, isInRange, remains, isP
   end
   -- sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
   sbs_btn:SetAlpha(O.ADebuff);
-   -- TODO: si durationObject == nil, doit-on afficher un overlay?
-  if (O.IgnoreDebuff and ST.iTest == 0 and durationObject ~= nil) then
-    sbs_btn.dispelOverlay:SetAlphaFromBoolean(durationObject:IsZero(), 1, 0)
-    sbs_btn.text:SetAlphaFromBoolean(durationObject:IsZero(), 0, 1)
-  else
-    sbs_btn.dispelOverlay:SetAlpha(1)
-    sbs_btn.text:SetAlpha(0)
-  end
+  sbs_btn.dispelOverlay:SetAlpha(1)
+  sbs_btn.text:SetAlpha(0)
   if (O.ShowLR) then
     sbs_fontH = O.BtnH - 2;
   end
@@ -3782,7 +3773,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     end
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
     if (O.ShowSpellIcon) then
-      if (HAS_AURACONTAINERS) then
+      if (SMARTDEBUFF_AURACONTAINERS) then
         -- Since AuraContainers
         if (btn.auraContainer and #O.SpellGuard > 0) then
           -- Refresh if needed only -- TODO MOVE
