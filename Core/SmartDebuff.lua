@@ -2126,8 +2126,6 @@ function SMARTDEBUFF_CreateButtons()
       button.texture:SetBlendMode("DISABLE");
       button.dispelOverlay = CreateFrame("Frame", nil, button)
       button.dispelOverlay:SetAllPoints(button)
-      button.dispelOverlay:SetFrameStrata(button:GetFrameStrata())
-      button.dispelOverlay:SetFrameLevel(2)
       button.dispelOverlay:SetAlpha(1)
       button.textureDispel = button.dispelOverlay:CreateTexture(nil, "BACKGROUND");
       button.textureDispel:SetAllPoints(button);
@@ -2153,29 +2151,27 @@ function SMARTDEBUFF_CreateButtons()
 
       -- create hp texture
       button.hp = CreateFrame("StatusBar", nil, button)
-      button.hp:SetFrameStrata("MEDIUM")
-      button.hp:SetFrameLevel(2)
+      button.hp:SetFrameStrata("DIALOG")
       button.hp:SetStatusBarColor(0, 0, 1);
       -- button.hp:SetColorTexture(0, 1, 0);
       -- button.hp:SetBlendMode("DISABLE");
       button.hp:ClearAllPoints();
 
       -- create hp text
-      button.hptext = button:CreateFontString(nil, nil, "SmartDebuff_FontHP");
+      button.hptext = button.hp:CreateFontString(nil, nil, "SmartDebuff_FontHP");
       button.hptext:SetJustifyH("LEFT");
       button.hptext:SetJustifyV("MIDDLE");
       button.hptext:ClearAllPoints();
 
       -- create mana texture
       button.mana = CreateFrame("StatusBar", nil, button)
-      button.mana:SetFrameStrata("MEDIUM")
-      button.mana:SetFrameLevel(2)
+      button.mana:SetFrameStrata("DIALOG")
       button.mana:SetStatusBarColor(0, 0, 1);
       -- button.mana:SetBlendMode("DISABLE");
       button.mana:ClearAllPoints();
 
       -- create mana text
-      button.manatext = button:CreateFontString(nil, nil, "SmartDebuff_FontHP");
+      button.manatext = button.mana:CreateFontString(nil, nil, "SmartDebuff_FontHP");
       button.manatext:SetJustifyH("LEFT");
       button.manatext:SetJustifyV("MIDDLE");
       button.manatext:ClearAllPoints();
@@ -2186,19 +2182,28 @@ function SMARTDEBUFF_CreateButtons()
       button.aggro:SetBlendMode("DISABLE");
       button.aggro:ClearAllPoints();
 
+      button.iconsFrame = CreateFrame("Frame", nil, button)
+      button.iconsFrame:SetAllPoints(button)
+      button.iconsFrame:SetFrameStrata("TOOLTIP")
+
       -- create raid icon texture
-      button.raidicon = button:CreateTexture(nil, "OVERLAY");
+      button.raidIconFrame = CreateFrame("Frame", nil, button)
+      button.raidIconFrame:SetAllPoints(button)
+      button.raidIconFrame:SetFrameStrata("TOOLTIP")
+      button.raidicon = button.iconsFrame:CreateTexture(nil, "ARTWORK");
       button.raidicon:SetTexture(nil);
       button.raidicon:SetBlendMode("BLEND");
       button.raidicon:ClearAllPoints();
 
       -- create spell icon texture
-      button.spellicon = { };
-      for j = 1, CFG.maxSpellIcons, 1 do
-        button.spellicon[j] = button:CreateTexture(nil, "OVERLAY");
-        button.spellicon[j]:SetTexture(nil);
-        button.spellicon[j]:SetBlendMode("BLEND");
-        button.spellicon[j]:ClearAllPoints();
+      if not SMARTDEBUFF_AURACONTAINERS then
+        button.spellicon = { };
+        for j = 1, CFG.maxSpellIcons, 1 do
+          button.spellicon[j] = button.iconsFrame:CreateTexture(nil, "OVERLAY");
+          button.spellicon[j]:SetTexture(nil);
+          button.spellicon[j]:SetBlendMode("BLEND");
+          button.spellicon[j]:ClearAllPoints();
+        end
       end
 
       button:EnableMouse(true);
@@ -2236,7 +2241,6 @@ function SMARTDEBUFF_CreateButtons()
       button.dispelOverlay = CreateFrame("Frame", nil, button)
       button.dispelOverlay:SetAllPoints(button)
       button.dispelOverlay:SetFrameStrata(button:GetFrameStrata())
-      button.dispelOverlay:SetFrameLevel(2)
       button.dispelOverlay:SetAlpha(1)
       button.textureDispel = button.dispelOverlay:CreateTexture(nil, "BACKGROUND");
       button.textureDispel:SetAllPoints(button);
@@ -2259,25 +2263,27 @@ function SMARTDEBUFF_CreateButtons()
       button.text3:SetAllPoints(button);
 
       -- create hp texture
-      button.hp = CreateFrame("StatusBar", nil, button, nil, "OVERLAY")
+      button.hp = CreateFrame("StatusBar", nil, button)
+      button.hp:SetFrameStrata("DIALOG")
       button.hp:SetStatusBarColor(0, 0, 1);
       -- button.hp:SetColorTexture(0, 1, 0);
       -- button.hp:SetBlendMode("DISABLE");
       button.hp:ClearAllPoints();
 
       -- create hp text
-      button.hptext = button:CreateFontString(nil, nil, "SmartDebuff_FontHP");
+      button.hptext = button.hp:CreateFontString(nil, nil, "SmartDebuff_FontHP");
       button.hptext:SetJustifyH("CENTER");
       button.hptext:ClearAllPoints();
 
       -- create mana texture
       button.mana =  CreateFrame("StatusBar", nil, button) -- button:CreateTexture(nil, "BORDER");
+      button.mana:SetFrameStrata("DIALOG")
       button.mana:SetStatusBarColor(0, 0, 1);
       -- button.mana:SetBlendMode("DISABLE");
       button.mana:ClearAllPoints();
 
       -- create mana text
-      button.manatext = button:CreateFontString(nil, nil, "SmartDebuff_FontHP");
+      button.manatext = button.mana:CreateFontString(nil, nil, "SmartDebuff_FontHP");
       button.manatext:SetJustifyH("CENTER");
       button.manatext:ClearAllPoints();
 
@@ -2287,19 +2293,25 @@ function SMARTDEBUFF_CreateButtons()
       button.aggro:SetBlendMode("DISABLE");
       button.aggro:ClearAllPoints();
 
+      button.iconsFrame = CreateFrame("Frame", nil, button)
+      button.iconsFrame:SetAllPoints(button)
+      button.iconsFrame:SetFrameStrata("TOOLTIP")
+
       -- create raid icon texture
-      button.raidicon = button:CreateTexture(nil, "ARTWORK");
+      button.raidicon = button.iconsFrame:CreateTexture(nil, "ARTWORK");
       button.raidicon:SetTexture(nil);
       button.raidicon:SetBlendMode("BLEND");
       button.raidicon:ClearAllPoints();
 
       -- create spell icon texture
-      button.spellicon = { };
-      for j = 1, CFG.maxSpellIcons, 1 do
-        button.spellicon[j] = button:CreateTexture(nil, "OVERLAY");
-        button.spellicon[j]:SetTexture(nil);
-        button.spellicon[j]:SetBlendMode("BLEND");
-        button.spellicon[j]:ClearAllPoints();
+      if not SMARTDEBUFF_AURACONTAINERS then
+        button.spellicon = { };
+        for j = 1, CFG.maxSpellIcons, 1 do
+          button.spellicon[j] = button.iconsFrame:CreateTexture(nil, "OVERLAY");
+          button.spellicon[j]:SetTexture(nil);
+          button.spellicon[j]:SetBlendMode("BLEND");
+          button.spellicon[j]:ClearAllPoints();
+        end
       end
 
       button:EnableMouse(true);
@@ -2454,11 +2466,11 @@ SMARTDEBUFF_ResetAuraContainers = function()
   auraContainerByIndex = {};
 end
 
-function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
-  if (not cSpells[SMARTDEBUFF_CHARMED] or cSpells[SMARTDEBUFF_CHARMED][2] ~= buttonIndex) then
+function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, forceShown)
+  if forceShown == nil and (not cSpells[SMARTDEBUFF_CHARMED] or cSpells[SMARTDEBUFF_CHARMED][2] ~= buttonIndex) then
     return
   end
-  if (not (unit ~= nil and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID)) then
+  if (forceShown == nil and not (unit ~= nil and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID)) then
     -- avoid change unit issues
     if button.charmedOverlay then
       button.charmedOverlay:Hide()
@@ -2467,29 +2479,29 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
     end
     return
   end
+  if (forceShown == false) then
+    return
+  end
   if not button.charmedOverlay then
     button.charmedOverlay = CreateFrame("Frame", nil, button)
-    button.charmedOverlay:SetAllPoints(button)
-    button.charmedOverlay:SetFrameStrata(button:GetFrameStrata())
-    button.charmedOverlay:SetFrameLevel(2)
-    button.charmedOverlay:Show()
-    button.textureCharmed = button.charmedOverlay:CreateTexture(nil, "BACKGROUND");
-    -- button.textureDispel:SetAllPoints(button);
+    button.charmedOverlay:Hide()
+    button.textureCharmed = button.charmedOverlay:CreateTexture(nil, "OVERLAY");
     button.textureCharmed:SetBlendMode("BLEND");
     button.textureCharmed:SetColorTexture(1,0,0,0); -- Initialement transparent
 
-    button.textCharmed = button:CreateFontString(nil, nil, "SmartDebuff_Font");
+    button.textCharmed = button.charmedOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
     button.textCharmed:SetJustifyH("CENTER");
     button.textCharmed:SetPoint("CENTER")
     button.textCharmed:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
-    -- button.text:SetAllPoints(button);
   end
+  button.charmedOverlay:SetSize(button:GetWidth(), button:GetHeight());
+  button.charmedOverlay:ClearAllPoints();
+  button.charmedOverlay:SetPoint("LEFT", button, "LEFT", 0, 0);
   button.textureCharmed:SetAllPoints(button);
   button.textCharmed:SetAllPoints(button);
 
   local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
   local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
-  SMARTDEBUFF_AddMsgD("Charmed overlay for button " .. buttonIndex.. " ("..(sbs_std)..")")
   if (inRange == 1) then
     button.textureCharmed:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
   else
@@ -2501,7 +2513,7 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
     button.textCharmed:SetText(sbs_std)
   end
   local shouldShowDebuff = true
-  if (O.IgnoreDebuff) then
+  if (O.IgnoreDebuff and forceShown == nil) then
     local spellId = cSpells[SMARTDEBUFF_CHARMED][1];
     shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(GetSpellCD(spellId))
   end
@@ -2511,6 +2523,14 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
   button.charmedOverlay:SetShown(UnitIsCharmed(unit))
   button.textureCharmed:SetShown(UnitIsCharmed(unit))
   button.textCharmed:SetShown(UnitIsCharmed(unit))
+  if (not forceShown) then
+    SMARTDEBUFF_AddMsgD("Charmed overlay for button " .. buttonIndex.. " ("..(sbs_std)..")")
+  end
+  if (forceShown == true) then
+    button.charmedOverlay:Show(forceShown)
+    button.textureCharmed:Show(forceShown)
+    button.textCharmed:Show(forceShown)
+  end
 end
 
 function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
@@ -2556,23 +2576,17 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
     if not frame then
       frame = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
       button.auraContainer = frame
-      frame:SetFrameStrata(button:GetFrameStrata());
-      frame:SetFrameLevel(button:GetFrameLevel() + 3);
+      frame:SetFrameStrata("TOOLTIP");
       button.dispelContainers = {}
-      button.dispelContainers[1] = CreateFrame("AuraContainer", nil, frame, "CustomAuraContainerTemplate");
-      button.dispelContainers[2] = CreateFrame("AuraContainer", nil, frame, "CustomAuraContainerTemplate");
-      button.dispelContainers[3] = CreateFrame("AuraContainer", nil, frame, "CustomAuraContainerTemplate");
-
-      frame:SetFrameStrata(button:GetFrameStrata());
-      frame:SetFrameLevel(button:GetFrameLevel() + 3);
+      button.dispelContainers[1] = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
+      button.dispelContainers[2] = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
+      button.dispelContainers[3] = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
     end
     frame:SetPoint("BOTTOMLEFT", button, "TOPLEFT", 0, 2);
     frame:SetWidth(button:GetWidth());
     frame:SetHeight(math.max(8, button:GetHeight() * 0.26));
     for buttonIndex = 1, 3, 1 do
       local dispelContainer = button.dispelContainers[buttonIndex]
-      dispelContainer:SetFrameStrata(button:GetFrameStrata());
-      dispelContainer:SetFrameLevel(button:GetFrameLevel() + 3);
       dispelContainer:SetPoint("BOTTOMLEFT", button, "TOPLEFT", 0, 2);
       dispelContainer:SetWidth(button:GetWidth());
       dispelContainer:SetHeight(math.max(8, button:GetHeight() * 0.26));
@@ -2585,15 +2599,11 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
 
     local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
     local buttonAlpha = O.ADebuff -- (inRange == 1 and O.ANormal or O.ANormalOOR) * O.ADebuff
-    local allIncludeDispelTypes = {}
 
     for buttonIndex = 1, 3, 1 do
       SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
       local dispelContainer = button.dispelContainers[buttonIndex]
       local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
-      for _, dispelType in pairs(allIncludeDispelTypes) do
-        allIncludeDispelTypes[dispelType] = true
-      end
       if (not includeDispelTypes) then
         -- remove existing auraSlot (on config changed)
         local slotKey = "sdb_" .. idx .. "_" .. buttonIndex
@@ -2626,8 +2636,7 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
               auraButton:SetSize(button:GetWidth(), button:GetHeight());
               auraButton:ClearAllPoints();
               auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
-              auraButton:SetFrameStrata(button:GetFrameStrata())
-              auraButton:SetFrameLevel(2)
+              auraButton:SetFrameStrata("HIGH")
 
               local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
               colorOverlay:SetBlendMode("BLEND");
@@ -2674,16 +2683,16 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
         local id = C_Spell.GetSpellIDForSpellIdentifier(spellName);
         if id then
           ids[id] = true
-          table.insert(list, id)
+          table.insert(list, spellName)
         end
       end
-      if (#ids == 0) then
+      if (#list == 0) then
           if (idx == 1 and O and O.Debug) then
             SMARTDEBUFF_AddMsgD("No not removable spell found")
           end
       else
           if (idx == 1 and O and O.Debug) then
-            SMARTDEBUFF_AddMsgD("AuraContainers for button not removable spells added: "..table.concat(list, ", "):sub(1, 47).."...")
+            SMARTDEBUFF_AddMsgD("AuraContainer for not removable spells added: "..table.concat(list, ", "):sub(1, 47).."...")
           end
           local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(0);
           local slotKey = "sdb_" .. idx .. "_nr"
@@ -2691,7 +2700,6 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
           local candidateFilters = {
             includeSpellIDs = ids,
             excludeSpellIDs = {},
-            excludeDispelTypes = allIncludeDispelTypes,
           }
           local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
           if not ok then
@@ -2702,6 +2710,7 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
                   auraButton:SetSize(button:GetWidth(), button:GetHeight());
                   auraButton:ClearAllPoints();
                   auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
+                  auraButton:SetFrameStrata("HIGH")
 
                   local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
                   colorOverlay:SetBlendMode("BLEND");
@@ -3228,8 +3237,12 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         isInRange = 1
         nr = math.floor(idx/7)
         nr = nr > 3 and 10 or nr
+        if (nr > 0 and nr <= 3) or nr == 10 then
+          SMARTDEBUFF_SetCharmedOverlay(idx, sbs_un, isInRange, _G["SmartDebuffBtn"..idx], nr, true)
+          nr = 0
+        end
       else
-        nr = -98
+        nr = 0
       end
     end
   end
@@ -6074,9 +6087,12 @@ ou   DoesSpellExist(spellID)    :  pour tous les sorts du jeu
 
 
 
-Not in CD while not in GCD: .isOnGCD == nil
-Not in CD while in GCD: .isOnGCD == true
-In CD (while in GCD or not): .isOnGCD == false
+Spell in CD = (scd.isActive == true) and not (scd.isOnGCD == true)
+  - No CD: isActive = false
+  - In GCD Only: isActive = true, isOnGCD = true
+  - In CD no GCD: isActive = true
+  - In CD and GCD: isActive = true, isOnGCD = false
+
 
 FIXME:12.0 UnitInRange by checking RaidNameplate
 >> Garder un cache des unités lors de la boucle, si pas possible:
