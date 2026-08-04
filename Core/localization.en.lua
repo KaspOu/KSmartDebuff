@@ -9,15 +9,19 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-All flavors :
+> Options back:
 
-- Modern detection for all versions
+  - Ignore Debuffs
+  - Debuff Guard (PTR)
+  - HoT icons, with filtering (PTR)
 
-- Show HoT icons, without filtering
+> Options removed:
 
-- Disabled : Ignore debuffs
+  - Summary frame
+  - Sound (PTR)
 
-- Disabled : Debuff Guard
+> 12.1.0 PTR Compatible
+
 ]];
 
 --@do-not-package@

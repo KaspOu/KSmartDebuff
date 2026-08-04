@@ -1,5 +1,15 @@
+v12.0.704
+- 12.1.0 PTR Compatible
+- Options back:
+  - Ignore Debuffs
+  - Debuff Guard (PTR)
+  - HoT icons, with filtering (PTR)
+- Options removed:
+  - Summary frame
+  - Sound (PTR)
+
 v12.0.703
-- Modern detection for all versions
+- Modern detection for all versions (Classic/Anniversary/MoP)
 
 v12.0.502
 - Disable ignore debuff option for Midnight

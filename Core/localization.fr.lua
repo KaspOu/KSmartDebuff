@@ -6,15 +6,18 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
-Toutes les versions :
+> Options de retour :
 
-- Détection moderne pour toutes les versions
+  - Ignorer les débuffs
+  - Débuffs protégés (PTR)
+  - Icônes de HoT filtrées (PTR)
 
-- Icônes de HoT, sans filtrage
+> Options supprimées :
 
-- Désactivé : Ignorer les débuffs
+  - Cadre récapitulatif
+  - Son (PTR)
 
-- Désactivé : Débuffs protégés
+> Compatible 12.1.0 RPT
 
 ]]
 
@@ -116,7 +119,7 @@ SMARTDEBUFF_OFT_COLOR_BACKDROP = "Arri\195\168re-plan\nCliquez-moi"
 SMARTDEBUFF_OFT_OPACITYNORMAL  = "Opacit\195\169 \195\160 port\195\169e";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Opacit\195\169 hors de port\195\169e";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacit\195\169 des d\195\169buffs";
-SMARTDEBUFF_OFT_NOTREMOVABLE   = "D\195\169buffs prot\195\169g\195\169s";
+SMARTDEBUFF_OFT_NOTREMOVABLE   = "D\195\169buffs critiques";
 SMARTDEBUFF_OFT_VEHICLE        = "V\195\169hicules";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Ic\195\180nes de raid";
 SMARTDEBUFF_OFT_SHOWROLEICON   = "Ic\195\180nes de r\195\180le (tank/heal)";
@@ -220,7 +223,7 @@ SMARTDEBUFF_INFO               = "Joueurs:\nPV %:\nMana %:\nMorts:\nAFK:\nHors l
 SMARTDEBUFF_TT_OPTIONS          = "|cff20d2ff- Bouton O -|r\nClic gauche : Ouvrir les options\nClic droit : Modifier les raccourcis";
 SMARTDEBUFF_OFT_CLASSSORT       = "Liste de tri des classes";
 SMARTDEBUFF_TT_CLASSSORT 	      = "Cliquez pour modifier l'ordre des classes";
-SMARTDEBUFF_OFT_NOTREMOVABLE_LIST = "Liste des d\195\169buffs prot\195\169g\195\169s";
+SMARTDEBUFF_OFT_NOTREMOVABLE_LIST = "Liste des d\195\169buffs critiques";
 SMARTDEBUFF_TT_NOTREMOVABLE_LIST 	= "Cliquez pour modifier la liste";
 SMARTDEBUFF_OFT_SKILLS          = "Raccourcis souris";
 SMARTDEBUFF_TT_SKILLS           = "Cliquez pour modifier les raccourcis\n(Clic G/D/M, avec Alt/Maj/Ctrl)";
