@@ -12,15 +12,13 @@ SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 > Options back:
 
   - Ignore Debuffs
-  - Debuff Guard (PTR)
-  - HoT icons, with filtering (PTR)
+  - Debuff Guard (12.1.0)
+  - HoT icons, with filtering (12.1.0)
 
 > Options removed:
 
   - Summary frame
-  - Sound (PTR)
-
-> 12.1.0 PTR Compatible
+  - Sound (12.1.0)
 
 ]];
 

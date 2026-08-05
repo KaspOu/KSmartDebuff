@@ -3080,6 +3080,29 @@
           </OnClick>
         </Scripts>
       </Button>
+      <Button name="$parent_btnFakeMode" inherits="UIPanelButtonTemplate" text="|cff00ffffFake">
+        <Size>
+          <AbsDimension x="40" y="20" />
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="76" y="4"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self:SetAlpha(.8);
+            self:Hide();
+            self:SetNormalFontObject("GameFontNormalSmall");
+            self:SetHighlightFontObject("GameFontHighlightSmall");
+          </OnLoad>
+          <OnClick>
+            SMARTDEBUFF_FakeModeToggle();
+          </OnClick>
+        </Scripts>
+      </Button>
 
       <Button name="$parent_btnGlobalSave" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GLOBALSAVE">
         <Size>
@@ -3475,8 +3498,16 @@
 					<OnTabPressed>
 					</OnTabPressed>
 					<OnEnterPressed>
-						SMARTDEBUFF_AddTextToTable(self, SMARTDEBUFF_Options.NotRemovableDebuffs);
-            SMARTDEBUFF_NRDOnScroll();
+						local getId, _ = strsplit(":", self:GetText())
+            local spellInfo = C_Spell.GetSpellInfo(getId)
+						if (spellInfo) then
+						  self:SetText(spellInfo.spellID..": "..spellInfo.name)
+						  SMARTDEBUFF_AddTextToTable(self, SMARTDEBUFF_Options.NotRemovableDebuffs);
+						  SMARTDEBUFF_NRDOnScroll();
+						else
+              PlaySoundFile(SDB_ERROR_SOUND, "master")
+						  SMARTDEBUFF_AddMsgErr('Please enter a SpellID')
+						end
 					</OnEnterPressed>
 				</Scripts>
 			</EditBox>

@@ -17,6 +17,7 @@ local CFG = {
   maxScrollBtn = 39, -- FauxScrollFrame height
   maxColumns = 14,
   maxSpellIcons = 10,
+  filterString = "HARMFUL|RAID"
 };
 local ERRS = {}
 
@@ -72,6 +73,7 @@ local auraContainerInitFailed = false;
 local auraContainerByIndex = {};
 auraSlotByName = {};
 local SMARTDEBUFF_ResetAuraContainers = nil;
+local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
 
 local ST = {
   iTotMana = 0,
@@ -196,7 +198,7 @@ local COL = {
   GYL = BCC(0.65, 0.65, 0.65),
 };
 
-local SDB_ERROR_SOUND = 565853; -- BellTollHorde.ogg
+SDB_ERROR_SOUND = 565853; -- BellTollHorde.ogg
 
 -- Global update: Sounds
 if SMARTDEBUFF_DISABLED_SOUNDS ~= "" then
@@ -388,13 +390,13 @@ end
 local function BlizzUnitFrame(unit)
   local lUnitIndex = LUnitIndex(unit)
   if lUnitIndex > 0 then
-    if (_G["CompactRaidFrame"..lUnitIndex] and _G["CompactRaidFrame"..lUnitIndex]:IsVisible()) then
+    if (_G["CompactRaidFrame"..lUnitIndex] and _G["CompactRaidFrame"..lUnitIndex]:IsShown()) then
       return _G["CompactRaidFrame"..lUnitIndex]
     end
-    if (_G["CompactPartyFrameMember"..lUnitIndex] and _G["CompactPartyFrameMember"..lUnitIndex]:IsVisible()) then
+    if (_G["CompactPartyFrameMember"..lUnitIndex] and _G["CompactPartyFrameMember"..lUnitIndex]:IsShown()) then
       return _G["CompactPartyFrameMember"..lUnitIndex]
     end
-    SMARTDEBUFF_AddMsgD(COL.RD.."BlizzUnitFrame "..unit.." not found")
+    SMARTDEBUFF_AddMsgD(COL.RD.."BlizzUnitFrame '"..unit.."' not found (index:"..lUnitIndex..")")
     return nil
   end
   if unit == "player" then
@@ -405,15 +407,18 @@ local function BlizzUnitFrame(unit)
       nMax = 5;
     end
     for j = 1, nMax, 1 do
-      if _G["CompactRaidFrame"..j] and _G["CompactRaidFrame"..j].unit and UnitIsUnit(_G["CompactRaidFrame"..j].unit, "player") and _G["CompactRaidFrame"..j]:IsVisible() then
+      if _G["CompactRaidFrame"..j] and _G["CompactRaidFrame"..j].unit and UnitIsUnit(_G["CompactRaidFrame"..j].unit, "player") and _G["CompactRaidFrame"..j]:IsShown() then
         return _G["CompactRaidFrame"..j]
       end
-      if _G["CompactPartyFrameMember"..j] and _G["CompactPartyFrameMember"..j].unit and UnitIsUnit(_G["CompactPartyFrameMember"..j].unit, "player") and _G["CompactPartyFrameMember"..j]:IsVisible() then
+      if _G["CompactPartyFrameMember"..j] and _G["CompactPartyFrameMember"..j].unit and UnitIsUnit(_G["CompactPartyFrameMember"..j].unit, "player") and _G["CompactPartyFrameMember"..j]:IsShown() then
         return _G["CompactPartyFrameMember"..j]
       end
     end
   end
-  SMARTDEBUFF_AddMsgD(COL.RD.."BlizzUnitFrame "..unit.." not found")
+  if unit == "pet" then
+    return { inDistance = true }
+  end
+  SMARTDEBUFF_AddMsgD(COL.RD.."BlizzUnitFrame '"..unit.."' not found")
   return nil
 end
 
@@ -699,6 +704,7 @@ function SMARTDEBUFF_CheckWarlockPet()
       local ucf = UnitCreatureFamily("pet");
       if (ucf == SMARTDEBUFF_IMP) then
         isSpellActive = true;
+        CFG.filterString = "HARMFUL|DISPELLABLE"
         SMARTDEBUFF_AddMsgD("Warlock debuff pet found: " .. SMARTDEBUFF_IMP);
       end
       SMARTDEBUFF_RefreshAOFKeys();
@@ -1390,6 +1396,12 @@ function SMARTDEBUFF_Options_Init()
 
   if (O.NotRemovableDebuffs == nil) then
     SMARTDEBUFF_SetDefaultNotRemovableDebuffs();
+  else
+    -- NEW PARAM (Deprecated list of SpellName)
+    local _, secd = strsplit(":", O.NotRemovableDebuffs[1])
+    if (secd == nil) then
+      SMARTDEBUFF_SetDefaultNotRemovableDebuffs();
+    end
   end
 
   if (O.SpellGuard == nil) then
@@ -1551,7 +1563,7 @@ function SMARTDEBUFF_SetDefaultNotRemovableDebuffs()
     if (v) then
       spellinfo = ns.GetSpellInfo(v);
       if (spellinfo) then
-        table.insert(O.NotRemovableDebuffs, spellinfo.name);
+        table.insert(O.NotRemovableDebuffs, v .. ": "..spellinfo.name);
       end
     end
   end
@@ -1775,11 +1787,12 @@ function SMARTDEBUFF_LinkSpellsToKeys()
       end
       if (cSpellList[v[2]]) then
         for _, s in ipairs(cSpellList[v[2]]) do
+          local spellType = (v[1] == "spell") and "Spell" or v[1]
           if (s and not cSpells[s]) then
-            cSpells[s] = {v[2], idx};
-            SMARTDEBUFF_AddMsgD(COL.GRD.."Spell binded: "..v[2].." -> "..k.." - default for '"..s.."'");
+            cSpells[s] = {v[2], idx, v[1]};
+            SMARTDEBUFF_AddMsgD(COL.GRD..spellType.." binded: "..v[2].." -> "..k.." - default for '"..s.."'");
           else
-            SMARTDEBUFF_AddMsgD(COL.GRD.."Spell binded: "..v[2].." -> "..k);
+            SMARTDEBUFF_AddMsgD(COL.GRD..spellType.." binded: "..v[2].." -> "..k);
           end
         end
       else
@@ -1796,7 +1809,7 @@ function SMARTDEBUFF_LinkSpellsToKeys()
     SMARTDEBUFF_AddMsgD(COL.ORD.."No spell found for Range detection!");
   end
   SMARTDEBUFF_ResetAuraContainers();
-  SMARTDEBUFF_InitCurves()
+  SMARTDEBUFF_InitCurves_Secrets()
 end
 
 
@@ -2038,6 +2051,17 @@ function SMARTDEBUFF_TestModeToggle()
     SmartDebuffOF_btnTestModeText:SetTextColor(1, .82, 0)
   end
   SMARTDEBUFF_SetUnits();
+end
+
+function SMARTDEBUFF_FakeModeToggle()
+  local _, extr = strsplit("!", CFG.filterString)
+  if (extr == nil) then
+    CFG.filterString = "!"..CFG.filterString;
+    SmartDebuffOF_btnFakeModeText:SetText("|cff00ff00Fake")
+  else
+    CFG.filterString = extr;
+    SmartDebuffOF_btnFakeModeText:SetText("|cff00ffffFake")
+  end
 end
 
 
@@ -2407,7 +2431,7 @@ function SMARTDEBUFF_CreateButtons()
       end
     end
 
-    SMARTDEBUFF_InitAuraContainers();
+    SMARTDEBUFF_SetAuraContainers();
   end
 
 end
@@ -2449,13 +2473,57 @@ local function SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex)
   return filters;
 end
 
-function SMARTDEBUFF_HasVisibleAuraInContainer(container)
-  if (not container or not container.sdbAuraSlots) then
-    return false;
+local excludeSpellIDsGlobalCache = nil;
+local excludeSpellIDsByClassCache = {};
+
+local function SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit)
+  if (not excludeSpellIDsGlobalCache) then
+    excludeSpellIDsGlobalCache = {};
+    for _, skipIndex in ipairs(SMARTDEBUFF_DEBUFFSKIPLIST_ID) do
+      local spellID = SMARTDEBUFF_DEBUFFSKIP_ID[skipIndex];
+      if (spellID) then
+        excludeSpellIDsGlobalCache[spellID] = true;
+      end
+    end
   end
 
-  return false;
+  if (not unit) then
+    return excludeSpellIDsGlobalCache;
+  end
+
+  local _, unitClass = UnitClass(unit);
+  if (not unitClass) then
+    return excludeSpellIDsGlobalCache;
+  end
+
+  local cached = excludeSpellIDsByClassCache[unitClass];
+  if (cached) then
+    return cached;
+  end
+
+  cached = {};
+  for spellID in pairs(excludeSpellIDsGlobalCache) do
+    cached[spellID] = true;
+  end
+  local classSkipList = SMARTDEBUFF_DEBUFFCLASSSKIPLIST_ID[unitClass];
+  if (classSkipList) then
+    for _, skipIndex in ipairs(classSkipList) do
+      local spellID = SMARTDEBUFF_DEBUFFSKIP_ID[skipIndex];
+      if (spellID) then
+        cached[spellID] = true;
+      end
+    end
+  end
+  excludeSpellIDsByClassCache[unitClass] = cached;
+  return cached;
 end
+
+-- function SMARTDEBUFF_HasVisibleAuraInContainer(container)
+--   if (not container or not container.sdbAuraSlots) then
+--     return false;
+--   end
+--   return false;
+-- end
 
 SMARTDEBUFF_ResetAuraContainers = function()
   for _, container in pairs(auraContainerByIndex) do
@@ -2500,7 +2568,6 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, 
   button.textureCharmed:SetAllPoints(button);
   button.textCharmed:SetAllPoints(button);
 
-  local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
   local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
   if (inRange == 1) then
     button.textureCharmed:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
@@ -2512,11 +2579,8 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, 
     sbs_std = inRange == 1 and sbs_std or "-"
     button.textCharmed:SetText(sbs_std)
   end
-  local shouldShowDebuff = true
-  if (O.IgnoreDebuff and forceShown == nil) then
-    local spellId = cSpells[SMARTDEBUFF_CHARMED][1];
-    shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(GetSpellCD(spellId))
-  end
+  local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
+  local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
   button.charmedOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
   button.textureCharmed:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
   button.textCharmed:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
@@ -2533,35 +2597,51 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, 
   end
 end
 
-function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
+function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
 
-  local button = _G["SmartDebuffBtn" .. idx];
+  local buttonName = isPet and ("SmartDebuffPetBtn" .. idx) or ("SmartDebuffBtn" .. idx)
+  local button = _G[buttonName];
+  local slotKeyPrefix = isPet and "sdb_pet_" or "sdb_"
 
-  if (auraContainerByIndex[idx]) then
-    -- FIXME: Hide / Show BUTTONS / SetTexture + Text (distance)
-    for buttonIndex = 1, 3, 1 do
-      SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
-
-      local slotKey = "sdb_" .. idx .. "_" .. buttonIndex
-      local slotButton = auraSlotByName[slotKey]
-      if slotButton then
-        if (O.IgnoreDebuff) then
-          local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
-          if (includeDispelTypes) then
-            local firstDispelType = next(includeDispelTypes)
-            local spellId = cSpells[firstDispelType][1];
-            button.dispelContainers[buttonIndex]:SetShown(SMARTDEBUFF_ShouldShowDebuff(GetSpellCD(spellId)))
-          end
-        else
-          button.dispelContainers[buttonIndex]:Show()
+  if (auraContainerByIndex[buttonName]) then
+    if (button:IsShown()) then
+        -- FIXME: Hide / Show BUTTONS / SetTexture + Text (distance)
+        if unit ~= nil then
+          auraContainerByIndex[buttonName]:SetUnit(unit);
         end
-      end
-      -- if (O.ShowLR) then
-      --   btnTxt = inRange == 1 and btnTxt or "-"
-      --   text:SetText(btnTxt)
-      -- end
+        for buttonIndex = 1, 3, 1 do
+          SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
+
+          local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
+          local slotButton = auraSlotByName[slotKey]
+          if slotButton then
+            local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
+            local dispelContainer = button.dispelContainers[buttonIndex]
+            if unit ~= nil then
+              dispelContainer:SetUnit(unit)
+            end
+            dispelContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
+            dispelContainer:SetAuraSlotCandidateFilters(slotKey, {
+              includeDispelTypes = includeDispelTypes or {},
+              excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
+            });
+            local shouldShowDebuff = true
+            if (O.IgnoreDebuff and includeDispelTypes) then
+                local firstDispelType = next(includeDispelTypes)
+                local dispelCD = SMARTDEBUFF_GetDispelCooldownByType(firstDispelType)
+                shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(dispelCD)
+            end
+            button.dispelContainers[buttonIndex]:SetShown(shouldShowDebuff)
+          end
+        end
+        if (button.auraContainer.sdbAuraSlots[10]) then
+          local slotKey = slotKeyPrefix .. idx .. "_nr"
+          -- container:SetUnit(unit)
+          button.auraContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
+          -- excludeDispelTypes = allIncludeDispelTypes,
+        end
     end
-    return auraContainerByIndex[idx];
+    return auraContainerByIndex[buttonName];
   end
   if (InCombatLockdown()) then
     return nil;
@@ -2571,7 +2651,7 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
     return nil;
   end
 
-  local safeFunction = function(button)
+  local safeInit = function(button)
     local frame = button.auraContainer
     if not frame then
       frame = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
@@ -2590,15 +2670,12 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
       dispelContainer:SetPoint("BOTTOMLEFT", button, "TOPLEFT", 0, 2);
       dispelContainer:SetWidth(button:GetWidth());
       dispelContainer:SetHeight(math.max(8, button:GetHeight() * 0.26));
-      -- if frame.sdbAuraSlots then
-      --   dispelContainer:SetUnit(unit);
-      -- end
     end
 
     frame.sdbAuraSlots = {};
 
-    local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
     local buttonAlpha = O.ADebuff -- (inRange == 1 and O.ANormal or O.ANormalOOR) * O.ADebuff
+    local allIncludeDispelTypes = {}
 
     for buttonIndex = 1, 3, 1 do
       SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
@@ -2606,30 +2683,34 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
       local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
       if (not includeDispelTypes) then
         -- remove existing auraSlot (on config changed)
-        local slotKey = "sdb_" .. idx .. "_" .. buttonIndex
-        pcall(function() dispelContainer:SetAuraSlotCandidateFilters(slotKey, {includeDispelTypes = {}});  end)
+        local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
+        pcall(function()
+          dispelContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
+          dispelContainer:SetAuraSlotCandidateFilters(slotKey, {includeDispelTypes = {}});
+        end)
       else
+        for dispelType, _ in pairs(includeDispelTypes) do
+          allIncludeDispelTypes[dispelType] = true
+        end
         local btnTxt = buttons[buttonIndex] or "?"
 
         if (idx == 1 and O and O.Debug) then
-            -- DEBUG
-            SMARTDEBUFF_AddMsgD("AuraContainers for button " .. buttonIndex.. " ("..(btnTxt ).."): " ..
-              (includeDispelTypes[SMARTDEBUFF_BLEEDING] and SMARTDEBUFF_BLEEDING.." " or "") ..
-              (includeDispelTypes[SMARTDEBUFF_CURSE] and SMARTDEBUFF_CURSE.." " or "") ..
-              (includeDispelTypes[SMARTDEBUFF_DISEASE] and SMARTDEBUFF_DISEASE.." " or "") ..
-              (includeDispelTypes[SMARTDEBUFF_MAGIC] and SMARTDEBUFF_MAGIC.." " or "") ..
-              (includeDispelTypes[SMARTDEBUFF_POISON] and SMARTDEBUFF_POISON.." " or "")
-            )
+            local list = ""
+            for dispelType, _ in pairs(includeDispelTypes) do
+              list = list.. " " .. dispelType
+            end
+            SMARTDEBUFF_AddMsgD(COL.GRD.."AuraContainers for button " .. buttonIndex.. " ("..(btnTxt ).."): " .. list)
         end
         local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex);
-        local slotKey = "sdb_" .. idx .. "_" .. buttonIndex
+        local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
         local slotButton = auraSlotByName[slotKey]
         local candidateFilters = {
           includeDispelTypes = includeDispelTypes,
+          excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
         }
         local ok = pcall(function() dispelContainer:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
         if not ok then
-          slotButton = dispelContainer:AddAuraSlot(slotKey, "HARMFUL|RAID", {
+          slotButton = dispelContainer:AddAuraSlot(slotKey, CFG.filterString, {
             candidateFilters = candidateFilters,
             initializeFrame = function(auraButton)
 
@@ -2649,10 +2730,10 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
               text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
               text:SetText("")
               if (O.ShowLR) then
-                btnTxt = inRange == 1 and btnTxt or "-"
                 text:SetText(btnTxt)
               end
               text:SetTextColor(1, 1, 1)
+              dispelContainer.text = text
             end,
           });
           auraSlotByName[slotKey] = slotButton
@@ -2662,10 +2743,7 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
           slotButton:SetPoint("LEFT", button, "LEFT", 0, 0);
         end
         if unit ~= nil then
-          dispelContainer:Show()
           dispelContainer:SetUnit(unit);
-        else
-          dispelContainer:Hide()
         end
         frame.sdbAuraSlots[buttonIndex] = slotButton;
       end
@@ -2679,31 +2757,36 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
       end
 
       local ids, list = {}, {}
-      for _, spellName in pairs(O.NotRemovableDebuffs) do
-        local id = C_Spell.GetSpellIDForSpellIdentifier(spellName);
-        if id then
-          ids[id] = true
-          table.insert(list, spellName)
+      for _, spellIDAndName in pairs(O.NotRemovableDebuffs) do
+        local id, _ = strsplit(":", spellIDAndName)
+        if C_Spell.DoesSpellExist(id) then
+          ids[tonumber(id)] = true
+          table.insert(list, id)
         end
       end
       if (#list == 0) then
           if (idx == 1 and O and O.Debug) then
-            SMARTDEBUFF_AddMsgD("No not removable spell found")
+            SMARTDEBUFF_AddMsgD(COL.OR.."No not removable spell found")
           end
       else
           if (idx == 1 and O and O.Debug) then
-            SMARTDEBUFF_AddMsgD("AuraContainer for not removable spells added: "..table.concat(list, ", "):sub(1, 47).."...")
+            local listDispels = ""
+            for dispelType, _ in pairs(allIncludeDispelTypes) do
+              listDispels = listDispels.. " " .. dispelType
+            end
+            SMARTDEBUFF_AddMsgD(COL.GRD.."AuraContainer for "..#list.." not removable spells added: "..table.concat(list, ", "):sub(1, 47).."... "..COL.OR.." EXCEPT: "..listDispels)
           end
           local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(0);
-          local slotKey = "sdb_" .. idx .. "_nr"
+          local slotKey = slotKeyPrefix .. idx .. "_nr"
           local slotButton = auraSlotByName[slotKey]
           local candidateFilters = {
             includeSpellIDs = ids,
             excludeSpellIDs = {},
+            excludeDispelTypes = allIncludeDispelTypes,
           }
           local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
           if not ok then
-              slotButton = frame:AddAuraSlot(slotKey, "HARMFUL|RAID", {
+              slotButton = frame:AddAuraSlot(slotKey, CFG.filterString, {
                 candidateFilters = candidateFilters,
                 initializeFrame = function(auraButton)
 
@@ -2733,13 +2816,17 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
           frame.sdbAuraSlots[10] = slotButton;
       end
     end
+    if unit ~= nil then
+      frame:SetUnit(unit)
+    end
     return frame
   end
   local ok, container
   if O.Debug then
-    ok, container = true, safeFunction(button)
+    -- unsafeInit for debug
+    ok, container = true, safeInit(button)
   else
-    ok, container = pcall(safeFunction, button)
+    ok, container = pcall(safeInit, button)
   end
 
   if (not ok or not container) then
@@ -2748,24 +2835,27 @@ function SMARTDEBUFF_InitAuraContainerForButton(idx, unit, inRange)
     return nil;
   end
 
-  auraContainerByIndex[idx] = container;
+  auraContainerByIndex[buttonName] = container;
   return container;
 end
 
-function SMARTDEBUFF_InitAuraContainers()
+function SMARTDEBUFF_SetAuraContainers()
   if (not SMARTDEBUFF_UseAuraContainerPath() or InCombatLockdown()) then
     return;
   end
 
   for i = 1, CFG.maxRaid, 1 do
-    SMARTDEBUFF_InitAuraContainerForButton(i, nil, 1);
+    SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, false);
+  end
+  for i = 1, CFG.maxPets, 1 do
+    SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, true);
   end
 end
 
 function SMARTDEBUFF_SetButtons()
   if (not isInit or not canDebuff or InCombatLockdown()) then return; end
 
-  SMARTDEBUFF_InitAuraContainers();
+  SMARTDEBUFF_SetAuraContainers();
 
   -- reset all buttons
   for i = 1, CFG.maxRaid, 1 do
@@ -3445,7 +3535,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   SmartDebuff_SetButtonBars(sbs_btn, unit, sbs_uc);
 end
 
-function SMARTDEBUFF_InitCurves()
+function SMARTDEBUFF_InitCurves_Secrets()
   if not C_CurveUtil then
     return
   end
@@ -3499,7 +3589,7 @@ function SMARTDEBUFF_InitCurves()
 end
 
 -- https://warcraft.wiki.gg/wiki/ScriptObject_ColorCurveObject
-function SMARTDEBUFF_SetButtonState_Curve(unit, idx, nr, isInRange, remains, isPet, durationObject, auraInstanceID)
+function SMARTDEBUFF_SetButtonState_Curve_Secrets(unit, idx, nr, isInRange, remains, isPet, durationObject, auraInstanceID)
   if (auraInstanceID) then
     if (O.ShowLR) then
       sbs_btn.text1:SetText(SMARTDEBUFF_KEY_L);
@@ -3543,9 +3633,7 @@ end
 
 local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_per, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y, sbb_txtr;
 local sbb_col = { r = 0, g = 1, b = 0 };
--- local dummy = CreateFrame("Frame")
--- local dummyTexture = dummy:CreateTexture(nil, "BACKGROUND")
--- dummy:Hide()
+
 function SmartDebuff_SetButtonBars(btn, unit, unitclass)
   if (unit) then -- and btn:IsVisible()
     if (UnitIsDeadOrGhost(unit) or not UnitIsConnected(unit)) then
@@ -3558,10 +3646,10 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     --sbb_h = btn:GetHeight() / 4 - 1;
     sbb_w = btn:GetWidth();
     sbb_upt = UnitPowerType(unit)
-    sbb_cur = UnitHealth(unit, 0)
-    sbb_nmax = UnitHealthMax(unit, 0)
+    sbb_cur = UnitHealth(unit)
+    sbb_nmax = UnitHealthMax(unit)
     if UnitHealthPercent then
-      sbb_per = string.format("%d", UnitHealthPercent(unit, nil))
+      sbb_per = string.format("%d", UnitHealthPercent(unit, nil, CurveConstants.ScaleTo100))
     else
       sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
@@ -3622,10 +3710,11 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       btn.hptext:SetText("");
     end
 
-    sbb_cur = UnitPower(unit,0);
-    sbb_nmax = UnitPowerMax(unit,0);
+    local powerType = Enum.PowerType and Enum.PowerType.Mana or 0
+    sbb_cur = UnitPower(unit, powerType);
+    sbb_nmax = UnitPowerMax(unit, powerType);
     if UnitPowerPercent then
-      sbb_per = string.format("%d", UnitPowerPercent(unit, nil, nil))
+      sbb_per = string.format("%d", UnitPowerPercent(unit, powerType, nil, CurveConstants.ScaleTo100))
     else
       sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
@@ -3636,7 +3725,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     end
     if (O.Invert) then
       if ns.IsSecretValue(sbb_cur) then
-        sbb_cur = UnitPowerMissing(unit)
+        sbb_cur = UnitPowerMissing(unit, powerType)
       else
         sbb_cur = sbb_nmax - sbb_cur
       end
@@ -3807,7 +3896,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
               local spellID = C_Spell.GetSpellIDForSpellIdentifier(O.SpellGuard[loop2]);
               if (not spellID or spellID <= 0) then
                 if (not ERRS[O.SpellGuard[loop2]]) then
-                  SMARTDEBUFF_AddMsgErr("SpellGuard: Error spellID not found for "..O.SpellGuard[loop2])
+                  SMARTDEBUFF_AddMsgD("SpellGuard: Error spellID not found for "..O.SpellGuard[loop2])
                 end
                 ERRS[O.SpellGuard[loop2]] = true
               else
@@ -4558,7 +4647,7 @@ end
 
 function SMARTDEBUFF_GetDispelCooldownByType(dispelType)
   if (not dispelType or not cSpells[dispelType]) then
-    return 0, nil;
+    return -1, nil;
   end
   local spellId = cSpells[dispelType][1];
   local cooldownDuration = nil;
@@ -4568,7 +4657,7 @@ function SMARTDEBUFF_GetDispelCooldownByType(dispelType)
   return GetSpellCD(spellId), cooldownDuration;
 end
 
-function SMARTDEBUFF_GetFallbackDispelType()
+function SMARTDEBUFF_GetFallbackDispelType_Secrets()
   local order = { SMARTDEBUFF_DISEASE, SMARTDEBUFF_POISON, SMARTDEBUFF_CURSE, SMARTDEBUFF_MAGIC };
   for _, t in ipairs(order) do
     if (cSpells[t]) then
@@ -4595,7 +4684,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, 
     cud_ir = 0;
   end
 
-  local container = SMARTDEBUFF_InitAuraContainerForButton(idx, unit, cud_ir);
+  local container = SMARTDEBUFF_SetAuraContainerForButton(idx, unit, cud_ir, pet);
 
   if (not container) then
     return;
@@ -4607,7 +4696,6 @@ function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, 
     return;
   end
 
-  container:SetUnit(unit);
   container:Show();
 
   -- FIXME: POSSIBLE?
@@ -4676,6 +4764,13 @@ function SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet)
 
       if (not cud_nrd and O.ShowNotRemov and cud_name and not cud_dtype) then
         for _, v in ipairs(O.NotRemovableDebuffs) do
+          if v then
+              local spellIDOrName, _ = strsplit(":", v)
+              if spellIDOrName then
+                  local info = C_Spell.GetSpellInfo(spellIDOrName)
+                  v = info and info.name or v
+              end
+          end
           if (v and cud_name and v == cud_name) then
             cud_nrd = true;
             cud_tlnr = cud_tl;
@@ -4688,7 +4783,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet)
     end
 
     if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
-      cud_cds = GetSpellCD(cSpells[SMARTDEBUFF_CHARMED][1]);
+      cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
       if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
         hasDebuff = true;
         SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
@@ -4749,7 +4844,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_Secrets(spell, unit, idx, isActive, pet)
         end
 
         if (ns.IsSecretValue(cud_name)) then
-          cud_dtype = SMARTDEBUFF_GetFallbackDispelType();
+          cud_dtype = SMARTDEBUFF_GetFallbackDispelType_Secrets();
         end
 
         if (cud_dtype and cSpells[cud_dtype]) then
@@ -4757,7 +4852,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_Secrets(spell, unit, idx, isActive, pet)
           if (SMARTDEBUFF_ShouldShowDebuff(cooldown)) then
             hasDebuff = true;
             SMARTDEBUFF_SetButtonState(unit, idx, 0, cud_ir, cud_tl, pet, -1);
-            SMARTDEBUFF_SetButtonState_Curve(unit, idx, 2, cud_ir, cud_tl, pet, cooldownDuration, cud_id);
+            SMARTDEBUFF_SetButtonState_Curve_Secrets(unit, idx, 2, cud_ir, cud_tl, pet, cooldownDuration, cud_id);
             SMARTDEBUFF_PlaySound();
             return;
           end
@@ -4844,6 +4939,7 @@ function SMARTDEBUFF_OFOnShow()
   SmartDebuffOF_Title:SetText(format("%s %s- %s", SMARTDEBUFF_OPTIONS_TITLE, COL.YLD, SMARTDEBUFF_SPELLS_VERSION));
   if O.Debug then
     ShowF(SmartDebuffOF_btnReload);
+    ShowF(SmartDebuffOF_btnFakeMode);
   end
 end
 
@@ -5753,7 +5849,7 @@ function SMARTDEBUFF_PickAction(self, button)
         end
         if (not GetCursorInfo()) then
           -- Unexpected error: Spell not pickable
-          PlaySoundFile(SDB_ERROR_SOUND);
+          PlaySoundFile(SDB_ERROR_SOUND, "master");
           SMARTDEBUFF_AddMsgErr(ChkS(aName).." #"..ChkS(aId)..", "..SMARTDEBUFF_TT_NOTMOVABLE, true)
           return;
         end
@@ -5880,7 +5976,7 @@ function SMARTDEBUFF_DropAction(self, button)
         end
         if (not GetCursorInfo()) then
           -- Unexpected: Spell not pickable
-          PlaySoundFile(SDB_ERROR_SOUND);
+          PlaySoundFile(SDB_ERROR_SOUND, "master");
           SMARTDEBUFF_AddMsgErr(ChkS(aNameOld).." #"..ChkS(aIdOld)..", "..SMARTDEBUFF_TT_NOTMOVABLE, true)
           return;
         end
@@ -6096,19 +6192,20 @@ Spell in CD = (scd.isActive == true) and not (scd.isOnGCD == true)
 
 FIXME:12.0 UnitInRange by checking RaidNameplate
 >> Garder un cache des unités lors de la boucle, si pas possible:
-/dump CompactPartyFrameMember1.DispelOverlay:IsVisible()
 /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
 /dump CompactPartyFrameMember1:GetAlpha()
 /dump CompactPartyFrameMember1.inDistance
 /dump CompactPartyFrameMember1.hasDispelCurse
 /dump CompactRaidFrame1.hasDispelCurse
 /dump CompactPartyFrameMember1.healPredictionDirty
+
+OLD:
+/dump CompactPartyFrameMember1.DispelOverlay:IsVisible()
 /dump CompactPartyFrameMember1Debuff1:IsVisible()
 /script for k, v in pairs(CompactPartyFrameMember1) do print(k, v) end
 /script for k, v in pairs(CompactPartyFrameMember1) do if not issecretvalue(v) or not issecrettable(v) then print(k, v) end end
 /script for k, v in pairs(CompactPartyFrameMember1) do if issecretvalue(v) or issecrettable(v) then print(k, v) end end
 /dump CompactPartyFrameMember1.dispelDebuffFrames
-
 /dump CompactPartyFrameMember1DispelDebuff1:IsVisible()
 CompactRaidFrame1Debuff1
 ]]

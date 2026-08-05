@@ -9,15 +9,13 @@ SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 > Options de retour :
 
   - Ignorer les débuffs
-  - Débuffs protégés (PTR)
-  - Icônes de HoT filtrées (PTR)
+  - Débuffs protégés (12.1.0)
+  - Icônes de HoT filtrées (12.1.0)
 
 > Options supprimées :
 
   - Cadre récapitulatif
-  - Son (PTR)
-
-> Compatible 12.1.0 RPT
+  - Son (12.1.0)
 
 ]]
 
