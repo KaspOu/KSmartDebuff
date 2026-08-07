@@ -17,7 +17,8 @@ local CFG = {
   maxScrollBtn = 39, -- FauxScrollFrame height
   maxColumns = 14,
   maxSpellIcons = 10,
-  filterString = "HARMFUL|RAID"
+  filterString = "HARMFUL|RAID",
+  filterStringNR = "HARMFUL"
 };
 local ERRS = {}
 
@@ -704,7 +705,6 @@ function SMARTDEBUFF_CheckWarlockPet()
       local ucf = UnitCreatureFamily("pet");
       if (ucf == SMARTDEBUFF_IMP) then
         isSpellActive = true;
-        CFG.filterString = "HARMFUL|DISPELLABLE"
         SMARTDEBUFF_AddMsgD("Warlock debuff pet found: " .. SMARTDEBUFF_IMP);
       end
       SMARTDEBUFF_RefreshAOFKeys();
@@ -1290,6 +1290,8 @@ function SMARTDEBUFF_Options_Init()
   local b = false;
   local s, t;
   _, SDB_cachePlayerClass = UnitClass("player");
+  CFG.filterString = ({ ["WARLOCK"]  = "HARMFUL|DISPELLABLE",})[SDB_cachePlayerClass] or CFG.filterString
+
   CleanMem()
 
   -- Cache SpellID List for current spec
@@ -1733,6 +1735,7 @@ function SMARTDEBUFF_CheckForSpellUpgrade()
           O.CurrentSpells[i] = { s[3], s[4] };
         elseif (s[3] ~= O.CurrentSpells[i][1] or (s[4] and s[4] ~= O.CurrentSpells[i][2])) then
           -- Spell changed: upgrade and cache it
+          print(s[1], s[2], s[3], s[4], s[5])
           SMARTDEBUFF_AddMsgD(COL.GR.."Spell upgrade found: "..O.CurrentSpells[i][1].." #"..ChkS(O.CurrentSpells[i][2]).." -> "..s[3].." #"..s[4]);
           SMARTDEBUFF_UpgradeSpell(O.CurrentSpells[i][1], O.CurrentSpells[i][2], s[3], s[4]);
           O.CurrentSpells[i] = { s[3], s[4] };
@@ -2057,10 +2060,13 @@ function SMARTDEBUFF_FakeModeToggle()
   local _, extr = strsplit("!", CFG.filterString)
   if (extr == nil) then
     CFG.filterString = "!"..CFG.filterString;
-    SmartDebuffOF_btnFakeModeText:SetText("|cff00ff00Fake")
+    CFG.filterStringNR = "!"..CFG.filterStringNR;
+    SmartDebuffOF_btnFakeModeText:SetText("|cff00aa00Switch")
   else
     CFG.filterString = extr;
-    SmartDebuffOF_btnFakeModeText:SetText("|cff00ffffFake")
+    _, extr = strsplit("!", CFG.filterStringNR)
+    CFG.filterStringNR = extr;
+    SmartDebuffOF_btnFakeModeText:SetText("|cffff5555Switch")
   end
 end
 
@@ -2637,7 +2643,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         if (button.auraContainer.sdbAuraSlots[10]) then
           local slotKey = slotKeyPrefix .. idx .. "_nr"
           -- container:SetUnit(unit)
-          button.auraContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
+          button.auraContainer:SetAuraSlotFilterString(slotKey, CFG.filterStringNR)
           -- excludeDispelTypes = allIncludeDispelTypes,
         end
     end
@@ -2761,7 +2767,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         local id, _ = strsplit(":", spellIDAndName)
         if C_Spell.DoesSpellExist(id) then
           ids[tonumber(id)] = true
-          table.insert(list, id)
+          table.insert(list, tonumber(id))
         end
       end
       if (#list == 0) then
@@ -2769,24 +2775,25 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             SMARTDEBUFF_AddMsgD(COL.OR.."No not removable spell found")
           end
       else
-          if (idx == 1 and O and O.Debug) then
-            local listDispels = ""
-            for dispelType, _ in pairs(allIncludeDispelTypes) do
-              listDispels = listDispels.. " " .. dispelType
-            end
-            SMARTDEBUFF_AddMsgD(COL.GRD.."AuraContainer for "..#list.." not removable spells added: "..table.concat(list, ", "):sub(1, 47).."... "..COL.OR.." EXCEPT: "..listDispels)
-          end
           local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(0);
           local slotKey = slotKeyPrefix .. idx .. "_nr"
           local slotButton = auraSlotByName[slotKey]
           local candidateFilters = {
             includeSpellIDs = ids,
             excludeSpellIDs = {},
-            excludeDispelTypes = allIncludeDispelTypes,
+            -- excludeDispelTypes = allIncludeDispelTypes,
           }
+          if (idx == 1 and O and O.Debug) then
+            local listDispels = ""
+            for dispelType, _ in pairs(allIncludeDispelTypes) do
+              listDispels = listDispels.. " " .. dispelType
+            end
+            SMARTDEBUFF_AddMsgD(COL.GRD.."AuraContainer for "..#list.." not removable spells added: "..table.concat(list, ", "):sub(1, 47).."... "..COL.OR.." EXCEPT: "..listDispels)
+            _G.SMARTDEBUFF_NR = { candidateFilters }
+          end
           local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
           if not ok then
-              slotButton = frame:AddAuraSlot(slotKey, CFG.filterString, {
+              slotButton = frame:AddAuraSlot(slotKey, CFG.filterStringNR, {
                 candidateFilters = candidateFilters,
                 initializeFrame = function(auraButton)
 
@@ -6189,6 +6196,9 @@ Spell in CD = (scd.isActive == true) and not (scd.isOnGCD == true)
   - In CD no GCD: isActive = true
   - In CD and GCD: isActive = true, isOnGCD = false
 
+HARMFUL|RAID = you can dispel it
+HARMFUL|RAID_PLAYER_DISPELLABLE = someone in your group can dispel it
+HARMFUL|DISPELLABLE = it is a dispellable debuff, but doesn't say anything about if anyone can dispel it 
 
 FIXME:12.0 UnitInRange by checking RaidNameplate
 >> Garder un cache des unités lors de la boucle, si pas possible:

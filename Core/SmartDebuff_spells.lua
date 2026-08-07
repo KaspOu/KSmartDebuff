@@ -31,6 +31,8 @@ Vérifier :
     Soins naturels améliorés ou non
     Soins naturels : ne pas tenter de pickup/drop le base id (qui est Délivrance de la corruption..)
     Déplacement/drop de Charge de la nature en spé Ours/Chat/Chouette/Cerf
+  Evocateur :
+    Détection dans le bon sens Expunge > Naturalize
   Démoniste :
     Changement de pet (imp)
     Bon fonctionnement des actionpet
@@ -75,6 +77,8 @@ SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
     { -- Expunge (10+)
       Spell_ID = 365585,
       Spell_List = {SMARTDEBUFF_POISON},
+      Improved_Talent = 364343, -- Force détection spé Heal, bug override par Naturalize
+      Improved_Spell_List = {SMARTDEBUFF_MAGIC, SMARTDEBUFF_POISON},
     },
     -- Cauterizing Flame set on R
   },
@@ -136,7 +140,7 @@ SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
   ["MAGE"] = {
     { -- Remove Curse (1+)
       Spell_ID = 475,
-      Spell_List = {SMARTDEBUFF_CURSE},
+      Spell_List = {SMARTDEBUFF_MAGIC, SMARTDEBUFF_CURSE},
     },
   },
 
@@ -164,7 +168,7 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
     -- 2893 - Abolish Poison (1-3)
   },
   ["EVOKER"]  = {
-    { Spell_ID = 374251, Button = "R", Types = {SMARTDEBUFF_CURSE, SMARTDEBUFF_POISON, SMARTDEBUFF_DISEASE} }, -- Cauterizing flame (10+)
+    { Spell_ID = 374251, Button = "R", Types = {SMARTDEBUFF_CURSE, SMARTDEBUFF_POISON, SMARTDEBUFF_DISEASE, SMARTDEBUFF_BLEEDING} }, -- Cauterizing flame (10+)
     { Spell_ID = 360995, Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Verdant embrace (10+)
     { Spell_ID = 361469, Button = "AL", Types = {SMARTDEBUFF_HEAL} }, -- Living flame (10+)
   },
