@@ -698,6 +698,21 @@ function SMARTDEBUFF_AddMsgD(msg, r, g, b)
   end
 end
 
+local SMARTDEBUFF_DebugTimers = {}
+--- Display a Debug message, delayed to avoid repetition
+function SMARTDEBUFF_AddMsgDT(msg, msg2)
+    if (DEFAULT_CHAT_FRAME and O and O.Debug) then
+        if SMARTDEBUFF_DebugTimers[msg] then
+            SMARTDEBUFF_DebugTimers[msg]:Cancel()
+        end
+        SMARTDEBUFF_DebugTimers[msg] = C_Timer.NewTimer(.4, function()
+          SMARTDEBUFF_AddMsgD(msg..(msg2 or ""))
+          SMARTDEBUFF_DebugTimers[msg] = nil
+        end)
+    end
+end
+
+
 function SMARTDEBUFF_CheckWarlockPet()
   if (SDB_cachePlayerClass == "WARLOCK") then
     isSpellActive = false;
@@ -1008,10 +1023,10 @@ function SMARTDEBUFF_SetSpells()
   if (SDB_cachePlayerClass and SMARTDEBUFF_CLASS_DISPELS_LIST_ID[SDB_cachePlayerClass] and #SMARTDEBUFF_CLASS_DISPELS_LIST_ID[SDB_cachePlayerClass] > 0) then
       sName = nil;
       SMARTDEBUFF_AddMsgD("Checking for class dispels...");
-      -- 1. Check for useable dispel, and enhancement
+      -- 1. Check for first useable dispel, and enhancement
       for _, val in ipairs(SMARTDEBUFF_CLASS_DISPELS_LIST_ID[SDB_cachePlayerClass]) do
         sSpellInfo = ns.GetSpellInfo(val.Spell_ID);
-        if (sSpellInfo) then
+        if (sName == nil and sSpellInfo) then
           -- Cache range detection dispel if possible (use base spell to ensure detection)
           if not SDB_cacheRangeCheckSpell and SDB_IsBaseSpellInRange(sSpellInfo.name, "player") then
             SDB_cacheRangeCheckSpell = SDB_GetBaseSpellName(sSpellInfo.spellID);
@@ -1290,7 +1305,7 @@ function SMARTDEBUFF_Options_Init()
   local b = false;
   local s, t;
   _, SDB_cachePlayerClass = UnitClass("player");
-  CFG.filterString = ({ ["WARLOCK"]  = "HARMFUL|DISPELLABLE",})[SDB_cachePlayerClass] or CFG.filterString
+  CFG.filterString = ({ ["WARLOCK"]  = "HARMFUL|DISPELLABLE", ["HUNTER"]  = "HARMFUL",})[SDB_cachePlayerClass] or CFG.filterString
 
   CleanMem()
 
@@ -1735,7 +1750,6 @@ function SMARTDEBUFF_CheckForSpellUpgrade()
           O.CurrentSpells[i] = { s[3], s[4] };
         elseif (s[3] ~= O.CurrentSpells[i][1] or (s[4] and s[4] ~= O.CurrentSpells[i][2])) then
           -- Spell changed: upgrade and cache it
-          print(s[1], s[2], s[3], s[4], s[5])
           SMARTDEBUFF_AddMsgD(COL.GR.."Spell upgrade found: "..O.CurrentSpells[i][1].." #"..ChkS(O.CurrentSpells[i][2]).." -> "..s[3].." #"..s[4]);
           SMARTDEBUFF_UpgradeSpell(O.CurrentSpells[i][1], O.CurrentSpells[i][2], s[3], s[4]);
           O.CurrentSpells[i] = { s[3], s[4] };
@@ -1793,16 +1807,16 @@ function SMARTDEBUFF_LinkSpellsToKeys()
           local spellType = (v[1] == "spell") and "Spell" or v[1]
           if (s and not cSpells[s]) then
             cSpells[s] = {v[2], idx, v[1]};
-            SMARTDEBUFF_AddMsgD(COL.GRD..spellType.." binded: "..v[2].." -> "..k.." - default for '"..s.."'");
+            SMARTDEBUFF_AddMsgDT(COL.GRD..spellType.." binded: "..v[2].." -> "..k.." - default for '"..s.."'");
           else
-            SMARTDEBUFF_AddMsgD(COL.GRD..spellType.." binded: "..v[2].." -> "..k);
+            SMARTDEBUFF_AddMsgDT(COL.GRD..spellType.." binded: "..v[2].." -> "..k);
           end
         end
       else
-        SMARTDEBUFF_AddMsgD(COL.GRD.."User spell binded: "..v[2].." -> "..k);
+        SMARTDEBUFF_AddMsgDT(COL.GRD.."User spell binded: "..v[2].." -> "..k);
         if not SDB_cacheRangeCheckSpell and SDB_IsBaseSpellInRange(v[2], "player") then
           SDB_cacheRangeCheckSpell = v[2]
-          SMARTDEBUFF_AddMsgD(COL.ORD.."Range detection fallback on user spell: "..SDB_cacheRangeCheckSpell);
+          SMARTDEBUFF_AddMsgDT(COL.ORD.."Range detection fallback on user spell: "..SDB_cacheRangeCheckSpell);
           break
         end
       end
@@ -2056,17 +2070,17 @@ function SMARTDEBUFF_TestModeToggle()
   SMARTDEBUFF_SetUnits();
 end
 
-function SMARTDEBUFF_FakeModeToggle()
+function SMARTDEBUFF_FilterStringToggle()
   local _, extr = strsplit("!", CFG.filterString)
   if (extr == nil) then
     CFG.filterString = "!"..CFG.filterString;
-    CFG.filterStringNR = "!"..CFG.filterStringNR;
-    SmartDebuffOF_btnFakeModeText:SetText("|cff00aa00Switch")
+    CFG.filterStringNR = CFG.filterStringNR ~= "" and "!"..CFG.filterStringNR or "";
+    SmartDebuffOF_btnFakeModeText:SetText("|cff00aa00Toggle")
   else
     CFG.filterString = extr;
     _, extr = strsplit("!", CFG.filterStringNR)
-    CFG.filterStringNR = extr;
-    SmartDebuffOF_btnFakeModeText:SetText("|cffff5555Switch")
+    CFG.filterStringNR = extr or "";
+    SmartDebuffOF_btnFakeModeText:SetText("|cffff5555Toggle")
   end
 end
 
@@ -2615,6 +2629,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         if unit ~= nil then
           auraContainerByIndex[buttonName]:SetUnit(unit);
         end
+        auraContainerByIndex[buttonName]:SetEnabled(unit ~= nil)
         for buttonIndex = 1, 3, 1 do
           SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
 
@@ -2622,22 +2637,26 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
           local slotButton = auraSlotByName[slotKey]
           if slotButton then
             local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
-            local dispelContainer = button.dispelContainers[buttonIndex]
-            if unit ~= nil then
-              dispelContainer:SetUnit(unit)
+            local shouldShowDebuff = unit ~= nil and not not includeDispelTypes
+            if (shouldShowDebuff and SDB_cachePlayerClass == "HUNTER") then
+              shouldShowDebuff = UnitIsUnit(unit, "player")
             end
-            dispelContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
-            dispelContainer:SetAuraSlotCandidateFilters(slotKey, {
-              includeDispelTypes = includeDispelTypes or {},
-              excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
-            });
-            local shouldShowDebuff = true
-            if (O.IgnoreDebuff and includeDispelTypes) then
+            if (shouldShowDebuff and O.IgnoreDebuff) then
                 local firstDispelType = next(includeDispelTypes)
                 local dispelCD = SMARTDEBUFF_GetDispelCooldownByType(firstDispelType)
                 shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(dispelCD)
             end
-            button.dispelContainers[buttonIndex]:SetShown(shouldShowDebuff)
+            local dispelContainer = button.dispelContainers[buttonIndex]
+            if shouldShowDebuff then
+              dispelContainer:SetUnit(unit)
+              dispelContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
+              dispelContainer:SetAuraSlotCandidateFilters(slotKey, {
+                includeDispelTypes = includeDispelTypes or {},
+                excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
+              });
+            end
+            dispelContainer:SetEnabled(shouldShowDebuff)
+            dispelContainer:SetShown(shouldShowDebuff)
           end
         end
         if (button.auraContainer.sdbAuraSlots[10]) then
@@ -2705,7 +2724,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             for dispelType, _ in pairs(includeDispelTypes) do
               list = list.. " " .. dispelType
             end
-            SMARTDEBUFF_AddMsgD(COL.GRD.."AuraContainers for button " .. buttonIndex.. " ("..(btnTxt ).."): " .. list)
+            SMARTDEBUFF_AddMsgDT(COL.GR.."AuraContainers for button " .. buttonIndex.. " ("..(btnTxt ).."): ", list)
         end
         local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex);
         local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
@@ -2724,6 +2743,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               auraButton:ClearAllPoints();
               auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
               auraButton:SetFrameStrata("HIGH")
+              auraButton:EnableMouse(true);
 
               local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
               colorOverlay:SetBlendMode("BLEND");
@@ -2751,10 +2771,11 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         if unit ~= nil then
           dispelContainer:SetUnit(unit);
         end
+        dispelContainer:SetEnabled(unit ~= nil);
         frame.sdbAuraSlots[buttonIndex] = slotButton;
       end
     end
-    if (O.ShowNotRemov ~= false) then
+    if (SMARTDEBUFF_IS_DEV and O.ShowNotRemov ~= false) then
       local sbs_ln = 5.5
       local sbs_wd = math.floor(button:GetWidth() / sbs_ln - 1);
       local btnTxt = unit and strsub(UnitName(unit), 0, 4) or ""
@@ -2772,7 +2793,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
       end
       if (#list == 0) then
           if (idx == 1 and O and O.Debug) then
-            SMARTDEBUFF_AddMsgD(COL.OR.."No not removable spell found")
+            SMARTDEBUFF_AddMsgDT(COL.OR.."No not removable spell found")
           end
       else
           local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(0);
@@ -2788,7 +2809,8 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             for dispelType, _ in pairs(allIncludeDispelTypes) do
               listDispels = listDispels.. " " .. dispelType
             end
-            SMARTDEBUFF_AddMsgD(COL.GRD.."AuraContainer for "..#list.." not removable spells added: "..table.concat(list, ", "):sub(1, 47).."... "..COL.OR.." EXCEPT: "..listDispels)
+            local except = candidateFilters.excludeDispelTypes and COL.OR.." EXCEPT: "..listDispels or ""
+            SMARTDEBUFF_AddMsgDT(COL.GRD.."AuraContainer for "..#list.." not removable spells added: ", table.concat(list, ", "):sub(1, 47).."... "..except)
             _G.SMARTDEBUFF_NR = { candidateFilters }
           end
           local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
@@ -2801,6 +2823,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   auraButton:ClearAllPoints();
                   auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
                   auraButton:SetFrameStrata("HIGH")
+                  auraButton:EnableMouse(true);
 
                   local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
                   colorOverlay:SetBlendMode("BLEND");
@@ -2826,6 +2849,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
     if unit ~= nil then
       frame:SetUnit(unit)
     end
+    frame:SetEnabled(unit ~= nil)
     return frame
   end
   local ok, container
@@ -3888,7 +3912,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
           -- Refresh if needed only -- TODO MOVE
           if (btn.spellGuardCompare ~= table.concat(O.SpellGuard, ", ")) then
             btn.spellGuardCompare = table.concat(O.SpellGuard, ", ")
-            SMARTDEBUFF_AddMsgD("SpellGuard: Add icons for: "..btn.spellGuardCompare)
+            SMARTDEBUFF_AddMsgD(COL.YLD.."SpellGuard: Add icons for: "..btn.spellGuardCompare)
             if (btn.sdbSpellGuardSlots == nil) then
               btn.sdbSpellGuardSlots = {};
             end
@@ -3903,7 +3927,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
               local spellID = C_Spell.GetSpellIDForSpellIdentifier(O.SpellGuard[loop2]);
               if (not spellID or spellID <= 0) then
                 if (not ERRS[O.SpellGuard[loop2]]) then
-                  SMARTDEBUFF_AddMsgD("SpellGuard: Error spellID not found for "..O.SpellGuard[loop2])
+                  SMARTDEBUFF_AddMsgD(COL.RD.."SpellGuard: Error spellID not found for "..O.SpellGuard[loop2])
                 end
                 ERRS[O.SpellGuard[loop2]] = true
               else
@@ -4052,7 +4076,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
         end
       end
     else
-      if (btn.spellicon[1]:IsVisible()) then
+      if (btn.spellicon and btn.spellicon[1] and btn.spellicon[1]:IsVisible()) then
         for loop2 = 1, CFG.maxSpellIcons, 1 do
           btn.spellicon[loop2]:Hide();
         end
@@ -4980,10 +5004,12 @@ function SMARTDEBUFF_CheckAnchorPos(self, button)
   if (not self) then return; end
 
   local s = self:GetName();
-  --SMARTDEBUFF_AddMsgD(s);
-  -- s = string.sub(s, 21);
-  s = s:utf8sub(1, 21)
-  if (not s) then s = "TOPLEFT"; end
+  -- SMARTDEBUFF_AddMsgD(s);
+  s = string.sub(s, 21);
+  if (not s or not tContains(AnchorPos, s)) then
+    SMARTDEBUFF_AddMsgErr("Unsupported AnchorPos: "..O.SFPosP.. "... PLEASE REPORT THIS ERROR")
+    s = "TOPLEFT";
+  end
   O.SFPosP = s;
 
   for _, v in pairs(AnchorPos) do
@@ -5034,6 +5060,9 @@ function SMARTDEBUFF_SetAnchorPos(self, button)
   elseif (O.SFPosP == "BOTTOMRIGHT") then
     x = x + w;
     y = y - h;
+  else
+    -- SMARTDEBUFF_AddMsgErr("Unsupported AnchorPos: "..O.SFPosP.. "... RESET")
+    O.SFPosP = "TOPLEFT"
   end
 
   O.SFPosX = x;
@@ -5403,6 +5432,10 @@ function SmartDebuff_SpellGuardBtnOnClick(self, button)
       table.remove(O.SpellGuard, n);
     end
     SMARTDEBUFF_SpellGuardOnScroll();
+    -- AutoDeactivate checkbox
+    if (#O.SpellGuard == 0 and SMARTDEBUFF_Options.ShowSpellIcon) then
+      SmartDebuffOF_cbShowSpellIcon:Click()
+    end
   end
   SmartDebuffSpellGuard_txtIn:ClearFocus();
 end
@@ -5411,6 +5444,10 @@ function SmartDebuff_SpellGuardBtnOnDragStop(i, n)
   --SMARTDEBUFF_AddMsgD(format("i = %.0f, n = %.0f", i, n));
   TableReorder(O.SpellGuard, i, n);
   SMARTDEBUFF_SpellGuardOnScroll();
+  -- AutoActivate checkbox
+  if (not SMARTDEBUFF_Options.ShowSpellIcon) then
+    SmartDebuffOF_cbShowSpellIcon:Click()
+  end
 end
 
 

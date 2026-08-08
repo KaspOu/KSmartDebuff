@@ -6,16 +6,18 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
+Chasseur: sort Feindre la mort ajouté (Talent : Onguent d’urgence)
+
 > Options de retour :
 
   - Ignorer les débuffs
-  - Débuffs protégés (12.1.0)
   - Icônes de HoT filtrées (12.1.0)
 
 > Options supprimées :
 
   - Cadre récapitulatif
   - Son (12.1.0)
+  - Débuffs protégés (bloqué)
 
 ]]
 

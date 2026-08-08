@@ -1,5 +1,9 @@
 v12.0.705
 - Fixes (tested with all classes)
+- Finally removed Debuff Guard (didn't work)
+- Anchor configuration fixed
+- Hunter: spell Feign death added (Talent: Emergency Salve)
+- Evoker: Heal spec Magic detection fixed
 
 v12.0.704
 - 12.1.0 PTR Compatible

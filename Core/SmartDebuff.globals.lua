@@ -27,6 +27,7 @@ SMARTDEBUFF_BOOK_TYPE_SPELL = "spell";
 local devVer = "|TInterface/PVPFrame/Icons/prestige-icon-8-3:16|t"
 SMARTDEBUFF_OPTIONS_TITLE = SMARTDEBUFF_VERS_TITLE ..devVer.. " Options"
 SMARTDEBUFF_HEADERS = { SMARTDEBUFF_HEADERS[1]..devVer, SMARTDEBUFF_HEADERS[2]..devVer }
+SMARTDEBUFF_IS_DEV = true
 --@end-do-not-package@
 
 

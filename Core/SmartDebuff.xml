@@ -1851,12 +1851,12 @@
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_NOTREMOVABLE);
-            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then
+            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_IS_DEV) then
               self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
               return
             end
+            _G[self:GetName().."Text"]:SetVertexColor(0, 1, 1, .7);
           </OnLoad>
           <OnShow>
             if (SMARTDEBUFF_Options) then
@@ -1891,12 +1891,11 @@
         </Anchors>
         <Scripts>
           <OnLoad>
-            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then
-              self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_IS_DEV) then
+              self:Hide()
               return
             end
+            _G[self:GetName().."Text"]:SetVertexColor(0, 1, 1, .7);
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
           </OnLoad>
@@ -2146,8 +2145,7 @@
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SOUND);
             if (SMARTDEBUFF_AURACONTAINERS) then
               self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
               return
             end
           </OnLoad>
@@ -2190,9 +2188,7 @@
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
             if (SMARTDEBUFF_AURACONTAINERS) then
-              self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+              self:Hide()
               return
             end
           </OnLoad>
@@ -2456,8 +2452,7 @@
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INFOFRAME);
             if (SMARTDEBUFF_HASSECRETS) then
               self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
               return
             end
           </OnLoad>
@@ -2650,8 +2645,7 @@
           <OnShow>
             if (not SMARTDEBUFF_MACROTEXT) then
               self:Disable()
-              self:SetAlpha(.5)
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0);
+              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
               return
             end
             if (SMARTDEBUFF_Options) then
@@ -3078,9 +3072,15 @@
           <OnClick>
             SMARTDEBUFF_TestModeToggle();
           </OnClick>
+          <OnEnter>
+            SMARTDEBUFF_SetGameTooltip(self, "|cff00ffff"..SMARTDEBUFF_OFT_TESTMODE, "Simulate full raid display");
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
         </Scripts>
       </Button>
-      <Button name="$parent_btnFakeMode" inherits="UIPanelButtonTemplate" text="|cffff5555Switch">
+      <Button name="$parent_btnFakeMode" inherits="UIPanelButtonTemplate" text="|cffff5555Toggle">
         <Size>
           <AbsDimension x="50" y="20" />
         </Size>
@@ -3099,8 +3099,14 @@
             self:SetHighlightFontObject("GameFontHighlightSmall");
           </OnLoad>
           <OnClick>
-            SMARTDEBUFF_FakeModeToggle();
+            SMARTDEBUFF_FilterStringToggle();
           </OnClick>
+          <OnEnter>
+            SMARTDEBUFF_SetGameTooltip(self, "|cff00ffffToggle filterString", "Switch filterString between HARMFUL and !HARMFUL");
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
         </Scripts>
       </Button>
 
@@ -3650,6 +3656,10 @@
 					<OnEnterPressed>
 						SMARTDEBUFF_AddTextToTable(self, SMARTDEBUFF_Options.SpellGuard)
             SMARTDEBUFF_SpellGuardOnScroll();
+            -- AutoActivate checkbox
+            if (not SMARTDEBUFF_Options.ShowSpellIcon) then
+              SmartDebuffOF_cbShowSpellIcon:Click()
+            end
 					</OnEnterPressed>
 				</Scripts>
 			</EditBox>

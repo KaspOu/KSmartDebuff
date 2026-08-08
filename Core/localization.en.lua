@@ -9,16 +9,18 @@ SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
+Hunter: spell Feign death added (Talent: Emergency Salve)
+
 > Options back:
 
   - Ignore Debuffs
-  - Debuff Guard (12.1.0)
   - HoT icons, with filtering (12.1.0)
 
 > Options removed:
 
   - Summary frame
   - Sound (12.1.0)
+  - Debuff Guard (not working)
 
 ]];
 

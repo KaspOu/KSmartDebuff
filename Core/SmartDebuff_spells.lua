@@ -54,7 +54,7 @@ elseif v < 120000 then
   SMARTDEBUFF_SPELLS_VERSION = "The War Within"
 end
 
--- Debuff spell IDs (for L button)
+-- Debuff spell IDs (for L button) - first known
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
   ["DRUID"]  = {
     { -- Nature's Cure, was talent for Remove Corruption (10+)
@@ -77,8 +77,6 @@ SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
     { -- Expunge (10+)
       Spell_ID = 365585,
       Spell_List = {SMARTDEBUFF_POISON},
-      Improved_Talent = 364343, -- Force détection spé Heal, bug override par Naturalize
-      Improved_Spell_List = {SMARTDEBUFF_MAGIC, SMARTDEBUFF_POISON},
     },
     -- Cauterizing Flame set on R
   },
@@ -144,6 +142,15 @@ SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
     },
   },
 
+  ["HUNTER"] = {
+    { -- FeignDeath
+      Spell_ID = 5384,
+      Spell_List = {},
+      Improved_Talent = 459517,
+      Improved_Spell_List = {SMARTDEBUFF_DISEASE, SMARTDEBUFF_POISON},
+    },
+  },
+
   ["WARLOCK"] = {
     { -- Singe Magic (4+), pet (imp)
       Spell_ID = 89808,
@@ -158,7 +165,7 @@ SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
   -- },
 }
 
--- Possible buttons : R, M, AL
+-- Possible buttons : R, M, AL - last known
 SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
   ["DRUID"]  = {
     { Spell_ID = 102401, Button = "R", Types = {SMARTDEBUFF_UTIL} }, -- Wild charge (5+)
@@ -201,21 +208,21 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
     -- 2870 - Cure Disease (1-2)
     -- 331 - Healing wave (1-4)
   },
-  
+
   ["DEATHKNIGHT"]  = {
-    { Spell_ID = 45524, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Chains of ice (3+) 
-    { Spell_ID = 47541, Button = "M", Types = {SMARTDEBUFF_HEAL} }, -- Death Coil (3+)   
+    { Spell_ID = 45524, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Chains of ice (3+)
+    { Spell_ID = 47541, Button = "M", Types = {SMARTDEBUFF_HEAL} }, -- Death Coil (3+)
   },
   ["DEMONHUNTER"]  = {
     { Spell_ID = 217832, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Imprison (7+)
   },
   ["HUNTER"]  = {
     { Spell_ID = 34477, Button = "M", Types = {SMARTDEBUFF_MISDIRECT} }, -- Misdirection (2+)
-  }, 
+  },
   ["MAGE"]  = {
     { Spell_ID = 118,   Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Polymorph (1+)
     { Spell_ID = 130,   Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Slow fall (1+)
-  }, 
+  },
   ["ROGUE"]  = {
     { Spell_ID = 2094,  Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Blind (1+)
     { Spell_ID = 57934, Button = "M", Types = {SMARTDEBUFF_MISDIRECT} }, -- Tricks of the Trade (3+)
