@@ -292,7 +292,7 @@ end
 --- @return string link
 local function GetActionKeyInfo(mode, i, extractDataOnly)
   local aType, aName, aRank, aId, aLink = nil, nil, nil, nil, nil;
-  if (O.Keys and O.Keys[mode] and SMARTDEBUFF_ORDER_KEYS[i] and O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]]) then
+  if (O and O.Keys and O.Keys[mode] and SMARTDEBUFF_ORDER_KEYS[i] and O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]]) then
     aType = O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]][1];
     if (aType) then
       aName = O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]][2];
