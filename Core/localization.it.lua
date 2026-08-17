@@ -2,7 +2,7 @@
 -- Italian localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff aggiornato: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse aggiornato: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
 SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
@@ -41,7 +41,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Sinistra (S)",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "caricato";
-SMARTDEBUFF_MSG_SDB            = "Menu opzioni SmartDebuff";
+SMARTDEBUFF_MSG_SDB            = "Menu opzioni KDecurse";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Tasti / Modalit\195\160";
@@ -50,7 +50,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Bers";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Mostra/Nascondi opzioni SmartDebuff";
+SMARTDEBUFF_OFT                = "Mostra/Nascondi opzioni KDecurse";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotte del Cacciatore";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotte dello Stregone";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotte del Cavaliere della Morte";
@@ -58,6 +58,7 @@ SMARTDEBUFF_OFT_HP             = "Vita";
 SMARTDEBUFF_OFT_MANA           = "Mana";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Inverti";
+SMARTDEBUFF_OFT_SORT           = "Ordina"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Ord per classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Colori classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Mostra S / D / C";
@@ -108,9 +109,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Spaziatura X";
 SMARTDEBUFF_OFT_SPACEY         = "Spaziatura Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Modalit\195\160 test";
 SMARTDEBUFF_OFT_STOPCAST       = "Interrompi lancio";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignora debuff";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignora in ricarica";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notifiche chat";
-SMARTDEBUFF_OFT_RESET_KEYS     = "Reimpostare gli incantesimi SmartDebuff ai valori predefiniti?\n\nQuesta azione \195\168 necessaria se ritieni che tutti i debuff non vengano rilevati correttamente.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "Reimpostare gli incantesimi KDecurse ai valori predefiniti?\n\nQuesta azione \195\168 necessaria se ritieni che tutti i debuff non vengano rilevati correttamente.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordine delle classi";
 SMARTDEBUFF_NRDT_TITLE         = "Debuff non rimovibili";
 SMARTDEBUFF_SG_TITLE           = "Incantesimi (HoT) tracciati";

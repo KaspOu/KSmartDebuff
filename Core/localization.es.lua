@@ -2,7 +2,7 @@
 -- Spanish localization
 -------------------------------------------------------------------------------
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff actualizado: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse actualizado: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
 SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
@@ -40,7 +40,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Izquierda (I)",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "cargado";
-SMARTDEBUFF_MSG_SDB            = "Marco de opciones de SmartDebuff";
+SMARTDEBUFF_MSG_SDB            = "Marco de opciones de KDecurse";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Teclas/Modos";
@@ -49,7 +49,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Objet";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Mostrar/ocultar Marco de opciones de SmartDebuff";
+SMARTDEBUFF_OFT                = "Mostrar/ocultar Marco de opciones de KDecurse";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotas de cazador";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotas de brujo";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotas de Caballero de la Muerte";
@@ -57,6 +57,7 @@ SMARTDEBUFF_OFT_HP             = "Vida";
 SMARTDEBUFF_OFT_MANA           = "Man\195\161";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Invertir";
+SMARTDEBUFF_OFT_SORT           = "Ordenar"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Ver clases";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Colores de clases";
 SMARTDEBUFF_OFT_SHOWLR         = "I / D / M";
@@ -107,9 +108,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Espaciado X"; -- ChatGPT
 SMARTDEBUFF_OFT_SPACEY         = "Espaciado Y"; -- ChatGPT
 SMARTDEBUFF_OFT_TESTMODE       = "Modo de prueba"; -- ChatGPT
 SMARTDEBUFF_OFT_STOPCAST       = "Interrumpir lanzamiento"; -- ChatGPT
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorar perjuicios"; -- ChatGPT
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorar en reutilización"; -- ChatGPT
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notificaciones de chat"; -- ChatGPT
-SMARTDEBUFF_OFT_RESET_KEYS     = "Reiniciar hechizos de SmartDebuff a los valores predeterminados?\n\nEsta acci\195\179n es necesaria si sientes que no todos los perjuicios se detectan correctamente."; -- ChatGPT
+SMARTDEBUFF_OFT_RESET_KEYS     = "Reiniciar hechizos de KDecurse a los valores predeterminados?\n\nEsta acci\195\179n es necesaria si sientes que no todos los perjuicios se detectan correctamente."; -- ChatGPT
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordenar por orden de clase";
 SMARTDEBUFF_NRDT_TITLE         = "Debuffs irremovibles";
 SMARTDEBUFF_SG_TITLE           = "Hechizos (HoT) seguidos"; -- ChatGPT

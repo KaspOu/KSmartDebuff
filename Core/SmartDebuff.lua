@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
--- SmartDebuff
+-- KDecurse
 -- Developed by Kallye (EU-Elune)  (cloned from Aeldra)
 --
 -- Supports you to cast debuff spells on friendly units
@@ -450,6 +450,7 @@ function SMARTDEBUFF_OnLoad(self)
   self:RegisterEvent("UNIT_ENTERED_VEHICLE");
   self:RegisterEvent("UNIT_EXITED_VEHICLE");
   self:RegisterEvent("UNIT_PET");
+  self:RegisterEvent("UNIT_FACTION")
 
   self:RegisterEvent("SPELLS_CHANGED");
   self:RegisterEvent("UPDATE_MACROS");
@@ -458,17 +459,22 @@ function SMARTDEBUFF_OnLoad(self)
   self:RegisterEvent("PLAYER_TALENT_UPDATE"); -- ! Changement de spécialisation -- Ne marche pas avec le pretre sacré?
   self:RegisterEvent("CHARACTER_POINTS_CHANGED"); -- Classic version of PLAYER_TALENT_UPDATE
 
-  --One of them allows SmartDebuff to be closed with the Escape key
+  --One of them allows KDecurse to be closed with the Escape key
   tinsert(UISpecialFrames, "SmartDebuffOF");
   UIPanelWindows["SmartDebuffOF"] = nil;
 
   SlashCmdList["SMARTDEBUFF"] = SMARTDEBUFF_command;
-  SLASH_SMARTDEBUFF1 = "/sdb";
-  SLASH_SMARTDEBUFF2 = "/smartdebuff";
+  SLASH_SMARTDEBUFF1 = "/kd";
+  SLASH_SMARTDEBUFF2 = "/kde";
+  SLASH_SMARTDEBUFF3 = "/kdecurse";
+  SLASH_SMARTDEBUFF4 = "/sdb";
+  SLASH_SMARTDEBUFF5 = "/smartdebuff";
 
   SlashCmdList["SMARTDEBUFFOPTIONS"] = SMARTDEBUFF_ToggleOF;
-  SLASH_SMARTDEBUFFOPTIONS1 = "/sdbo";
-  SLASH_SMARTDEBUFFOPTIONS2 = "/sdbm";
+  SLASH_SMARTDEBUFFOPTIONS1 = "/kdo";
+  SLASH_SMARTDEBUFFOPTIONS2 = "/kdm";
+  SLASH_SMARTDEBUFFOPTIONS3 = "/sdbo";
+  SLASH_SMARTDEBUFFOPTIONS4 = "/sdbm";
 
   SlashCmdList["SmartReloadUI"] = function(msg) ReloadUI(); end;
   SLASH_SmartReloadUI1 = "/rui";
@@ -492,7 +498,7 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
   if ((event == "UNIT_NAME_UPDATE" and arg1 == "player") or event == "PLAYER_ENTERING_WORLD") then
     isPlayer = true;
     --self:UnRegisterEvent("PLAYER_ENTERING_WORLD");
-  elseif(event == "ADDON_LOADED" and arg1 == SMARTDEBUFF_TITLE) then
+  elseif(event == "ADDON_LOADED" and arg1 == SMARTDEBUFF_ADDONNAME) then
     isLoaded = true;
     self:UnregisterEvent("ADDON_LOADED");
   elseif(event == "CVAR_UPDATE" and arg1 == "ActionButtonUseKeyDown") then
@@ -507,7 +513,7 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
     return;
   end;
 
-  if (event == "GROUP_ROSTER_UPDATE" or event == "UNIT_ENTERED_VEHICLE" or event == "UNIT_EXITED_VEHICLE" or event == "PLAYER_ROLES_ASSIGNED") then
+  if (event == "GROUP_ROSTER_UPDATE" or event == "UNIT_FACTION" or event == "UNIT_ENTERED_VEHICLE" or event == "UNIT_EXITED_VEHICLE" or event == "PLAYER_ROLES_ASSIGNED") then
     shouldCallSetUnits = true;
     shouldCallSetButtons = true;
 
@@ -1018,7 +1024,7 @@ function SMARTDEBUFF_SetSpells()
   cSpellDefault["AR"] = { };
   SDB_cacheRangeCheckSpell = nil; -- reset: range detection requires readable spell/talent
 
-  SMARTDEBUFF_AddMsgD("--- Smart Debuff Set spells --- "..SDB_cachePlayerClass);
+  SMARTDEBUFF_AddMsgD("--- Smart Decurse Set spells --- "..SDB_cachePlayerClass);
   -- Add Dispels abilities to L
   if (SDB_cachePlayerClass and SMARTDEBUFF_CLASS_DISPELS_LIST_ID[SDB_cachePlayerClass] and #SMARTDEBUFF_CLASS_DISPELS_LIST_ID[SDB_cachePlayerClass] > 0) then
       sName = nil;
@@ -1296,11 +1302,11 @@ local function ReplaceDeprecatedOptions(options)
   -- options.UseSound: no code support
 end
 
--- Init the SmartDebuff variables ---------------------------------------------------------------------------------------
+-- Init the KDecurse variables ---------------------------------------------------------------------------------------
 function SMARTDEBUFF_Options_Init()
   if (isInit or InCombatLockdown()) then return; end
 
-  SMARTDEBUFF_AddMsgD("--- Smart Debuff Options Init --- ");
+  SMARTDEBUFF_AddMsgD("--- Smart Decurse Options Init --- ");
 
   local b = false;
   local s, t;
@@ -1440,20 +1446,6 @@ function SMARTDEBUFF_Options_Init()
     end
   end
 
-  -- Cosmos support
-  if(EarthFeature_AddButton) then
-    EarthFeature_AddButton(
-      { id = SMARTDEBUFF_TITLE;
-        name = SMARTDEBUFF_TITLE;
-        subtext = SMARTDEBUFF_SUBTITLE;
-        tooltip = "";
-        icon = imgSDB;
-        callback = SMARTDEBUFF_ToggleSF;
-        test = nil;
-      } );
-  elseif (Cosmos_RegisterButton) then
-    Cosmos_RegisterButton(SMARTDEBUFF_TITLE, SMARTDEBUFF_TITLE, SMARTDEBUFF_SUBTITLE, imgSDB, SMARTDEBUFF_ToggleSF);
-  end
 
   -- CTMod support
   if(CT_RegisterMod) then
@@ -1525,7 +1517,7 @@ function SMARTDEBUFF_Options_Init()
 
   if (O.ChatNotif) then
     SMARTDEBUFF_AddMsg(format("%s %s %s(%s)", SMARTDEBUFF_VERS_TITLE, SMARTDEBUFF_MSG_LOADED, COL.YLD, SMARTDEBUFF_SPELLS_VERSION), true);
-    SMARTDEBUFF_AddMsg("/sdb - " .. SMARTDEBUFF_MSG_SDB, true);
+    SMARTDEBUFF_AddMsg("/kd - " .. SMARTDEBUFF_MSG_SDB, true);
   end
   isInit = true;
 
@@ -1830,7 +1822,7 @@ function SMARTDEBUFF_LinkSpellsToKeys()
 end
 
 
--- SmartDebuff commandline menu ---------------------------------------------------------------------------------------
+-- KDecurse commandline menu ---------------------------------------------------------------------------------------
 local function NumCheck(n, min, max, def)
   local i = tonumber(n);
   if (i == nil or i < min or i > max) then
@@ -1839,26 +1831,32 @@ local function NumCheck(n, min, max, def)
   return i;
 end
 
-function SMARTDEBUFF_command(msgIn)
+
+local function checkForInit()
   if (not isInit) then
     if (InCombatLockdown()) then
       SMARTDEBUFF_AddMsgWarn(SMARTDEBUFF_VERS_TITLE..": You are still in combat, please wait", true);
-      return;
+      return false
     end
     SMARTDEBUFF_AddMsgWarn(SMARTDEBUFF_VERS_TITLE.." not initialized correctly!", true);
     if (not isTTreeLoaded) then
       SMARTDEBUFF_AddMsgWarn("Talent tree not loaded, have you finished the quests in the starting zone?", true);
     end
     -- print("isLoaded:", isLoaded, ", isPlayer:", isPlayer, ", isTTreeLoaded:", isTTreeLoaded, ", isInit:", isInit);
-    return;
+    return false
   end
+  return true
+end
+
+function SMARTDEBUFF_command(msgIn)
+  if (not checkForInit()) then return; end
 
   local msgs = SMARTDEBUFF_Split(msgIn, " ");
   local msg = msgs[1];
 
   if(msg == "help" or msg == "?") then
     SMARTDEBUFF_AddMsg(SMARTDEBUFF_VERS_TITLE, true);
-    SMARTDEBUFF_AddMsg("Syntax: /sdb [command] or /smartdebuff [command]", true);
+    SMARTDEBUFF_AddMsg("Syntax: /kd [command] or /smartdebuff [command]", true);
     SMARTDEBUFF_AddMsg("o      -  " .. SMARTDEBUFF_MSG_SDB, true);
     SMARTDEBUFF_AddMsg("ris #  -  " .. "Raid icon size # = 4-64", true);
     SMARTDEBUFF_AddMsg("bsx # -  " .. "Button space X # = 0-16", true);
@@ -1945,7 +1943,7 @@ end
 -- END SMARTDEBUFF_command
 
 
--- SmartDebuff frame functions ---------------------------------------------------------------------------------------
+-- KDecurse frame functions ---------------------------------------------------------------------------------------
 
 function SMARTDEBUFF_ToggleSF()
   if (not isInit or not canDebuff or InCombatLockdown()) then return; end
@@ -3177,7 +3175,7 @@ end
 local SMARTDEBUFF_DEBUG_DISPELS = {}
 local sbs_btn, sbs_un, sbs_uc, sbs_st, sbs_std, sbs_fontH, sbs_pre, sbs_ln, sbs_wd, sbs_io, sbs_uv, sbs_iv, sbs_rc, sbs_cd;
 local sbs_col = { r = 0.39, g = 0.42, b = 0.64 };
---- Sets the visual state of a SmartDebuff button.
+--- Sets the visual state of a KDecurse button.
 --- @param unit string The unit ID (e.g., "raid1", "player", "pet1").
 --- @param idx number The index of the button.
 --- @param nr number The debuff type: `1 - 3`: Used for LRM spells / `0`: Normal / `10`: Not removable / `-99`: Unit no longer exists. / `-1`: Force No dispel
@@ -4468,15 +4466,16 @@ function SMARTDEBUFF_ToggleSortedByClass()
   if O.SortedByClass then
     O.SortedByClass = false
     O.SortedByRole = true
+    SMARTDEBUFF_BoolState(O.SortedByRole, SMARTDEBUFF_OFT_SORT..": "..SMARTDEBUFF_OFT_ROLE.." = ")
   elseif O.SortedByRole then
     O.SortedByClass = false
     O.SortedByRole = false
+    SMARTDEBUFF_BoolState(true, SMARTDEBUFF_OFT_SORT..": "..SMARTDEBUFF_OFT_GROUPNR.." = ")
   else
     O.SortedByClass = true
     O.SortedByRole = false
+    SMARTDEBUFF_BoolState(O.SortedByClass, SMARTDEBUFF_OFT_CLASSVIEW.." = ")
   end
-  SMARTDEBUFF_BoolState(O.SortedByClass, SMARTDEBUFF_OFT_CLASSVIEW.." = ")
-  SMARTDEBUFF_BoolState(O.SortedByRole, SMARTDEBUFF_OFT_ROLE.." = ")
   SMARTDEBUFF_SetButtons();
 end
 
@@ -4530,10 +4529,10 @@ function SMARTDEBUFF_IsOffline(unit)
   return false;
 end
 
--- END SmartDebuff frame functions
+-- END KDecurse frame functions
 
 
--- SmartDebuff functions ---------------------------------------------------------------------------------------
+-- KDecurse functions ---------------------------------------------------------------------------------------
 -- Main check function, called by update event
 local cd_i, cd_unit, cd_btn, cd_sbtn, cd_spell;
 function SMARTDEBUFF_CheckDebuffs(force)
@@ -4933,10 +4932,10 @@ function SMARTDEBUFF_PlaySound()
     --SMARTDEBUFF_AddMsgD("Play sound");
   end
 end
--- END SmartDebuff functions
+-- END KDecurse functions
 
 
--- SmartDebuff option frame functions ---------------------------------------------------------------------------------------
+-- KDecurse option frame functions ---------------------------------------------------------------------------------------
 
 function SMARTDEBUFF_SetGameTooltip(self, title, text, anchor)
   if (not anchor) then anchor = "ANCHOR_LEFT"; end
@@ -4948,7 +4947,9 @@ function SMARTDEBUFF_SetGameTooltip(self, title, text, anchor)
 end
 
 function SMARTDEBUFF_ToggleOF()
+  if (not checkForInit()) then return; end
   if (not isInit or not canDebuff or InCombatLockdown()) then return; end
+
   local frame = SmartDebuffOF;
   if (frame:IsVisible()) then
 
@@ -5107,7 +5108,7 @@ function SMARTDEBUFF_SetMoving(b)
   local f = SmartDebuffSF;
   if (b) then
     if (InCombatLockdown()) then
-      SMARTDEBUFF_AddMsgWarn("SmartDebuff Frame can't be moved in combat");
+      SMARTDEBUFF_AddMsgWarn("KDecurse Frame can't be moved in combat");
       f.IsMoving = false;
       return;
     end
@@ -5683,7 +5684,7 @@ function SMARTDEBUFF_ColorsUpdate(b)
   SMARTDEBUFF_CheckSFBackdrop();
 end
 
--- SmartDebuff action binding option frame functions --------------------------------
+-- KDecurse action binding option frame functions --------------------------------
 
 -- -- Pickup hook to avoid the GetCursorInfo bug with pet spells
 -- local lastSlot, lastBookType;

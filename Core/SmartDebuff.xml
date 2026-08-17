@@ -124,7 +124,7 @@
       </Button>
 
 
-      <Button name="$parent_btnStyle" inherits="UIPanelButtonTemplate" text="S">
+      <Button name="$parent_btnStyle" inherits="UIPanelButtonTemplate" text="K ">
         <Size>
             <AbsDimension x="12" y="12" />
         </Size>
@@ -137,6 +137,7 @@
         </Anchors>
         <Scripts>
           <OnLoad>
+            _G[self:GetName().."Text"]:SetVertexColor(0, 1, 0, 1);
             self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
             self:SetAlpha(0.8);
             self:SetNormalFontObject(SmartDebuff_GameFontNormalMicro);
@@ -208,7 +209,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_btnStyle">
             <Offset>
-              <AbsDimension x="-1" y="-1"/>
+              <AbsDimension x="-1" y="-1.5"/>
             </Offset>
           </Anchor>
         </Anchors>

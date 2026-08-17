@@ -2,7 +2,7 @@
 -- Russian localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff обновлен: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse обновлен: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
 SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
@@ -41,7 +41,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Левая (Л)",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "загружен";
-SMARTDEBUFF_MSG_SDB            = "Меню настроек SmartDebuff";
+SMARTDEBUFF_MSG_SDB            = "Меню настроек KDecurse";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Клавиши / Режимы";
@@ -50,7 +50,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Цель";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Показать/Скрыть настройки SmartDebuff";
+SMARTDEBUFF_OFT                = "Показать/Скрыть настройки KDecurse";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Питомец Охотника";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Питомец Чернокнижника";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Питомец Рыцаря Смерти";
@@ -58,6 +58,7 @@ SMARTDEBUFF_OFT_HP             = "Здоровье";
 SMARTDEBUFF_OFT_MANA           = "Мана";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Инвертировать";
+SMARTDEBUFF_OFT_SORT           = "Сортировка"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Сортировка по классу";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Цвета классов";
 SMARTDEBUFF_OFT_SHOWLR         = "Показать Л / П / С";
@@ -108,9 +109,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Отступ по X";
 SMARTDEBUFF_OFT_SPACEY         = "Отступ по Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Тест. реж.";
 SMARTDEBUFF_OFT_STOPCAST       = "Прерывание заклинания";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Игнорировать дебаффы";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Игнорировать при перезарядке";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Уведомления в чате";
-SMARTDEBUFF_OFT_RESET_KEYS     = "Сбросить заклинания SmartDebuff по умолчанию?\n\nЭто действие необходимо, если вы считаете, что не все дебаффы определяются корректно.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "Сбросить заклинания KDecurse по умолчанию?\n\nЭто действие необходимо, если вы считаете, что не все дебаффы определяются корректно.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Порядок классов";
 SMARTDEBUFF_NRDT_TITLE         = "Неснимаемые дебаффы";
 SMARTDEBUFF_SG_TITLE           = "Отслеживаемые заклинания (HoT)";

@@ -4,7 +4,7 @@
 
 SMARTDEBUFF_FONT = "Fonts\\ARKai_T.TTF"
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff 已更新: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse 已更新: "..SMARTDEBUFF_VERSION;
 
 
 -- Creatures
@@ -44,7 +44,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "左",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "已加載";
-SMARTDEBUFF_MSG_SDB            = "SmartDebuff 選項框體";
+SMARTDEBUFF_MSG_SDB            = "KDecurse 選項框體";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "按鍵/模式";
@@ -61,6 +61,7 @@ SMARTDEBUFF_OFT_HP             = "生命";
 SMARTDEBUFF_OFT_MANA           = "魔法";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "反轉";
+SMARTDEBUFF_OFT_SORT           = "排序"
 SMARTDEBUFF_OFT_CLASSVIEW      = "職業視圖";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "職業顏色";
 SMARTDEBUFF_OFT_SHOWLR         = "左 / 右 / 中";
@@ -111,9 +112,9 @@ SMARTDEBUFF_OFT_SPACEX         = "X軸間距";  -- ChatGPT
 SMARTDEBUFF_OFT_SPACEY         = "Y軸間距";  -- ChatGPT
 SMARTDEBUFF_OFT_TESTMODE       = "測試模式";  -- ChatGPT
 SMARTDEBUFF_OFT_STOPCAST       = "中斷施法";  -- ChatGPT
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "忽略減益";  -- ChatGPT
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "冷却中忽略";  -- ChatGPT
 SMARTDEBUFF_OFT_CHATNOTIF      = "聊天通知";  -- ChatGPT
-SMARTDEBUFF_OFT_RESET_KEYS     = "重置 SmartDebuff 法術為預設值？\n\n如果您覺得所有減益效果都未正確偵測，則需要執行此操作。";  -- ChatGPT
+SMARTDEBUFF_OFT_RESET_KEYS     = "重置 KDecurse 法術為預設值？\n\n如果您覺得所有減益效果都未正確偵測，則需要執行此操作。";  -- ChatGPT
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "按職業排序";
 SMARTDEBUFF_NRDT_TITLE         = "不可驅散的Debuffs";
 SMARTDEBUFF_SG_TITLE           = "追蹤法術 (HoT)";  -- ChatGPT

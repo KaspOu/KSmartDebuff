@@ -1,3 +1,8 @@
+v12.1.003
+- NEW NAME: K Decurse
+- Supports UNIT_FACTION event (after cinematics)
+- Ignore debuff renamed: ignore on cooldown
+
 v12.1.001
 - Midnight 12.1.0 - New Auras display
 
@@ -69,7 +74,7 @@ v11.2.501
 v11.2.005
 - Italian added
 - Korean added
-- Korean / Chinese fonts (SmartDebuff frame)
+- Korean / Chinese fonts (KDecurse frame)
 - ES / DE: Missing translations added
 
 v11.2.004

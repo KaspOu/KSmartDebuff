@@ -4,12 +4,14 @@
 
 SMARTDEBUFF_FONT = "Fonts\\FRIZQT___CYR.TTF"
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff upgraded to "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse upgraded to "..SMARTDEBUFF_VERSION;
 
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-Hunter: spell Feign death added (Talent: Emergency Salve)
+New name: |cff00ff00K|r|cffffffff Decurse|r !
+
+Hunter: Feign death - Poison dispel (Talent)
 
 > Options back:
 
@@ -74,7 +76,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Left",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "loaded";
-SMARTDEBUFF_MSG_SDB            = "SmartDebuff options frame";
+SMARTDEBUFF_MSG_SDB            = "KDecurse options frame";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Keys/Modes";
@@ -83,7 +85,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Trgt";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Show/Hide SmartDebuff options frame";
+SMARTDEBUFF_OFT                = "Show/Hide KDecurse options frame";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Hunter pets";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Warlock pets";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Death Knight pets";
@@ -91,6 +93,7 @@ SMARTDEBUFF_OFT_HP             = "HP";
 SMARTDEBUFF_OFT_MANA           = "Mana";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Invert";
+SMARTDEBUFF_OFT_SORT           = "Sort"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Class view";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Class colors";
 SMARTDEBUFF_OFT_SHOWLR         = "L / R / M";
@@ -141,9 +144,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Space X";
 SMARTDEBUFF_OFT_SPACEY         = "Space Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Test Mode";
 SMARTDEBUFF_OFT_STOPCAST       = "Stop Casting";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignore Debuffs";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignore On Cooldown";
 SMARTDEBUFF_OFT_CHATNOTIF        = "Chat notification";
-SMARTDEBUFF_OFT_RESET_KEYS     = "Reset the SmartDebuff spell bindings to default?\n\nThis action is necessary if you have the feeling that not all debuffs are correctly detected.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "Reset the KDecurse spell bindings to default?\n\nThis action is necessary if you have the feeling that not all debuffs are correctly detected.";
 
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Sort by class order";
 SMARTDEBUFF_NRDT_TITLE         = "Unremovable Debuffs";

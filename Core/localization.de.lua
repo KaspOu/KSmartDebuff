@@ -4,7 +4,7 @@
 
 if (GetLocale() ~= "deDE") then return end
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff aktualisiert: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse aktualisiert: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
 SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
@@ -42,7 +42,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Links",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "geladen";
-SMARTDEBUFF_MSG_SDB            = "SmartDebuff Optionen";
+SMARTDEBUFF_MSG_SDB            = "KDecurse Optionen";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Tasten/Modus";
@@ -51,7 +51,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Ziel";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Zeige/verberge SmartDebuff Optionen";
+SMARTDEBUFF_OFT                = "Zeige/verberge KDecurse Optionen";
 SMARTDEBUFF_OFT_HUNTERPETS     = "J\195\164ger Pets";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Hexer Pets";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Todesritter Pets";
@@ -59,6 +59,7 @@ SMARTDEBUFF_OFT_HP             = "HP";
 SMARTDEBUFF_OFT_MANA           = "Mana";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Invertiert";
+SMARTDEBUFF_OFT_SORT           = "Sortierung"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Klassenansicht";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Klassenfarben";
 SMARTDEBUFF_OFT_SHOWLR         = "L / R / M";
@@ -109,9 +110,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Abstand X";
 SMARTDEBUFF_OFT_SPACEY         = "Abstand Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Test Modus";
 SMARTDEBUFF_OFT_STOPCAST       = "Stoppe Zauber";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignoriere Debuffs";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Bei Abklingzeit ignorieren";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Chat-Benachrichtigungen"; -- ChatGPT
-SMARTDEBUFF_OFT_RESET_KEYS     = "Die SmartDebuff Zauber-Bindings zur\195\188cksetzen?\nDies ist nur n\195\182tig falls du das Gef\195\188hl hast,\ndass nicht alle Debuffs korrekt angezeigt werden.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "Die KDecurse Zauber-Bindings zur\195\188cksetzen?\nDies ist nur n\195\182tig falls du das Gef\195\188hl hast,\ndass nicht alle Debuffs korrekt angezeigt werden.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Klassenanordnung";
 SMARTDEBUFF_NRDT_TITLE         = "Unentfernbare Debuffs";
 SMARTDEBUFF_SG_TITLE           = "Zauber-W\195\164chter";

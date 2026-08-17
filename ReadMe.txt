@@ -1,9 +1,9 @@
 ***********************************************************************
-SmartDebuff
-Developed by Kallye (EU-Elune)  (cloned from Aeldra)
+KDecurse
+Developed by Kallye (EU-Elune)  (cloned from SmartDebuff by Aeldra)
 ***********************************************************************
 
-SmartDebuff is an addon to support you in cast debuff spells.
+KDecurse is an addon to support you in cast debuff spells.
 
 FAQ
 Q1: How can I move the frames?
@@ -12,18 +12,18 @@ A1: Use Shift-Left click and drag them arround
 Q2: How can I assign a key for debuffing?
 A2: During the new Blizzard secure UI is this not longer possible!
 
-Q3: SmartDebuff casts the wrong debuff on a player, is this a bug?
+Q3: KDecurse casts the wrong debuff on a player, is this a bug?
 A3: Please watch carfully in which color the debuff button is highlighted, this is very important! You have to click the button with the correct mouse click
 As example per default:
 Highlighted BLUE  = LEFT click
 Highlighted RED   = RIGHT click
 Highlighted GREEN = MIDDLE click
 
-Q4: My SmartDebuff frame is gone, how I get it back?
-A4: Type in the chat "/sdbo" or "/sdbm", if the options menu not opens SmartDebuff is not enabled, type "/sdb rafp" to reset all frame positions.
+Q4: My KDecurse frame is gone, how I get it back?
+A4: Type in the chat "/kdo" or "/kdm", if the options menu not opens KDecurse is not enabled, type "/kd rafp" to reset all frame positions.
 
-Q5: I use the "Auto hide" feature, but now SmartDebuff is hidden till combat, how I can configure it?
-A5: Type in the chat "/sdbo" or "/sdbm" the options menu will displayed and the unit buttons also.
+Q5: I use the "Auto hide" feature, but now KDecurse is hidden till combat, how I can configure it?
+A5: Type in the chat "/kdo" or "/kdm" the options menu will displayed and the unit buttons also.
 
 
 
@@ -57,16 +57,16 @@ Alt-Middle click: Debuff 3
 
 
 Chat:
-Type /sdb for SmartDebuff frame in game
-Type /sdb [command] or /smartdebuff [command] in game
-options - Show/hide SmartDebuff options frame
+Type /kd for KDecurse frame in game
+Type /kd [command] or /smartdebuff [command] in game
+options - Show/hide KDecurse options frame
 ris # - Raid icon size # = 4-64
 bsx # - Button space X # = 0-16
 bsy # - Button space Y # = 0-16
 tm #  - Test mode # = number of test buttons
 rafp  - Reset all frame positions
 
-Type /sdbo or /sdbm for SmartDebuff options frame in game
+Type /kdo or /kdm for KDecurse options frame in game
 
 
 Please send me a mail or write a comment if you discover Bugs or have Suggestions.

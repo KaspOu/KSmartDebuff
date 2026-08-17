@@ -2,11 +2,13 @@
 -- French localization
 -------------------------------------------------------------------------------
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff mis \195\160 jour : "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
-Chasseur: sort Feindre la mort ajouté (Talent : Onguent d’urgence)
+Nouveau nom : |cff00ff00K|r|cffffffff Decurse|r !
+
+Chasseur: Feindre la mort - Dispel Poison (talent)
 
 > Options de retour :
 
@@ -70,7 +72,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Gauche (G)",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "charg\195\169";
-SMARTDEBUFF_MSG_SDB            = "Menu d'options SmartDebuff";
+SMARTDEBUFF_MSG_SDB            = "Menu d'options KDecurse";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Touches / Modes";
@@ -79,7 +81,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Cible";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Afficher/Masquer les options SmartDebuff";
+SMARTDEBUFF_OFT                = "Afficher/Masquer les options KDecurse";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Familier de Chasseur";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Familier de D\195\169moniste";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Familier de Chevalier de la mort";
@@ -87,6 +89,7 @@ SMARTDEBUFF_OFT_HP             = "Vie";
 SMARTDEBUFF_OFT_MANA           = "Mana";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Inverser";
+SMARTDEBUFF_OFT_SORT           = "Tri"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Tri par classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Couleurs de classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Afficher G / D / M";
@@ -137,9 +140,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Espacement X";
 SMARTDEBUFF_OFT_SPACEY         = "Espacement Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Mode test";
 SMARTDEBUFF_OFT_STOPCAST       = "Interruption de sort";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorer les d\195\169buffs";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorer en recharge";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notifications de chat";
-SMARTDEBUFF_OFT_RESET_KEYS     = "R\195\169initialiser les sorts SmartDebuff par d\195\169faut ?\n\nCette action est n\195\169cessaire si vous avez l'impression que tous les d\195\169buffs ne sont pas correctement d\195\169tect\195\169s.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "R\195\169initialiser les sorts KDecurse par d\195\169faut ?\n\nCette action est n\195\169cessaire si vous avez l'impression que tous les d\195\169buffs ne sont pas correctement d\195\169tect\195\169s.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordre des classes";
 SMARTDEBUFF_NRDT_TITLE         = "D\195\169buffs non dissipables";
 SMARTDEBUFF_SG_TITLE           = "Sorts (HoT) suivis";

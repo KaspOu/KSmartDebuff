@@ -5,8 +5,9 @@
 SMARTDEBUFF_VERSION       = "v"..C_AddOns.GetAddOnMetadata("SmartDebuff", "Version"); -- "v10.0.202"
 SMARTDEBUFF_VERSIONNR     = tonumber(gsub(SMARTDEBUFF_VERSION, "%D", ""), 10); -- "100202"
 SMARTDEBUFF_BREAKINGVERSION = 102602;
-SMARTDEBUFF_TITLE         = "SmartDebuff";
-SMARTDEBUFF_HEADERS        = {"SmartDebuff", "martDebuff"}
+SMARTDEBUFF_ADDONNAME     = "SmartDebuff"
+SMARTDEBUFF_TITLE         = "|cff00ff00K|rDecurse";
+SMARTDEBUFF_HEADERS       = {"KDecurse", "Decurse"}
 SMARTDEBUFF_SUBTITLE      = "Debuff support";
 SMARTDEBUFF_DESC          = "Supports you to cast debuff spells on friendly units";
 SMARTDEBUFF_VERS_TITLE    = SMARTDEBUFF_TITLE .. " " .. SMARTDEBUFF_VERSION;

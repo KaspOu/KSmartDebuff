@@ -4,7 +4,7 @@
 
 SMARTDEBUFF_FONT = "Fonts\\2002.TTF"
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff 업데이트됨: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse 업데이트됨: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
 SMARTDEBUFF_HUMANOID  = BATTLE_PET_NAME_1;
@@ -43,7 +43,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "좌",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "불러옴";
-SMARTDEBUFF_MSG_SDB            = "SmartDebuff 옵션 메뉴";
+SMARTDEBUFF_MSG_SDB            = "KDecurse 옵션 메뉴";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "키 / 모드";
@@ -52,7 +52,7 @@ SMARTDEBUFF_FT_MODETARGET      = "대상";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "SmartDebuff 옵션 표시/숨기기";
+SMARTDEBUFF_OFT                = "KDecurse 옵션 표시/숨기기";
 SMARTDEBUFF_OFT_HUNTERPETS     = "사냥꾼 야수";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "흑마법사 소환수";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "죽음의 기사 소환수";
@@ -60,6 +60,7 @@ SMARTDEBUFF_OFT_HP             = "생명력";
 SMARTDEBUFF_OFT_MANA           = "마나";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "반전";
+SMARTDEBUFF_OFT_SORT           = "정렬"
 SMARTDEBUFF_OFT_CLASSVIEW      = "직업별 정렬";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "직업 색상";
 SMARTDEBUFF_OFT_SHOWLR         = "좌 / 우 / 중 표시";
@@ -110,9 +111,9 @@ SMARTDEBUFF_OFT_SPACEX         = "X 간격";
 SMARTDEBUFF_OFT_SPACEY         = "Y 간격";
 SMARTDEBUFF_OFT_TESTMODE       = "테스트 모드";
 SMARTDEBUFF_OFT_STOPCAST       = "주문 시전 중단";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "디버프 무시";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "재사용 대기 중 무시";
 SMARTDEBUFF_OFT_CHATNOTIF      = "채팅 알림";
-SMARTDEBUFF_OFT_RESET_KEYS     = "SmartDebuff 주문을 기본값으로 재설정하시겠습니까?\n\n모든 디버프가 올바르게 감지되지 않는다고 생각되면 이 작업이 필요합니다.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "KDecurse 주문을 기본값으로 재설정하시겠습니까?\n\n모든 디버프가 올바르게 감지되지 않는다고 생각되면 이 작업이 필요합니다.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "직업 정렬 순서";
 SMARTDEBUFF_NRDT_TITLE         = "해제 불가 디버프";
 SMARTDEBUFF_SG_TITLE           = "추적 중인 주문 (HoT)";

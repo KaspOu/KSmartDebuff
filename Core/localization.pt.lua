@@ -2,7 +2,7 @@
 -- Portuguese localization (ChatGPT)
 -------------------------------------------------------------------------------
 
-SMARTDEBUFF_UPGRADED = "SmartDebuff atualizado: "..SMARTDEBUFF_VERSION;
+SMARTDEBUFF_UPGRADED = "KDecurse atualizado: "..SMARTDEBUFF_VERSION;
 
 
 -- Creatures
@@ -42,7 +42,7 @@ SMARTDEBUFF_KEYS = {["L"]  = "Esquerda (E)",
 
 -- Messages
 SMARTDEBUFF_MSG_LOADED         = "carregado";
-SMARTDEBUFF_MSG_SDB            = "Menu de op\195\167\195\180es SmartDebuff";
+SMARTDEBUFF_MSG_SDB            = "Menu de op\195\167\195\180es KDecurse";
 
 -- Frame text
 SMARTDEBUFF_FT_MODES           = "Teclas / Modos";
@@ -51,7 +51,7 @@ SMARTDEBUFF_FT_MODETARGET      = "Alvo";
 
 
 -- Options frame text
-SMARTDEBUFF_OFT                = "Mostrar/Ocultar op\195\167\195\180es SmartDebuff";
+SMARTDEBUFF_OFT                = "Mostrar/Ocultar op\195\167\195\180es KDecurse";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotes de Ca\195\167ador";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotes de Bruxo";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotes de Cavaleiro da Morte";
@@ -59,6 +59,7 @@ SMARTDEBUFF_OFT_HP             = "Vida";
 SMARTDEBUFF_OFT_MANA           = "Mana";
 SMARTDEBUFF_OFT_HPTEXT         = "%";
 SMARTDEBUFF_OFT_INVERT         = "Inverter";
+SMARTDEBUFF_OFT_SORT           = "Ordenar"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Ordenar por Classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Cores de Classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Mostrar E / D / M";
@@ -109,9 +110,9 @@ SMARTDEBUFF_OFT_SPACEX         = "Espa\195\167amento X";
 SMARTDEBUFF_OFT_SPACEY         = "Espa\195\167amento Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Modo de Teste";
 SMARTDEBUFF_OFT_STOPCAST       = "Interromper Feiti\195\167o";
-SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorar Debuffs";
+SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorar em recarga";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notifica\195\167\195\180es de Chat";
-SMARTDEBUFF_OFT_RESET_KEYS     = "Redefinir os feiti\195\167os do SmartDebuff para o padr\195\163o?\n\nEsta a\195\167\195\180o \195\169 necess\195\161ria se voc\195\170 sentir que nem todos os debuffs est\195\163o sendo detectados corretamente.";
+SMARTDEBUFF_OFT_RESET_KEYS     = "Redefinir os feiti\195\167os do KDecurse para o padr\195\163o?\n\nEsta a\195\167\195\180o \195\169 necess\195\161ria se voc\195\170 sentir que nem todos os debuffs est\195\163o sendo detectados corretamente.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordem das Classes";
 SMARTDEBUFF_NRDT_TITLE         = "Debuffs N\195\180o Remov\195\173veis";
 SMARTDEBUFF_SG_TITLE           = "Feiti\195\167os (HoT) Monitorados";
