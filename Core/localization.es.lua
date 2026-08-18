@@ -118,7 +118,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff alarma tono";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "May\195\186sculas-arrastrar izquierdo: Mover marco\n|cff20d2ff- S bot\195\179n -|r\nClick Izquierdo: Mostrar por clases\nMay\195\186scuals-Click Izquierdo: Colores de clase\nAlt-Click izquierdo: Destacar I/D/M\nClick derecho: Fondo";
+SMARTDEBUFF_TT                 = "May\195\186sculas-arrastrar izquierdo: Mover marco\n|cff20d2ff- K bot\195\179n -|r\nClick Izquierdo: Mostrar por clases\nMay\195\186scuals-Click Izquierdo: Colores de clase\nAlt-Click izquierdo: Destacar I/D/M\nClick derecho: Fondo";
 SMARTDEBUFF_TT_TARGETMODE      = "En modo objetivo |cff20d2ffClick izquierdo|r selecciona la unidad\ny |cff20d2ffClick derecho|r lanza el hechizo m\195\161s r\195\161pido de curaci\195\179n.\nUsar |cff20d2ffAlt-Click derecho/izquierdo|r para debuff.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Muestra debuffs cr\195\173ticos\nque no son removibles.";
 SMARTDEBUFF_TT_HP              = "Muestra los puntos de salud\nactuales de la unidad.";
@@ -154,6 +154,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Muestra y usa la configuraci\195\179n\navanzad
 SMARTDEBUFF_TT_STOPCAST        = "Interrumpe inmediatamente el\nlanzamiento o canalizaci\195\179n en\ncurso para lanzar el hechizo definido.\n(Solo para hechizos de disipaci\195\179n)"; -- ChatGPT
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignora el perjuicio en la unidad\nsi tu hechizo de disipaci\195\179n est\195\161 en tiempo de reutilizaci\195\179n"; -- ChatGPT
 SMARTDEBUFF_TT_CHATNOTIF       = "Muestra notificaciones de chat al cargar"; -- ChatGPT
+SMARTDEBUFF_TT_DISABLED_VERSION  = "Esta opci\195\179n no est\195\161 disponible en esta versi\195\179n de WoW."
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Esta opci\195\179n ya no est\195\161 disponible debido a las limitaciones de Blizzard."
 
 --SMARTDEBUFF_TT_COLUMNS         = "Columns";
 --SMARTDEBUFF_TT_INTERVAL        = "Interval";

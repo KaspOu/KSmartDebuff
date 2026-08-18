@@ -1852,12 +1852,17 @@
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_NOTREMOVABLE);
-            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_IS_DEV) then
-              self:Disable()
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
+            if (SMARTDEBUFF_HASSECRETS) then
+              if (SMARTDEBUFF_IS_DEV) then
+                SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_NOTREMOVABLE, "|cff00ffffDebug temporaire|r\n"..SMARTDEBUFF_TT_DISABLED_BLIZZARD)
+                self:Enable()
+                _G[self:GetName().."Text"]:SetVertexColor(1, 0.55, 0.15, .7);
+                return
+              end
+
+              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_NOTREMOVABLE, SMARTDEBUFF_TT_DISABLED_BLIZZARD)
               return
             end
-            _G[self:GetName().."Text"]:SetVertexColor(0, 1, 1, .7);
           </OnLoad>
           <OnShow>
             if (SMARTDEBUFF_Options) then
@@ -1892,13 +1897,18 @@
         </Anchors>
         <Scripts>
           <OnLoad>
-            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_IS_DEV) then
+            self:SetNormalFontObject("GameFontNormalSmall");
+            self:SetHighlightFontObject("GameFontHighlightSmall");
+
+            if (SMARTDEBUFF_HASSECRETS) then
+              if (SMARTDEBUFF_IS_DEV) then
+                _G[self:GetName().."Text"]:SetVertexColor(1, .5, .5, .7);
+                return
+              end
+
               self:Hide()
               return
             end
-            _G[self:GetName().."Text"]:SetVertexColor(0, 1, 1, .7);
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
           </OnLoad>
           <OnClick>
             SMARTDEBUFF_ToggleNRDebuffs();
@@ -2145,8 +2155,7 @@
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SOUND);
             if (SMARTDEBUFF_AURACONTAINERS) then
-              self:Disable()
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
+              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_DISABLED_BLIZZARD)
               return
             end
           </OnLoad>
@@ -2452,8 +2461,7 @@
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INFOFRAME);
             if (SMARTDEBUFF_HASSECRETS) then
-              self:Disable()
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
+              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_INFOFRAME, SMARTDEBUFF_TT_DISABLED_BLIZZARD)
               return
             end
           </OnLoad>
@@ -2645,8 +2653,7 @@
           </OnLoad>
           <OnShow>
             if (not SMARTDEBUFF_MACROTEXT) then
-              self:Disable()
-              _G[self:GetName().."Text"]:SetVertexColor(1, 0, 0, .5);
+              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_STOPCAST, SMARTDEBUFF_TT_DISABLED_VERSION)
               return
             end
             if (SMARTDEBUFF_Options) then

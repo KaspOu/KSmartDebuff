@@ -122,7 +122,7 @@ SMARTDEBUFF_S_TITLE            = "減益警報音效";  -- ChatGPT
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-左拖動: 移動框體\n|cff20d2ff- S 按鈕 -|r\n左點擊: 按職業顯示\nShift-左點擊: 職業顏色\nAlt-左點擊: 高亮 左/右/中\n右點擊: 背景";
+SMARTDEBUFF_TT                 = "Shift-左拖動: 移動框體\n|cff20d2ff- K 按鈕 -|r\n左點擊: 按職業顯示\nShift-左點擊: 職業顏色\nAlt-左點擊: 高亮 左/右/中\n右點擊: 背景";
 SMARTDEBUFF_TT_TARGETMODE      = "在目標模式\n|cff20d2ff左點擊|r選擇單位\n|cff20d2ff右點擊|r釋放最快的治療法術。\n|cff20d2ffAlt-左/右/中點擊|r驅除debuff.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "顯示重大 debuff\n即便是無法驅除.";
 SMARTDEBUFF_TT_HP              = "顯示真實生命";
@@ -158,6 +158,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "顯示並使用進階錨點設定\n用於減�
 SMARTDEBUFF_TT_STOPCAST        = "立即中斷當前施法或引導\n以施放指定法術。\n(僅限驅散法術)";  -- ChatGPT
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "如果您的驅散法術正在冷卻中，\n則忽略單位上的減益效果。";  -- ChatGPT
 SMARTDEBUFF_TT_CHATNOTIF       = "載入時顯示聊天通知";  -- ChatGPT
+SMARTDEBUFF_TT_DISABLED_VERSION  = "此選項在此版本的《魔獸世界》中無法使用。"
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "由於暴雪的限制，此選項已不再可用。"
 
 SMARTDEBUFF_TT_COLUMNS         = "列";  -- ChatGPT
 SMARTDEBUFF_TT_INTERVAL        = "間隔";  -- ChatGPT

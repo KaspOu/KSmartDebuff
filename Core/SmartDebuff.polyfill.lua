@@ -93,11 +93,17 @@ end
 
 -- WARNING, can't be used with secrets
 ns.UnitAura = UnitAura or function(unitToken, index, filter)
+  if SMARTDEBUFF_HASSECRETS then
+    return nil;
+  end
   local auraData = C_UnitAuras.GetAuraDataByIndex(unitToken, index, filter);
   return AuraUtil.UnpackAuraData(auraData);
 end
 
 ns.UnitBuff = UnitBuff or function(unitToken, index, filter)
+  if SMARTDEBUFF_HASSECRETS then
+    return nil;
+  end
   local auraData = C_UnitAuras.GetBuffDataByIndex(unitToken, index, filter);
   -- Since Midnight (12): doesn't work in raids
   if SMARTDEBUFF_HASSECRETS or not auraData then

@@ -977,6 +977,9 @@ end
 local ifd_name, ifd_icon, ifd_i;
 function SMARTDEBUFF_IsFeignDeath(unit)
   --return UnitIsFeignDeath(unit); -- works only for members in own group
+  if (SMARTDEBUFF_HASSECRETS) then
+    return false
+  end
   ifd_i = 0;
   while (true) do
     ifd_i = ifd_i + 1;
@@ -1417,7 +1420,7 @@ function SMARTDEBUFF_Options_Init()
     SMARTDEBUFF_SetDefaultKeys(true);
   end
 
-  if (O.NotRemovableDebuffs == nil) then
+  if (O.NotRemovableDebuffs == nil or O.NotRemovableDebuffs[1] == nil) then
     SMARTDEBUFF_SetDefaultNotRemovableDebuffs();
   else
     -- NEW PARAM (Deprecated list of SpellName)
@@ -3083,22 +3086,8 @@ function SMARTDEBUFF_SetButton(unit, idx, pet)
         elseif ((v[1] == "target") and v[2]) then
           -- Do nothing
         elseif ((v[1] == "menu") and v[2]) then
-          local showmenu;
-          local btnName = btn:GetName();
           --SMARTDEBUFF_AddMsgD(btnName..", "..unit);
-          showmenu = function()
-            if (not InCombatLockdown()) then
-              local dd = _G[btnName.."DropDown"];
-              if (dd.initialize ~= SMARTDEBUFF_ButtonDropDown_Initialize) then
-                CloseDropDownMenus();
-                UIDropDownMenu_Initialize(dd, SMARTDEBUFF_ButtonDropDown_Initialize, "MENU");
-              end
-              ToggleDropDownMenu(1, nil, dd, btnName, btn:GetWidth()-2, 2);
-            end
-          end
-          --SecureUnitButton_OnLoad(btn, unit, showmenu);
-          btn:SetAttribute(pre.."type"..suf, "menu");
-          btn:SetAttribute(pre.."_menu"..suf, showmenu);
+          btn:SetAttribute(pre.."type"..suf, "togglemenu")
         else
           btn:SetAttribute(pre.."type"..suf, nil);
           btn:SetAttribute(pre..v[1]..suf, nil);
@@ -3130,46 +3119,21 @@ function SMARTDEBUFF_SetButton(unit, idx, pet)
   end
 end
 
-function SMARTDEBUFF_ButtonDropDown_Initialize(self)
-	local menu;
-	local name;
-	local id = nil;
-	local btn = self:GetParent();
-	local unit = SecureButton_GetModifiedAttribute(btn, "unit", SecureButton_GetEffectiveButton(btn), "");
-
-  if (unit == nil) then return; end
-
-	--SMARTDEBUFF_AddMsgD("Dropdown: "..tostring(unit));
-	if (UnitIsUnit(unit, "player")) then
-		menu = "SELF";
-	elseif (UnitIsUnit(unit, "vehicle")) then
-		-- NOTE: vehicle check must come before pet check for accuracy's sake because
-		-- a vehicle may also be considered your pet
-		menu = "VEHICLE";
-	elseif (UnitIsUnit(unit, "pet")) then
-		menu = "PET";
-	elseif (UnitIsPlayer(unit)) then
-		id = UnitInRaid(unit);
-		if (id) then
-			menu = "RAID_PLAYER";
-			name = GetRaidRosterInfo(id);
-		elseif (UnitInParty(unit)) then
-			menu = "PARTY";
-		else
-			menu = "PLAYER";
-		end
-	else
-		menu = "TARGET";
-		name = RAID_TARGET_ICON;
-	end
-	if (menu) then
-    if UnitPopupManager.OpenMenu then
-      UnitPopupManager:OpenMenu(menu, { unit= unit })
-    else
-      UnitPopup_ShowMenu(self, menu, unit, name, id);
-    end
-	end
-end
+local placeholders = {
+  UnitName("player"),
+  "Kallye",
+  "Archeon",
+  "Lameth",
+  "Ziz",
+  "Bibope",
+  "Devielea",
+  "Naro",
+  "Badien",
+  "Ramshtein",
+  "Shrazuul",
+  "Dijinette",
+  "Kelyan"
+}
 
 -- FIXME: DEBG
 local SMARTDEBUFF_DEBUG_DISPELS = {}
@@ -3346,11 +3310,11 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   else
     sbs_st = "?"
     if (ST.iTest > 0) then
-      sbs_st = (idx % 2 == 0) and UnitName("player") or "Kallye";
+      sbs_st = placeholders[((idx - 1) % #placeholders) + 1]
       isInRange = (idx % 5 == 0) and 0 or 1
       if (string.len(sbs_st) > sbs_wd-1) then
         --sbs_un = string.sub(sbs_un, 1, sbs_wd);
-        sbs_st = sbs_st:utf8sub(1, sbs_wd-1) .. "?";
+        sbs_st = sbs_st:utf8sub(1, sbs_wd-1)
       end
       if (idx % 7 == 0) then
         isInRange = 1
@@ -6177,6 +6141,36 @@ function SMARTDEBUFF_BtnActionOnLeave(self, motion)
   GameTooltip:Hide();
 end
 
+function SMARTDEBUFF_DisableCheckButton(self, title, tooltip)
+  self:Disable()
+  local text = _G[self:GetName().."Text"]
+  text:SetVertexColor(1, 0, 0, .5);
+  local strike = self:CreateTexture(nil, "OVERLAY")
+  strike:SetColorTexture(1, 0, 0, .35)
+  strike:SetHeight(1)
+  strike:SetPoint("LEFT", text, "LEFT", -12, 0)
+  strike:SetPoint("RIGHT", text, "RIGHT", 2, 0)
+
+  local infoButton = CreateFrame("Button", nil, self:GetParent())
+  infoButton:SetSize(16, 16)
+  infoButton:SetPoint("LEFT", text, "RIGHT", 2, 0)
+
+  local icon = infoButton:CreateTexture(nil, "ARTWORK")
+  icon:SetAllPoints()
+  icon:SetTexture("Interface\\Common\\Help-i")
+  icon:SetVertexColor(1, 0.55, 0.15)
+
+  infoButton:SetScript("OnEnter", function(button)
+      GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
+      GameTooltip:SetText(title, 1, 0.55, 0.15)
+      GameTooltip:AddLine(tooltip, 1, .2, .2, true)
+      GameTooltip:Show()
+  end)
+
+  infoButton:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+  end)
+end
 
 ns.O = O
 ns.cSpells = cSpells

@@ -9,21 +9,34 @@ SMARTDEBUFF_UPGRADED = "KDecurse upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-New name: |cff00ff00K|r|cffffffff Decurse|r !
+SmartDebuff is now
 
-Hunter: Feign death - Poison dispel (Talent)
+   |cff00ff00K|r|cffffffff Decurse|r !
 
-> Options back:
 
-  - Ignore Debuffs
-  - HoT icons, with filtering (12.1.0)
+|cff00ff00> Options back:|r
+  - Ignore on Cooldown
+  - HoT icons, filtered |cff4f81bd(Midnight)|r
 
-> Options removed:
+|cffff1010> Options removed:|r|cffff8c26
+  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Sound    |cff4f81bd(Midnight)|r
+  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Summary frame
+  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Debuff Guard
+|r
+|cfffff2cc> Added :|r
+  - Hunter: Feign death - Poison dispel (Talent)
 
-  - Summary frame
-  - Sound (12.1.0)
-  - Debuff Guard (not working)
+|cfffff2cc> Fixed :|r
+  - Issue with hunters in raid
+  - Unit menu working again
 
+
+
+
+
+|cffff1010WARNING:|r
+|cfffff2ccBlizzard known issues:|r
+FPS drops (with units far far away...) |cff4f81bd(Midnight)|r
 ]];
 
 --@do-not-package@
@@ -155,7 +168,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff Alert Sound";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- S button -|r\nLeft click: Show by class, role or group\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R/M\nRight click: Background";
+SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- K button -|r\nLeft click: Show by class, role or group\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R/M\nRight click: Background";
 SMARTDEBUFF_TT_TARGETMODE      = "In normal mode |cff20d2ffLeft click|r dispels unit\n \nIn Target mode |cff20d2ffLeft click|r selects the unit,\nuse |cff20d2ffAlt-Left/Right click|r to dispel,\nand |cff20d2ffRight click|r casts the fastest heal spell.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Displays critical debuffs\nwhich are not removable.";
 SMARTDEBUFF_TT_HP              = "Displays actual health\npoints of the unit.";
@@ -191,6 +204,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Displays and uses the advanced\nanchoring setu
 SMARTDEBUFF_TT_STOPCAST        = "Stops immediately the current\ncasting or channeling,\nto cast the defined spell.\n(Debuff spells only)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignores the debuff on the unit\nif your debuff spell is on cooldown";
 SMARTDEBUFF_TT_CHATNOTIF         = "Displays chat messages on load";
+SMARTDEBUFF_TT_DISABLED_VERSION  = "This option is not available in this WoW version."
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "This option is no longer available due to Blizzard limitations."
 
 --SMARTDEBUFF_TT_COLUMNS         = "Columns";
 --SMARTDEBUFF_TT_INTERVAL        = "Interval";

@@ -28,17 +28,29 @@ A5: Type in the chat "/kdo" or "/kdm" the options menu will displayed and the un
 
 
 
-Features:
-- Supports all classes
-- Supports all clients
-- Checks debuffs on you, raid/party members, raid/party pets
-- Shows HP, Mana, AFK, offline, aggro state
-- Shows class colors
-- Sorted by groups or classes
-- Choose your favorite debuff hightlight colors
-- Choose opacity
-- Sound reminder
+✨ Main Features
+- Works out of the box — class dispels are pre-configured, and the addon automatically detects which dispel talents you have
+- Highlights dispellable debuffs on you, party/raid members and pets
+- Quick actions — a blue “L” highlights units that can be dispelled with Left-Click
+- Some other class abilities are bound to Alt / Ctrl / Shift + Left/Right-Click
+- Automatically handles dispel cooldowns and ignores debuffs while on cooldown
+- Shows your HoTs on units (configurable)
+- Shows HP, Mana, AFK and aggro state
+
+🎨 Display & Customization
+- Customizable spell shortcuts — choose which spells are assigned to which keys
 - Target mode (like raid unit frames)
+- Class colors
+- Sort by roles, groups or classes
+- Raid icons / role icons
+- Custom debuff highlight colors
+- Opacity settings (in / out of range)
+
+🔧 Compatibility
+- Supports all classes and dispel talents
+- All languages supported (EN / FR / RU / DE / ES / IT / KO / PT / zhCN)
+- Russian names supported
+- Available for all flavors: Midnight, Mists, Classic/Anniversary
 
 
 Normal mode:
@@ -69,7 +81,7 @@ rafp  - Reset all frame positions
 Type /kdo or /kdm for KDecurse options frame in game
 
 
-Please send me a mail or write a comment if you discover Bugs or have Suggestions.
+Please write a comment if you discover Bugs or have Suggestions.
 
 Contact:
 https://www.curseforge.com/wow/addons/smartdebuff-reloaded

@@ -121,7 +121,7 @@ SMARTDEBUFF_S_TITLE            = "디버프 경고음";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-좌클릭으로 제목을 드래그: 프레임 이동\n|cff20d2ff- S 버튼 -|r\n좌클릭: 직업, 역할 또는 그룹별로 표시\nShift-좌클릭: 직업 색상\nAlt-좌클릭: 좌/우/중 강조\n우클릭: 배경";
+SMARTDEBUFF_TT                 = "Shift-좌클릭으로 제목을 드래그: 프레임 이동\n|cff20d2ff- K 버튼 -|r\n좌클릭: 직업, 역할 또는 그룹별로 표시\nShift-좌클릭: 직업 색상\nAlt-좌클릭: 좌/우/중 강조\n우클릭: 배경";
 SMARTDEBUFF_TT_TARGETMODE      = "일반 모드에서 |cff20d2ff좌클릭|r은 유닛을 해제합니다...\n \n대상 모드에서 |cff20d2ff좌클릭|r은 유닛을 선택하고,\n|cff20d2ffAlt-클릭|r으로 해제하며\n|cff20d2ff우클릭|r은 가장 빠른 치유 주문을 시전합니다.|r.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "해제할 수 없는\n치명적인 디버프를 표시합니다.";
 SMARTDEBUFF_TT_HP              = "유닛의 실제\n생명력을 표시합니다.";
@@ -157,6 +157,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "디버프 프레임의\n고급 앵커 설정�
 SMARTDEBUFF_TT_STOPCAST        = "현재 시전 중이거나 정신 집중 중인\n주문을 즉시 중단하고\n설정된 주문을 시전합니다.\n(해제 주문에만 해당)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "해제 주문이 재사용 대기 중일 경우\n유닛의 디버프를 무시합니다.";
 SMARTDEBUFF_TT_CHATNOTIF       = "불러올 때 채팅 알림을 표시합니다.";
+SMARTDEBUFF_TT_DISABLED_VERSION  = "이 옵션은 이 WoW 버전에서 사용할 수 없습니다."
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "블리자드의 제한으로 인해 이 옵션은 더 이상 사용할 수 없습니다."
 
 --SMARTDEBUFF_TT_COLUMNS         = "열";
 --SMARTDEBUFF_TT_INTERVAL        = "간격";

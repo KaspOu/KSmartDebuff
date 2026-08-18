@@ -119,7 +119,7 @@ SMARTDEBUFF_S_TITLE            = "Suono di avviso debuff";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Trascina il titolo con Maiusc-Clic sinistro: Sposta il riquadro\n|cff20d2ff- Pulsante S -|r\nClic sinistro: Mostra per classe, ruolo o gruppo\nMaiusc-Clic sinistro: Colori classe\nAlt-Clic sinistro: Evidenzia S/D/C\nClic destro: Sfondo";
+SMARTDEBUFF_TT                 = "Trascina il titolo con Maiusc-Clic sinistro: Sposta il riquadro\n|cff20d2ff- Pulsante K -|r\nClic sinistro: Mostra per classe, ruolo o gruppo\nMaiusc-Clic sinistro: Colori classe\nAlt-Clic sinistro: Evidenzia S/D/C\nClic destro: Sfondo";
 SMARTDEBUFF_TT_TARGETMODE      = "In modalit\195\160 normale, |cff20d2ffClic sinistro|r rimuove il debuff dall'unit\195\160...\n \nIn modalit\195\160 bersaglio, |cff20d2ffClic sinistro|r seleziona l'unit\195\160,\nrimuovi il debuff con |cff20d2ffAlt-Clic|r\ne |cff20d2ffClic destro|r lancia l'incantesimo di cura pi\195\185 veloce.|r.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Mostra i debuff critici\nche non sono rimovibili.";
 SMARTDEBUFF_TT_HP              = "Mostra i punti vita\nreali dell'unit\195\160.";
@@ -155,6 +155,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Mostra e usa la configurazione\navanzata dei p
 SMARTDEBUFF_TT_STOPCAST        = "Interrompe immediatamente il\nlancio o la canalizzazione in\ncorso per lanciare l'incantesimo definito.\n(Solo per incantesimi di rimozione)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignora il debuff sull'unit\195\160\nse il tuo incantesimo di rimozione \195\168 in ricarica";
 SMARTDEBUFF_TT_CHATNOTIF       = "Mostra notifiche chat al caricamento";
+SMARTDEBUFF_TT_DISABLED_VERSION  = "Questa opzione non \195\168 disponibile in questa versione di WoW."
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Questa opzione non \195\168 pi\195\185 disponibile a causa delle limitazioni di Blizzard."
 
 --SMARTDEBUFF_TT_COLUMNS         = "Colonne";
 --SMARTDEBUFF_TT_INTERVAL        = "Intervallo";

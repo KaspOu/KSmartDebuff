@@ -8,7 +8,7 @@
 ## Title-ruRU: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-zhCN: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-zhTW: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
-## Version: 12.1.003
+## Version: 12.1.004
 ## Author: |cff00ff00Kallye|r (EU-Elune)
 ## Notes: Show party buttons with debuffs easy tracking and dispel actions. Use << |cff00ff00/kd|r >> for debuff frame.
 ## Notes-frFR: Affiche des boutons pour tracker les debuffs avec des actions de dispel. Écrivez << |cff00ff00/kd|r >> pour avoir la fenêtre de débuff.
@@ -28,7 +28,8 @@
 ## IconTexture: Interface\Icons\ability_shaman_cleansespirit
 ## AddonCompartmentFunc: SMARTDEBUFF_ToggleOF
 
-## X-Credits: Aeldra (formerly SmartDebuff), Semi#1287
+## X-Previous-Title: SmartDebuff
+## X-Credits: Aeldra (for SmartDebuff), Semi#1287
 ## X-Category: Buffs & Debuffs
 ## X-Localizations: enUS, frFR, ruRU, deDE, esES, esMX, itIT, koKR, ptBR, zhCN, zhTW
 ## X-License: All Rights Reserved: You are free to fork and modify on Github, please ask about anything else.

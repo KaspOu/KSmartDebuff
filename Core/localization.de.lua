@@ -120,7 +120,7 @@ SMARTDEBUFF_S_TITLE            = "Debuff Warnton";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Shift-Links ziehen: Fenster verschieben\n|cff20d2ff- S Knopf -|r\nLinks Klick: Ordne nach Klassen\nShift-Links Klick: Klassen-Farben\nAlt-Links Klick: Zeige L/R/M\nRechts Klick: Hintergrund";
+SMARTDEBUFF_TT                 = "Shift-Links ziehen: Fenster verschieben\n|cff20d2ff- K Knopf -|r\nLinks Klick: Ordne nach Klassen\nShift-Links Klick: Klassen-Farben\nAlt-Links Klick: Zeige L/R/M\nRechts Klick: Hintergrund";
 SMARTDEBUFF_TT_TARGETMODE      = "Im Ziel-Modus w\195\164hlt |cff20d2fflinks klick|r die Einheit aus\nund |cff20d2ffrechts klick|r zaubert den schnellsten Heilspruch.\n|cff20d2ffAlt-Links/Rechts klick|r wird zum Debuffen benutzt.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Zeigt kritische Debuffs an,\nauch wenn sie nicht entfernt\nwerden k\195\182nnen.";
 SMARTDEBUFF_TT_HP              = "Zeigt die aktuellen Lebenspunkte\nder Einheit an.";
@@ -156,6 +156,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Stellt dar und benutzt das\nerweiterte Anker-S
 SMARTDEBUFF_TT_STOPCAST        = "Stoppt sofort den aktuellen\nZauber, um den definierten\nZauber benutzen zu k\195\182nnen.\n(Nur Debuff-Zauber)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignoriert den Debuff auf der Einheit\nwenn der Debuff-Zauber noch Cooldown hat.";
 SMARTDEBUFF_TT_CHATNOTIF       = "Zeigt Chat-Benachrichtigungen beim Laden an."; -- ChatGPT
+SMARTDEBUFF_TT_DISABLED_VERSION  = "Diese Option ist in dieser WoW-Version nicht verf\195\188gbar."
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Diese Option ist aufgrund von Einschr\195\164nkungen durch Blizzard nicht mehr verf\195\188gbar."
 
 --SMARTDEBUFF_TT_COLUMNS         = "Columns";
 --SMARTDEBUFF_TT_INTERVAL        = "Interval";

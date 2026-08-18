@@ -120,7 +120,7 @@ SMARTDEBUFF_S_TITLE            = "Som de Alerta de Debuff";
 
 
 -- Tooltip text
-SMARTDEBUFF_TT                 = "Arraste o t\195\173tulo com Shift-Clique Esquerdo: Move o quadro\n|cff20d2ff- Bot\195\163o S -|r\nClique Esquerdo: Mostrar por classe, fun\195\167\195\180o ou grupo\nShift-Clique Esquerdo: Cores de classe\nAlt-Clique Esquerdo: Destacar E/D/M\nClique Direito: Plano de Fundo";
+SMARTDEBUFF_TT                 = "Arraste o t\195\173tulo com Shift-Clique Esquerdo: Move o quadro\n|cff20d2ff- Bot\195\163o K -|r\nClique Esquerdo: Mostrar por classe, fun\195\167\195\180o ou grupo\nShift-Clique Esquerdo: Cores de classe\nAlt-Clique Esquerdo: Destacar E/D/M\nClique Direito: Plano de Fundo";
 SMARTDEBUFF_TT_TARGETMODE      = "No modo normal, |cff20d2ffClique Esquerdo|r remove o debuff da unidade...\n \nNo modo alvo, |cff20d2ffClique Esquerdo|r seleciona a unidade,\nremova o debuff com |cff20d2ffAlt-Clique|r\ne |cff20d2ffClique Direito|r lan\195\167a o feiti\195\167o de cura mais r\195\161pido.|r.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Mostra debuffs cr\195\173ticos\nque n\195\180o s\195\163o remov\195\173veis.";
 SMARTDEBUFF_TT_HP              = "Mostra os pontos de vida\nreais da unidade.";
@@ -156,6 +156,8 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Mostra e usa a configura\195\167\195\180o\nava
 SMARTDEBUFF_TT_STOPCAST        = "Interrompe imediatamente o\nlan\195\167amento ou canaliza\195\167\195\180o em\nandamento para lan\195\167ar o feiti\195\167o definido.\n(Somente para feiti\195\167os de remo\195\167\195\180o)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignora o debuff na unidade\nse seu feiti\195\167o de remo\195\167\195\180o estiver em tempo de recarga";
 SMARTDEBUFF_TT_CHATNOTIF       = "Mostra notifica\195\167\195\180es de chat ao carregar";
+SMARTDEBUFF_TT_DISABLED_VERSION  = "Esta op\195\167\195\163o n\195\163o est\195\161 dispon\195\173vel nesta vers\195\163o do WoW."
+SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Esta op\195\167\195\163o n\195\163o est\195\161 mais dispon\195\173vel devido \195\160s limita\195\167\195\181es da Blizzard."
 
 --SMARTDEBUFF_TT_COLUMNS         = "Columns";
 --SMARTDEBUFF_TT_INTERVAL        = "Interval";
