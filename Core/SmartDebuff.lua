@@ -103,7 +103,6 @@ local imgTarget     = nil;
 local imgMenu       = nil;
 local imgMissing    = nil;
 
-local DebugChatFrame = DEFAULT_CHAT_FRAME;
 local PET_BOOK ="pet";
 
 local GetAddOnInfo = C_AddOns.GetAddOnInfo or GetAddOnInfo
@@ -717,12 +716,12 @@ function SMARTDEBUFF_AddMsgDT(msg, msg2)
         end)
     end
 end
-function SMARTDEBUFF_AddMsgErrT(msg, msg2)
+function SMARTDEBUFF_AddMsgErrT(msg, msg2, force)
     if SMARTDEBUFF_DebugTimers[msg] then
         SMARTDEBUFF_DebugTimers[msg]:Cancel()
     end
     SMARTDEBUFF_DebugTimers[msg] = C_Timer.NewTimer(.4, function()
-      SMARTDEBUFF_AddMsgErr(msg..(msg2 or ""))
+      SMARTDEBUFF_AddMsgErr(msg..(msg2 or ""), force)
       SMARTDEBUFF_DebugTimers[msg] = nil
     end)
 end
@@ -2867,13 +2866,13 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
   local ok, container = xpcall(safeInit,
       function(err)
         auraContainerInitFailed = auraContainerInitFailed + 1;
-        -- SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")")
-        SMARTDEBUFF_AddMsgErrT("CRITICAL ERROR: ", tostring(err)) -- .. "\n" .. debugstack())
+        -- SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
+        SMARTDEBUFF_AddMsgErrT("CRITICAL ERROR: ", tostring(err), true) -- .. "\n" .. debugstack())
         local un, uc = "?", "?"
         if (unit ~= nil) then
           un = UnitName(unit); uc = UnitClass(unit);
         end
-        SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")")
+        SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
         return err
       end,
       button
@@ -2884,7 +2883,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
     if (unit ~= nil) then
       un = UnitName(unit); uc = UnitClass(unit);
     end
-    SMARTDEBUFF_AddMsgErrT("No container? Please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")")
+    SMARTDEBUFF_AddMsgErrT("No container? Please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
   end
   if (not ok) then
     -- if O.Debug then error(container) end
