@@ -21,9 +21,11 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Opzioni";
 
-SMARTDEBUFF_KEY_L = "S";
-SMARTDEBUFF_KEY_R = "D";
-SMARTDEBUFF_KEY_M = "C";
+if not SMARTDEBUFF_Options.ForceLR then
+    SMARTDEBUFF_KEY_L = "S";
+    SMARTDEBUFF_KEY_R = "D";
+    SMARTDEBUFF_KEY_M = "C";
+end
 SMARTDEBUFF_KEYS = {["L"]  = "Sinistra (S)",
                     ["R"]  = "Destra (D)",
                     ["M"]  = "Centrale (C)",
@@ -62,6 +64,7 @@ SMARTDEBUFF_OFT_SORT           = "Ordina"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Ord per classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Colori classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Mostra S / D / C";
+SMARTDEBUFF_OFT_FORCELR        = "Forza a L / R / M"
 SMARTDEBUFF_OFT_HEADERS        = "Intestazioni";
 SMARTDEBUFF_OFT_GROUPNR        = "Numero gruppo";
 SMARTDEBUFF_OFT_SOUND          = "Suono";

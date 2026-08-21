@@ -1645,6 +1645,47 @@
         </Scripts>
       </CheckButton>
 
+      <CheckButton name="$parent_cbForceLR" inherits="InterfaceOptionsCheckButtonTemplate">
+        <HitRectInsets>
+          <AbsInset left="0" right="0" top="0" bottom="0"/>
+        </HitRectInsets>
+        <Size>
+          <AbsDimension x="16" y="16"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbHeaders">
+            <Offset>
+              <AbsDimension x="115" y="-16"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+          -- Hide if english
+          if SMARTDEBUFF_OFT_FORCELR == "" then
+            self:Hide()
+          end
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetChecked(SMARTDEBUFF_Options.ForceLR);
+            end
+          </OnShow>
+          <OnClick>
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.ForceLR = not SMARTDEBUFF_Options.ForceLR;
+              SMARTDEBUFF_CheckDebuffs(true);
+            end
+          </OnClick>
+          <OnEnter>
+            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_FORCELR, SMARTDEBUFF_TT_RELOADREQUIRED);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+      </CheckButton>
+
       <CheckButton name="$parent_cbShowRaidIcon" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
