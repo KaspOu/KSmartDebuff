@@ -2,8 +2,6 @@
 -- German localization
 -------------------------------------------------------------------------------
 
-if (GetLocale() ~= "deDE") then return end
-
 SMARTDEBUFF_UPGRADED = "KDecurse aktualisiert: "..SMARTDEBUFF_VERSION;
 
 -- Creatures
@@ -22,9 +20,11 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Optionen";
 
-SMARTDEBUFF_KEY_L = "L";
-SMARTDEBUFF_KEY_R = "R";
-SMARTDEBUFF_KEY_M = "M";
+if not SMARTDEBUFF_Options.ForceLR then
+    SMARTDEBUFF_KEY_L = "L";
+    SMARTDEBUFF_KEY_R = "R";
+    SMARTDEBUFF_KEY_M = "M";
+end
 SMARTDEBUFF_KEYS = {["L"]  = "Links",
                     ["R"]  = "Rechts",
                     ["M"]  = "Mitte",
@@ -63,6 +63,7 @@ SMARTDEBUFF_OFT_SORT           = "Sortierung"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Klassenansicht";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Klassenfarben";
 SMARTDEBUFF_OFT_SHOWLR         = "L / R / M";
+SMARTDEBUFF_OFT_FORCELR        = ""
 SMARTDEBUFF_OFT_HEADERS        = "Titel";
 SMARTDEBUFF_OFT_GROUPNR        = "Gruppen Nr.";
 SMARTDEBUFF_OFT_SOUND          = "Warnton";

@@ -910,19 +910,19 @@ end
 function SMARTDEBUFF_toggleBool(b, msg)
   if (not b or b == nil) then
     b = true;
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
   else
     b = false
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
   end
   return b;
 end
 
 function SMARTDEBUFF_BoolState(b, msg)
   if (b) then
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
   else
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
   end
 end
 
@@ -1360,6 +1360,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.SortedByClass == nil) then O.SortedByClass = false; O.SortedByRole = true; end -- first loading
   if (O.SortedByRole == nil) then O.SortedByRole = false; end
   if (O.ShowLR == nil) then O.ShowLR = true; end
+  if (O.ForceLR == nil) then O.ForceLR = false; end
 
   if (O.DebuffGrp == nil) then O.DebuffGrp = {true, true, true, true, true, true, true, true}; end
   if (O.DebuffClasses == nil) then O.DebuffClasses = {}; end
@@ -2470,6 +2471,47 @@ function SMARTDEBUFF_UseAuraContainerPath()
   return SMARTDEBUFF_AURACONTAINERS and auraContainerInitFailed == 0;
 end
 
+
+-- Fonctions de conversion RGB (0-1) <-> HSL (0-1)
+local function rgb_to_hsl(r, g, b)
+  local max = math.max(r, g, b)
+  local min = math.min(r, g, b)
+  local h, s, l = 0, 0, (max + min) / 2
+
+  if max ~= min then
+      local d = max - min
+      s = l > 0.5 and d / (2 - max - min) or d / (max + min)
+      if max == r then
+          h = (g - b) / d + (g < b and 6 or 0)
+      elseif max == g then
+          h = (b - r) / d + 2
+      elseif max == b then
+          h = (r - g) / d + 4
+      end
+      h = h / 6
+  end
+  return h, s, l
+end
+
+local function hue_to_rgb(p, q, t)
+  if t < 0 then t = t + 1 end
+  if t > 1 then t = t - 1 end
+  if t < 1/6 then return p + (q - p) * 6 * t end
+  if t < 1/2 then return q end
+  if t < 2/3 then return p + (q - p) * (2/3 - t) * 6 end
+  return p
+end
+
+local function hsl_to_rgb(h, s, l)
+  if s == 0 then
+      return l, l, l
+  else
+      local q = l < 0.5 and l * (1 + s) or l + s - l * s
+      local p = 2 * l - q
+      return hue_to_rgb(p, q, h + 1/3), hue_to_rgb(p, q, h), hue_to_rgb(p, q, h - 1/3)
+  end
+end
+
 local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
   if (buttonIndex == 1) then
     return O.ColDebuffL;
@@ -2479,6 +2521,33 @@ local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
     return O.ColDebuffM;
   end
   return O.ColDebuffNR;
+end
+local cacheTextColorByButtonIndex = {}
+
+local function SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+  local sbs_col = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+  local k = string.format("%.3f,%.3f,%.3f", sbs_col.r or 0, sbs_col.g or 0, sbs_col.b or 0)
+
+  if cacheTextColorByButtonIndex[k] then
+    return cacheTextColorByButtonIndex[k]
+  end
+
+  local h, s, l = rgb_to_hsl(sbs_col.r, sbs_col.g, sbs_col.b)
+
+  -- 1. Booster la luminosité et la saturation
+  l = math.min(1, l * .8 + 0.40) -- Éclaircit fortement
+  s = math.min(1, s * 1.3)        -- Garde/renforce l'intensité des couleurs
+
+  -- 2. Décaler légèrement le bleu (~0.66) vers le cyan (~0.5)
+  if h > 0.55 and h < 0.75 then
+      h = h - 0.08
+  end
+
+  local nr, ng, nb = hsl_to_rgb(h, s, l)
+
+  local col = { r = nr, g = ng, b = nb, a = 1 }
+  cacheTextColorByButtonIndex[k] = col
+  return col
 end
 
 local function SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex)
@@ -2555,6 +2624,7 @@ end
 --   return false;
 -- end
 
+
 SMARTDEBUFF_ResetAuraContainers = function()
   for _, container in pairs(auraContainerByIndex) do
     if (container and container.Hide) then
@@ -2608,6 +2678,8 @@ function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, 
   if (O.ShowLR) then
     sbs_std = inRange == 1 and sbs_std or "-"
     button.textCharmed:SetText(sbs_std)
+    local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+    button.textCharmed:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
   end
   local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
   local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
@@ -2763,9 +2835,10 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
               text:SetText("")
               if (O.ShowLR) then
+                local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+                text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
                 text:SetText(btnTxt)
               end
-              text:SetTextColor(1, 1, 1)
               dispelContainer.text = text
             end,
           });
@@ -2837,7 +2910,8 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   text:SetPoint("CENTER")
                   text:SetFont(SMARTDEBUFF_FONT, O.Fontsize, "");
                   text:SetText(btnTxt)
-                  text:SetTextColor(1, 1, 1)
+                  local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(0)
+                  text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
                 end,
               });
               auraSlotByName[slotKey] = slotButton
@@ -4438,6 +4512,13 @@ function SMARTDEBUFF_ToggleShowLR()
   O.ShowLR = SMARTDEBUFF_toggleBool(O.ShowLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
   if (SmartDebuffOF:IsVisible()) then
     SmartDebuffOF_cbShowLR:SetChecked(O.ShowLR);
+  end
+  SMARTDEBUFF_CheckDebuffs(true);
+end
+function SMARTDEBUFF_ToggleForceLR()
+  O.ForceLR = SMARTDEBUFF_toggleBool(O.ForceLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
+  if (SmartDebuffOF:IsVisible()) then
+    SmartDebuffOF_cbForceLR:SetChecked(O.ForceLR);
   end
   SMARTDEBUFF_CheckDebuffs(true);
 end

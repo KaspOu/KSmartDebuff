@@ -110,6 +110,7 @@ SMARTDEBUFF_OFT_SORT           = "Sort"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Class view";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Class colors";
 SMARTDEBUFF_OFT_SHOWLR         = "L / R / M";
+SMARTDEBUFF_OFT_FORCELR        = "";
 SMARTDEBUFF_OFT_HEADERS        = "Headers";
 SMARTDEBUFF_OFT_GROUPNR        = "Group Nr.";
 SMARTDEBUFF_OFT_SOUND          = "Sound";
@@ -204,6 +205,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Displays and uses the advanced\nanchoring setu
 SMARTDEBUFF_TT_STOPCAST        = "Stops immediately the current\ncasting or channeling,\nto cast the defined spell.\n(Debuff spells only)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignores the debuff on the unit\nif your debuff spell is on cooldown";
 SMARTDEBUFF_TT_CHATNOTIF         = "Displays chat messages on load";
+SMARTDEBUFF_TT_RELOADREQUIRED    = "/reload"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "This option is not available in this WoW version."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "This option is no longer available due to Blizzard limitations."
 

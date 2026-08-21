@@ -65,9 +65,11 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Options";
 
-SMARTDEBUFF_KEY_L = "G";
-SMARTDEBUFF_KEY_R = "D";
-SMARTDEBUFF_KEY_M = "M";
+if not SMARTDEBUFF_Options.ForceLR then
+    SMARTDEBUFF_KEY_L = "G";
+    SMARTDEBUFF_KEY_R = "D";
+    SMARTDEBUFF_KEY_M = "M";
+end
 SMARTDEBUFF_KEYS = {["L"]  = "Gauche (G)",
                     ["R"]  = "Droite (D)",
                     ["M"]  = "Milieu (M)",
@@ -106,6 +108,7 @@ SMARTDEBUFF_OFT_SORT           = "Tri"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Tri par classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Couleurs de classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Afficher G / D / M";
+SMARTDEBUFF_OFT_FORCELR        = "Forcer en L / R / M"
 SMARTDEBUFF_OFT_HEADERS        = "En-t\195\170tes";
 SMARTDEBUFF_OFT_GROUPNR        = "Num\195\169ro de groupe";
 SMARTDEBUFF_OFT_SOUND          = "Son";

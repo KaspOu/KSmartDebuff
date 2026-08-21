@@ -21,9 +21,11 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Настройки";
 
-SMARTDEBUFF_KEY_L = "Л";
-SMARTDEBUFF_KEY_R = "П";
-SMARTDEBUFF_KEY_M = "С";
+if not SMARTDEBUFF_Options.ForceLR then
+    SMARTDEBUFF_KEY_L = "Л";
+    SMARTDEBUFF_KEY_R = "П";
+    SMARTDEBUFF_KEY_M = "С";
+end
 SMARTDEBUFF_KEYS = {["L"]  = "Левая (Л)",
                     ["R"]  = "Правая (П)",
                     ["M"]  = "Средняя (С)",
@@ -62,6 +64,7 @@ SMARTDEBUFF_OFT_SORT           = "Сортировка"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Сортировка по классу";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Цвета классов";
 SMARTDEBUFF_OFT_SHOWLR         = "Показать Л / П / С";
+SMARTDEBUFF_OFT_FORCELR        = "Принудительно L / R / M"
 SMARTDEBUFF_OFT_HEADERS        = "Заголовки";
 SMARTDEBUFF_OFT_GROUPNR        = "Номер группы";
 SMARTDEBUFF_OFT_SOUND          = "Звук";

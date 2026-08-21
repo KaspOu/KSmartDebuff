@@ -24,9 +24,11 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." 選項";
 
-SMARTDEBUFF_KEY_L = "左";
-SMARTDEBUFF_KEY_R = "右";
-SMARTDEBUFF_KEY_M = "中";
+if not SMARTDEBUFF_Options.ForceLR then
+    SMARTDEBUFF_KEY_L = "左";
+    SMARTDEBUFF_KEY_R = "右";
+    SMARTDEBUFF_KEY_M = "中";
+end
 SMARTDEBUFF_KEYS = {["L"]  = "左",
                     ["R"]  = "右",
                     ["M"]  = "中",
@@ -65,6 +67,7 @@ SMARTDEBUFF_OFT_SORT           = "排序"
 SMARTDEBUFF_OFT_CLASSVIEW      = "職業視圖";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "職業顏色";
 SMARTDEBUFF_OFT_SHOWLR         = "左 / 右 / 中";
+SMARTDEBUFF_OFT_FORCELR        = "強制 L / R / M"
 SMARTDEBUFF_OFT_HEADERS        = "標題";
 SMARTDEBUFF_OFT_GROUPNR        = "組號";
 SMARTDEBUFF_OFT_SOUND          = "聲音";
