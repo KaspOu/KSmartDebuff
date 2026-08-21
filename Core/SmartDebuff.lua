@@ -2748,10 +2748,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
           slotButton = dispelContainer:AddAuraSlot(slotKey, CFG.filterString, {
             candidateFilters = candidateFilters,
             initializeFrame = function(auraButton)
-
-              auraButton:SetSize(button:GetWidth(), button:GetHeight());
-              auraButton:ClearAllPoints();
-              auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
+              auraButton:SetAllPoints(button);
               auraButton:SetFrameStrata("HIGH")
               auraButton:EnableMouse(true);
 
@@ -2773,10 +2770,6 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             end,
           });
           auraSlotByName[slotKey] = slotButton
-        else
-          slotButton:SetSize(button:GetWidth(), button:GetHeight());
-          slotButton:ClearAllPoints();
-          slotButton:SetPoint("LEFT", button, "LEFT", 0, 0);
         end
         if unit ~= nil then
           dispelContainer:SetUnit(unit);
