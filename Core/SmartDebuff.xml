@@ -2127,6 +2127,7 @@
           <OnClick>
             if (SMARTDEBUFF_Options) then
               SMARTDEBUFF_Options.ShowVehicles = not SMARTDEBUFF_Options.ShowVehicles;
+              SMARTDEBUFF_CreateButtonsPetsIfEnabled()
               SMARTDEBUFF_SetButtons();
             end
           </OnClick>
