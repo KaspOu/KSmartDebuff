@@ -2724,7 +2724,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbAdvAnchors">
             <Offset>
-              <AbsDimension x="2" y="-32"/>
+              <AbsDimension x="2" y="-36"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2752,6 +2752,91 @@
           </OnLeave>
         </Scripts>
       </Slider>
+
+      <Frame name="SmartDebuffColTextureDropDown" inherits="UIDropDownMenuTemplate">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sldCheckInterval">
+            <Offset>
+              <AbsDimension x="2" y="10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <!-- Label placé juste au-dessus du menu déroulant -->
+            <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="Texture">
+              <Color r="1" g="1" b="1" a="1"/>
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="18" y="0"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      <Scripts>
+        <OnLoad>
+          local label = _G[self:GetName().."Label"]
+          if label then
+            label:SetText(SMARTDEBUFF_OFT_COLTEXTURE)
+          end
+          UIDropDownMenu_Initialize(self, function(frame, level)
+            local infoT = UIDropDownMenu_CreateInfo()
+            local info = UIDropDownMenu_CreateInfo()
+
+            local options = {
+              { text = "|cff999999None",   value = "" },
+              { text = "Skull",   value = "icon_skull" },
+              { text = "Skull (Inverted)", value = "icon_skull_inv" },
+              { text = "Swirl",   value = "icon_swirl" },
+              { text = "Swirl (Inverted)", value = "icon_swirl_inv" },
+            }
+
+            infoT.text = SMARTDEBUFF_OFT_COLTEXTURE
+            infoT.isTitle = true;
+		        infoT.notCheckable = true;
+            infoT.justifyH = "LEFT";
+            UIDropDownMenu_AddButton(infoT, level)
+            self.infos = {}
+            for _, option in ipairs(options) do
+              info.text = option.text
+              info.value = option.value
+              infoT.justifyH = "LEFT";
+              info.func = function(btn)
+                -- Mises à jour lors de la sélection
+                UIDropDownMenu_SetSelectedValue(frame, btn.value)
+                if SMARTDEBUFF_Options then
+                  SMARTDEBUFF_Options.ColTexture = btn.value
+                  SMARTDEBUFF_TestModeToggle(true)
+                  SMARTDEBUFF_CheckDebuffs(true)
+                end
+              end
+              info.checked = (SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColTexture == option.value)
+              UIDropDownMenu_AddButton(info, level)
+              self.infos[option.value] = option.text
+            end
+            UIDropDownMenu_JustifyText(self, "LEFT")
+          end)
+        </OnLoad>
+        <OnShow>
+          if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColTexture then
+            UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColTexture)
+            if self.infos and self.infos[SMARTDEBUFF_Options.ColTexture] then
+              UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColTexture])
+            else
+              UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColTexture)
+            end
+          end
+        </OnShow>
+        <OnEnter>
+          SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE.."\n"..SMARTDEBUFF_TT_RELOADREQUIRED)
+        </OnEnter>
+        <OnLeave>
+          GameTooltip:Hide()
+        </OnLeave>
+      </Scripts>
+    </Frame>
 
       <Slider name="$parent_sldFontsize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>

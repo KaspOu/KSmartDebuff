@@ -1378,6 +1378,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ColDebuffM == nil) then O.ColDebuffM = { r = 0.0, g = 0.7, b = 0.0 }; end
   if (O.ColDebuffNR == nil) then O.ColDebuffNR = { r = 0.86, g = 0.3, b = 1.0 }; end
   if (O.ColBack == nil) then O.ColBack = { r = 0.0, g = 0.0, b = 0.0, a = 0.5 }; end
+  if (O.ColTexture == nil) then O.ColTexture = "" end
 
   if (O.ShowHP == nil) then O.ShowHP = true; end
   if (O.ShowMana == nil) then O.ShowMana = true; end
@@ -2070,12 +2071,15 @@ function SMARTDEBUFF_CheckSFBackdrop()
   end
 end
 
-function SMARTDEBUFF_TestModeToggle()
-  if (ST.iTest == nil or ST.iTest < 1) then
-    ST.iTest = 30;
+function SMARTDEBUFF_TestModeToggle(force)
+  if force ~= nil then
+    ST.iTest = force and 30 or 0
+  else
+    ST.iTest = (ST.iTest == nil or ST.iTest < 1) and 30 or 0
+  end
+  if ST.iTest > 0 then
     SmartDebuffOF_btnTestModeText:SetTextColor(0, .9, 0)
   else
-    ST.iTest = 0;
     SmartDebuffOF_btnTestModeText:SetTextColor(1, .82, 0)
   end
   SMARTDEBUFF_SetUnits();
@@ -2667,7 +2671,7 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
     button.btnOverlay:Hide()
     button.colorOverlay = button.btnOverlay:CreateTexture(nil, "OVERLAY");
     button.colorOverlay:SetBlendMode("BLEND");
-    button.colorOverlay:SetColorTexture(1,0,0,0); -- Initialement transparent
+    button.colorOverlay:SetColorTexture(1,1,1,1); -- Initialement transparent
 
     button.textOverlay = button.btnOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
     button.textOverlay:SetJustifyH("CENTER");
@@ -2683,10 +2687,14 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
   local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
   if shouldShowDebuff then
     local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+    button.colorOverlay:SetColorTexture(1, 1, 1, 1);
+    if O.ColTexture ~= "" then
+      button.colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
+    end
     if (inRange == 1) then
-      button.colorOverlay:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
+      button.colorOverlay:SetVertexColor(sbs_col.r, sbs_col.g, sbs_col.b, 1);
     else
-      button.colorOverlay:SetColorTexture(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
+      button.colorOverlay:SetVertexColor(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
     end
     if (O.ShowLR) then
       button.textOverlay:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
@@ -2843,7 +2851,11 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
               colorOverlay:SetBlendMode("BLEND");
               colorOverlay:SetAllPoints();
-              colorOverlay:SetColorTexture(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
+              colorOverlay:SetColorTexture(1, 1, 1, 1);
+              if O.ColTexture ~= "" then
+                colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
+              end
+              colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
               colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
 
               local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -2923,7 +2935,11 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
                   colorOverlay:SetBlendMode("BLEND");
                   colorOverlay:SetAllPoints();
-                  colorOverlay:SetColorTexture(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
+                  colorOverlay:SetColorTexture(1, 1, 1, 1);
+                  if O.ColTexture ~= "" then
+                    colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
+                  end
+                  colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
                   colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
                   local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
                   text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
