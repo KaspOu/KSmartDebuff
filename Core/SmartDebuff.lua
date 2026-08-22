@@ -2174,6 +2174,7 @@ function SMARTDEBUFF_CreateButtons()
       --button:SetBackdropColor(0,0,0,0);
 
 
+      -- Btn Overlay: C_CurveUtil players
       -- create bg alpha frame and texture
       button.texture = button:CreateTexture(nil, "BACKGROUND");
       button.texture:SetColorTexture(0, 0, 0);
@@ -2187,21 +2188,22 @@ function SMARTDEBUFF_CreateButtons()
       button.textureDispel:SetBlendMode("BLEND");
       button.textureDispel:SetColorTexture(0,0,0,0); -- Initialement transparent
 
+      local offsetY = -math.floor((O.BtnH - 20) / 10)
       button.text = button:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text:SetJustifyH("CENTER");
-      button.text:SetAllPoints(button);
+      button.text:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button:SetFontString(button.text);
       button.text1 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text1:SetJustifyH("CENTER");
-      button.text1:SetAllPoints(button);
+      button.text1:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button.text1:SetAlpha(0)
       button.text2 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text2:SetJustifyH("CENTER");
-      button.text2:SetAllPoints(button);
+      button.text2:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button.text2:SetAlpha(0)
       button.text3 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text3:SetJustifyH("CENTER");
-      button.text3:SetAllPoints(button);
+      button.text3:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button.text3:SetAlpha(0)
 
       -- create hp texture
@@ -2288,7 +2290,7 @@ function SMARTDEBUFF_CreateButtons()
         bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
         insets = { left = 0, right = 0, top = 0, bottom = 0 } });
 
-      -- create bg texture
+      -- Btn Overlay: C_CurveUtil pets
       button.texture = button:CreateTexture(nil, "BACKGROUND");
       button.texture:SetColorTexture(0, 0, 0);
       button.texture:SetAllPoints(button);
@@ -2302,20 +2304,21 @@ function SMARTDEBUFF_CreateButtons()
       button.textureDispel:SetBlendMode("BLEND");
       button.textureDispel:SetColorTexture(0,0,0,0); -- Initialement transparent
 
+      local offsetY = -math.floor((O.BtnH - 20) / 10)
       button.text = button:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text:SetJustifyH("CENTER");
-      button.text:SetAllPoints(button);
+      button.text:SetPoint("CENTER", button, "CENTER", 0, offsetY);
       button:SetFontString(button.text);
       button.text1 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text1:SetJustifyH("CENTER");
-      button.text1:SetAllPoints(button);
+      button.text1:SetPoint("CENTER", button, "CENTER", 0, offsetY);
       button.text1:SetAlpha(0)
       button.text2 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text2:SetJustifyH("CENTER");
-      button.text2:SetAllPoints(button);
+      button.text2:SetPoint("CENTER", button, "CENTER", 0, offsetY);
       button.text3 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text3:SetJustifyH("CENTER");
-      button.text3:SetAllPoints(button);
+      button.text3:SetPoint("CENTER", button, "CENTER", 0, offsetY);
 
       -- create hp texture
       button.hp = CreateFrame("StatusBar", nil, button)
@@ -2634,68 +2637,75 @@ SMARTDEBUFF_ResetAuraContainers = function()
   auraContainerByIndex = {};
 end
 
-function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, forceShown)
+--- Set Btn Overlay:
+--- - Charmed
+--- - TestMode
+--- - Legacy API
+function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forceShown)
   if forceShown == nil and (not cSpells[SMARTDEBUFF_CHARMED] or cSpells[SMARTDEBUFF_CHARMED][2] ~= buttonIndex) then
     return
   end
   if (forceShown == nil and not (unit ~= nil and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID)) then
     -- avoid change unit issues
-    if button.charmedOverlay then
-      button.charmedOverlay:Hide()
-      button.textureCharmed:Hide()
-      button.textCharmed:Hide()
+    if button.btnOverlay then
+      button.btnOverlay:Hide()
+      button.colorOverlay:Hide()
+      button.textOverlay:Hide()
     end
     return
   end
   if (forceShown == false) then
     return
   end
-  if not button.charmedOverlay then
-    button.charmedOverlay = CreateFrame("Frame", nil, button)
-    button.charmedOverlay:Hide()
-    button.textureCharmed = button.charmedOverlay:CreateTexture(nil, "OVERLAY");
-    button.textureCharmed:SetBlendMode("BLEND");
-    button.textureCharmed:SetColorTexture(1,0,0,0); -- Initialement transparent
+  if not button.btnOverlay then
+    button.btnOverlay = CreateFrame("Frame", nil, button)
+    button.btnOverlay:Hide()
+    button.colorOverlay = button.btnOverlay:CreateTexture(nil, "OVERLAY");
+    button.colorOverlay:SetBlendMode("BLEND");
+    button.colorOverlay:SetColorTexture(1,0,0,0); -- Initialement transparent
 
-    button.textCharmed = button.charmedOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
-    button.textCharmed:SetJustifyH("CENTER");
-    button.textCharmed:SetPoint("CENTER")
-    button.textCharmed:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+    button.textOverlay = button.btnOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
+    button.textOverlay:SetJustifyH("CENTER");
+    button.textOverlay:SetPoint("CENTER")
   end
-  button.charmedOverlay:SetSize(button:GetWidth(), button:GetHeight());
-  button.charmedOverlay:ClearAllPoints();
-  button.charmedOverlay:SetPoint("LEFT", button, "LEFT", 0, 0);
-  button.textureCharmed:SetAllPoints(button);
-  button.textCharmed:SetAllPoints(button);
+  button.btnOverlay:SetSize(button:GetWidth(), button:GetHeight());
+  button.btnOverlay:ClearAllPoints();
+  button.btnOverlay:SetPoint("LEFT", button, "LEFT", 0, 0);
+  button.colorOverlay:SetAllPoints(button);
+  button.textOverlay:SetText("")
 
-  local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
-  if (inRange == 1) then
-    button.textureCharmed:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
-  else
-    button.textureCharmed:SetColorTexture(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
-  end
-  button.textCharmed:SetText("")
-  if (O.ShowLR) then
-    sbs_std = inRange == 1 and sbs_std or "-"
-    button.textCharmed:SetText(sbs_std)
-    local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-    button.textCharmed:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
-  end
   local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
   local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
-  button.charmedOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.textureCharmed:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.textCharmed:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.charmedOverlay:SetShown(UnitIsCharmed(unit))
-  button.textureCharmed:SetShown(UnitIsCharmed(unit))
-  button.textCharmed:SetShown(UnitIsCharmed(unit))
+  if shouldShowDebuff then
+    local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+    if (inRange == 1) then
+      button.colorOverlay:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
+    else
+      button.colorOverlay:SetColorTexture(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
+    end
+    if (O.ShowLR) then
+      button.textOverlay:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+      local offsetY = -math.floor((O.BtnH - 20) / 10)
+      button.textOverlay:SetPoint("CENTER", button, "CENTER", 0, offsetY);
+      sbs_std = inRange == 1 and sbs_std or "-"
+      button.textOverlay:SetText(sbs_std)
+      local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+      button.textOverlay:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
+    end
+  end
+  button.btnOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.colorOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.textOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.btnOverlay:SetShown(UnitIsCharmed(unit))
+  button.colorOverlay:SetShown(UnitIsCharmed(unit))
+  button.textOverlay:SetShown(UnitIsCharmed(unit))
   if (not forceShown) then
     SMARTDEBUFF_AddMsgD("Charmed overlay for button " .. buttonIndex.. " ("..(sbs_std)..")")
   end
   if (forceShown == true) then
-    button.charmedOverlay:Show(forceShown)
-    button.textureCharmed:Show(forceShown)
-    button.textCharmed:Show(forceShown)
+    button.btnOverlay:Show(forceShown)
+    button.colorOverlay:Show(forceShown)
+    button.textOverlay:Show(forceShown)
   end
 end
 
@@ -2713,7 +2723,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         end
         auraContainerByIndex[buttonName]:SetEnabled(unit ~= nil)
         for buttonIndex = 1, 3, 1 do
-          SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
+          SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex)
 
           local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
           local slotButton = auraSlotByName[slotKey]
@@ -2785,7 +2795,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
     local allIncludeDispelTypes = {}
 
     for buttonIndex = 1, 3, 1 do
-      SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
+      SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex)
       local dispelContainer = button.dispelContainers[buttonIndex]
       local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
       if (not includeDispelTypes) then
@@ -2817,6 +2827,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         }
         local ok = pcall(function() dispelContainer:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
         if not ok then
+          --- Set Btn Overlay: L R M
           slotButton = dispelContainer:AddAuraSlot(slotKey, CFG.filterString, {
             candidateFilters = candidateFilters,
             initializeFrame = function(auraButton)
@@ -2831,8 +2842,10 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
 
               local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-              text:SetPoint("CENTER")
               text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+              local offsetY = -math.floor((O.BtnH - 20) / 10)
+              text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
+              -- 20 : 0 , 40 : 2
               text:SetText("")
               if (O.ShowLR) then
                 local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
@@ -2891,6 +2904,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
           end
           local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
           if not ok then
+            -- --- Set Btn Overlay: NR
               slotButton = frame:AddAuraSlot(slotKey, CFG.filterStringNR, {
                 candidateFilters = candidateFilters,
                 initializeFrame = function(auraButton)
@@ -2907,8 +2921,9 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   colorOverlay:SetColorTexture(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
                   colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
                   local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                  text:SetPoint("CENTER")
-                  text:SetFont(SMARTDEBUFF_FONT, O.Fontsize, "");
+                  text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+                  local offsetY = -math.floor((O.BtnH - 20) / 10)
+                  text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
                   text:SetText(btnTxt)
                   local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(0)
                   text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
@@ -3411,7 +3426,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         nr = math.floor(idx/7)
         nr = nr > 3 and 10 or nr
         if (nr > 0 and nr <= 3) or nr == 10 then
-          SMARTDEBUFF_SetCharmedOverlay(idx, sbs_un, isInRange, _G["SmartDebuffBtn"..idx], nr, true)
+          SMARTDEBUFF_SetBtnOverlay(idx, sbs_un, isInRange, _G["SmartDebuffBtn"..idx], nr, true)
           nr = 0
         end
       else
