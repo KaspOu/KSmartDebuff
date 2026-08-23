@@ -128,6 +128,18 @@ local Icons = {
   ["CLASSES"]     = "Interface\\WorldStateFrame\\Icons-Classes",
 };
 
+function SMARTDEBUFF_GetIcon(icon)
+  local p1 = strsplit("\\", icon)
+  if string.lower(p1) == "interface" then
+    return icon
+  elseif tonumber(icon) then
+    local icons = { "Interface\\ICONS\\INV_Misc_Toy_01", "Interface\\ICONS\\Spell_Nature_FaerieFire", "Interface\\ICONS\\Sha_Spell_Shadow_Shadesofdarkness", [10] = "Interface\\ICONS\\INV_Misc_Web_01" }
+    return icons[tonumber(icon)] or icons[1]
+  else
+    return addonFolder.."\\Icons\\"..icon..".png"
+  end
+end
+
 local IconCoords = {
   ["WARRIOR"] = { 0.00, 0.25, 0.00, 0.25 },
   ["MAGE"] = { 0.25, 0.50, 0.00, 0.25 },
@@ -1870,7 +1882,7 @@ function SMARTDEBUFF_command(msgIn)
 
   if(msg == "help" or msg == "?") then
     SMARTDEBUFF_AddMsg(SMARTDEBUFF_VERS_TITLE, true);
-    SMARTDEBUFF_AddMsg("Syntax: /kd [command] or /smartdebuff [command]", true);
+    SMARTDEBUFF_AddMsg("Syntax: /kd [command] or /kdecurse [command]", true);
     SMARTDEBUFF_AddMsg("o      -  " .. SMARTDEBUFF_MSG_SDB, true);
     SMARTDEBUFF_AddMsg("ris #  -  " .. "Raid icon size # = 4-64", true);
     SMARTDEBUFF_AddMsg("bsx # -  " .. "Button space X # = 0-16", true);
@@ -2072,10 +2084,14 @@ function SMARTDEBUFF_CheckSFBackdrop()
 end
 
 function SMARTDEBUFF_TestModeToggle(force)
+  local previousValue = ST.iTest
   if force ~= nil then
     ST.iTest = force and 30 or 0
   else
     ST.iTest = (ST.iTest == nil or ST.iTest < 1) and 30 or 0
+  end
+  if previousValue == ST.iTest then
+    return
   end
   if ST.iTest > 0 then
     SmartDebuffOF_btnTestModeText:SetTextColor(0, .9, 0)
@@ -2692,10 +2708,12 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
   local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
   local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
   if shouldShowDebuff then
-    local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+    local sbs_std, sbs_col = (buttons[buttonIndex] or ""), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
     button.colorOverlay:SetColorTexture(1, 1, 1, 1);
-    if O.ColTexture ~= "" then
-      button.colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
+    if O.ColTexture == "-" then
+      button.colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(buttonIndex))
+    elseif O.ColTexture ~= "" then
+      button.colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
     end
     button.border:SetVertexColor(sbs_col.r, sbs_col.g, sbs_col.b, 1);
     if (inRange == 1) then
@@ -2710,7 +2728,7 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
       sbs_std = inRange == 1 and sbs_std or "-"
       button.textOverlay:SetText(sbs_std)
       local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-      button.textOverlay:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
+      button.textOverlay:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
     end
   end
   button.btnOverlay:SetAlphaFromBoolean(shouldShowDebuff, O.ADebuff, 0)
@@ -2811,7 +2829,6 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
 
     frame.sdbAuraSlots = {};
 
-    local buttonAlpha = O.ADebuff -- (inRange == 1 and O.ANormal or O.ANormalOOR) * O.ADebuff
     local allIncludeDispelTypes = {}
 
     for buttonIndex = 1, 3, 1 do
@@ -2859,24 +2876,31 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               colorOverlay:SetBlendMode("BLEND");
               colorOverlay:SetAllPoints();
               colorOverlay:SetColorTexture(1, 1, 1, 1);
-              if O.ColTexture ~= "" then
-                colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
+              if O.ColTexture == "-" then
+	              auraButton:SetIcon(colorOverlay)
+              elseif O.ColTexture ~= "" then
+                colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
               end
-              colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
-              colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
+              colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
 
-              local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-              text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
-              local offsetY = -math.floor((O.BtnH - 20) / 10)
-              text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
-              -- 20 : 0 , 40 : 2
-              text:SetText("")
+              local border = auraButton:CreateTexture(nil, "OVERLAY")
+              border:SetTexture("Interface\\Buttons\\CheckButtonHilight") -- Bordure brillante classique d'action bar
+              border:SetBlendMode("ADD") -- Rend la bordure plus lumineuse
+              border:SetPoint("TOPLEFT", auraButton, "TOPLEFT", -2, 2)
+              border:SetPoint("BOTTOMRIGHT", auraButton, "BOTTOMRIGHT", 2, -2)
+              border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
+
               if (O.ShowLR) then
+                local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+                text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+                local offsetY = -math.floor((O.BtnH - 20) / 10)
+                text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
+                -- 20 : 0 , 40 : 2
+                text:SetText("")
                 local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-                text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
+                text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
                 text:SetText(btnTxt)
               end
-              dispelContainer.text = text
             end,
           });
           auraSlotByName[slotKey] = slotButton
@@ -2932,10 +2956,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               slotButton = frame:AddAuraSlot(slotKey, CFG.filterStringNR, {
                 candidateFilters = candidateFilters,
                 initializeFrame = function(auraButton)
-
-                  auraButton:SetSize(button:GetWidth(), button:GetHeight());
-                  auraButton:ClearAllPoints();
-                  auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
+                  auraButton:SetAllPoints(button);
                   auraButton:SetFrameStrata("HIGH")
                   auraButton:EnableMouse(true);
 
@@ -2943,25 +2964,22 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   colorOverlay:SetBlendMode("BLEND");
                   colorOverlay:SetAllPoints();
                   colorOverlay:SetColorTexture(1, 1, 1, 1);
-                  if O.ColTexture ~= "" then
-                    colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
+                  if O.ColTexture == "-" then
+                    auraButton:SetIcon(colorOverlay)
+                  elseif O.ColTexture ~= "" then
+                    colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
                   end
-                  colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
-                  colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
-                  local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                  text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
-                  local offsetY = -math.floor((O.BtnH - 20) / 10)
-                  text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
-                  text:SetText(btnTxt)
-                  local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(0)
-                  text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
+                  colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
+
+                  local border = auraButton:CreateTexture(nil, "OVERLAY")
+                  border:SetTexture("Interface\\Buttons\\CheckButtonHilight") -- Bordure brillante classique d'action bar
+                  border:SetBlendMode("ADD") -- Rend la bordure plus lumineuse
+                  border:SetPoint("TOPLEFT", auraButton, "TOPLEFT", -2, 2)
+                  border:SetPoint("BOTTOMRIGHT", auraButton, "BOTTOMRIGHT", 2, -2)
+                  border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
                 end,
               });
               auraSlotByName[slotKey] = slotButton
-          else
-            slotButton:SetSize(button:GetWidth(), button:GetHeight());
-            slotButton:ClearAllPoints();
-            slotButton:SetPoint("LEFT", button, "LEFT", 0, 0);
           end
           frame.sdbAuraSlots[10] = slotButton;
       end
@@ -5669,6 +5687,7 @@ function SMARTDEBUFF_ColorsToggle()
     SmartDebuffColors:Hide();
   else
     SmartDebuffColors:Show();
+    SMARTDEBUFF_TestModeToggle(true)
   end
 end
 

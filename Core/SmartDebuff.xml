@@ -2777,6 +2777,10 @@
         </Layers>
       <Scripts>
         <OnLoad>
+          if not SMARTDEBUFF_IS_RETAIL then
+            self:Hide()
+            return
+          end
           local label = _G[self:GetName().."Label"]
           if label then
             label:SetText(SMARTDEBUFF_OFT_COLTEXTURE)
@@ -2787,10 +2791,29 @@
 
             local options = {
               { text = "|cff999999None",   value = "" },
+              { text = "|cffFFD100Debuff Icon (dynamic)",   value = "-" },
               { text = "Skull",   value = "icon_skull" },
               { text = "Skull (Inverted)", value = "icon_skull_inv" },
+              { text = "Skull 2",   value = "Interface\\ICONS\\INV_Misc_Bone_HumanSkull_02" },
               { text = "Swirl",   value = "icon_swirl" },
               { text = "Swirl (Inverted)", value = "icon_swirl_inv" },
+              { text = "Cleanse", value = "Interface\\ICONS\\ability_shaman_cleansespirit" },
+              { text = "Curse",   value = "Interface\\ICONS\\Spell_Nature_FaerieFire" },
+              { text = "Diamond",   value = "Interface\\ICONS\\INV_Misc_Gem_Diamond_01" },
+              { text = "Enchant",   value = "Interface\\ICONS\\INV_Enchant_ShardBrilliantSmall" },
+              { text = "Air",   value = "Interface\\ICONS\\inv_misc_volatileair" },
+              { text = "Fire",   value = "Interface\\ICONS\\INV_Misc_SuperSoulAsh" },
+              { text = "Fireball",   value = "Interface\\ICONS\\Sha_Spell_Fire_BluePyroblast" },
+              { text = "Hands",   value = "Interface\\ICONS\\Spell_Arcane_ArcanePotency" },
+              { text = "Pearl",   value = "Interface\\ICONS\\INV_Misc_Gem_Pearl_02" },
+              { text = "Potion",   value = "Interface\\ICONS\\inv_misc_potionsetE" },
+              { text = "Puppet",   value = "Interface\\ICONS\\INV_Misc_Toy_01" },
+              { text = "Runes",   value = "Interface\\ICONS\\Spell_Mage_TemporalShield" },
+              { text = "Sha",   value = "Interface\\ICONS\\Sha_Spell_Shadow_Shadesofdarkness" },
+              { text = "Storm",   value = "Interface\\ICONS\\inv_misc_stormlordsfavor" },
+              { text = "Talisman",   value = "Interface\\ICONS\\INV_Jewelry_Talisman_08" },
+              { text = "Tarot",   value = "Interface\\ICONS\\INV_Misc_Ticket_Tarot_Maelstrom_01" },
+              { text = "Web",   value = "Interface\\ICONS\\INV_Misc_Web_01" },
             }
 
             infoT.text = SMARTDEBUFF_OFT_COLTEXTURE
