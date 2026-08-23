@@ -1373,10 +1373,10 @@ function SMARTDEBUFF_Options_Init()
   if (O.ADebuff == nil) then O.ADebuff = 1.0; end
 
   if (O.ColNormal == nil) then O.ColNormal = { r = 0.39, g = 0.42, b = 0.64 }; end
-  if (O.ColDebuffL == nil) then O.ColDebuffL = { r = 0.0, g = 0.0, b = 1.0 }; end
+  if (O.ColDebuffL == nil) then O.ColDebuffL = { r = 0.86, g = 0.3, b = 1.0 }; end
   if (O.ColDebuffR == nil) then O.ColDebuffR = { r = 1.0, g = 0.0, b = 0.0 }; end
   if (O.ColDebuffM == nil) then O.ColDebuffM = { r = 0.0, g = 0.7, b = 0.0 }; end
-  if (O.ColDebuffNR == nil) then O.ColDebuffNR = { r = 0.86, g = 0.3, b = 1.0 }; end
+  if (O.ColDebuffNR == nil) then O.ColDebuffNR = { r = 0.0, g = 0.0, b = 1.0 }; end
   if (O.ColBack == nil) then O.ColBack = { r = 0.0, g = 0.0, b = 0.0, a = 0.5 }; end
   if (O.ColTexture == nil) then O.ColTexture = "" end
 
@@ -1572,10 +1572,10 @@ end
 
 function SMARTDEBUFF_SetDefaultColors()
   O.ColNormal  = { r = 0.39, g = 0.42, b = 0.64 };
-  O.ColDebuffL = { r = 0.0, g = 0.0, b = 1.0 };
+  O.ColDebuffL = { r = 0.86, g = 0.3, b = 1.0 };
   O.ColDebuffR = { r = 1.0, g = 0.0, b = 0.0 };
   O.ColDebuffM = { r = 0.0, g = 0.7, b = 0.0 };
-  O.ColDebuffNR = { r = 0.86, g = 0.3, b = 1.0 };
+  O.ColDebuffNR = { r = 0.0, g = 0.0, b = 1.0 };
   O.ColBack    = { r = 0.0, g = 0.0, b = 0.0, a = 0.5 };
 end
 
@@ -2671,7 +2671,13 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
     button.btnOverlay:Hide()
     button.colorOverlay = button.btnOverlay:CreateTexture(nil, "OVERLAY");
     button.colorOverlay:SetBlendMode("BLEND");
-    button.colorOverlay:SetColorTexture(1,1,1,1); -- Initialement transparent
+    button.colorOverlay:SetColorTexture(1,0,0,0); -- Initialement transparent
+
+    button.border = button.btnOverlay:CreateTexture(nil, "OVERLAY")
+    button.border:SetTexture("Interface\\Buttons\\CheckButtonHilight") -- Bordure brillante classique d'action bar
+    button.border:SetBlendMode("ADD") -- Rend la bordure plus lumineuse
+    button.border:SetPoint("TOPLEFT", button.btnOverlay, "TOPLEFT", -2, 2)
+    button.border:SetPoint("BOTTOMRIGHT", button.btnOverlay, "BOTTOMRIGHT", 2, -2)
 
     button.textOverlay = button.btnOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
     button.textOverlay:SetJustifyH("CENTER");
@@ -2691,6 +2697,7 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
     if O.ColTexture ~= "" then
       button.colorOverlay:SetTexture(addonFolder.."\\Icons\\"..O.ColTexture..".png")
     end
+    button.border:SetVertexColor(sbs_col.r, sbs_col.g, sbs_col.b, 1);
     if (inRange == 1) then
       button.colorOverlay:SetVertexColor(sbs_col.r, sbs_col.g, sbs_col.b, 1);
     else
@@ -2706,9 +2713,9 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
       button.textOverlay:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
     end
   end
-  button.btnOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.colorOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.textOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.btnOverlay:SetAlphaFromBoolean(shouldShowDebuff, O.ADebuff, 0)
+  button.colorOverlay:SetAlphaFromBoolean(shouldShowDebuff, O.ADebuff, 0)
+  button.textOverlay:SetAlphaFromBoolean(shouldShowDebuff, O.ADebuff, 0)
   button.btnOverlay:SetShown(UnitIsCharmed(unit))
   button.colorOverlay:SetShown(UnitIsCharmed(unit))
   button.textOverlay:SetShown(UnitIsCharmed(unit))
@@ -3486,18 +3493,20 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   local debugShown = false
   local dispelShown = false
 
-  --Always draw frames under dispel overlay
-  sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 0.6);
+  -- Always draw frames under dispel overlay
+  if isInRange ~= 1 and nr ~= -99 and ST.iTest == 0 then
+    local blizzUnit = BlizzUnitFrame(unit)
+    isInRange = (blizzUnit and blizzUnit.inDistance) and 1 or isInRange
+  end
+  local normalAlpha = (isInRange == 1) and O.ANormal or O.ANormalOOR
+  sbs_btn.texture:SetBlendMode("BLEND")
+  sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b,normalAlpha);
   if (not sbs_pre and O.ShowGradient) then
-    sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r / 4, sbs_col.g / 4, sbs_col.b / 4, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) );
+    sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r / 4, sbs_col.g / 4, sbs_col.b / 4, normalAlpha), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, normalAlpha) );
   else
-    sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
+    sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, normalAlpha), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, normalAlpha) )
   end
-  if (isInRange == 1) then
-    sbs_btn:SetAlpha(O.ANormal);
-  else
-    sbs_btn:SetAlpha(O.ANormalOOR);
-  end
+
   if (nr == 0) then
     -- FIXME:
     if (SMARTDEBUFF_DEBUG_DISPELS[sbs_un] and ST.iTest == 0 and spellCD ~= 0) then
@@ -3535,8 +3544,6 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         sbs_std = "-";
       end
     end
-    sbs_btn.textureDispel:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
-    sbs_btn:SetAlpha(O.ADebuff);
   elseif (nr == 2) then
     dispelShown = true
     if (ST.iTest == 0) then
@@ -3558,8 +3565,6 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         sbs_std = "-";
       end
     end
-    sbs_btn.textureDispel:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
-    sbs_btn:SetAlpha(O.ADebuff);
   elseif (nr == 3) then
     dispelShown = true
     if (ST.iTest == 0) then
@@ -3571,18 +3576,18 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     sbs_col.g = O.ColDebuffM.g;
     sbs_col.b = O.ColDebuffM.b;
     if (isInRange == 1) then
+      sbs_btn:SetAlpha(O.ANormal);
       sbs_btn.textureDispel:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
       if (O.ShowLR) then
         sbs_std = SMARTDEBUFF_KEY_M;
       end
     else
+      sbs_btn:SetAlpha(O.ANormalOOR);
       sbs_btn.textureDispel:SetColorTexture(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
       if (O.ShowLR) then
         sbs_std = "-";
       end
     end
-    sbs_btn.textureDispel:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
-    sbs_btn:SetAlpha(O.ADebuff);
   elseif (nr == 10 and not UnitIsDeadOrGhost(unit)) then
     dispelShown = true
     debugShown = true
@@ -3592,8 +3597,6 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
     sbs_col.g = O.ColDebuffNR.g;
     sbs_col.b = O.ColDebuffNR.b;
     sbs_btn.textureDispel:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
-    sbs_btn.textureDispel:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
-    sbs_btn:SetAlpha(O.ADebuff);
   else
     sbs_btn.texture:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 0.9);
     if (not sbs_pre and O.ShowGradient) then
@@ -3602,40 +3605,30 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
       sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
     end
 
-    sbs_btn:SetAlpha(O.ANormalOOR);
-
-    if isInRange ~= 1 and nr ~= -99 then
-      local blizzUnit = BlizzUnitFrame(unit)
-      isInRange = (blizzUnit and blizzUnit.inDistance) and 1 or isInRange
-    end
-    if (nr == -99) then
-      -- unit does not longer exists
-      sbs_btn:SetAlpha(0.1);
-    elseif (sbs_iv) then
-      -- unit is in a vehicle
-      sbs_btn:SetAlpha(O.ANormalOOR / 2);
-      -- CompactPartyFrameMember
-    elseif (isInRange == 1) then -- UnitInRange(unit)) then
-      -- unit is in range
-      sbs_btn:SetAlpha(O.ANormal);
-      -- FIXME:
-      if nr ~= -1 then
-        debugShown = true
-        SMARTDEBUFF_AddMsgD("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
-      end
-    else
-      -- unit is oor
-      sbs_btn:SetAlpha(O.ANormalOOR);
-      -- FIXME:
-      if nr ~= -1 then
-        debugShown = true
-        SMARTDEBUFF_AddMsgD("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
-      end
+    if nr ~= -1 then
+      debugShown = true
+      SMARTDEBUFF_AddMsgD("Special status "..nr.." detected, inRange:"..isInRange..", remains:"..string.format("%.2f", remains)..", spell cd: "..spellCD)
     end
   end
   if not debugShown and SMARTDEBUFF_DEBUG_DISPELS[sbs_un] then
       SMARTDEBUFF_AddMsgD("TOTALLY UNEXPECTED, inRange:"..isInRange..", remains:"..string.format("%.2f", remains).." / "..sbs_uv..", spell cd: "..spellCD..", nr:"..nr)
       SMARTDEBUFF_DEBUG_DISPELS[sbs_un] = nil
+  end
+
+
+  if (nr == -99) then
+    -- unit does not longer exists
+    sbs_btn:SetAlpha(0.1);
+  elseif (sbs_iv) then
+    -- unit is in a vehicle
+    sbs_btn:SetAlpha(O.ANormalOOR / 2);
+    -- CompactPartyFrameMember
+  elseif (isInRange == 1) then
+    -- unit is in range
+    sbs_btn:SetAlpha(O.ANormal);
+  else
+    -- unit is oor
+    sbs_btn:SetAlpha(O.ANormalOOR);
   end
 
   sbs_btn.text:SetFont(SMARTDEBUFF_FONT, sbs_fontH, "");
@@ -3645,7 +3638,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
   -- sbs_btn.text:SetFontObject("GameFontWhiteSmall");
   sbs_btn.text:SetText(sbs_st);
   sbs_btn.text:SetAlpha(dispelShown and 0 or 1)
-  sbs_btn.dispelOverlay:SetAlpha(dispelShown and 1 or 0)
+  sbs_btn.dispelOverlay:SetAlpha(dispelShown and O.ADebuff or 0)
   sbs_btn.text1:SetText(sbs_std);
   sbs_btn.text1:SetAlpha(1);
   sbs_btn.text2:SetAlpha(0);
@@ -3745,8 +3738,8 @@ function SMARTDEBUFF_SetButtonState_Curve_Secrets(unit, idx, nr, isInRange, rema
     end
   end
   -- sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1), CreateColor(sbs_col.r, sbs_col.g, sbs_col.b, 1) )
-  sbs_btn:SetAlpha(O.ADebuff);
-  sbs_btn.dispelOverlay:SetAlpha(1)
+  sbs_btn:SetAlpha(O.ANormal);
+  sbs_btn.dispelOverlay:SetAlpha(O.ADebuff)
   sbs_btn.text:SetAlpha(0)
   if (O.ShowLR) then
     sbs_fontH = O.BtnH - 2;
