@@ -8,3 +8,4 @@ ignore:
     - .vscode
     - .release*
     - .git*
+    - .logo*

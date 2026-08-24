@@ -70,7 +70,7 @@ local cRaidicons = {};
 local canDebuff = false;
 local hasDebuff = false;
 
-local auraContainerInitFailed = false;
+local auraContainerInitFailed = 0;
 local auraContainerByIndex = {};
 auraSlotByName = {};
 local SMARTDEBUFF_ResetAuraContainers = nil;
@@ -103,7 +103,6 @@ local imgTarget     = nil;
 local imgMenu       = nil;
 local imgMissing    = nil;
 
-local DebugChatFrame = DEFAULT_CHAT_FRAME;
 local PET_BOOK ="pet";
 
 local GetAddOnInfo = C_AddOns.GetAddOnInfo or GetAddOnInfo
@@ -717,6 +716,15 @@ function SMARTDEBUFF_AddMsgDT(msg, msg2)
         end)
     end
 end
+function SMARTDEBUFF_AddMsgErrT(msg, msg2, force)
+    if SMARTDEBUFF_DebugTimers[msg] then
+        SMARTDEBUFF_DebugTimers[msg]:Cancel()
+    end
+    SMARTDEBUFF_DebugTimers[msg] = C_Timer.NewTimer(.4, function()
+      SMARTDEBUFF_AddMsgErr(msg..(msg2 or ""), force)
+      SMARTDEBUFF_DebugTimers[msg] = nil
+    end)
+end
 
 
 function SMARTDEBUFF_CheckWarlockPet()
@@ -976,10 +984,11 @@ end
 -- IsFeignDeath(unit)
 local ifd_name, ifd_icon, ifd_i;
 function SMARTDEBUFF_IsFeignDeath(unit)
-  --return UnitIsFeignDeath(unit); -- works only for members in own group
-  if (SMARTDEBUFF_HASSECRETS) then
-    return false
+  if C_UnitAuras.GetUnitAuraBySpellID then
+    local FEIGN_DEAD = 5384
+    return C_UnitAuras.GetUnitAuraBySpellID(unit, FEIGN_DEAD) ~= nil
   end
+  --return UnitIsFeignDeath(unit); -- works only for members in own group
   ifd_i = 0;
   while (true) do
     ifd_i = ifd_i + 1;
@@ -2458,7 +2467,7 @@ function SMARTDEBUFF_CreateButtons()
 end
 
 function SMARTDEBUFF_UseAuraContainerPath()
-  return SMARTDEBUFF_AURACONTAINERS and not auraContainerInitFailed;
+  return SMARTDEBUFF_AURACONTAINERS and auraContainerInitFailed == 0;
 end
 
 local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
@@ -2739,10 +2748,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
           slotButton = dispelContainer:AddAuraSlot(slotKey, CFG.filterString, {
             candidateFilters = candidateFilters,
             initializeFrame = function(auraButton)
-
-              auraButton:SetSize(button:GetWidth(), button:GetHeight());
-              auraButton:ClearAllPoints();
-              auraButton:SetPoint("LEFT", button, "LEFT", 0, 0);
+              auraButton:SetAllPoints(button);
               auraButton:SetFrameStrata("HIGH")
               auraButton:EnableMouse(true);
 
@@ -2764,10 +2770,6 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             end,
           });
           auraSlotByName[slotKey] = slotButton
-        else
-          slotButton:SetSize(button:GetWidth(), button:GetHeight());
-          slotButton:ClearAllPoints();
-          slotButton:SetPoint("LEFT", button, "LEFT", 0, 0);
         end
         if unit ~= nil then
           dispelContainer:SetUnit(unit);
@@ -2853,18 +2855,32 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
     frame:SetEnabled(unit ~= nil)
     return frame
   end
-  local ok, container
-  if O.Debug then
-    -- unsafeInit for debug
-    ok, container = true, safeInit(button)
-  else
-    ok, container = pcall(safeInit, button)
-  end
 
-  if (not ok or not container) then
-    auraContainerInitFailed = true;
-    SMARTDEBUFF_AddMsgErr("Init failed for container #"..idx)
-    return nil;
+  local ok, container = xpcall(safeInit,
+      function(err)
+        auraContainerInitFailed = auraContainerInitFailed + 1;
+        -- SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
+        SMARTDEBUFF_AddMsgErrT("CRITICAL ERROR: ", tostring(err), true) -- .. "\n" .. debugstack())
+        local un, uc = "?", "?"
+        if (unit ~= nil) then
+          un = UnitName(unit); uc = UnitClass(unit);
+        end
+        SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
+        return err
+      end,
+      button
+  )
+  if (ok and not container) then
+    auraContainerInitFailed = auraContainerInitFailed + 1;
+    local un, uc = "?", "?"
+    if (unit ~= nil) then
+      un = UnitName(unit); uc = UnitClass(unit);
+    end
+    SMARTDEBUFF_AddMsgErrT("No container? Please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
+  end
+  if (not ok) then
+    -- if O.Debug then error(container) end
+    container = nil
   end
 
   auraContainerByIndex[buttonName] = container;
@@ -4665,7 +4681,9 @@ end
 local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_id, cud_nrd, cud_tlnr, cud_cds;
 
 function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, pet)
-
+  if (not SMARTDEBUFF_UseAuraContainerPath()) then
+    return false
+  end
   if (spell == nil) then
     cud_ir = -1;
   elseif (
@@ -4880,7 +4898,7 @@ end
 -- DEPRECATED - END
 
 function SMARTDEBUFF_CheckUnitDebuffs(spell, unit, idx, isActive, pet)
-  if (SMARTDEBUFF_UseAuraContainerPath()) then
+  if (SMARTDEBUFF_AURACONTAINERS) then
     return SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, pet);
   elseif (not SMARTDEBUFF_HASSECRETS) then
     return SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet);
