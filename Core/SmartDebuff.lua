@@ -1400,7 +1400,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ColDebuffM == nil) then O.ColDebuffM = { r = 0.0, g = 0.7, b = 0.0 }; end
   if (O.ColDebuffNR == nil) then O.ColDebuffNR = { r = 0.0, g = 0.0, b = 1.0 }; end
   if (O.ColBack == nil) then O.ColBack = { r = 0.0, g = 0.0, b = 0.0, a = 0.5 }; end
-  if (O.ColTexture == nil) then O.ColTexture = "" end
+  if (O.ColDTexture == nil) then O.ColDTexture = "" end
 
   if (O.ShowHP == nil) then O.ShowHP = true; end
   if (O.ShowMana == nil) then O.ShowMana = true; end
@@ -2633,10 +2633,10 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
   if shouldShowDebuff then
     local sbs_std, sbs_col = (buttons[buttonIndex] or ""), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
     button.colorOverlay:SetColorTexture(1, 1, 1, 1);
-    if O.ColTexture == "-" then
+    if O.ColDTexture == "-" then
       button.colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(buttonIndex))
-    elseif O.ColTexture ~= "" then
-      button.colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
+    elseif O.ColDTexture ~= "" then
+      button.colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
     end
     button.border:SetVertexColor(sbs_col.r, sbs_col.g, sbs_col.b, 1);
     if (inRange == 1) then
@@ -2793,10 +2793,10 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               colorOverlay:SetBlendMode("BLEND");
               colorOverlay:SetAllPoints();
               colorOverlay:SetColorTexture(1, 1, 1, 1);
-              if O.ColTexture == "-" then
+              if O.ColDTexture == "-" then
 	              auraButton:SetIcon(colorOverlay)
-              elseif O.ColTexture ~= "" then
-                colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
+              elseif O.ColDTexture ~= "" then
+                colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
               end
               colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
 
@@ -2881,10 +2881,10 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   colorOverlay:SetBlendMode("BLEND");
                   colorOverlay:SetAllPoints();
                   colorOverlay:SetColorTexture(1, 1, 1, 1);
-                  if O.ColTexture == "-" then
+                  if O.ColDTexture == "-" then
                     auraButton:SetIcon(colorOverlay)
-                  elseif O.ColTexture ~= "" then
-                    colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
+                  elseif O.ColDTexture ~= "" then
+                    colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
                   end
                   colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
 
@@ -3649,10 +3649,10 @@ function SMARTDEBUFF_SetButtonState_Curve_Secrets(unit, idx, nr, isInRange, rema
     local txtMColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextM)
     local txtRColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextR)
     sbs_btn.textureDispel:SetColorTexture(dispelTypeColor:GetRGBA())
-    if O.ColTexture == "-" then
+    if O.ColDTexture == "-" then
       sbs_btn.textureDispel:SetTexture(auraIcon)
-    elseif O.ColTexture ~= "" then
-      sbs_btn.textureDispel:SetTexture(SMARTDEBUFF_GetIcon(O.ColTexture))
+    elseif O.ColDTexture ~= "" then
+      sbs_btn.textureDispel:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
     end
     sbs_btn.textureDispel:SetVertexColor( dispelTypeColor:GetRGBA())
     sbs_btn.border:SetVertexColor(dispelTypeColor:GetRGBA())
@@ -4486,6 +4486,7 @@ function SMARTDEBUFF_ToggleShowLR()
   O.ShowLR = SMARTDEBUFF_toggleBool(O.ShowLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
   if (SmartDebuffOF:IsVisible()) then
     SmartDebuffOF_cbShowLR:SetChecked(O.ShowLR);
+    SmartDebuffOF_cbForceLR:SetAlpha(O.ShowLR and 1 or .5);
   end
   SMARTDEBUFF_CheckDebuffs(true);
 end

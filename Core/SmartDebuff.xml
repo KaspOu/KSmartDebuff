@@ -1632,8 +1632,7 @@
           </OnShow>
           <OnClick>
             if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowLR = not SMARTDEBUFF_Options.ShowLR;
-              SMARTDEBUFF_CheckDebuffs(true);
+              SMARTDEBUFF_ToggleShowLR();
             end
           </OnClick>
           <OnEnter>
@@ -1665,6 +1664,7 @@
           if SMARTDEBUFF_OFT_FORCELR == "" then
             self:Hide()
           end
+          self:SetAlpha(SMARTDEBUFF_Options.ShowLR and 1 or .5);
           </OnLoad>
           <OnShow>
             if (SMARTDEBUFF_Options) then
@@ -2804,7 +2804,7 @@
                 UIDropDownMenu_SetSelectedValue(frame, btn.value)
 
                 if SMARTDEBUFF_Options then
-                  SMARTDEBUFF_Options.ColTexture = btn.value
+                  SMARTDEBUFF_Options.ColDTexture = btn.value
                   SMARTDEBUFF_TestModeToggle(true)
                   SMARTDEBUFF_CheckDebuffs(true)
                 end
@@ -2812,7 +2812,7 @@
 
               info.checked = (
                 SMARTDEBUFF_Options
-                and SMARTDEBUFF_Options.ColTexture == value
+                and SMARTDEBUFF_Options.ColDTexture == value
               )
 
               UIDropDownMenu_AddButton(info, level)
@@ -2823,12 +2823,12 @@
           end)
         </OnLoad>
         <OnShow>
-          if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColTexture then
-            UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColTexture)
-            if self.infos and self.infos[SMARTDEBUFF_Options.ColTexture] then
-              UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColTexture])
+          if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColDTexture then
+            UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColDTexture)
+            if self.infos and self.infos[SMARTDEBUFF_Options.ColDTexture] then
+              UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColDTexture])
             else
-              UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColTexture)
+              UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColDTexture)
             end
           end
         </OnShow>

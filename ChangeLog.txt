@@ -1,3 +1,10 @@
+v12.1.005
+- Fixed btns opacity for all versions
+- Added textures (none, selected icon, debuff icon)
+- Added new glowing border
+- Default colors has been changed (Left: pink)
+- Perf enhancements (pet icons loaded on demand)
+
 v12.1.004
 - Fixed unit menu not opening correctly
 - Fixed issue with hunters in party

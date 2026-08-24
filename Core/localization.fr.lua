@@ -11,7 +11,9 @@ SmartDebuff devient
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cff00ff00> Options de retour :|r
+|cff00ff00> Nouvelles Options / de retour :|r
+  - Texture
+  - Forcer l'affichage de L / R / M
   - Ignorer en recharge
   - Icônes de HoT filtrées |cff4f81bd(Midnight)|r
 
@@ -23,9 +25,11 @@ SmartDebuff devient
 |cfffff2cc> Sort ajouté :|r
   - Chasseur : Feindre la mort - Dispel Poison (talent)
 
+
 |cfffff2cc> Corrigé :|r
-  - Bug en présence de chasseurs
+  - Bug récurrent |cff4f81bd(Midnight)|r
   - Menu d'unité à nouveau fonctionnel
+  - Opacité des boutons + bordure brillante
 
 
 
@@ -108,7 +112,7 @@ SMARTDEBUFF_OFT_SORT           = "Tri"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Tri par classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Couleurs de classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Afficher G / D / M";
-SMARTDEBUFF_OFT_FORCELR        = "Forcer en L / R / M"
+SMARTDEBUFF_OFT_FORCELR        = "Forcer l'affichage de L / R / M"
 SMARTDEBUFF_OFT_HEADERS        = "En-t\195\170tes";
 SMARTDEBUFF_OFT_GROUPNR        = "Num\195\169ro de groupe";
 SMARTDEBUFF_OFT_SOUND          = "Son";

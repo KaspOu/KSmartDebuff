@@ -14,7 +14,9 @@ SmartDebuff is now
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cff00ff00> Options back:|r
+|cff00ff00> New & back Options:|r
+  - Texture
+  - Force L / R / M display
   - Ignore on Cooldown
   - HoT icons, filtered |cff4f81bd(Midnight)|r
 
@@ -23,12 +25,13 @@ SmartDebuff is now
   |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Summary frame
   |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Debuff Guard
 |r
-|cfffff2cc> Added :|r
+|cfffff2cc> Spell added :|r
   - Hunter: Feign death - Poison dispel (Talent)
 
 |cfffff2cc> Fixed :|r
-  - Issue with hunters in raid
+  - Recurring bug |cff4f81bd(Midnight)|r
   - Unit menu working again
+  - Buttons opacity + added glow border
 
 
 
