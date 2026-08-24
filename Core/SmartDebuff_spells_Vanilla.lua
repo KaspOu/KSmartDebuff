@@ -168,3 +168,16 @@ Wham\
 ";
 
 SMARTDEBUFF_SOUNDS_DEFAULT = 566027; -- Bell Tribal
+
+SMARTDEBUFF_DISABLED_TEXTURES = "\
+Skull 2\
+Cleanse\
+Air\
+Fire\
+Fireball\
+Potion\
+Runes\
+Sha\
+Storm\
+Web\
+";

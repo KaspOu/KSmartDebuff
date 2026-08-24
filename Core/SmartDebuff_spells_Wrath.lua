@@ -150,3 +150,16 @@ Lightning 2\
 Lightning 3\
 Pet Level Up\
 ";
+
+SMARTDEBUFF_DISABLED_TEXTURES = "\
+Skull 2\
+Cleanse\
+Air\
+Fire\
+Fireball\
+Potion\
+Runes\
+Sha\
+Storm\
+Web\
+";

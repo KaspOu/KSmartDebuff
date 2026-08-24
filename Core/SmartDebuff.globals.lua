@@ -251,3 +251,31 @@ SMARTDEBUFF_SOUNDS = {
 SMARTDEBUFF_DISABLED_SOUNDS = "";
 
 SMARTDEBUFF_SOUNDS_DEFAULT = 567447 -- Glyph: Minor Destroy
+
+SMARTDEBUFF_TEXTURES = {
+  { "|cff999999None", ""},
+  { "|cffFFD100Debuff Icon (dynamic)", "-"},
+  { "Skull", "icon_skull"},
+  { "Skull (Inverted)", "icon_skull_inv"},
+  { "Skull 2", "Interface\\ICONS\\INV_Misc_Bone_HumanSkull_02" },
+  { "Swirl", "icon_swirl"},
+  { "Swirl (Inverted)", "icon_swirl_inv"},
+  { "Cleanse", "Interface\\ICONS\\ability_shaman_cleansespirit"},
+  { "Curse", "Interface\\ICONS\\Spell_Nature_FaerieFire"},
+  { "Diamond", "Interface\\ICONS\\INV_Misc_Gem_Diamond_01"},
+  { "Enchant", "Interface\\ICONS\\INV_Enchant_ShardBrilliantSmall"},
+  { "Air", "Interface\\ICONS\\inv_misc_volatileair"},
+  { "Fire", "Interface\\ICONS\\INV_Misc_SuperSoulAsh"},
+  { "Fireball", "Interface\\ICONS\\Sha_Spell_Fire_BluePyroblast"},
+  { "Hands", "Interface\\ICONS\\Spell_Arcane_ArcanePotency"},
+  { "Pearl", "Interface\\ICONS\\INV_Misc_Gem_Pearl_02"},
+  { "Potion", "Interface\\ICONS\\inv_misc_potionsetE"},
+  { "Puppet", "Interface\\ICONS\\INV_Misc_Toy_01"},
+  { "Runes", "Interface\\ICONS\\Spell_Mage_TemporalShield"},
+  { "Sha", "Interface\\ICONS\\Sha_Spell_Shadow_Shadesofdarkness"},
+  { "Storm", "Interface\\ICONS\\inv_misc_stormlordsfavor"},
+  { "Talisman", "Interface\\ICONS\\INV_Jewelry_Talisman_08"},
+  { "Tarot", "Interface\\ICONS\\INV_Misc_Ticket_Tarot_Maelstrom_01"},
+  { "Web", "Interface\\ICONS\\INV_Misc_Web_01" }
+}
+SMARTDEBUFF_DISABLED_TEXTURES = "";
