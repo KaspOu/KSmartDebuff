@@ -910,19 +910,19 @@ end
 function SMARTDEBUFF_toggleBool(b, msg)
   if (not b or b == nil) then
     b = true;
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
   else
     b = false
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
   end
   return b;
 end
 
 function SMARTDEBUFF_BoolState(b, msg)
   if (b) then
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.GR .. "On");
   else
-    SMARTDEBUFF_AddMsg(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
+    SMARTDEBUFF_AddMsgD(SMARTDEBUFF_TITLE .. ": " .. msg .. COL.RD .."Off");
   end
 end
 
@@ -1352,7 +1352,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.Toggle == nil) then  O.Toggle = true; end
   if (O.ShowSF == nil) then O.ShowSF = true; end
   if (O.ShowIF == nil) then O.ShowIF = true; end -- ShowInfoFrame
-  if (O.ShowPets == nil) then O.ShowPets = not SMARTDEBUFF_IS_RETAIL; end
+  if (O.ShowPets == nil) then O.ShowPets = false; end
   if (O.ShowPetsWL == nil) then O.ShowPetsWL = O.ShowPets; end
   if (O.ShowPetsDK == nil) then O.ShowPetsDK = O.ShowPets; end
 
@@ -1360,6 +1360,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.SortedByClass == nil) then O.SortedByClass = false; O.SortedByRole = true; end -- first loading
   if (O.SortedByRole == nil) then O.SortedByRole = false; end
   if (O.ShowLR == nil) then O.ShowLR = true; end
+  if (O.ForceLR == nil) then O.ForceLR = false; end
 
   if (O.DebuffGrp == nil) then O.DebuffGrp = {true, true, true, true, true, true, true, true}; end
   if (O.DebuffClasses == nil) then O.DebuffClasses = {}; end
@@ -2094,7 +2095,118 @@ function SMARTDEBUFF_FilterStringToggle()
   end
 end
 
+function SMARTDEBUFF_CreateButtonsPetsIfEnabled()
+  if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK or O.ShowVehicles) and not _G["SmartDebuffPetBtn1"] then
+    local frame = _G["SmartDebuffSF"];
+    for i = 1, CFG.maxPets, 1 do
+      local button = CreateFrame("Button", "SmartDebuffPetBtn"..i, frame, "SecureActionButtonTemplate");
+      button:SetWidth(1);
+      button:SetHeight(1);
+      button:ClearAllPoints();
 
+      button.dropdown = CreateFrame("Frame", "SmartDebuffPetBtn"..i.."DropDown", button, "UIDropDownMenuTemplate");
+
+      if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
+      button:SetBackdrop( {
+        bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
+        insets = { left = 0, right = 0, top = 0, bottom = 0 } });
+
+      -- Btn Overlay: C_CurveUtil pets
+      button.texture = button:CreateTexture(nil, "BACKGROUND");
+      button.texture:SetColorTexture(0, 0, 0);
+      button.texture:SetAllPoints(button);
+      button.texture:SetBlendMode("DISABLE");
+      button.dispelOverlay = CreateFrame("Frame", nil, button)
+      button.dispelOverlay:SetAllPoints(button)
+      button.dispelOverlay:SetFrameStrata(button:GetFrameStrata())
+      button.dispelOverlay:SetAlpha(1)
+      button.textureDispel = button.dispelOverlay:CreateTexture(nil, "BACKGROUND");
+      button.textureDispel:SetAllPoints(button);
+      button.textureDispel:SetBlendMode("BLEND");
+      button.textureDispel:SetColorTexture(0,0,0,0); -- Initialement transparent
+
+      local offsetY = -math.floor((O.BtnH - 20) / 10)
+      button.text = button:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text:SetJustifyH("CENTER");
+      button.text:SetPoint("CENTER", button, "CENTER", 0, offsetY);
+      button:SetFontString(button.text);
+      button.text1 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text1:SetJustifyH("CENTER");
+      button.text1:SetPoint("CENTER", button, "CENTER", 0, offsetY);
+      button.text1:SetAlpha(0)
+      button.text2 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text2:SetJustifyH("CENTER");
+      button.text2:SetPoint("CENTER", button, "CENTER", 0, offsetY);
+      button.text3 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
+      button.text3:SetJustifyH("CENTER");
+      button.text3:SetPoint("CENTER", button, "CENTER", 0, offsetY);
+
+      -- create hp texture
+      button.hp = CreateFrame("StatusBar", nil, button)
+      button.hp:SetFrameStrata("DIALOG")
+      button.hp:SetStatusBarColor(0, 0, 1);
+      -- button.hp:SetColorTexture(0, 1, 0);
+      -- button.hp:SetBlendMode("DISABLE");
+      button.hp:ClearAllPoints();
+
+      -- create hp text
+      button.hptext = button.hp:CreateFontString(nil, nil, "SmartDebuff_FontHP");
+      button.hptext:SetJustifyH("CENTER");
+      button.hptext:ClearAllPoints();
+
+      -- create mana texture
+      button.mana =  CreateFrame("StatusBar", nil, button) -- button:CreateTexture(nil, "BORDER");
+      button.mana:SetFrameStrata("DIALOG")
+      button.mana:SetStatusBarColor(0, 0, 1);
+      -- button.mana:SetBlendMode("DISABLE");
+      button.mana:ClearAllPoints();
+
+      -- create mana text
+      button.manatext = button.mana:CreateFontString(nil, nil, "SmartDebuff_FontHP");
+      button.manatext:SetJustifyH("CENTER");
+      button.manatext:ClearAllPoints();
+
+      -- create aggro texture
+      button.aggro = button:CreateTexture(nil, "BORDER");
+      button.aggro:SetColorTexture(1, 1, 0);
+      button.aggro:SetBlendMode("DISABLE");
+      button.aggro:ClearAllPoints();
+
+      button.iconsFrame = CreateFrame("Frame", nil, button)
+      button.iconsFrame:SetAllPoints(button)
+      button.iconsFrame:SetFrameStrata("TOOLTIP")
+
+      -- create raid icon texture
+      button.raidicon = button.iconsFrame:CreateTexture(nil, "ARTWORK");
+      button.raidicon:SetTexture(nil);
+      button.raidicon:SetBlendMode("BLEND");
+      button.raidicon:ClearAllPoints();
+
+      -- create spell icon texture
+      if not SMARTDEBUFF_AURACONTAINERS then
+        button.spellicon = { };
+        for j = 1, CFG.maxSpellIcons, 1 do
+          button.spellicon[j] = button.iconsFrame:CreateTexture(nil, "OVERLAY");
+          button.spellicon[j]:SetTexture(nil);
+          button.spellicon[j]:SetBlendMode("BLEND");
+          button.spellicon[j]:ClearAllPoints();
+        end
+      end
+
+      button:EnableMouse(true);
+      button:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+      button:SetScript("OnEnter", SMARTDEBUFF_ButtonTooltipOnEnter);
+      button:SetScript("OnLeave", SMARTDEBUFF_ButtonTooltipOnLeave);
+
+      button:SetAttribute("unit", nil);
+      button:SetAttribute("type1", "spell");
+      button:SetAttribute("type2", "spell");
+      button:SetAttribute("type3", "target");
+      button:SetAttribute("spell1", nil);
+      button:SetAttribute("spell2", nil);
+    end
+  end
+end
 function SMARTDEBUFF_CreateButtons()
   local frame = _G["SmartDebuffSF"];
 
@@ -2173,6 +2285,7 @@ function SMARTDEBUFF_CreateButtons()
       --button:SetBackdropColor(0,0,0,0);
 
 
+      -- Btn Overlay: C_CurveUtil players
       -- create bg alpha frame and texture
       button.texture = button:CreateTexture(nil, "BACKGROUND");
       button.texture:SetColorTexture(0, 0, 0);
@@ -2186,21 +2299,22 @@ function SMARTDEBUFF_CreateButtons()
       button.textureDispel:SetBlendMode("BLEND");
       button.textureDispel:SetColorTexture(0,0,0,0); -- Initialement transparent
 
+      local offsetY = -math.floor((O.BtnH - 20) / 10)
       button.text = button:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text:SetJustifyH("CENTER");
-      button.text:SetAllPoints(button);
+      button.text:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button:SetFontString(button.text);
       button.text1 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text1:SetJustifyH("CENTER");
-      button.text1:SetAllPoints(button);
+      button.text1:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button.text1:SetAlpha(0)
       button.text2 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text2:SetJustifyH("CENTER");
-      button.text2:SetAllPoints(button);
+      button.text2:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button.text2:SetAlpha(0)
       button.text3 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
       button.text3:SetJustifyH("CENTER");
-      button.text3:SetAllPoints(button);
+      button.text3:SetPoint("CENTER", button, "CENTER", 0, offsetY)
       button.text3:SetAlpha(0)
 
       -- create hp texture
@@ -2274,112 +2388,7 @@ function SMARTDEBUFF_CreateButtons()
       button:SetAttribute("spell2", nil);
     end
 
-    for i = 1, CFG.maxPets, 1 do
-      local button = CreateFrame("Button", "SmartDebuffPetBtn"..i, frame, "SecureActionButtonTemplate");
-      button:SetWidth(1);
-      button:SetHeight(1);
-      button:ClearAllPoints();
-
-      button.dropdown = CreateFrame("Frame", "SmartDebuffPetBtn"..i.."DropDown", button, "UIDropDownMenuTemplate");
-
-      if (BackdropTemplateMixin) then Mixin(button, BackdropTemplateMixin) end
-      button:SetBackdrop( {
-        bgFile = nil, edgeFile = addonFolder.."\\Icons\\white16x16", tile = false, tileSize = 0, edgeSize = 2,
-        insets = { left = 0, right = 0, top = 0, bottom = 0 } });
-
-      -- create bg texture
-      button.texture = button:CreateTexture(nil, "BACKGROUND");
-      button.texture:SetColorTexture(0, 0, 0);
-      button.texture:SetAllPoints(button);
-      button.texture:SetBlendMode("DISABLE");
-      button.dispelOverlay = CreateFrame("Frame", nil, button)
-      button.dispelOverlay:SetAllPoints(button)
-      button.dispelOverlay:SetFrameStrata(button:GetFrameStrata())
-      button.dispelOverlay:SetAlpha(1)
-      button.textureDispel = button.dispelOverlay:CreateTexture(nil, "BACKGROUND");
-      button.textureDispel:SetAllPoints(button);
-      button.textureDispel:SetBlendMode("BLEND");
-      button.textureDispel:SetColorTexture(0,0,0,0); -- Initialement transparent
-
-      button.text = button:CreateFontString(nil, nil, "SmartDebuff_Font");
-      button.text:SetJustifyH("CENTER");
-      button.text:SetAllPoints(button);
-      button:SetFontString(button.text);
-      button.text1 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
-      button.text1:SetJustifyH("CENTER");
-      button.text1:SetAllPoints(button);
-      button.text1:SetAlpha(0)
-      button.text2 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
-      button.text2:SetJustifyH("CENTER");
-      button.text2:SetAllPoints(button);
-      button.text3 = button.dispelOverlay:CreateFontString(nil, nil, "SmartDebuff_Font");
-      button.text3:SetJustifyH("CENTER");
-      button.text3:SetAllPoints(button);
-
-      -- create hp texture
-      button.hp = CreateFrame("StatusBar", nil, button)
-      button.hp:SetFrameStrata("DIALOG")
-      button.hp:SetStatusBarColor(0, 0, 1);
-      -- button.hp:SetColorTexture(0, 1, 0);
-      -- button.hp:SetBlendMode("DISABLE");
-      button.hp:ClearAllPoints();
-
-      -- create hp text
-      button.hptext = button.hp:CreateFontString(nil, nil, "SmartDebuff_FontHP");
-      button.hptext:SetJustifyH("CENTER");
-      button.hptext:ClearAllPoints();
-
-      -- create mana texture
-      button.mana =  CreateFrame("StatusBar", nil, button) -- button:CreateTexture(nil, "BORDER");
-      button.mana:SetFrameStrata("DIALOG")
-      button.mana:SetStatusBarColor(0, 0, 1);
-      -- button.mana:SetBlendMode("DISABLE");
-      button.mana:ClearAllPoints();
-
-      -- create mana text
-      button.manatext = button.mana:CreateFontString(nil, nil, "SmartDebuff_FontHP");
-      button.manatext:SetJustifyH("CENTER");
-      button.manatext:ClearAllPoints();
-
-      -- create aggro texture
-      button.aggro = button:CreateTexture(nil, "BORDER");
-      button.aggro:SetColorTexture(1, 1, 0);
-      button.aggro:SetBlendMode("DISABLE");
-      button.aggro:ClearAllPoints();
-
-      button.iconsFrame = CreateFrame("Frame", nil, button)
-      button.iconsFrame:SetAllPoints(button)
-      button.iconsFrame:SetFrameStrata("TOOLTIP")
-
-      -- create raid icon texture
-      button.raidicon = button.iconsFrame:CreateTexture(nil, "ARTWORK");
-      button.raidicon:SetTexture(nil);
-      button.raidicon:SetBlendMode("BLEND");
-      button.raidicon:ClearAllPoints();
-
-      -- create spell icon texture
-      if not SMARTDEBUFF_AURACONTAINERS then
-        button.spellicon = { };
-        for j = 1, CFG.maxSpellIcons, 1 do
-          button.spellicon[j] = button.iconsFrame:CreateTexture(nil, "OVERLAY");
-          button.spellicon[j]:SetTexture(nil);
-          button.spellicon[j]:SetBlendMode("BLEND");
-          button.spellicon[j]:ClearAllPoints();
-        end
-      end
-
-      button:EnableMouse(true);
-      button:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
-      button:SetScript("OnEnter", SMARTDEBUFF_ButtonTooltipOnEnter);
-      button:SetScript("OnLeave", SMARTDEBUFF_ButtonTooltipOnLeave);
-
-      button:SetAttribute("unit", nil);
-      button:SetAttribute("type1", "spell");
-      button:SetAttribute("type2", "spell");
-      button:SetAttribute("type3", "target");
-      button:SetAttribute("spell1", nil);
-      button:SetAttribute("spell2", nil);
-    end
+    SMARTDEBUFF_CreateButtonsPetsIfEnabled()
   end
 
   local offX = 4;
@@ -2470,6 +2479,47 @@ function SMARTDEBUFF_UseAuraContainerPath()
   return SMARTDEBUFF_AURACONTAINERS and auraContainerInitFailed == 0;
 end
 
+
+-- Fonctions de conversion RGB (0-1) <-> HSL (0-1)
+local function rgb_to_hsl(r, g, b)
+  local max = math.max(r, g, b)
+  local min = math.min(r, g, b)
+  local h, s, l = 0, 0, (max + min) / 2
+
+  if max ~= min then
+      local d = max - min
+      s = l > 0.5 and d / (2 - max - min) or d / (max + min)
+      if max == r then
+          h = (g - b) / d + (g < b and 6 or 0)
+      elseif max == g then
+          h = (b - r) / d + 2
+      elseif max == b then
+          h = (r - g) / d + 4
+      end
+      h = h / 6
+  end
+  return h, s, l
+end
+
+local function hue_to_rgb(p, q, t)
+  if t < 0 then t = t + 1 end
+  if t > 1 then t = t - 1 end
+  if t < 1/6 then return p + (q - p) * 6 * t end
+  if t < 1/2 then return q end
+  if t < 2/3 then return p + (q - p) * (2/3 - t) * 6 end
+  return p
+end
+
+local function hsl_to_rgb(h, s, l)
+  if s == 0 then
+      return l, l, l
+  else
+      local q = l < 0.5 and l * (1 + s) or l + s - l * s
+      local p = 2 * l - q
+      return hue_to_rgb(p, q, h + 1/3), hue_to_rgb(p, q, h), hue_to_rgb(p, q, h - 1/3)
+  end
+end
+
 local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
   if (buttonIndex == 1) then
     return O.ColDebuffL;
@@ -2479,6 +2529,33 @@ local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
     return O.ColDebuffM;
   end
   return O.ColDebuffNR;
+end
+local cacheTextColorByButtonIndex = {}
+
+local function SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+  local sbs_col = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+  local k = string.format("%.3f,%.3f,%.3f", sbs_col.r or 0, sbs_col.g or 0, sbs_col.b or 0)
+
+  if cacheTextColorByButtonIndex[k] then
+    return cacheTextColorByButtonIndex[k]
+  end
+
+  local h, s, l = rgb_to_hsl(sbs_col.r, sbs_col.g, sbs_col.b)
+
+  -- 1. Booster la luminosité et la saturation
+  l = math.min(1, l * .8 + 0.40) -- Éclaircit fortement
+  s = math.min(1, s * 1.3)        -- Garde/renforce l'intensité des couleurs
+
+  -- 2. Décaler légèrement le bleu (~0.66) vers le cyan (~0.5)
+  if h > 0.55 and h < 0.75 then
+      h = h - 0.08
+  end
+
+  local nr, ng, nb = hsl_to_rgb(h, s, l)
+
+  local col = { r = nr, g = ng, b = nb, a = 1 }
+  cacheTextColorByButtonIndex[k] = col
+  return col
 end
 
 local function SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex)
@@ -2555,6 +2632,7 @@ end
 --   return false;
 -- end
 
+
 SMARTDEBUFF_ResetAuraContainers = function()
   for _, container in pairs(auraContainerByIndex) do
     if (container and container.Hide) then
@@ -2564,66 +2642,75 @@ SMARTDEBUFF_ResetAuraContainers = function()
   auraContainerByIndex = {};
 end
 
-function SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex, forceShown)
+--- Set Btn Overlay:
+--- - Charmed
+--- - TestMode
+--- - Legacy API
+function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forceShown)
   if forceShown == nil and (not cSpells[SMARTDEBUFF_CHARMED] or cSpells[SMARTDEBUFF_CHARMED][2] ~= buttonIndex) then
     return
   end
   if (forceShown == nil and not (unit ~= nil and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID)) then
     -- avoid change unit issues
-    if button.charmedOverlay then
-      button.charmedOverlay:Hide()
-      button.textureCharmed:Hide()
-      button.textCharmed:Hide()
+    if button.btnOverlay then
+      button.btnOverlay:Hide()
+      button.colorOverlay:Hide()
+      button.textOverlay:Hide()
     end
     return
   end
   if (forceShown == false) then
     return
   end
-  if not button.charmedOverlay then
-    button.charmedOverlay = CreateFrame("Frame", nil, button)
-    button.charmedOverlay:Hide()
-    button.textureCharmed = button.charmedOverlay:CreateTexture(nil, "OVERLAY");
-    button.textureCharmed:SetBlendMode("BLEND");
-    button.textureCharmed:SetColorTexture(1,0,0,0); -- Initialement transparent
+  if not button.btnOverlay then
+    button.btnOverlay = CreateFrame("Frame", nil, button)
+    button.btnOverlay:Hide()
+    button.colorOverlay = button.btnOverlay:CreateTexture(nil, "OVERLAY");
+    button.colorOverlay:SetBlendMode("BLEND");
+    button.colorOverlay:SetColorTexture(1,0,0,0); -- Initialement transparent
 
-    button.textCharmed = button.charmedOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
-    button.textCharmed:SetJustifyH("CENTER");
-    button.textCharmed:SetPoint("CENTER")
-    button.textCharmed:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+    button.textOverlay = button.btnOverlay:CreateFontString(nil, "OVERLAY", "SmartDebuff_Font");
+    button.textOverlay:SetJustifyH("CENTER");
+    button.textOverlay:SetPoint("CENTER")
   end
-  button.charmedOverlay:SetSize(button:GetWidth(), button:GetHeight());
-  button.charmedOverlay:ClearAllPoints();
-  button.charmedOverlay:SetPoint("LEFT", button, "LEFT", 0, 0);
-  button.textureCharmed:SetAllPoints(button);
-  button.textCharmed:SetAllPoints(button);
+  button.btnOverlay:SetSize(button:GetWidth(), button:GetHeight());
+  button.btnOverlay:ClearAllPoints();
+  button.btnOverlay:SetPoint("LEFT", button, "LEFT", 0, 0);
+  button.colorOverlay:SetAllPoints(button);
+  button.textOverlay:SetText("")
 
-  local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
-  if (inRange == 1) then
-    button.textureCharmed:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
-  else
-    button.textureCharmed:SetColorTexture(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
-  end
-  button.textCharmed:SetText("")
-  if (O.ShowLR) then
-    sbs_std = inRange == 1 and sbs_std or "-"
-    button.textCharmed:SetText(sbs_std)
-  end
   local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
   local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
-  button.charmedOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.textureCharmed:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.textCharmed:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
-  button.charmedOverlay:SetShown(UnitIsCharmed(unit))
-  button.textureCharmed:SetShown(UnitIsCharmed(unit))
-  button.textCharmed:SetShown(UnitIsCharmed(unit))
+  if shouldShowDebuff then
+    local sbs_std, sbs_col = (buttons[buttonIndex] or "?"), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+    if (inRange == 1) then
+      button.colorOverlay:SetColorTexture(sbs_col.r, sbs_col.g, sbs_col.b, 1);
+    else
+      button.colorOverlay:SetColorTexture(sbs_col.r / 2, sbs_col.g / 2, sbs_col.b / 2, 1);
+    end
+    if (O.ShowLR) then
+      button.textOverlay:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+      local offsetY = -math.floor((O.BtnH - 20) / 10)
+      button.textOverlay:SetPoint("CENTER", button, "CENTER", 0, offsetY);
+      sbs_std = inRange == 1 and sbs_std or "-"
+      button.textOverlay:SetText(sbs_std)
+      local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+      button.textOverlay:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
+    end
+  end
+  button.btnOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.colorOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.textOverlay:SetAlphaFromBoolean(shouldShowDebuff, 1, 0)
+  button.btnOverlay:SetShown(UnitIsCharmed(unit))
+  button.colorOverlay:SetShown(UnitIsCharmed(unit))
+  button.textOverlay:SetShown(UnitIsCharmed(unit))
   if (not forceShown) then
     SMARTDEBUFF_AddMsgD("Charmed overlay for button " .. buttonIndex.. " ("..(sbs_std)..")")
   end
   if (forceShown == true) then
-    button.charmedOverlay:Show(forceShown)
-    button.textureCharmed:Show(forceShown)
-    button.textCharmed:Show(forceShown)
+    button.btnOverlay:Show(forceShown)
+    button.colorOverlay:Show(forceShown)
+    button.textOverlay:Show(forceShown)
   end
 end
 
@@ -2641,7 +2728,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         end
         auraContainerByIndex[buttonName]:SetEnabled(unit ~= nil)
         for buttonIndex = 1, 3, 1 do
-          SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
+          SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex)
 
           local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
           local slotButton = auraSlotByName[slotKey]
@@ -2713,7 +2800,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
     local allIncludeDispelTypes = {}
 
     for buttonIndex = 1, 3, 1 do
-      SMARTDEBUFF_SetCharmedOverlay(idx, unit, inRange, button, buttonIndex)
+      SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex)
       local dispelContainer = button.dispelContainers[buttonIndex]
       local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
       if (not includeDispelTypes) then
@@ -2745,6 +2832,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
         }
         local ok = pcall(function() dispelContainer:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
         if not ok then
+          --- Set Btn Overlay: L R M
           slotButton = dispelContainer:AddAuraSlot(slotKey, CFG.filterString, {
             candidateFilters = candidateFilters,
             initializeFrame = function(auraButton)
@@ -2759,13 +2847,16 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
 
               local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-              text:SetPoint("CENTER")
               text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+              local offsetY = -math.floor((O.BtnH - 20) / 10)
+              text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
+              -- 20 : 0 , 40 : 2
               text:SetText("")
               if (O.ShowLR) then
+                local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+                text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
                 text:SetText(btnTxt)
               end
-              text:SetTextColor(1, 1, 1)
               dispelContainer.text = text
             end,
           });
@@ -2818,6 +2909,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
           end
           local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
           if not ok then
+            -- --- Set Btn Overlay: NR
               slotButton = frame:AddAuraSlot(slotKey, CFG.filterStringNR, {
                 candidateFilters = candidateFilters,
                 initializeFrame = function(auraButton)
@@ -2834,10 +2926,12 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                   colorOverlay:SetColorTexture(buttonColor.r, buttonColor.g, buttonColor.b, buttonAlpha);
                   colorOverlay:SetGradient("HORIZONTAL", CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1), CreateColor(buttonColor.r, buttonColor.g, buttonColor.b, 1))
                   local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                  text:SetPoint("CENTER")
-                  text:SetFont(SMARTDEBUFF_FONT, O.Fontsize, "");
+                  text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+                  local offsetY = -math.floor((O.BtnH - 20) / 10)
+                  text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
                   text:SetText(btnTxt)
-                  text:SetTextColor(1, 1, 1)
+                  local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(0)
+                  text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
                 end,
               });
               auraSlotByName[slotKey] = slotButton
@@ -2895,8 +2989,10 @@ function SMARTDEBUFF_SetAuraContainers()
   for i = 1, CFG.maxRaid, 1 do
     SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, false);
   end
-  for i = 1, CFG.maxPets, 1 do
-    SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, true);
+  if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK or O.ShowVehicles) then
+    for i = 1, CFG.maxPets, 1 do
+      SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, true);
+    end
   end
 end
 
@@ -2964,6 +3060,7 @@ end
 
 function SMARTDEBUFF_SetPetButtons(b)
   if (not isInit or not canDebuff or InCombatLockdown()) then return; end
+  SMARTDEBUFF_CreateButtonsPetsIfEnabled()
 
   -- reset buttons
   if (b) then
@@ -2973,7 +3070,7 @@ function SMARTDEBUFF_SetPetButtons(b)
   end
 
   local i;
-  if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK) then
+  if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK or O.ShowVehicles) then
     i = ST.iVehicles + 1;
     for _, data in pairs(cPets) do
       if (data and UnitExists(data.Unit) and i <= CFG.maxPets) then
@@ -3337,7 +3434,7 @@ function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, sp
         nr = math.floor(idx/7)
         nr = nr > 3 and 10 or nr
         if (nr > 0 and nr <= 3) or nr == 10 then
-          SMARTDEBUFF_SetCharmedOverlay(idx, sbs_un, isInRange, _G["SmartDebuffBtn"..idx], nr, true)
+          SMARTDEBUFF_SetBtnOverlay(idx, sbs_un, isInRange, _G["SmartDebuffBtn"..idx], nr, true)
           nr = 0
         end
       else
@@ -4350,63 +4447,65 @@ function SMARTDEBUFF_SetStyle()
   local offPX = offX;
   local offPY = -offY-hox;
   if (O.SortedByClass or O.Vertical or O.SortedByRole) then offPY = -offY+hx; end
-  for j = 0, (CFG.maxPets - 1), 1 do
-    btn = _G["SmartDebuffPetBtn"..(j + 1)];
-    btn:SetWidth(btnW);
-    btn:SetHeight(btnH);
+  if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK or O.ShowVehicles) then
+    for j = 0, (CFG.maxPets - 1), 1 do
+      btn = _G["SmartDebuffPetBtn"..(j + 1)];
+      btn:SetWidth(btnW);
+      btn:SetHeight(btnH);
 
-    if (O.SortedByClass or O.Vertical or O.SortedByRole) then
-      if (j == 0) then ln = hx+hox; end
-      if (math.ceil(ST.iVehicles / 5) > math.floor(O.Columns / 2)) then
-        offX = 4;
+      if (O.SortedByClass or O.Vertical or O.SortedByRole) then
+        if (j == 0) then ln = hx+hox; end
+        if (math.ceil(ST.iVehicles / 5) > math.floor(O.Columns / 2)) then
+          offX = 4;
+        else
+          offPY = 0;
+        end
+        if (j > 0 and math.fmod(j, maxR) == 0) then
+          i = 0;
+          sp = sp + btnW + O.BtnSpX;
+        end
+        if (j > 0 and math.fmod(j, O.Columns * 5) == 0) then
+          sp = 0;
+          ln = ln + 5 * (btnH + O.BtnSpY);
+        end
+        btn:ClearAllPoints();
+        btn:SetPoint(anchor, frame, anchor, offX + sp, offPY * vu + (-i * (btnH + O.BtnSpY) - ln) * vu);
       else
-        offPY = 0;
+        if (j == 0) then ln = 0; end
+        if (j > 0 and math.fmod(j, 5) == 0) then
+          sp = sp + O.BtnSpX;
+        end
+        if (j > 0 and math.fmod(j, O.Columns * 5) == 0) then
+          ln = ln + 1;
+          sp = 0;
+          i = 0;
+        end
+        btn:ClearAllPoints();
+        --btn:SetPoint(anchor, frame, anchor, 4 + i * (btnW + O.BtnSpX) + sp, offPY + (-hx - hox - ln * (btnH + O.BtnSpY + hox)) * vu);
+        btn:SetPoint(anchor, frame, anchor, 4 + i * (btnW + O.BtnSpX) + sp, offPY * vu + (-ln * (btnH + O.BtnSpY)) * vu);
       end
-      if (j > 0 and math.fmod(j, maxR) == 0) then
-        i = 0;
-        sp = sp + btnW + O.BtnSpX;
+      if (b) then
+        grp = grp + 1;
+        SMARTDEBUFF_SetHeaderLabels("Pets", grp, btn);
+        --SMARTDEBUFF_SetHeaderLabels("PET", grp, btn, "PET");
+        b = false;
       end
-      if (j > 0 and math.fmod(j, O.Columns * 5) == 0) then
-        sp = 0;
-        ln = ln + 5 * (btnH + O.BtnSpY);
+      if (btn:IsVisible()) then
+        tX = btn:GetLeft() - frame:GetLeft() + btnW + 8;
+        if (O.VerticalUp) then
+          tY = frame:GetBottom() - btn:GetTop() - 4;
+        else
+          tY = frame:GetTop() - btn:GetBottom() + 4;
+        end
+        if (tX > offPX) then
+          offPX = tX;
+        end
+        if (math.abs(tY) > math.abs(offY)) then
+          offY = math.abs(tY);
+        end
       end
-      btn:ClearAllPoints();
-      btn:SetPoint(anchor, frame, anchor, offX + sp, offPY * vu + (-i * (btnH + O.BtnSpY) - ln) * vu);
-    else
-      if (j == 0) then ln = 0; end
-      if (j > 0 and math.fmod(j, 5) == 0) then
-        sp = sp + O.BtnSpX;
-      end
-      if (j > 0 and math.fmod(j, O.Columns * 5) == 0) then
-        ln = ln + 1;
-        sp = 0;
-        i = 0;
-      end
-      btn:ClearAllPoints();
-      --btn:SetPoint(anchor, frame, anchor, 4 + i * (btnW + O.BtnSpX) + sp, offPY + (-hx - hox - ln * (btnH + O.BtnSpY + hox)) * vu);
-      btn:SetPoint(anchor, frame, anchor, 4 + i * (btnW + O.BtnSpX) + sp, offPY * vu + (-ln * (btnH + O.BtnSpY)) * vu);
+      i = i + 1;
     end
-    if (b) then
-      grp = grp + 1;
-      SMARTDEBUFF_SetHeaderLabels("Pets", grp, btn);
-      --SMARTDEBUFF_SetHeaderLabels("PET", grp, btn, "PET");
-      b = false;
-    end
-    if (btn:IsVisible()) then
-      tX = btn:GetLeft() - frame:GetLeft() + btnW + 8;
-      if (O.VerticalUp) then
-        tY = frame:GetBottom() - btn:GetTop() - 4;
-      else
-        tY = frame:GetTop() - btn:GetBottom() + 4;
-      end
-      if (tX > offPX) then
-        offPX = tX;
-      end
-      if (math.abs(tY) > math.abs(offY)) then
-        offY = math.abs(tY);
-      end
-    end
-    i = i + 1;
   end
 
   frmW = offPX - 4;
@@ -4438,6 +4537,13 @@ function SMARTDEBUFF_ToggleShowLR()
   O.ShowLR = SMARTDEBUFF_toggleBool(O.ShowLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
   if (SmartDebuffOF:IsVisible()) then
     SmartDebuffOF_cbShowLR:SetChecked(O.ShowLR);
+  end
+  SMARTDEBUFF_CheckDebuffs(true);
+end
+function SMARTDEBUFF_ToggleForceLR()
+  O.ForceLR = SMARTDEBUFF_toggleBool(O.ForceLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
+  if (SmartDebuffOF:IsVisible()) then
+    SmartDebuffOF_cbForceLR:SetChecked(O.ForceLR);
   end
   SMARTDEBUFF_CheckDebuffs(true);
 end
@@ -4610,7 +4716,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
       end
     end
 
-    if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK) then
+    if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK or O.ShowVehicles) then
       for cd_i = 1, CFG.maxPets, 1  do
         cd_btn = _G["SmartDebuffPetBtn"..cd_i];
         cd_sbtn = SecureButton_GetEffectiveButton(cd_btn);

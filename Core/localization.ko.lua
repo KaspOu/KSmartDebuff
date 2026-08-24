@@ -23,9 +23,11 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." 옵션";
 
-SMARTDEBUFF_KEY_L = "좌";
-SMARTDEBUFF_KEY_R = "우";
-SMARTDEBUFF_KEY_M = "중";
+if not SMARTDEBUFF_Options.ForceLR then
+    SMARTDEBUFF_KEY_L = "좌";
+    SMARTDEBUFF_KEY_R = "우";
+    SMARTDEBUFF_KEY_M = "중";
+end
 SMARTDEBUFF_KEYS = {["L"]  = "좌",
                     ["R"]  = "우",
                     ["M"]  = "중",
@@ -64,6 +66,7 @@ SMARTDEBUFF_OFT_SORT           = "정렬"
 SMARTDEBUFF_OFT_CLASSVIEW      = "직업별 정렬";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "직업 색상";
 SMARTDEBUFF_OFT_SHOWLR         = "좌 / 우 / 중 표시";
+SMARTDEBUFF_OFT_FORCELR        = "L / R / M 강제 적용"
 SMARTDEBUFF_OFT_HEADERS        = "머리글";
 SMARTDEBUFF_OFT_GROUPNR        = "그룹 번호";
 SMARTDEBUFF_OFT_SOUND          = "소리";
