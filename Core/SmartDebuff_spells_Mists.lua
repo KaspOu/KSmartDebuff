@@ -207,3 +207,82 @@ Spell\
 SMARTDEBUFF_DISABLED_TEXTURES = "\
 Fire\
 ";
+
+SMARTDEBUFF_DEBUFFS_LIST = {
+  -- Generic / Outside instances / PvP
+  [0] = {
+    -- DEATH KNIGHT
+    [55095]  = SMARTDEBUFF_DISEASE,  -- Frost Fever
+    [55078]  = SMARTDEBUFF_DISEASE,  -- Blood Plague
+    [191587] = SMARTDEBUFF_DISEASE,  -- Virulent Plague
+
+    -- DRUID
+    [8921]   = SMARTDEBUFF_MAGIC,    -- Moonfire
+    [93402]  = SMARTDEBUFF_MAGIC,    -- Sunfire
+    [5570]   = SMARTDEBUFF_MAGIC,    -- Insect Swarm
+    [1079]   = SMARTDEBUFF_BLEEDING, -- Rip
+    [1822]   = SMARTDEBUFF_BLEEDING, -- Rake
+    [339]    = SMARTDEBUFF_MAGIC,    -- Entangling Roots
+
+    -- HUNTER
+    [118253] = SMARTDEBUFF_POISON,   -- Serpent Sting
+    [3355]   = SMARTDEBUFF_MAGIC,    -- Freezing Trap
+
+    -- MAGE
+    [118]    = SMARTDEBUFF_MAGIC,    -- Polymorph
+    [122]    = SMARTDEBUFF_MAGIC,    -- Frost Nova
+    [31661]  = SMARTDEBUFF_MAGIC,    -- Dragon's Breath
+    [2139]   = SMARTDEBUFF_MAGIC,    -- Counterspell
+    [82691]  = SMARTDEBUFF_MAGIC,    -- Ring of Frost
+    [12654]  = SMARTDEBUFF_MAGIC,    -- Ignite
+    [113092] = SMARTDEBUFF_MAGIC,    -- Frost Bomb
+
+    -- MONK
+    [115078] = SMARTDEBUFF_MAGIC,    -- Paralysis
+    [198909] = SMARTDEBUFF_MAGIC,    -- Song of Chi-Ji
+    [115181] = SMARTDEBUFF_MAGIC,    -- Breath of Fire
+    [123725] = SMARTDEBUFF_MAGIC,    -- Breath of Fire
+
+    -- PALADIN
+    [853]    = SMARTDEBUFF_MAGIC,    -- Hammer of Justice
+    [20066]  = SMARTDEBUFF_MAGIC,    -- Repentance
+    [197277] = SMARTDEBUFF_MAGIC,    -- Judgment
+    [204242] = SMARTDEBUFF_MAGIC,    -- Greater Judgment
+
+    -- PRIEST
+    [605]    = SMARTDEBUFF_MAGIC,    -- Mind Control
+    [8122]   = SMARTDEBUFF_MAGIC,    -- Psychic Scream
+    [15487]  = SMARTDEBUFF_MAGIC,    -- Silence
+    [589]    = SMARTDEBUFF_MAGIC,    -- Shadow Word: Pain
+    [34914]  = SMARTDEBUFF_MAGIC,    -- Vampiric Touch
+    [335467] = SMARTDEBUFF_MAGIC,    -- Devouring Plague
+
+    -- ROGUE
+    [2818]   = SMARTDEBUFF_POISON,   -- Deadly Poison
+    [3409]   = SMARTDEBUFF_POISON,   -- Crippling Poison
+    [5760]   = SMARTDEBUFF_POISON,   -- Mind-Numbing Poison
+    [199804] = SMARTDEBUFF_POISON,   -- Wound Poison
+    [113952] = SMARTDEBUFF_POISON,   -- Paralytic Poison
+    [703]    = SMARTDEBUFF_BLEEDING, -- Garrote
+    [1943]   = SMARTDEBUFF_BLEEDING, -- Rupture
+
+    -- SHAMAN
+    [51514]  = SMARTDEBUFF_MAGIC,    -- Hex
+    [188389] = SMARTDEBUFF_MAGIC,    -- Flame Shock
+
+    -- WARLOCK
+    [5782]   = SMARTDEBUFF_MAGIC,    -- Fear
+    [6358]   = SMARTDEBUFF_MAGIC,    -- Seduction
+    [30283]  = SMARTDEBUFF_MAGIC,    -- Shadowfury
+    [702]    = SMARTDEBUFF_CURSE,    -- Curse of Weakness
+    [1714]   = SMARTDEBUFF_CURSE,    -- Curse of Tongues
+    [199711] = SMARTDEBUFF_CURSE,    -- Agony
+    [172]    = SMARTDEBUFF_MAGIC,    -- Corruption
+    [30108]  = SMARTDEBUFF_MAGIC,    -- Unstable Affliction
+    [48181]  = SMARTDEBUFF_MAGIC,    -- Haunt
+
+    -- WARRIOR
+    [115767] = SMARTDEBUFF_BLEEDING, -- Deep Wounds
+    [94009]  = SMARTDEBUFF_BLEEDING, -- Rend
+  }
+}

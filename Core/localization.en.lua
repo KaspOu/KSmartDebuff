@@ -14,25 +14,18 @@ SmartDebuff is now
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cff00ff00> New & back Options:|r
+|cfffff2cc>New & back Options:|r|cff00ff00
+  - Sound (for 'knowns' debuffs)
   - Texture
-  - Force L / R / M display
-  - Ignore on Cooldown
-  - HoT icons, filtered |cff4f81bd(Midnight)|r
-
-|cffff1010> Options removed:|r|cffff8c26
-  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Sound    |cff4f81bd(Midnight)|r
-  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Summary frame
-  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Debuff Guard
 |r
-|cfffff2cc> Spell added :|r
-  - Hunter: Feign death - Poison dispel (Talent)
+
+|cfffff2cc> Debuffs sound added for:|r
+  - PvP
+  - Midnight S1
+  - Midnight S2
 
 |cfffff2cc> Fixed :|r
-  - Recurring bug |cff4f81bd(Midnight)|r
-  - Unit menu working again
   - Buttons opacity + added glow border
-
 
 
 
@@ -185,7 +178,7 @@ SMARTDEBUFF_TT_CLASSCOLOR      = "Displays the unit buttons in\ntheir correspond
 SMARTDEBUFF_TT_SHOWLR          = "Displays the corresponding\nmouse button (L/R/M), if\na unit has a debuff.";
 SMARTDEBUFF_TT_HEADERS         = "Displays the group number / class name / role\nas header row.";
 SMARTDEBUFF_TT_GROUPNR         = "Displays the group number\nin front of the unit name.";
-SMARTDEBUFF_TT_SOUND           = "Plays a sound, if a\nunit gets a debuff.";
+SMARTDEBUFF_TT_SOUND           = "Plays a sound, if a\nunit gets a 'known' debuff.";
 SMARTDEBUFF_TT_TOOLTIP         = "Displays the tooltip,\nonly out of combat.";
 SMARTDEBUFF_TT_HEALRANGE       = "Displays a red boarder,\nif your spell is out of range.";
 SMARTDEBUFF_TT_SHOWAGGRO       = "Displays which\nunit has aggro.";

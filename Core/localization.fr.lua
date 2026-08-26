@@ -11,26 +11,19 @@ SmartDebuff devient
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cff00ff00> Nouvelles Options / de retour :|r
+|cfffff2cc> Nouvelles Options / de retour :|r|cff00ff00
+  - Son (pour les débuffs connus)
   - Texture
-  - Forcer l'affichage de L / R / M
-  - Ignorer en recharge
-  - Icônes de HoT filtrées |cff4f81bd(Midnight)|r
-
-|cffff1010> Options supprimées :|r|cffff8c26
-  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Son    |cff4f81bd(Midnight)|r
-  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Cadre récapitulatif
-  |TInterface\TargetingFrame\UI-RaidTargetingIcon_7:10|t Débuffs critiques
 |r
-|cfffff2cc> Sort ajouté :|r
-  - Chasseur : Feindre la mort - Dispel Poison (talent)
+
+|cfffff2cc> Sons de débuffs ajoutés :|r
+  - PvP
+  - Saison 1 de Midnight
+  - Saison 2 de Midnight
 
 
 |cfffff2cc> Corrigé :|r
-  - Bug récurrent |cff4f81bd(Midnight)|r
-  - Menu d'unité à nouveau fonctionnel
   - Opacité des boutons + bordure brillante
-
 
 
 
@@ -183,7 +176,7 @@ SMARTDEBUFF_TT_CLASSCOLOR      = "Affiche les boutons d'unit\195\169 dans\nleurs
 SMARTDEBUFF_TT_SHOWLR          = "Affiche le bouton de souris correspondant (G/D/M)\nsi une unit\195\169 a un d\195\169buff.";
 SMARTDEBUFF_TT_HEADERS         = "Affiche le n° de groupe / classe / r\195\180le\ncomme en-t\195\170te.";
 SMARTDEBUFF_TT_GROUPNR         = "Affiche le num\195\169ro de groupe\ndevant le nom de l'unit\195\169.";
-SMARTDEBUFF_TT_SOUND           = "Joue un son si une\nunit\195\169 re\195\167oit un d\195\169buff.";
+SMARTDEBUFF_TT_SOUND           = "Joue un son si une\nunit\195\169 re\195\167oit un d\195\169buff 'connu'.";
 SMARTDEBUFF_TT_TOOLTIP         = "Affiche l'infobulle\nseulement hors combat.";
 SMARTDEBUFF_TT_HEALRANGE       = "Affiche une bordure rouge\nsi votre sort est hors de port\195\169e.";
 SMARTDEBUFF_TT_SHOWAGGRO       = "Affiche quelle\nunit\195\169 a l'aggro.";

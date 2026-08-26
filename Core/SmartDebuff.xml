@@ -1147,6 +1147,7 @@
           <OnClick>
             SMARTDEBUFF_Options.ShowPets = not SMARTDEBUFF_Options.ShowPets;
             SMARTDEBUFF_SetPetButtons(true);
+            SMARTDEBUFF_SetAuraSoundsTestMode()
           </OnClick>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -1180,6 +1181,7 @@
           <OnClick>
             SMARTDEBUFF_Options.ShowPetsWL = not SMARTDEBUFF_Options.ShowPetsWL;
             SMARTDEBUFF_SetPetButtons(true);
+            SMARTDEBUFF_SetAuraSoundsTestMode()
           </OnClick>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -1216,6 +1218,7 @@
           <OnClick>
             SMARTDEBUFF_Options.ShowPetsDK = not SMARTDEBUFF_Options.ShowPetsDK;
             SMARTDEBUFF_SetPetButtons(true);
+            SMARTDEBUFF_SetAuraSoundsTestMode()
           </OnClick>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -2129,6 +2132,7 @@
               SMARTDEBUFF_Options.ShowVehicles = not SMARTDEBUFF_Options.ShowVehicles;
               SMARTDEBUFF_CreateButtonsPetsIfEnabled()
               SMARTDEBUFF_SetButtons();
+              SMARTDEBUFF_SetAuraSoundsTestMode()
             end
           </OnClick>
           <OnEnter>
@@ -2196,10 +2200,6 @@
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SOUND);
-            if (SMARTDEBUFF_AURACONTAINERS) then
-              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_DISABLED_BLIZZARD)
-              return
-            end
           </OnLoad>
           <OnShow>
             if (SMARTDEBUFF_Options) then
@@ -2213,6 +2213,7 @@
                 SmartDebuffSounds:Show();
               end
               SMARTDEBUFF_CheckDebuffs(true);
+              SMARTDEBUFF_SetAuraSoundsDetectTest(true)
             end
           </OnClick>
           <OnEnter>
@@ -2239,10 +2240,6 @@
           <OnLoad>
             self:SetNormalFontObject("GameFontNormalSmall");
             self:SetHighlightFontObject("GameFontHighlightSmall");
-            if (SMARTDEBUFF_AURACONTAINERS) then
-              self:Hide()
-              return
-            end
           </OnLoad>
           <OnClick>
             SMARTDEBUFF_SoundsToggle();
