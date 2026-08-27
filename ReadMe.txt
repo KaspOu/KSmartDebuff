@@ -70,7 +70,7 @@ Alt-Middle click: Debuff 3
 
 Chat:
 Type /kd for KDecurse frame in game
-Type /kd [command] or /smartdebuff [command] in game
+Type /kd [command] or /kdecurse [command] in game
 options - Show/hide KDecurse options frame
 ris # - Raid icon size # = 4-64
 bsx # - Button space X # = 0-16

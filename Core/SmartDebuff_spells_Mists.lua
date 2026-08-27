@@ -203,3 +203,7 @@ Lightning 2\
 Lightning 3\
 Spell\
 ";
+
+SMARTDEBUFF_DISABLED_TEXTURES = "\
+Fire\
+";

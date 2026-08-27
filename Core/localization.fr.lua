@@ -11,7 +11,9 @@ SmartDebuff devient
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cff00ff00> Options de retour :|r
+|cff00ff00> Nouvelles Options / de retour :|r
+  - Texture
+  - Forcer l'affichage de L / R / M
   - Ignorer en recharge
   - Icônes de HoT filtrées |cff4f81bd(Midnight)|r
 
@@ -23,9 +25,11 @@ SmartDebuff devient
 |cfffff2cc> Sort ajouté :|r
   - Chasseur : Feindre la mort - Dispel Poison (talent)
 
+
 |cfffff2cc> Corrigé :|r
-  - Bug en présence de chasseurs
+  - Bug récurrent |cff4f81bd(Midnight)|r
   - Menu d'unité à nouveau fonctionnel
+  - Opacité des boutons + bordure brillante
 
 
 
@@ -108,7 +112,7 @@ SMARTDEBUFF_OFT_SORT           = "Tri"
 SMARTDEBUFF_OFT_CLASSVIEW      = "Tri par classe";
 SMARTDEBUFF_OFT_CLASSCOLOR     = "Couleurs de classe";
 SMARTDEBUFF_OFT_SHOWLR         = "Afficher G / D / M";
-SMARTDEBUFF_OFT_FORCELR        = "Forcer en L / R / M"
+SMARTDEBUFF_OFT_FORCELR        = "Forcer l'affichage de L / R / M"
 SMARTDEBUFF_OFT_HEADERS        = "En-t\195\170tes";
 SMARTDEBUFF_OFT_GROUPNR        = "Num\195\169ro de groupe";
 SMARTDEBUFF_OFT_SOUND          = "Son";
@@ -124,6 +128,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "D\195\169grad\195\169";
 SMARTDEBUFF_OFT_INFOFRAME      = "Cadre r\195\169capitulatif";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Masquage auto.";
 SMARTDEBUFF_OFT_COLUMNS        = "Colonnes";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Texture"
 SMARTDEBUFF_OFT_INTERVAL       = "Intervalle";
 SMARTDEBUFF_OFT_FONTSIZE       = "Taille de police";
 SMARTDEBUFF_OFT_WIDTH          = "Largeur";
@@ -202,8 +207,10 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Affiche et utilise la configuration\navanc\195
 SMARTDEBUFF_TT_STOPCAST        = "Interrompt imm\195\169diatement le\nlancement ou la canalisation en\ncours pour lancer le sort d\195\169fini.\n(Uniquement pour les sorts de dissipation)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignore le d\195\169buff sur l'unit\195\169\nsi votre sort de dissipation est en temps de recharge";
 SMARTDEBUFF_TT_CHATNOTIF       = "Affiche des notifications de chat au chargement";
+SMARTDEBUFF_TT_RELOADREQUIRED   = "Un rechargement est requis (tapez /reload)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Cette option n'est pas disponible sur cette version de WoW."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Cette option n'est plus disponible en raison des limitations de Blizzard."
+SMARTDEBUFF_TT_COLTEXTURE       = "D\195\169finir la texture de l'ic\195\180ne\n(utiliser le Mode test pour pr\195\169visualiser)\n"
 
 --SMARTDEBUFF_TT_COLUMNS         = "Columns";
 --SMARTDEBUFF_TT_INTERVAL        = "Interval";
