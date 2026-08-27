@@ -7,7 +7,7 @@ SMARTDEBUFF_VERSIONNR     = tonumber(gsub(SMARTDEBUFF_VERSION, "%D", ""), 10); -
 SMARTDEBUFF_BREAKINGVERSION = 102602;
 SMARTDEBUFF_ADDONNAME     = "SmartDebuff"
 SMARTDEBUFF_TITLE         = "|cff00ff00K|rDecurse";
-SMARTDEBUFF_HEADERS       = {"KDecurse", "Decurse"}
+SMARTDEBUFF_HEADERS       = {"|cff00ff00K|rDecurse", "Decurse"}
 SMARTDEBUFF_SUBTITLE      = "Debuff support";
 SMARTDEBUFF_DESC          = "Supports you to cast debuff spells on friendly units";
 SMARTDEBUFF_VERS_TITLE    = SMARTDEBUFF_TITLE .. " " .. SMARTDEBUFF_VERSION;
@@ -25,7 +25,7 @@ SMARTDEBUFF_BOOK_TYPE_SPELL = "spell";
 
 --@do-not-package@
 -- Development icons
-local devVer = "|TInterface/PVPFrame/Icons/prestige-icon-8-3:16|t"
+local devVer = ".|TInterface/PVPFrame/Icons/prestige-icon-8-3:16|t"
 SMARTDEBUFF_OPTIONS_TITLE = SMARTDEBUFF_VERS_TITLE ..devVer.. " Options"
 SMARTDEBUFF_HEADERS = { SMARTDEBUFF_HEADERS[1]..devVer, SMARTDEBUFF_HEADERS[2]..devVer }
 SMARTDEBUFF_IS_DEV = true
