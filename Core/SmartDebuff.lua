@@ -460,6 +460,7 @@ function SMARTDEBUFF_OnLoad(self)
   self:RegisterEvent("ADDON_LOADED");
   self:RegisterEvent("CVAR_UPDATE");
   self:RegisterEvent("PLAYER_ENTERING_WORLD");
+  self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
   --self:RegisterEvent("WORLD_MAP_UPDATE");
   self:RegisterEvent("UNIT_NAME_UPDATE");
 
@@ -534,7 +535,12 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
     return;
   end;
 
-  if (event == "GROUP_ROSTER_UPDATE" or event == "UNIT_FACTION" or event == "UNIT_ENTERED_VEHICLE" or event == "UNIT_EXITED_VEHICLE" or event == "PLAYER_ROLES_ASSIGNED") then
+  if (event == "GROUP_ROSTER_UPDATE") then
+    shouldCallSetUnits = true;
+    shouldCallSetButtons = true;
+    SMARTDEBUFF_SetAuraSounds()
+
+  elseif (event == "UNIT_FACTION" or event == "UNIT_ENTERED_VEHICLE" or event == "UNIT_EXITED_VEHICLE" or event == "PLAYER_ROLES_ASSIGNED") then
     shouldCallSetUnits = true;
     shouldCallSetButtons = true;
 
@@ -560,7 +566,7 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
     SMARTDEBUFF_CheckIF();
 
   elseif (event == "BAG_UPDATE") then
-    SMARTDEBUFF_AddMsgD(COL.OR.."Event: "..event);
+    SMARTDEBUFF_AddMsgDT(COL.OR.."Event: "..event);
     shouldCallRefreshUI = true;
 
   elseif (event == "UPDATE_MACROS") then
@@ -584,6 +590,8 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
     shouldCallSetButtons = true;
     shouldCallRefreshUI = true;
     SMARTDEBUFF_Ticker(false);
+  elseif (event == "ZONE_CHANGED_NEW_AREA") then
+    SMARTDEBUFF_SetAuraSounds()
   end
 
 end
@@ -1583,6 +1591,8 @@ function SMARTDEBUFF_Options_Init()
     SMARTDEBUFF_ShowWhatsNew()
   end
 
+  SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
+
   SMARTDEBUFF_CheckWarlockPet();
   SMARTDEBUFF_CheckSF();
   SMARTDEBUFF_CheckForSpellUpgrade();
@@ -1855,6 +1865,20 @@ function SMARTDEBUFF_LinkSpellsToKeys()
   end
   SMARTDEBUFF_ResetAuraContainers();
   SMARTDEBUFF_InitCurves_Secrets()
+
+  SMARTDEBUFF_SetAuraSoundsDetectTest()
+end
+
+-- Necessary to detect CFG.filterString
+-- AuraSounds will include test depending on CFG.filterString
+--  * If force = true, will force full aurasounds refresh
+function SMARTDEBUFF_SetAuraSoundsDetectTest(force)
+  local _, extr = strsplit("!", CFG.filterString)
+  if not force then
+    SMARTDEBUFF_SetAuraSoundsOnKeySet(extr ~= nil)
+    return
+  end
+  SMARTDEBUFF_SetAuraSoundsTestMode(extr ~= nil)
 end
 
 
@@ -1944,6 +1968,7 @@ function SMARTDEBUFF_command(msgIn)
   elseif (msg == "debug") then
     O.Debug = SMARTDEBUFF_toggleBool(O.Debug, "Debug active = ");
     if (O.Debug) then SMARTDEBUFF_AddMsg("Hover buttons with modifier for actions debug"); end
+    SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
   elseif (msg == "reset") then
     SMARTDEBUFF_SetDefaultKeys(true);
   elseif (msg == "rvl") then
@@ -2117,11 +2142,13 @@ function SMARTDEBUFF_FilterStringToggle()
     CFG.filterString = "!"..CFG.filterString;
     CFG.filterStringNR = CFG.filterStringNR ~= "" and "!"..CFG.filterStringNR or "";
     SmartDebuffOF_btnFakeModeText:SetText("|cff00aa00Toggle")
+    SMARTDEBUFF_SetAuraSoundsTestMode(true)
   else
     CFG.filterString = extr;
     _, extr = strsplit("!", CFG.filterStringNR)
     CFG.filterStringNR = extr or "";
     SmartDebuffOF_btnFakeModeText:SetText("|cffff5555Toggle")
+    SMARTDEBUFF_SetAuraSoundsTestMode(false)
   end
 end
 
@@ -2501,7 +2528,7 @@ local function SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
   return col
 end
 
-local function SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex)
+function SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex)
   local filters = {};
   local knownDispelTypes = {
     SMARTDEBUFF_BLEEDING,
@@ -2664,6 +2691,8 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
   end
 end
 
+local lastDispelCD = {}
+
 function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
 
   local buttonName = isPet and ("SmartDebuffPetBtn" .. idx) or ("SmartDebuffBtn" .. idx)
@@ -2691,6 +2720,10 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             if (shouldShowDebuff and O.IgnoreDebuff) then
                 local firstDispelType = next(includeDispelTypes)
                 local dispelCD = SMARTDEBUFF_GetDispelCooldownByType(firstDispelType)
+                if lastDispelCD[buttonIndex] ~= dispelCD then
+                  SMARTDEBUFF_SetAuraSoundsDetectTest()
+                  lastDispelCD[buttonIndex] = dispelCD
+                end
                 shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(dispelCD)
             end
             local dispelContainer = button.dispelContainers[buttonIndex]
@@ -5000,6 +5033,7 @@ end
 function SMARTDEBUFF_OFToggleGrp(i)
   O.DebuffGrp[i] = not O.DebuffGrp[i];
   shouldCallSetUnits = true;
+  SMARTDEBUFF_SetAuraSoundsTestMode()
 end
 
 function SMARTDEBUFF_OFOnShow()
@@ -5589,6 +5623,7 @@ function SmartDebuff_SoundsBtnOnClick(self, button)
     O.Sound = SMARTDEBUFF_SOUNDS[n][2];
     -- SmartDebuffSounds_txtIn:SetText(SMARTDEBUFF_SOUNDS[n][1]);
     SMARTDEBUFF_SoundsOnScroll(); -- set selection and highlight
+    SMARTDEBUFF_SetAuraSoundsDetectTest(true)
   end
   if (SmartDebuffFrame.SoundHandle) then
     StopSound(SmartDebuffFrame.SoundHandle);

@@ -1,3 +1,6 @@
+v12.1.006
+- Sound option is back (based on debuff list)
+
 v12.1.005
 - Fixed btns opacity for all versions
 - Added textures (none, selected icon, debuff icon)
