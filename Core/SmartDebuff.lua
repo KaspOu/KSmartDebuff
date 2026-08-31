@@ -5623,9 +5623,13 @@ end
 function SMARTDEBUFF_SoundsOnShow(self)
   SMARTDEBUFF_HideAllButThis(self);
   SmartDebuffSounds_Title:SetText(SMARTDEBUFF_S_TITLE);
+  if SMARTDEBUFF_UseAuraContainerPath() then
+    ShowF(SmartDebuffAuraSounds);
+  end
 end
 
 function SMARTDEBUFF_SoundsToggle()
+  -- SmartDebuffAuraSounds OnHide / OnShow
   if (SmartDebuffSounds:IsVisible()) then
     SmartDebuffSounds:Hide();
   else
@@ -5634,6 +5638,7 @@ function SMARTDEBUFF_SoundsToggle()
 end
 
 function SMARTDEBUFF_SoundsOnHide(self)
+  HideF(SmartDebuffAuraSounds);
 end
 
 function SmartDebuff_SoundsBtnOnClick(self, button)

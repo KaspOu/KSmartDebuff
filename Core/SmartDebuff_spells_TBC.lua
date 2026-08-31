@@ -184,6 +184,9 @@ Web\
 SMARTDEBUFF_DEBUFFS_LIST = {
   -- Generic / Outside instances / PvP
   [0] = {
+    __name = PVP,
+    __type = SETTINGS_DEFAULTS,
+    __ext = "",
 
     -- DRUID
     [26988]  = SMARTDEBUFF_MAGIC,    -- Moonfire

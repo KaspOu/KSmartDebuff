@@ -167,8 +167,7 @@ local function AddAuraSoundsForUnit(unit, listIDs, showDebug, testMode)
 
     local list = {}
     for spellID, dispelType in pairs(listIDs) do
-
-        if cacheAllIncludeDispelTypes[dispelType] then
+        if type(spellID) == "number" and cacheAllIncludeDispelTypes[dispelType] then
             AddAuraSound(unit, spellID)
             list[#list + 1] = tostring(spellID)
         end
@@ -283,6 +282,204 @@ function SMARTDEBUFF_SetAuraSoundsTestMode(testMode)
       return
     end
     RefreshAuraSounds(testMode)
+end
+
+
+-- ============================================================================
+-- SmartDebuffAuraSounds Frame Handlers
+-- ============================================================================
+
+local auraSoundsTextLines = {}
+local auraSoundsLineCache = {}
+
+local function BuildAuraSoundsTextLines()
+    wipe(auraSoundsTextLines)
+    wipe(auraSoundsLineCache)
+
+    local currentID = select(8, GetInstanceInfo())
+    if SMARTDEBUFF_DEBUFFS_LIST[currentID] == nil or currentID == 0 then
+        currentID = -1
+    end
+
+    -- SORT by ID desc
+    local instanceIDs = {}
+    for instanceID in pairs(SMARTDEBUFF_DEBUFFS_LIST) do
+        instanceIDs[#instanceIDs + 1] = instanceID
+    end
+    table.sort(instanceIDs, function(a, b) return a > b end)
+    -- SORT end
+
+    -- for instanceID, instanceData in pairs(SMARTDEBUFF_DEBUFFS_LIST) do
+    for _, instanceID in ipairs(instanceIDs) do
+        local instanceData = SMARTDEBUFF_DEBUFFS_LIST[instanceID]
+        if currentID == -1 or currentID == instanceID and instanceData.__name then
+            local instanceName = instanceData.__name
+            local ext = instanceData.__ext or ""
+            local typeLabel = instanceData.__type or ""
+
+            if ext ~= "" then
+                auraSoundsTextLines[#auraSoundsTextLines + 1] = "|cff00ff00" .. instanceName .. " - " .. typeLabel .. " |r|cff339933(" .. ext .. ")|r"
+            else
+                auraSoundsTextLines[#auraSoundsTextLines + 1] = "|cff00ff00" .. instanceName .. " - " .. typeLabel .. "|r"
+            end
+            auraSoundsTextLines[#auraSoundsTextLines + 1] = " "
+
+            -- SORT by name asc
+            local spellIDs = {}
+            for spellID, debuffType in pairs(instanceData) do
+                if type(spellID) == "number" then
+                    spellIDs[#spellIDs + 1] = spellID
+                end
+            end
+            table.sort(spellIDs, function(a, b)
+                local nameA = C_Spell.GetSpellName(a) or ""
+                local nameB = C_Spell.GetSpellName(b) or ""
+                return nameA < nameB
+            end)
+            -- SORT END
+
+            --for spellID, debuffType in pairs(instanceData) do
+            for _, spellID in ipairs(spellIDs) do
+                local debuffType = instanceData[spellID]
+                if type(spellID) == "number" then
+                    local spellInfo = C_Spell.GetSpellInfo(spellID)
+                    local spellName = spellInfo and spellInfo.name or "Unknown (ID: " .. spellID .. ")"
+
+                    local isActive = spellInfo and cacheAllIncludeDispelTypes[debuffType] or false
+
+                    local debuffSymbol = _G["DEBUFF_SYMBOL_"..string.upper(debuffType)]
+
+                    if isActive then
+                        local color = AuraUtil.GetAuraBorderColor(debuffType):GenerateHexColorMarkup()
+                        auraSoundsTextLines[#auraSoundsTextLines + 1] = "  " .. spellName  .. color .. " (".. debuffSymbol .. ")|r |cff666666 - " .. spellID
+                    else
+                        auraSoundsTextLines[#auraSoundsTextLines + 1] = "  |cff999999" .. spellName .. " (" .. debuffSymbol .. ") |cff666666 - " .. spellID
+                    end
+                end
+            end
+
+            auraSoundsTextLines[#auraSoundsTextLines + 1] = " "
+            auraSoundsTextLines[#auraSoundsTextLines + 1] = " "
+        end
+    end
+end
+
+
+local AURASOUNDS_SCROLL_SIZE = 40
+function SMARTDEBUFF_AuraSoundsOnShow(frame)
+    BuildAuraSoundsTextLines()
+
+    local scrollFrame = SmartDebuffAuraSounds_ScrollFrame
+    if scrollFrame then
+        FauxScrollFrame_Update(scrollFrame, #auraSoundsTextLines, AURASOUNDS_SCROLL_SIZE, 12)
+        SMARTDEBUFF_AuraSoundsOnScroll(scrollFrame)
+    end
+
+    if frame and frame.Title then
+        frame.Title:SetText("Aura Sounds by Debuff Type")
+    end
+end
+
+
+function SMARTDEBUFF_AuraSoundsOnScroll(scrollFrame)
+    local NUM_VISIBLE = 40
+    local LINE_HEIGHT = 12
+    local WIDTH = scrollFrame:GetWidth() - 8
+
+    -- ============================================================
+    -- Création du conteneur
+    -- ============================================================
+
+    local textFrame = scrollFrame.auraSoundsTextFrame
+
+    if not textFrame then
+        textFrame = CreateFrame("Frame", nil, scrollFrame)
+
+        -- IMPORTANT :
+        -- Le conteneur ne doit PAS être le scroll child.
+        -- Il contient simplement les lignes visibles.
+        textFrame:SetSize(
+            scrollFrame:GetWidth(),
+            NUM_VISIBLE * LINE_HEIGHT
+        )
+
+        textFrame:SetPoint("TOPLEFT", scrollFrame, "TOPLEFT", 0, 0)
+
+        scrollFrame.auraSoundsTextFrame = textFrame
+    end
+
+    -- ============================================================
+    -- Mise à jour du FauxScrollFrame
+    -- ============================================================
+
+    FauxScrollFrame_Update(
+        scrollFrame,
+        #auraSoundsTextLines,
+        NUM_VISIBLE,
+        LINE_HEIGHT
+    )
+
+    local offset = FauxScrollFrame_GetOffset(scrollFrame)
+
+    -- ============================================================
+    -- Création / mise à jour des 40 lignes
+    -- ============================================================
+
+    for i = 1, NUM_VISIBLE do
+
+        local lineID = "AuraLine" .. i
+        local textLine = auraSoundsLineCache[lineID]
+
+        if not textLine then
+            textLine = textFrame:CreateFontString(
+                nil,
+                "OVERLAY",
+                "GameFontNormalSmall"
+            )
+
+            textLine:SetJustifyH("LEFT")
+            textLine:SetWidth(WIDTH)
+            textLine:SetHeight(LINE_HEIGHT)
+
+            if i == 1 then
+                textLine:SetPoint(
+                    "TOPLEFT",
+                    textFrame,
+                    "TOPLEFT",
+                    4,
+                    0
+                )
+            else
+                textLine:SetPoint(
+                    "TOPLEFT",
+                    auraSoundsLineCache["AuraLine" .. (i - 1)],
+                    "BOTTOMLEFT",
+                    0,
+                    0
+                )
+            end
+
+            auraSoundsLineCache[lineID] = textLine
+        end
+
+        local lineIndex = offset + i
+        local text = auraSoundsTextLines[lineIndex]
+
+        if text then
+            textLine:SetText(text)
+            textLine:Show()
+        else
+            textLine:SetText("")
+            textLine:Hide()
+        end
+    end
+end
+
+
+
+
+function SMARTDEBUFF_AuraSoundsOnHide(frame)
+    wipe(auraSoundsTextLines)
 end
 
 

@@ -251,6 +251,9 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {
 SMARTDEBUFF_DEBUFFS_LIST = {
   -- Generic / Outside instances / PvP
   [0] = {
+    __name = PVP,
+    __type = SETTINGS_DEFAULTS,
+    __ext = "",
     -- DEATH KNIGHT
     [55095]  = SMARTDEBUFF_DISEASE,  -- Frost Fever
     [55078]  = SMARTDEBUFF_DISEASE,  -- Blood Plague
@@ -276,10 +279,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     -- HUNTER
     [3355]   = SMARTDEBUFF_MAGIC,    -- Freezing Trap
     [213691] = SMARTDEBUFF_MAGIC,    -- Scatter Shot
-    [2719]   = SMARTDEBUFF_BLEEDING, -- Lacerate / Sting Bleed
+    -- [2719]   = SMARTDEBUFF_BLEEDING, -- Lacerate / Sting Bleed
     [118253] = SMARTDEBUFF_POISON,   -- Serpent Sting
     [259491] = SMARTDEBUFF_POISON,   -- Serpent Sting
-    [1978]   = SMARTDEBUFF_POISON,   -- Serpent Sting
+    -- [1978]   = SMARTDEBUFF_POISON,   -- Serpent Sting
 
     -- MAGE
     [118]    = SMARTDEBUFF_MAGIC,    -- Polymorph
@@ -289,7 +292,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     [82691]  = SMARTDEBUFF_MAGIC,    -- Ring of Frost
     [12654]  = SMARTDEBUFF_MAGIC,    -- Ignite
     [2120]   = SMARTDEBUFF_MAGIC,    -- Flamestrike
-    [113092] = SMARTDEBUFF_MAGIC,    -- Frost Bomb
+    -- [113092] = SMARTDEBUFF_MAGIC,    -- Frost Bomb
 
     -- MONK
     [198909] = SMARTDEBUFF_MAGIC,    -- Song of Chi-Ji
@@ -302,13 +305,13 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     [20066]  = SMARTDEBUFF_MAGIC,    -- Repentance
     [197277] = SMARTDEBUFF_MAGIC,    -- Judgment
     [204242] = SMARTDEBUFF_MAGIC,    -- Greater Judgment
-    [31803]  = SMARTDEBUFF_MAGIC,    -- Execution Sentence
+    -- [31803]  = SMARTDEBUFF_MAGIC,    -- Execution Sentence
 
     -- PRIEST
     [605]    = SMARTDEBUFF_MAGIC,    -- Mind Control
     [8122]   = SMARTDEBUFF_MAGIC,    -- Psychic Scream
     [15487]  = SMARTDEBUFF_MAGIC,    -- Silence
-    [212440] = SMARTDEBUFF_DISEASE,  -- Devouring Plague
+    -- [212440] = SMARTDEBUFF_DISEASE,  -- Devouring Plague
     [589]    = SMARTDEBUFF_MAGIC,    -- Shadow Word: Pain
     [34914]  = SMARTDEBUFF_MAGIC,    -- Vampiric Touch
     [335467] = SMARTDEBUFF_MAGIC,    -- Devouring Plague
@@ -317,8 +320,8 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     [2818]   = SMARTDEBUFF_POISON,   -- Deadly Poison
     [3408]   = SMARTDEBUFF_POISON,   -- Crippling Poison
     [5760]   = SMARTDEBUFF_POISON,   -- Mind-Numbing Poison
-    [199804] = SMARTDEBUFF_POISON,   -- Wound Poison
-    [113952] = SMARTDEBUFF_POISON,   -- Paralytic Poison
+    -- [199804] = SMARTDEBUFF_POISON,   -- Wound Poison
+    -- [113952] = SMARTDEBUFF_POISON,   -- Paralytic Poison
     [703]    = SMARTDEBUFF_BLEEDING, -- Garrote
     [1943]   = SMARTDEBUFF_BLEEDING, -- Rupture
     [3409]   = SMARTDEBUFF_POISON,   -- Crippling Poison
@@ -334,7 +337,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     [118699] = SMARTDEBUFF_MAGIC,    -- Fear
     [30283]  = SMARTDEBUFF_MAGIC,    -- Shadowfury
     [702]    = SMARTDEBUFF_CURSE,    -- Curse of Weakness
-    [17862]  = SMARTDEBUFF_CURSE,    -- Curse of Shadows
+    -- [17862]  = SMARTDEBUFF_CURSE,    -- Curse of Shadows
     [1714]   = SMARTDEBUFF_CURSE,    -- Curse of Tongues
     [199711] = SMARTDEBUFF_CURSE,    -- Agony
     [980]    = SMARTDEBUFF_CURSE,    -- Agony
@@ -344,9 +347,9 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     [80240]  = SMARTDEBUFF_CURSE,    -- Havoc
 
     -- WARRIOR
-    [115767] = SMARTDEBUFF_BLEEDING, -- Deep Wounds
+    -- [115767] = SMARTDEBUFF_BLEEDING, -- Deep Wounds
     [257044] = SMARTDEBUFF_BLEEDING, -- Sweeping Strikes Bleed
-    [94009]  = SMARTDEBUFF_BLEEDING, -- Rend
+    -- [94009]  = SMARTDEBUFF_BLEEDING, -- Rend
   },
 
 
@@ -354,20 +357,24 @@ SMARTDEBUFF_DEBUFFS_LIST = {
   -- Midnight S2 Content
   -- =======================
 
-  -- The Venomous Abyss (Raid)
   [3004] = {
-    [1286922] = SMARTDEBUFF_MAGIC,       -- Icebound Flames
-    [1301800] = SMARTDEBUFF_MAGIC,       -- Acidic Burst
-    [1306906] = SMARTDEBUFF_POISON,       -- Venomfang
+      __name = "The Venomous Abyss",
+      __type = MAP_LEGEND_RAID,
+      __ext = "Midnight S2",
+      [1286922] = SMARTDEBUFF_MAGIC,       -- Icebound Flames
+      [1301800] = SMARTDEBUFF_MAGIC,       -- Acidic Burst
+      [1306906] = SMARTDEBUFF_POISON,       -- Venomfang
 
-    [1287434] = SMARTDEBUFF_MAGIC,       -- Essence Rend
-    -- [1284483] = SMARTDEBUFF_MAGIC,       -- Blighted Blood
-    [1295173] = SMARTDEBUFF_MAGIC,       -- Exploding Infection
-    -- [1294994] = SMARTDEBUFF_MAGIC,       -- Stygian Infection
+      [1287434] = SMARTDEBUFF_MAGIC,       -- Essence Rend
+      -- [1284483] = SMARTDEBUFF_MAGIC,       -- Blighted Blood
+      [1295173] = SMARTDEBUFF_MAGIC,       -- Exploding Infection
+      -- [1294994] = SMARTDEBUFF_MAGIC,       -- Stygian Infection
   },
 
-  -- Altar of Fangs
   [2741] = {
+      __name = "Altar of Fangs",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S2",
       [1294569] = SMARTDEBUFF_MAGIC,    -- Paralyzing Shots
       [1294845] = SMARTDEBUFF_POISON,   -- Corrosive Fangs
       [1296069] = SMARTDEBUFF_DISEASE,  -- Regurgitate
@@ -379,8 +386,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1238255] = SMARTDEBUFF_CURSE,    -- Whirling Spirit
   },
 
-  -- Murder Row
   [2743] = {
+      __name = "Murder Row",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S2",
       [474515]  = SMARTDEBUFF_POISON,   -- Heartstop Poison
       [1216590] = SMARTDEBUFF_POISON,   -- Heartstop Poison (variant)
       [474740]  = SMARTDEBUFF_BLEEDING, -- Murder in a Row
@@ -395,8 +404,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1245456] = SMARTDEBUFF_DISEASE,  -- Blightspore Burst
   },
 
-  -- Den of Nalorakk
   [2742] = {
+      __name = "Den of Nalorakk",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S2",
       [1234846] = SMARTDEBUFF_POISON,   -- Toxic Spores
       [1235549] = SMARTDEBUFF_MAGIC,    -- Glacial Torment
       [1239860] = SMARTDEBUFF_MAGIC,    -- Cryo Surge
@@ -404,8 +415,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1238801] = SMARTDEBUFF_CURSE,    -- Insatiable Hunger
   },
 
-  -- The Blinding Vale
   [2744] = {
+      __name = "The Blinding Vale",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S2",
       [1235865] = SMARTDEBUFF_BLEEDING, -- Thornblade
       [1238076] = SMARTDEBUFF_BLEEDING, -- Thornblade (variant)
       [1241058] = SMARTDEBUFF_BLEEDING, -- Grievous Thrash
@@ -417,8 +430,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1250937] = SMARTDEBUFF_POISON,   -- Toxic Spew
   },
 
-  -- Voidscar Arena
   [2745] = {
+      __name = "Voidscar Arena",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S2",
       [1226031] = SMARTDEBUFF_POISON,   -- Poison Splash
       [1289258] = SMARTDEBUFF_POISON,   -- Corrosive Essence
       [1249238] = SMARTDEBUFF_MAGIC,    -- Fire Spit
@@ -429,13 +444,18 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1252095] = SMARTDEBUFF_CURSE,    -- Curse of Dread
   },
 
-  -- Kings' Rest (BfA)
   [1762] = {
+      __name = "Kings' Rest",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "BfA",
       [266191]  = SMARTDEBUFF_BLEEDING, -- Whirling Axe
       [266231]  = SMARTDEBUFF_BLEEDING, -- Severing Axe
       [267273]  = SMARTDEBUFF_POISON,   -- Poison Nova
       [267763]  = SMARTDEBUFF_DISEASE,  -- Wretched Discharge
       [269972]  = SMARTDEBUFF_CURSE,    -- Hex Volley
+      [270492]  = SMARTDEBUFF_CURSE,    -- Hex
+      [270499]  = SMARTDEBUFF_CURSE,    -- Frost Shock
+      [270920]  = SMARTDEBUFF_CURSE,    -- Bind Soul
       [271564]  = SMARTDEBUFF_POISON,   -- Lingering Fluid
       [276031]  = SMARTDEBUFF_MAGIC,    -- Pit of Despair
       [1294815] = SMARTDEBUFF_MAGIC,    -- Shadowfrost Bolt
@@ -448,8 +468,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1306763] = SMARTDEBUFF_POISON,   -- Serpent Strike
   },
 
-  -- Ruby Life Pools (Dragonflight)
   [2520] = {
+      __name = "Ruby Life Pools",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Dragonflight",
       [372682]  = SMARTDEBUFF_MAGIC,    -- Primal Chill
       [373589]  = SMARTDEBUFF_MAGIC,    -- Primal Chill (variant)
       [1305234] = SMARTDEBUFF_MAGIC,    -- Cold Claws
@@ -459,71 +481,93 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [392924]  = SMARTDEBUFF_MAGIC,    -- Shock Blast
   },
 
-  -- Temple of Sethraliss (BfA)
   [1877] = {
-      [1291399] = SMARTDEBUFF_BLEEDING, -- Serrated Charge
-      [1296052] = SMARTDEBUFF_MAGIC,    -- Imbued Conduction
-      [1308100] = SMARTDEBUFF_POISON,   -- Poisoned Cheap Shot
-      [1308148] = SMARTDEBUFF_POISON,   -- Cytotoxin
-      [267027]  = SMARTDEBUFF_POISON,   -- Poison Spit
-      [1303486] = SMARTDEBUFF_POISON,   -- Caustic Stomp
-      [1308546] = SMARTDEBUFF_POISON,   -- Venomous Slash
+      __name = "Temple of Sethraliss",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "BfA",
+      [263957]  = SMARTDEBUFF_POISON, -- Hadotoxin
+      [268008]  = SMARTDEBUFF_MAGIC,  -- Snake Charm
+      [268013]  = SMARTDEBUFF_MAGIC,  -- Flame Shock
+      [269686]  = SMARTDEBUFF_DISEASE, -- Plague
+      [272699]  = SMARTDEBUFF_POISON, -- Venomous Spit
+      [273563]  = SMARTDEBUFF_POISON,  -- Neurotoxin
+      [1291399] = SMARTDEBUFF_BLEEDING,  -- Serrated Charge
+      [1296052] = SMARTDEBUFF_MAGIC,  -- Imbued Conduction
+      [1308100] = SMARTDEBUFF_POISON, -- Poisoned Cheap Shot
+      [1308148] = SMARTDEBUFF_POISON, -- Cytotoxin
+      [267027]  = SMARTDEBUFF_POISON, -- Poison Spit
+      [1303486] = SMARTDEBUFF_POISON, -- Caustic Stomp
+      [1308546] = SMARTDEBUFF_POISON,  -- Venomous Slash
   },
 
   -- =====
   -- Midnight S1 Content
   -- =======================
 
-   -- The Voidspire (Raid)
    [2912] = {
+    __name = "The Voidspire",
+    __type = MAP_LEGEND_RAID,
+    __ext = "Midnight S1",
     [1233865] = SMARTDEBUFF_MAGIC,       -- Null Corona
     [1275059] = SMARTDEBUFF_CURSE,       -- Black Miasma
     [1280023] = SMARTDEBUFF_MAGIC,       -- Void Marked
   },
 
-  -- March on Quel'Danas (Raid)
-  [2913] = {
-  },
+  -- -- March on Quel'Danas (Raid)
+  -- [2913] = {
+  -- },
 
-  -- The Dreamrift (Raid)
   [2939] = {
+      __name = "The Dreamrift",
+      __type = MAP_LEGEND_RAID,
+      __ext = "Midnight S1",
       [1257087] = SMARTDEBUFF_MAGIC,       -- Consuming Miasma - Stage 1
       [1257085] = SMARTDEBUFF_MAGIC,       -- Consuming Miasma - Stage 2
   },
 
-  -- Sporefall (Raid)
-  [1592] = {
-  },
+  -- -- Sporefall (Raid)
+  -- [1592] = {
+  -- },
 
-  -- Algeth'ar Academy
   [2526] = {
+      __name = "Algeth'ar Academy",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [390918]  = SMARTDEBUFF_POISON,   -- Detonation Seeds
       [389033]  = SMARTDEBUFF_POISON,   -- Lasher Toxin
       [396716]  = SMARTDEBUFF_BLEEDING, -- Splinterbark
   },
 
-  -- Magister's Terrace
   [2747] = {
+      __name = "Magister's Terrace",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1255187] = SMARTDEBUFF_MAGIC,    -- Holy Fire
       [1282055] = SMARTDEBUFF_MAGIC,    -- Ethereal Shackles
       [1245068] = SMARTDEBUFF_MAGIC,    -- Consuming Void
   },
 
-  -- Maisara Caverns
   [2748] = {
+      __name = "Maisara Caverns",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1258475] = SMARTDEBUFF_MAGIC,    -- Magma Surge
       [1258806] = SMARTDEBUFF_MAGIC,    -- Ritual Firebrand
       [1259255] = SMARTDEBUFF_MAGIC,    -- Spirit Rend
       [1246666] = SMARTDEBUFF_DISEASE,  -- Infected Pinions
   },
 
-  -- Nexus Point Xenas
   [2746] = {
+      __name = "Nexus Point Xenas",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1277557] = SMARTDEBUFF_MAGIC,    -- Burning Radiance
   },
 
-  -- Pit of Saron
   [658] = {
+      __name = "Pit of Saron",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1258434] = SMARTDEBUFF_CURSE,    -- Curse of Torment
       [1258437] = SMARTDEBUFF_MAGIC,    -- Permeating Cold
       [1264186] = SMARTDEBUFF_CURSE,    -- Shadowbind
@@ -531,19 +575,25 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1262929] = SMARTDEBUFF_DISEASE,  -- Rotting Strikes
   },
 
-  -- Seat of the Triumvirate
   [1753] = {
+      __name = "Seat of the Triumvirate",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1280330] = SMARTDEBUFF_MAGIC,    -- Rift Essence
   },
 
-  -- Skyreach
   [1209] = {
+      __name = "Skyreach",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1254475] = SMARTDEBUFF_BLEEDING, -- Blade Rush
       [1254380] = SMARTDEBUFF_BLEEDING, -- Shear
   },
 
-  -- Windrunner Spire
   [2749] = {
+      __name = "Windrunner Spire",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "Midnight S1",
       [1216298] = SMARTDEBUFF_MAGIC,    -- Soul Torment
       [1216822] = SMARTDEBUFF_POISON,   -- Poison Spray
       [474105]  = SMARTDEBUFF_CURSE,    -- Curse of Darkness
@@ -553,8 +603,10 @@ SMARTDEBUFF_DEBUFFS_LIST = {
   -- The War Within
   -- =======================
 
-  -- The Stonevault
   [2652] = {
+    __name = "The Stonevault",
+    __type = MAP_LEGEND_DUNGEON,
+    __ext = "The War Within",
     [426308] = SMARTDEBUFF_CURSE, -- Void Infection
     [449455] = SMARTDEBUFF_MAGIC, -- Howling Fear
     [425974] = SMARTDEBUFF_MAGIC, -- Ground Pound

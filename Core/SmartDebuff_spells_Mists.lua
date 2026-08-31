@@ -211,6 +211,9 @@ Fire\
 SMARTDEBUFF_DEBUFFS_LIST = {
   -- Generic / Outside instances / PvP
   [0] = {
+    __name = PVP,
+    __type = SETTINGS_DEFAULTS,
+    __ext = "",
     -- DEATH KNIGHT
     [55095]  = SMARTDEBUFF_DISEASE,  -- Frost Fever
     [55078]  = SMARTDEBUFF_DISEASE,  -- Blood Plague
