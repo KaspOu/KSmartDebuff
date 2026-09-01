@@ -1873,6 +1873,9 @@ end
 -- AuraSounds will include test depending on CFG.filterString
 --  * If force = true, will force full aurasounds refresh
 function SMARTDEBUFF_SetAuraSoundsDetectTest(force)
+  if not SMARTDEBUFF_SetAuraSoundsOnKeySet then
+    return
+  end
   local _, extr = strsplit("!", CFG.filterString)
   if not force then
     SMARTDEBUFF_SetAuraSoundsOnKeySet(extr ~= nil)
@@ -5043,15 +5046,14 @@ function SMARTDEBUFF_OFOnShow()
   SmartDebuffOF_Title:SetText(format("%s %s- %s", SMARTDEBUFF_OPTIONS_TITLE, COL.YLD, SMARTDEBUFF_SPELLS_VERSION));
   if O.Debug then
     ShowF(SmartDebuffOF_btnReload);
-    ShowF(SmartDebuffOF_btnFakeMode);
+    if (SMARTDEBUFF_AURACONTAINERS) then
+      ShowF(SmartDebuffOF_btnFakeMode);
+    end
   end
 end
 
 function SMARTDEBUFF_OFOnHide()
-  if ST.iTest ~= 0 then
-    ST.iTest = 0;
-    SMARTDEBUFF_SetUnits();
-  end
+  SMARTDEBUFF_TestModeToggle(false)
   SMARTDEBUFF_LinkSpellsToKeys();
   SMARTDEBUFF_CheckAutoHide();
   HideF(SmartDebuffWNF);

@@ -65,7 +65,7 @@ SMARTDEBUFF_MAGIC   = "Magic";
 SMARTDEBUFF_CURSE   = "Curse";
 SMARTDEBUFF_DISEASE = "Disease";
 SMARTDEBUFF_POISON  = "Poison";
-SMARTDEBUFF_BLEEDING   = "Bleeding"; -- Not a really debuff type
+SMARTDEBUFF_BLEEDING   = "Bleed";
 SMARTDEBUFF_CHARMED = "Mind Control";
 
 SMARTDEBUFF_HEAL    = "Heal";

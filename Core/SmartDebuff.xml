@@ -2244,13 +2244,13 @@
           <OnClick>
             SMARTDEBUFF_SoundsToggle();
           </OnClick>
-			<OnEnter>
-				SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);
-			</OnEnter>
-			<OnLeave>
-				GameTooltip:Hide();
-			</OnLeave>
-		</Scripts>
+          <OnEnter>
+            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
       </Button>
 
       <CheckButton name="$parent_cbShowHeaderRow" inherits="InterfaceOptionsCheckButtonTemplate">
@@ -2772,71 +2772,71 @@
             </FontString>
           </Layer>
         </Layers>
-      <Scripts>
-        <OnLoad>
-          local label = _G[self:GetName().."Label"]
-          if label then
-            label:SetText(SMARTDEBUFF_OFT_COLTEXTURE)
-          end
-          UIDropDownMenu_Initialize(self, function(frame, level)
-            local infoT = UIDropDownMenu_CreateInfo()
-            local info = UIDropDownMenu_CreateInfo()
+        <Scripts>
+          <OnLoad>
+            local label = _G[self:GetName().."Label"]
+            if label then
+              label:SetText(SMARTDEBUFF_OFT_COLTEXTURE)
+            end
+            UIDropDownMenu_Initialize(self, function(frame, level)
+              local infoT = UIDropDownMenu_CreateInfo()
+              local info = UIDropDownMenu_CreateInfo()
 
-            infoT.text = SMARTDEBUFF_OFT_COLTEXTURE
-            infoT.isTitle = true;
-		        infoT.notCheckable = true;
-            infoT.justifyH = "LEFT";
-            UIDropDownMenu_AddButton(infoT, level)
-            self.infos = {}
-            for _, option in ipairs(SMARTDEBUFF_TEXTURES) do
-              local text = option[1]
-              local value = option[2]
+              infoT.text = SMARTDEBUFF_OFT_COLTEXTURE
+              infoT.isTitle = true;
+              infoT.notCheckable = true;
+              infoT.justifyH = "LEFT";
+              UIDropDownMenu_AddButton(infoT, level)
+              self.infos = {}
+              for _, option in ipairs(SMARTDEBUFF_TEXTURES) do
+                local text = option[1]
+                local value = option[2]
 
-              info.text = text
-              info.value = value
-              info.justifyH = "LEFT"
+                info.text = text
+                info.value = value
+                info.justifyH = "LEFT"
 
-              info.func = function(btn)
-                -- Mise à jour lors de la sélection
-                UIDropDownMenu_SetSelectedValue(frame, btn.value)
+                info.func = function(btn)
+                  -- Mise à jour lors de la sélection
+                  UIDropDownMenu_SetSelectedValue(frame, btn.value)
 
-                if SMARTDEBUFF_Options then
-                  SMARTDEBUFF_Options.ColDTexture = btn.value
-                  SMARTDEBUFF_TestModeToggle(true)
-                  SMARTDEBUFF_CheckDebuffs(true)
+                  if SMARTDEBUFF_Options then
+                    SMARTDEBUFF_Options.ColDTexture = btn.value
+                    SMARTDEBUFF_TestModeToggle(true)
+                    SMARTDEBUFF_CheckDebuffs(true)
+                  end
                 end
+
+                info.checked = (
+                  SMARTDEBUFF_Options
+                  and SMARTDEBUFF_Options.ColDTexture == value
+                )
+
+                UIDropDownMenu_AddButton(info, level)
+
+                self.infos[value] = text
               end
-
-              info.checked = (
-                SMARTDEBUFF_Options
-                and SMARTDEBUFF_Options.ColDTexture == value
-              )
-
-              UIDropDownMenu_AddButton(info, level)
-
-              self.infos[value] = text
+              UIDropDownMenu_JustifyText(self, "LEFT")
+            end)
+          </OnLoad>
+          <OnShow>
+            if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColDTexture then
+              UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColDTexture)
+              if self.infos and self.infos[SMARTDEBUFF_Options.ColDTexture] then
+                UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColDTexture])
+              else
+                UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColDTexture)
+              end
             end
-            UIDropDownMenu_JustifyText(self, "LEFT")
-          end)
-        </OnLoad>
-        <OnShow>
-          if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColDTexture then
-            UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColDTexture)
-            if self.infos and self.infos[SMARTDEBUFF_Options.ColDTexture] then
-              UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColDTexture])
-            else
-              UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColDTexture)
-            end
-          end
-        </OnShow>
-        <OnEnter>
-          SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE.."\n"..SMARTDEBUFF_TT_RELOADREQUIRED)
-        </OnEnter>
-        <OnLeave>
-          GameTooltip:Hide()
-        </OnLeave>
-      </Scripts>
-    </Frame>
+          </OnShow>
+          <OnEnter>
+            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE.."\n"..SMARTDEBUFF_TT_RELOADREQUIRED)
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide()
+          </OnLeave>
+        </Scripts>
+      </Frame>
 
       <Slider name="$parent_sldFontsize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
