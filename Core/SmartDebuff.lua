@@ -2121,6 +2121,7 @@ function SMARTDEBUFF_CheckSFBackdrop()
   end
 end
 
+
 function SMARTDEBUFF_TestModeToggle(force)
   local previousValue = ST.iTest
   if force ~= nil then
@@ -2133,20 +2134,34 @@ function SMARTDEBUFF_TestModeToggle(force)
   end
   if ST.iTest > 0 then
     SmartDebuffOF_btnTestModeText:SetTextColor(0, .9, 0)
+    if (O.ShowHeaderRow) then
+      local title, _ = strsplit(".", SMARTDEBUFF_HEADERS[1])
+      SmartDebuffSF_Title:SetText(title);
+    else
+      SmartDebuffSF_Title:SetText("");
+    end
+    SmartDebuffSF_btnClose:Hide();
+    SmartDebuffSF_btnStyle:Hide();
+    SmartDebuffSF_btnOptions:Hide();
+    SMARTDEBUFF_FilterStringToggle(false)
   else
     SmartDebuffOF_btnTestModeText:SetTextColor(1, .82, 0)
+    SMARTDEBUFF_CheckSFButtons()
   end
   SMARTDEBUFF_SetUnits();
 end
 
-function SMARTDEBUFF_FilterStringToggle()
+function SMARTDEBUFF_FilterStringToggle(force)
   local _, extr = strsplit("!", CFG.filterString)
   if (extr == nil) then
+    if force == false then return end
+    SMARTDEBUFF_TestModeToggle(false)
     CFG.filterString = "!"..CFG.filterString;
     CFG.filterStringNR = CFG.filterStringNR ~= "" and "!"..CFG.filterStringNR or "";
     SmartDebuffOF_btnFakeModeText:SetText("|cff00aa00Toggle")
     SMARTDEBUFF_SetAuraSoundsTestMode(true)
   else
+    if force == true then return end
     CFG.filterString = extr;
     _, extr = strsplit("!", CFG.filterStringNR)
     CFG.filterStringNR = extr or "";
@@ -3229,17 +3244,19 @@ end
 local placeholders = {
   UnitName("player"),
   "Kallye",
+  "Sunset",
+  "Данил",
+  "Ziz",
   "Archeon",
   "Lameth",
-  "Ziz",
   "Bibope",
   "Devielea",
+  "Dijinette",
   "Naro",
   "Badien",
   "Ramshtein",
   "Shrazuul",
-  "Dijinette",
-  "Kelyan"
+  "Hella",
 }
 
 -- FIXME: DEBG
