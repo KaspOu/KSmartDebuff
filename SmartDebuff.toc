@@ -1,4 +1,4 @@
-## Interface: 120007, 120100, 50504, 38002, 20506, 11509
+## Interface: 120100, 120105, 50504, 38002, 20506, 11509
 ## Title: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-frFR: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-deDE: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
@@ -25,7 +25,7 @@
 ## LoadSavedVariablesFirst: 1
 ## SavedVariables: SMARTDEBUFF_OptionsGlobal
 ## SavedVariablesPerCharacter: SMARTDEBUFF_Options
-## IconTexture: Interface\Icons\ability_shaman_cleansespirit
+## IconTexture: Interface\AddOns\SmartDebuff\icon.png
 ## AddonCompartmentFunc: SMARTDEBUFF_ToggleOF
 
 ## X-Previous-Title: SmartDebuff
