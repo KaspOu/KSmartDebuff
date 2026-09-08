@@ -1,3 +1,6 @@
+v12.1.007
+- Added debuff sound alert list
+
 v12.1.006
 - Sound option is back (based on debuff list)
 
