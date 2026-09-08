@@ -176,6 +176,9 @@ Web\
 ";
 
   SMARTDEBUFF_DEBUFFS_LIST = {
+    __name = PVP,
+    __type = SETTINGS_DEFAULTS,
+    __ext = "",
     -- Generic / Outside instances / PvP
     [0] = {
     }

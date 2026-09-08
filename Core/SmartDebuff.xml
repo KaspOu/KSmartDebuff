@@ -4471,6 +4471,101 @@
   </Frame>
 
 
+  <Frame name="SmartDebuffAuraSounds" toplevel="true" frameStrata="MEDIUM" parent="SmartDebuffOF" hidden="true" enableMouse="true">
+    <Size>
+      <AbsDimension x="272" y="520"/>
+    </Size>
+    <Anchors>
+       <Anchor point="TOPLEFT" relativeTo="SmartDebuffSounds" relativePoint="TOPRIGHT">
+         <Offset>
+           <AbsDimension x="2" y="0"/>
+         </Offset>
+       </Anchor>
+     </Anchors>
+
+    <Frames>
+      <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
+        <Size>
+          <AbsDimension x="264" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="4" y="-4"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <FontString inherits="GameFontHighlightSmall" justifyH="CENTER"/>
+        <Scripts>
+          <OnLoad>
+            self:SetAutoFocus(false);
+            self:EnableMouse(false);
+            self:EnableKeyboard(false);
+            self:SetText(QUEUED_STATUS_LISTED);
+          </OnLoad>
+          <OnShow>
+            SmartDebuffWNF:Hide()
+          </OnShow>
+        </Scripts>
+      </EditBox>
+
+      <ScrollFrame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
+        <Size>
+          <AbsDimension x="240" y="485"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="0" y="-14"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnVerticalScroll>
+            FauxScrollFrame_OnVerticalScroll(self, offset, 12, SMARTDEBUFF_AuraSoundsOnScroll);
+          </OnVerticalScroll>
+          <OnShow>
+            SMARTDEBUFF_AuraSoundsOnScroll(self);
+          </OnShow>
+        </Scripts>
+      </ScrollFrame>
+
+      <Button name="$parent_btnClose" inherits="UIPanelCloseButton">
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPRIGHT" relativeTo="$parent">
+            <Offset>
+              <AbsDimension x="2" y="2"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+          </OnLoad>
+        </Scripts>
+      </Button>
+
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        self:SetHeight(SmartDebuffOF:GetHeight());
+        if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
+        self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
+      </OnLoad>
+      <OnShow>
+        self:SetHeight(SmartDebuffOF:GetHeight());
+        SMARTDEBUFF_AuraSoundsOnShow(self);
+      </OnShow>
+      <OnHide>
+        SMARTDEBUFF_AuraSoundsOnHide(self);
+      </OnHide>
+    </Scripts>
+
+  </Frame>
+
+
   <Frame name="SmartDebuffWNF" movable="true" toplevel="true" frameStrata="MEDIUM" parent="UIParent" hidden="true" enableMouse="true">
     <Size>
       <AbsDimension x="200" y="70"/>
