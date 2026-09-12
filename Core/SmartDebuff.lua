@@ -590,7 +590,8 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
     shouldCallSetButtons = true;
     shouldCallRefreshUI = true;
     SMARTDEBUFF_Ticker(false);
-  elseif (event == "ZONE_CHANGED_NEW_AREA") then
+  elseif (event == "ZONE_CHANGED_NEW_AREA" and SMARTDEBUFF_SetAuraSounds) then
+    SMARTDEBUFF_AddMsgD(COL.OR.."Event: "..event);
     SMARTDEBUFF_SetAuraSounds()
   end
 
