@@ -1667,7 +1667,9 @@
           if SMARTDEBUFF_OFT_FORCELR == "" then
             self:Hide()
           end
-          self:SetAlpha(SMARTDEBUFF_Options.ShowLR and 1 or .5);
+          if (SMARTDEBUFF_Options) then
+            self:SetAlpha(SMARTDEBUFF_Options.ShowLR and 1 or .5);
+          end
           </OnLoad>
           <OnShow>
             if (SMARTDEBUFF_Options) then

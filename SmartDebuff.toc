@@ -1,4 +1,4 @@
-## Interface: 120100, 120105, 50504, 38002, 20506, 11509
+## Interface: 120100, 120105, 16001, 50504, 38002, 20506, 11509
 ## Title: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-frFR: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-deDE: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
@@ -47,7 +47,8 @@ Core\SmartDebuff_spells_TBC.lua [AllowLoadGameType tbc]
 Core\SmartDebuff_spells_Wrath.lua [AllowLoadGameType wrath]
 Core\SmartDebuff_spells_Cata.lua [AllowLoadGameType cata]
 Core\SmartDebuff_spells_Mists.lua [AllowLoadGameType mists]
-Core\SmartDebuff_spells.lua [AllowLoadGameType mainline]
+Core\SmartDebuff_spells_Forever.lua [ExcludeLoadGameType standard, classic][AllowLoadGameType forever]
+Core\SmartDebuff_spells.lua [AllowLoadGameType standard]
 Core\Localization.en.lua
 Core\Localization.fr.lua [AllowLoadTextLocale frFR]
 Core\Localization.de.lua [AllowLoadTextLocale deDE]

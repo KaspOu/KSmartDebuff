@@ -62,7 +62,7 @@ for _, class in ipairs(CLASS_SORT_ORDER) do SMARTDEBUFF_CLASSES[class] = LOCALIZ
 -- Bindings
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." Options";
 
-if not SMARTDEBUFF_Options.ForceLR then
+if not SMARTDEBUFF_Options or not SMARTDEBUFF_Options.ForceLR then
     SMARTDEBUFF_KEY_L = "G";
     SMARTDEBUFF_KEY_R = "D";
     SMARTDEBUFF_KEY_M = "M";

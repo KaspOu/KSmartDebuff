@@ -289,6 +289,8 @@ end
 -- SmartDebuffAuraSounds Frame Handlers
 -- ============================================================================
 
+local AURASOUNDS_SCROLL_SIZE = 40
+
 local auraSoundsTextLines = {}
 local auraSoundsLineCache = {}
 
@@ -362,10 +364,12 @@ local function BuildAuraSoundsTextLines()
             auraSoundsTextLines[#auraSoundsTextLines + 1] = " "
         end
     end
+    while #auraSoundsTextLines < AURASOUNDS_SCROLL_SIZE+1 do
+        auraSoundsTextLines[#auraSoundsTextLines + 1] = " "
+    end
 end
 
 
-local AURASOUNDS_SCROLL_SIZE = 40
 function SMARTDEBUFF_AuraSoundsOnShow(frame)
     BuildAuraSoundsTextLines()
 
