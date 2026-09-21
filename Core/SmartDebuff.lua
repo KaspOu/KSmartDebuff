@@ -1457,6 +1457,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowMsgWarning == nil) then O.ShowMsgWarning = true; end
 
   if (O.Debug == nil) then O.Debug = false;  end
+  if (O.DebugMagic == nil) then O.DebugMagic = false;  end
 
   if (O.Keys == nil or O.Keys[1]["M"] == "-") then
     SMARTDEBUFF_SetDefaultKeys(true);
@@ -1864,6 +1865,12 @@ function SMARTDEBUFF_LinkSpellsToKeys()
   if not SDB_cacheRangeCheckSpell then
     SMARTDEBUFF_AddMsgD(COL.ORD.."No spell found for Range detection!");
   end
+
+  if O.DebugMagic and not cSpells[SMARTDEBUFF_MAGIC] then
+    cSpells[SMARTDEBUFF_MAGIC] = {"DEBUG", 1, "spell"}
+    SMARTDEBUFF_AddMsgD(COL.ORD.."DEBUG MAGIC FORCED!");
+  end
+
   SMARTDEBUFF_ResetAuraContainers();
   SMARTDEBUFF_InitCurves_Secrets()
 
@@ -1971,8 +1978,17 @@ function SMARTDEBUFF_command(msgIn)
     end
   elseif (msg == "debug") then
     O.Debug = SMARTDEBUFF_toggleBool(O.Debug, "Debug active = ");
+    if (O.DebugMagic) then O.DebugMagic = false; SMARTDEBUFF_LinkSpellsToKeys(); SMARTDEBUFF_FilterStringToggle(false) end
     if (O.Debug) then SMARTDEBUFF_AddMsg("Hover buttons with modifier for actions debug"); end
     SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
+
+  elseif (msg == "debugm") then
+    O.DebugMagic = SMARTDEBUFF_toggleBool(O.DebugMagic, "Debug magic active = ");
+    O.Debug = O.DebugMagic
+    SMARTDEBUFF_FilterStringToggle(O.DebugMagic)
+    if (O.Debug) then SMARTDEBUFF_AddMsg("Hover buttons with modifier for actions debug"); end
+    SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
+    SMARTDEBUFF_LinkSpellsToKeys()
   elseif (msg == "reset") then
     SMARTDEBUFF_SetDefaultKeys(true);
   elseif (msg == "rvl") then
