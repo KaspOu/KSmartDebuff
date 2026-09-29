@@ -145,6 +145,7 @@ local function AddAuraSound(unit, spellID)
             spellID = spellID,
             soundFileID = SMARTDEBUFF_Options.Sound,
             outputChannel = "master",
+            throttleSeconds = 2,
         }
     )
 
