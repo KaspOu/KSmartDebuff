@@ -1,4 +1,4 @@
-## Interface: 120100, 120105, 16001, 50504, 38002, 20506, 11509
+## Interface: 120105, 16001, 50504, 38002, 20506, 11509
 ## Title: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-frFR: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
 ## Title-deDE: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
