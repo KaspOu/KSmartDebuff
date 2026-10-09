@@ -77,6 +77,7 @@ bsx # - Button space X # = 0-16
 bsy # - Button space Y # = 0-16
 tm #  - Test mode # = number of test buttons
 rafp  - Reset all frame positions
+debug  - Show debug informations and Aura ids display
 
 Type /kdo or /kdm for KDecurse options frame in game
 
