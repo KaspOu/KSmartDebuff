@@ -109,6 +109,56 @@ local function ShouldShowUnit(unit)
     return (SMARTDEBUFF_Options.ShowVehicles or SMARTDEBUFF_Options.ShowPetsWL or SMARTDEBUFF_Options.ShowPetsDK or SMARTDEBUFF_Options.ShowPets) and true or false
 end
 
+local instancesCache = nil
+
+local function GetInstanceByID(instanceID)
+    if not instancesCache then
+        instancesCache = {}
+
+
+        local currentTier = EJ_GetCurrentTier()
+        local numTiers = EJ_GetNumTiers()
+        if numTiers < 1 then
+            return nil
+        end
+
+        for tier = 1, numTiers do
+            EJ_SelectTier(tier)
+
+            local tierName = EJ_GetTierInfo(tier)
+
+            for _, isRaid in ipairs({ false, true }) do
+                local index = 1
+
+                while true do
+                    local journalID, name, _, _, _, _, _, _, _, _, mapID = EJ_GetInstanceByIndex(index, isRaid)
+
+                    if not journalID then
+                        break
+                    end
+
+                    if mapID then
+                        instancesCache[mapID] = {
+                            name = name,
+                            expansion = tierName,
+                            journalID = journalID,
+                            isRaid = isRaid,
+                        }
+                    end
+
+                    index = index + 1
+                end
+            end
+        end
+
+        if currentTier then
+            EJ_SelectTier(currentTier)
+        end
+    end
+
+    return instancesCache[instanceID]
+end
+
 -- ============================================================================
 -- Remove every registered AuraSound
 -- ============================================================================
@@ -319,6 +369,13 @@ local function BuildAuraSoundsTextLines()
             local instanceName = instanceData.__name
             local ext = instanceData.__ext or ""
             local typeLabel = instanceData.__type or ""
+            local instanceInfo = GetInstanceByID(instanceID)
+            if instanceInfo then
+                -- instanceName = instanceName .. "-".. instanceInfo.name
+                instanceName = instanceInfo.name
+                ext = ext and ext or instanceInfo.expansion
+                typeLabel = typeLabel and typeLabel or instanceInfo.isRaid and MAP_LEGEND_RAID or MAP_LEGEND_DUNGEON
+            end
 
             if ext ~= "" then
                 auraSoundsTextLines[#auraSoundsTextLines + 1] = "|cff00ff00" .. instanceName .. " - " .. typeLabel .. " |r|cff339933(" .. ext .. ")|r"
@@ -486,5 +543,3 @@ end
 function SMARTDEBUFF_AuraSoundsOnHide(frame)
     wipe(auraSoundsTextLines)
 end
-
-

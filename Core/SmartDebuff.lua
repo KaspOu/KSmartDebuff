@@ -1983,12 +1983,18 @@ function SMARTDEBUFF_command(msgIn)
     SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
 
   elseif (msg == "debugm") then
+    ---@deprecated
+    if not SMARTDEBUFF_AURACONTAINERS then
+      SMARTDEBUFF_AddMsg("Command *debugm* disabled on Classic")
+      return
+    end
     O.DebugMagic = SMARTDEBUFF_toggleBool(O.DebugMagic, "Debug magic active = ");
     O.Debug = O.DebugMagic
     SMARTDEBUFF_FilterStringToggle(O.DebugMagic)
     if (O.Debug) then SMARTDEBUFF_AddMsg("Hover buttons with modifier for actions debug"); end
     SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
     SMARTDEBUFF_LinkSpellsToKeys()
+    SMARTDEBUFF_RefreshAOFKeys()
   elseif (msg == "reset") then
     SMARTDEBUFF_SetDefaultKeys(true);
   elseif (msg == "rvl") then
@@ -2169,6 +2175,9 @@ function SMARTDEBUFF_TestModeToggle(force)
 end
 
 function SMARTDEBUFF_FilterStringToggle(force)
+  if (not SMARTDEBUFF_AURACONTAINERS) then
+    return
+  end
   local _, extr = strsplit("!", CFG.filterString)
   if (extr == nil) then
     if force == false then return end
@@ -5816,6 +5825,10 @@ function SMARTDEBUFF_RefreshAOFKeys()
     SMARTDEBUFF_AddMsgD(COL.RD.."-- Refresh Keys window --");
     SmartDebuffAOFKeys:Hide();
     SmartDebuffAOFKeys:Show();
+  end
+  if (SmartDebuffAuraSounds:IsVisible()) then
+    SmartDebuffAuraSounds:Hide();
+    SmartDebuffAuraSounds:Show();
   end
 end
 
