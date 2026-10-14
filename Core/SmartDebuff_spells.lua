@@ -46,15 +46,13 @@ Vérifier :
 ]]--
 --@end-do-not-package@
 
-SMARTDEBUFF_SPELLS_VERSION = "Midnight";
+local expansionName = {
+  [LE_EXPANSION_DRAGONFLIGHT or 9] = "Dragonflight",
+  [LE_EXPANSION_WAR_WITHIN  or 10] = "The War Within",
+  [LE_EXPANSION_MIDNIGHT    or 11] = "Midnight",
+}
+SMARTDEBUFF_SPELLS_VERSION = expansionName[GetExpansionLevel()] or "Midnight"
 SMARTDEBUFF_MACROTEXT = true;
-
-local v = select(4, GetBuildInfo())
-if v < 110000 then
-  SMARTDEBUFF_SPELLS_VERSION = "Dragonflight"
-elseif v < 120000 then
-  SMARTDEBUFF_SPELLS_VERSION = "The War Within"
-end
 
 -- Debuff spell IDs (for L button) - first known
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID = {
@@ -399,8 +397,9 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1290036] = SMARTDEBUFF_POISON,       -- Caustic Venom
 
       [1287434] = SMARTDEBUFF_MAGIC,       -- Essence Rend
-      -- [1284483] = SMARTDEBUFF_MAGIC,       -- Blighted Blood
+      [1284471] = SMARTDEBUFF_MAGIC,       -- Blighted Blood
       [1295173] = SMARTDEBUFF_MAGIC,       -- Exploding Infection
+      [1304046] = SMARTDEBUFF_MAGIC,       -- Overwhelming Fear
       -- [1294994] = SMARTDEBUFF_MAGIC,       -- Stygian Infection
   },
 
@@ -541,6 +540,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     __type = MAP_LEGEND_RAID,
     __ext = "Midnight S1",
     [1233865] = SMARTDEBUFF_MAGIC,       -- Null Corona
+    [1233887] = SMARTDEBUFF_MAGIC,       -- Null Corona2
     [1275059] = SMARTDEBUFF_CURSE,       -- Black Miasma
     [1280023] = SMARTDEBUFF_MAGIC,       -- Void Marked
   },

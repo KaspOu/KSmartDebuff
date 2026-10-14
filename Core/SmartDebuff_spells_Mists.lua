@@ -209,6 +209,19 @@ Fire\
 ";
 
 SMARTDEBUFF_DEBUFFS_LIST = {
+
+  [1136] = {
+      __name = "Siege of Orgrimmar ",
+      __type = MAP_LEGEND_RAID,
+      __ext = "",
+      [143434] = SMARTDEBUFF_MAGIC,       -- Shadow Word: Bane
+      [144514] = SMARTDEBUFF_MAGIC,       -- Lingering Corruption
+      [144351] = SMARTDEBUFF_MAGIC,       -- Mark of Arrogance
+      [142913] = SMARTDEBUFF_MAGIC,       -- Displaced Energy
+      [142983] = SMARTDEBUFF_MAGIC,       -- Torment
+      [145218] = SMARTDEBUFF_MAGIC,       -- Harden Flesh
+  },
+
   -- Generic / Outside instances / PvP
   [0] = {
     __name = PVP,
