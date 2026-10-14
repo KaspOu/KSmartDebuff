@@ -371,7 +371,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       -- [1294994] = SMARTDEBUFF_MAGIC,       -- Stygian Infection
   },
 
-  [2741] = {
+  [2993] = {
       __name = "Altar of Fangs",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S2",
@@ -386,7 +386,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1238255] = SMARTDEBUFF_CURSE,    -- Whirling Spirit
   },
 
-  [2743] = {
+  [2813] = {
       __name = "Murder Row",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S2",
@@ -404,7 +404,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1245456] = SMARTDEBUFF_DISEASE,  -- Blightspore Burst
   },
 
-  [2742] = {
+  [2825] = {
       __name = "Den of Nalorakk",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S2",
@@ -415,7 +415,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1238801] = SMARTDEBUFF_CURSE,    -- Insatiable Hunger
   },
 
-  [2744] = {
+  [2859] = {
       __name = "The Blinding Vale",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S2",
@@ -430,7 +430,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1250937] = SMARTDEBUFF_POISON,   -- Toxic Spew
   },
 
-  [2745] = {
+  [2923] = {
       __name = "Voidscar Arena",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S2",
@@ -468,7 +468,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1306763] = SMARTDEBUFF_POISON,   -- Serpent Strike
   },
 
-  [2520] = {
+  [2521] = {
       __name = "Ruby Life Pools",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Dragonflight",
@@ -538,7 +538,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [396716]  = SMARTDEBUFF_BLEEDING, -- Splinterbark
   },
 
-  [2747] = {
+  [2811] = {
       __name = "Magister's Terrace",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S1",
@@ -547,7 +547,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1245068] = SMARTDEBUFF_MAGIC,    -- Consuming Void
   },
 
-  [2748] = {
+  [2874] = {
       __name = "Maisara Caverns",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S1",
@@ -557,7 +557,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1246666] = SMARTDEBUFF_DISEASE,  -- Infected Pinions
   },
 
-  [2746] = {
+  [2915] = {
       __name = "Nexus Point Xenas",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S1",
@@ -590,7 +590,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       [1254380] = SMARTDEBUFF_BLEEDING, -- Shear
   },
 
-  [2749] = {
+  [2805] = {
       __name = "Windrunner Spire",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S1",
