@@ -11,19 +11,13 @@ SmartDebuff devient
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cfffff2cc> Nouvelles Options / de retour :|r|cff00ff00
-  - Son (pour les débuffs connus)
-  - Texture
-|r
-
-|cfffff2cc> Sons de débuffs ajoutés :|r
-  - PvP
-  - Saison 1 de Midnight
-  - Saison 2 de Midnight
-
-
 |cfffff2cc> Corrigé :|r
-  - Opacité des boutons + bordure brillante
+  - Son des donjons Midnight
+
+|cfffff2cc> Sons ajoutés pour:|r
+  - Le Déliement de Kith'ix
+  - Le Labyrinthe de Kindo'jan
+
 
 
 

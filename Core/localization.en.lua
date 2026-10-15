@@ -14,18 +14,13 @@ SmartDebuff is now
    |cff00ff00K|r|cffffffff Decurse|r !
 
 
-|cfffff2cc>New & back Options:|r|cff00ff00
-  - Sound (for 'knowns' debuffs)
-  - Texture
-|r
-
-|cfffff2cc> Debuffs sound added for:|r
-  - PvP
-  - Midnight S1
-  - Midnight S2
-
 |cfffff2cc> Fixed :|r
-  - Buttons opacity + added glow border
+  - Midnight dungeons sounds
+
+|cfffff2cc> Sound added for:|r
+  - The Unbinding of Kith'ix
+  - Labyrinth of Kindo'jan
+
 
 
 

@@ -6,6 +6,8 @@ Class Dispels only: https://www.wowhead.com/spells/specialization?filter=109;38;
 Talents dispels: https://www.wowhead.com/spells/talents?filter=109;38;0
 https://wago.tools/db2/SpellDispelType
 
+https://www.wowhead.com/spells/npc-abilities/dispel-type:2?filter=21;2;120105
+
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID
   Format: [ClassName] = { { Spell_ID, Spell_List, OnlyIfUsable?, Improved_Talent?, Improved_Spell_List?, } }
   Priority: first active spell > first inactive talent > first item
@@ -356,14 +358,45 @@ SMARTDEBUFF_DEBUFFS_LIST = {
   -- =====
   -- Midnight S2 Content
   -- =======================
+  [3095] = {
+      __name = "The Unbinding of Kith'ix",
+      __type = MAP_LEGEND_RAID,
+      __ext = "Midnight S2.5",
+      [1304046] = SMARTDEBUFF_MAGIC,       -- overwhelming-fear
+      [1316782] = SMARTDEBUFF_CURSE,       -- curse-of-despair
+      [1316354] = SMARTDEBUFF_POISON,      -- toxic-whirl
+      [1317754] = SMARTDEBUFF_POISON,      -- heartsting
+      [1318850] = SMARTDEBUFF_POISON,      -- caustic-burst
+      [1318851] = SMARTDEBUFF_POISON,      -- caustic-burst
+  },
+  [3043] = {
+      __name = "The Labyrinth of Kindo'jan",
+      __type = MAP_LEGEND_DELVE,
+      __ext = "Midnight S2.5",
+      [1301380] = SMARTDEBUFF_MAGIC,       -- Amani Aegis
+      [1305701] = SMARTDEBUFF_MAGIC,       -- Bone Armor
+      [1306259] = SMARTDEBUFF_MAGIC,       -- Kulzi's Grace
+      [1315264] = SMARTDEBUFF_MAGIC,       -- Spectral Regeneration
+      [1292001] = SMARTDEBUFF_CURSE,       -- beckoning-death
+      [1292666] = SMARTDEBUFF_CURSE,       -- necrotic-sweep
+      [1292130] = SMARTDEBUFF_CURSE,       -- storm-of-torment
+      [1299628] = SMARTDEBUFF_CURSE,       -- furious-gale
+      [1320845] = SMARTDEBUFF_CURSE,       -- whirling-spirit
+      [1289267] = SMARTDEBUFF_CURSE,       -- rotten-cascade
+      [1291903] = SMARTDEBUFF_CURSE,       -- forbidden-ritual
+      [1292549] = SMARTDEBUFF_CURSE,       -- rush-of-death
+      [1293976] = SMARTDEBUFF_CURSE,       -- withering-cascade
+      [1290485] = SMARTDEBUFF_DISEASE,     -- vine-blast
+  },
 
   [3004] = {
       __name = "The Venomous Abyss",
       __type = MAP_LEGEND_RAID,
       __ext = "Midnight S2",
       [1286922] = SMARTDEBUFF_MAGIC,       -- Icebound Flames
-      [1301800] = SMARTDEBUFF_MAGIC,       -- Acidic Burst
+      [1301800] = SMARTDEBUFF_POISON,       -- Acidic Burst
       [1306906] = SMARTDEBUFF_POISON,       -- Venomfang
+      [1290036] = SMARTDEBUFF_POISON,       -- Caustic Venom
 
       [1287434] = SMARTDEBUFF_MAGIC,       -- Essence Rend
       -- [1284483] = SMARTDEBUFF_MAGIC,       -- Blighted Blood
@@ -376,7 +409,6 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S2",
       [1294569] = SMARTDEBUFF_MAGIC,    -- Paralyzing Shots
-      [1294845] = SMARTDEBUFF_POISON,   -- Corrosive Fangs
       [1296069] = SMARTDEBUFF_DISEASE,  -- Regurgitate
       [1302867] = SMARTDEBUFF_DISEASE,  -- Festering Gash
       [1305368] = SMARTDEBUFF_POISON,   -- Spiteful Venom

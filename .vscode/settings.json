@@ -220,7 +220,8 @@
         "SETTINGS_DEFAULTS",
         "SmartDebuffOF_btnFakeModeText",
         "SmartDebuffOF_cbShowSpellIcon",
-        "GetSpellInfo"
+        "GetSpellInfo",
+        "MAP_LEGEND_DELVE"
     ],
     "Lua.diagnostics.disable": [
         "need-check-nil",

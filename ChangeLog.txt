@@ -1,3 +1,9 @@
+v12.5.001
+- Fixed S2 dungeons sounds detection
+- Added: The Unbinding of Kith'ix
+- Added: Labyrinth of Kindo'jan
+- Added: Forever dungeons list
+
 v12.1.007
 - Added debuff sound alert list
 
