@@ -1,4 +1,4 @@
-v12.5.001
+v12.1.501
 - Fixed S2 dungeons sounds detection
 - Added: The Unbinding of Kith'ix
 - Added: Labyrinth of Kindo'jan

@@ -9,8 +9,7 @@ https://foreverdb.net/dungeons
 https://www.wowhead.com/forever/guides/dungeons
 
 Tests your spells:
-https://www.wowhead.com/spell=526
-https://www.wowhead.com/classic/spell=51886
+https://www.wowhead.com/forever/spell=3604
 
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID
   Format: [ClassName] = { { Spell_ID, Spell_List, OnlyIfUsable?, Improved_Talent?, Improved_Spell_List?, } }
@@ -134,52 +133,33 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
 
   SMARTDEBUFF_DEBUFFS_LIST = {
     -- 249 - Onyxia's Lair /Raid
+    -- 469 - Blackwing / Raid
     -- ??? - Hyjal Summit /Raid
     -- ??? - Barrow Deeps /Raid
     -- 2784 - Demon Fall Canyon
     -- ??? - Blackmaw Hold
     -- ??? - Shaper's Terrace
-    [531] = {
-      __name = "Ahn'Qiraj temple",
-      __type = MAP_LEGEND_RAID,
+    -- 389 - Ragefire Chasm
+    -- 36 - Deadmines
+    -- 34 - Stormwind Stockade
+    -- 90 - Gnomeregan
+
+    [3109] = {
+      __name = "Manor Mistmantle",
+      __type = MAP_LEGEND_DUNGEON,
       __ext = "",
-      [1224125] = SMARTDEBUFF_MAGIC,    -- silence
-      [26580] = SMARTDEBUFF_MAGIC,    -- fear
-      [25812] = SMARTDEBUFF_POISON,    -- toxic-volley
-      [25991] = SMARTDEBUFF_POISON,    -- poison-bolt-volley
-      [26180] = SMARTDEBUFF_POISON,    -- wyvern-sting
     },
-    [409] = {
-      __name = "Molten Core",
-      __type = MAP_LEGEND_RAID,
-      __ext = "",
-      [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
-      [19776] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
-      [7645] = SMARTDEBUFF_MAGIC,    -- dominate-mind
-      [19659] = SMARTDEBUFF_MAGIC,    -- ignite-mana
-      [19713] = SMARTDEBUFF_CURSE,    -- shazzrahs-curse
-      [19496] = SMARTDEBUFF_MAGIC,    -- magma-shackles
-      [19716] = SMARTDEBUFF_CURSE,    -- gehennas-curse
-      [19408] = SMARTDEBUFF_MAGIC,    -- panic
-      [19703] = SMARTDEBUFF_CURSE,    -- lucifrons-curse
-      [19702] = SMARTDEBUFF_MAGIC,    -- impending-doom
-    },
-    [533] = {
-      __name = "Naxxramas",
-      __type = MAP_LEGEND_RAID,
-      __ext = "",
-      [29212] = SMARTDEBUFF_POISON,    -- cripple
-      [1224125] = SMARTDEBUFF_MAGIC,    -- silence
-      [26580] = SMARTDEBUFF_MAGIC,    -- fear
-      [25991] = SMARTDEBUFF_POISON,    -- poison-bolt-volley
-    },
-    [2856] = {
-      __name = "Scarlet Enclave",
-      __type = MAP_LEGEND_RAID,
-      __ext = "",
-      [3815] = SMARTDEBUFF_POISON,    -- poison-cloud
-      [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
-    },
+    -- [???] = {
+    --   __name = "Blackmaw Hold",
+    --   __type = MAP_LEGEND_DUNGEON,
+    --   __ext = "",
+    -- },
+    -- [???] = {
+    --   __name = "Shaper's Terrace",
+    --   __type = MAP_LEGEND_DUNGEON,
+    --   __ext = "",
+    -- },
+
     [3065] = {
       __name = "The Hall of Thanes",
       __type = MAP_LEGEND_DUNGEON,
@@ -215,6 +195,65 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [1303598] = SMARTDEBUFF_MAGIC,    -- mass-polymorph
       [1304473] = SMARTDEBUFF_CURSE,    -- curse-of-thorns
     },
+
+    [531] = {
+      __name = "Ahn'Qiraj",
+      __type = MAP_LEGEND_RAID,
+      __ext = "",
+      [1224125] = SMARTDEBUFF_MAGIC,    -- silence
+      [18327] = SMARTDEBUFF_MAGIC,    -- silence
+      [26580] = SMARTDEBUFF_MAGIC,    -- fear
+      [12096] = SMARTDEBUFF_MAGIC,    -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
+      [25812] = SMARTDEBUFF_POISON,    -- toxic-volley
+      [25991] = SMARTDEBUFF_POISON,    -- poison-bolt-volley
+      [26180] = SMARTDEBUFF_POISON,    -- wyvern-sting
+    },
+    [409] = {
+      __name = "Molten Core",
+      __type = MAP_LEGEND_RAID,
+      __ext = "",
+      [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [19776] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [7645] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [19659] = SMARTDEBUFF_MAGIC,    -- ignite-mana
+      [19713] = SMARTDEBUFF_CURSE,    -- shazzrahs-curse
+      [19496] = SMARTDEBUFF_MAGIC,    -- magma-shackles
+      [19716] = SMARTDEBUFF_CURSE,    -- gehennas-curse
+      [19408] = SMARTDEBUFF_MAGIC,    -- panic
+      [19703] = SMARTDEBUFF_CURSE,    -- lucifrons-curse
+      [19702] = SMARTDEBUFF_MAGIC,    -- impending-doom
+    },
+    [469] = {
+      __name = "Blackwing Lair",
+      __type = MAP_LEGEND_RAID,
+      __ext = "",
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [22687] = SMARTDEBUFF_CURSE,    -- Veil of Shadow
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
+    },
+    [533] = {
+      __name = "Naxxramas",
+      __type = MAP_LEGEND_RAID,
+      __ext = "",
+      [29212] = SMARTDEBUFF_POISON,    -- cripple
+      [1224125] = SMARTDEBUFF_MAGIC,    -- silence
+      [18327] = SMARTDEBUFF_MAGIC,    -- silence
+      [26580] = SMARTDEBUFF_MAGIC,    -- fear
+      [12096] = SMARTDEBUFF_MAGIC,    -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
+      [25991] = SMARTDEBUFF_POISON,    -- poison-bolt-volley
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
+    },
+    [2856] = {
+      __name = "Scarlet Enclave",
+      __type = MAP_LEGEND_RAID,
+      __ext = "",
+      [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
+    },
+
     [129] = {
       __name = "Razorfen Downs",
       __type = MAP_LEGEND_DUNGEON,
@@ -222,9 +261,26 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [12255] = SMARTDEBUFF_CURSE,    -- curse-of-tutenkash
       [12946] = SMARTDEBUFF_DISEASE,    -- putrid-stench
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
       [7645] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [18327] = SMARTDEBUFF_MAGIC,    -- silence
+    },
+    [47] = {
+      __name = "Razorfen Kraul",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [8281] = SMARTDEBUFF_MAGIC,    -- sonic-burst
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
+      [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
     },
     [43] = {
       __name = "Wailing Caverns",
@@ -234,22 +290,9 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [8040] = SMARTDEBUFF_MAGIC, -- druid's-slumber
       [7967] = SMARTDEBUFF_MAGIC, -- naralex's-nightmare
       [7399] = SMARTDEBUFF_MAGIC, -- terrify
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
     },
-    [3109] = {
-      __name = "Manor Mistmantle",
-      __type = MAP_LEGEND_DUNGEON,
-      __ext = "",
-    },
-    -- [???] = {
-    --   __name = "Blackmaw Hold",
-    --   __type = MAP_LEGEND_DUNGEON,
-    --   __ext = "",
-    -- },
-    -- [???] = {
-    --   __name = "Shaper's Terrace",
-    --   __type = MAP_LEGEND_DUNGEON,
-    --   __ext = "",
-    -- },
+
     [189] = {
       __name = "Scarlet Monastery",
       __type = MAP_LEGEND_DUNGEON,
@@ -259,16 +302,22 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [9373] = SMARTDEBUFF_MAGIC,    -- soul-siphon
       [7399] = SMARTDEBUFF_MAGIC,    -- terrify
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [3815] = SMARTDEBUFF_POISON,    -- poison-cloud
       [8399] = SMARTDEBUFF_MAGIC,    -- sleep
       [853] = SMARTDEBUFF_MAGIC,    -- hammer-of-justice
       [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
       [8282] = SMARTDEBUFF_CURSE,    -- curse-of-blood
       [26580] = SMARTDEBUFF_MAGIC,    -- fear
+      [12096] = SMARTDEBUFF_MAGIC,    -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
       [19776] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
     },
     [289] = {
       __name = "Scholomance",
@@ -277,24 +326,50 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
       [29212] = SMARTDEBUFF_POISON,    -- cripple
       [1224125] = SMARTDEBUFF_MAGIC,    -- silence
+      [18327] = SMARTDEBUFF_MAGIC,    -- silence
       [26580] = SMARTDEBUFF_MAGIC,    -- fear
+      [12096] = SMARTDEBUFF_MAGIC,    -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
       [7645] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
       [19776] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [12889] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [8994] = SMARTDEBUFF_MAGIC,    -- banish
+      [18763] = SMARTDEBUFF_MAGIC,    -- freeze
+      [15499] = SMARTDEBUFF_MAGIC,    -- frost-shock
+      [7964] = SMARTDEBUFF_MAGIC, -- smoke-bomb
+
     },
     [329] = {
       __name = "Stratholm",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
       [29212] = SMARTDEBUFF_POISON,    -- cripple
       [1224125] = SMARTDEBUFF_MAGIC,    -- silence
+      [18327] = SMARTDEBUFF_MAGIC,    -- silence
       [26580] = SMARTDEBUFF_MAGIC,    -- fear
+      [12096] = SMARTDEBUFF_MAGIC,    -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [14907] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [12889] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [13338] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [17293] = SMARTDEBUFF_MAGIC,    -- burning-winds
+      [16867] = SMARTDEBUFF_CURSE,    -- banshee-curse
+      [15499] = SMARTDEBUFF_MAGIC,    -- frost-shock
+      [7964] = SMARTDEBUFF_MAGIC, -- smoke-bomb
     },
     [429] = {
       __name = "Dire Maul",
@@ -304,9 +379,18 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [8399] = SMARTDEBUFF_MAGIC,    -- sleep
       [29212] = SMARTDEBUFF_POISON,    -- cripple
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
       [7645] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [12889] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [13338] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [8994] = SMARTDEBUFF_MAGIC,    -- banish
+      [12096] = SMARTDEBUFF_MAGIC,    -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
     },
     [230] = {
       __name = "Blackrock Depths",
@@ -314,10 +398,19 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __ext = "",
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [8282] = SMARTDEBUFF_CURSE,    -- curse-of-blood
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
+      [12889] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [13338] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [8994] = SMARTDEBUFF_MAGIC,    -- banish
+      [15499] = SMARTDEBUFF_MAGIC,    -- frost-shock
     },
     [229] = {
       __name = "Blackrock Spire",
@@ -326,8 +419,74 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
       [8282] = SMARTDEBUFF_CURSE,    -- curse-of-blood
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
+    },
+
+    [33] = {
+      __name = "Shadowfang Keep",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [853] = SMARTDEBUFF_MAGIC,     -- Hammer of Justice
+      [122] = SMARTDEBUFF_MAGIC,     -- Frost Nova
+    },
+
+    [48] = {
+      __name = "Blackfathom Deeps",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
+      [700] = SMARTDEBUFF_MAGIC,     -- Sleep
+      [8399] = SMARTDEBUFF_MAGIC,     -- Sleep
+      [246] = SMARTDEBUFF_MAGIC,     -- Slow
+      [435169] = SMARTDEBUFF_POISON, -- Poison Cloud
+      [3815] = SMARTDEBUFF_POISON, -- Poison Cloud
+      [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [15499] = SMARTDEBUFF_MAGIC,    -- frost-shock
+    },
+
+    [70] = {
+      __name = "Uldaman",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [9482]  = SMARTDEBUFF_MAGIC,  -- amplify-flames
+      [3356]  = SMARTDEBUFF_MAGIC,  -- flame-lash
+      [8053]  = SMARTDEBUFF_MAGIC,  -- flame-shock
+      [11892] = SMARTDEBUFF_CURSE,  -- shrink
+      [18327] = SMARTDEBUFF_MAGIC,    -- silence
+    },
+
+    [209] = {
+      __name = "Zul'Farrak",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [11836] = SMARTDEBUFF_MAGIC,   -- freeze-solid
+      [8600]  = SMARTDEBUFF_DISEASE, -- fevered-plague
+      [1294626] = SMARTDEBUFF_CURSE,  -- Theka's Last Breath
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+    },
+
+    [109] = {
+      __name = "Sunken Temple",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [1714] = SMARTDEBUFF_CURSE, -- Curse of Tongues
+    },
+
+    [349] = {
+      __name = "Maraudon",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [7964] = SMARTDEBUFF_MAGIC, -- smoke-bomb
+      [21687] = SMARTDEBUFF_POISON, -- toxic-volley
+      [12747] = SMARTDEBUFF_CURSE, -- entangling-roots
     },
 
     -- Generic / Outside instances / PvP
@@ -339,16 +498,25 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       -- PNJ
       [12054]   = SMARTDEBUFF_BLEEDING, -- rend
       [26070]  = SMARTDEBUFF_MAGIC,   -- fear
+      [12542] = SMARTDEBUFF_MAGIC,    -- fear
       [3427] = SMARTDEBUFF_DISEASE,    -- infected-wound
       [1304473] = SMARTDEBUFF_CURSE,    -- curse-of-thorns
       [7399] = SMARTDEBUFF_MAGIC,    -- terrify
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [8399] = SMARTDEBUFF_MAGIC,    -- sleep
       [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
+      [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [15531] = SMARTDEBUFF_MAGIC,    -- frost-nova
+      [14907] = SMARTDEBUFF_MAGIC,     -- Frost Nova
       [11639] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
       [19776] = SMARTDEBUFF_MAGIC,    -- shadow-word-pain
+      [15548] = SMARTDEBUFF_MAGIC,    -- thunderclap
+      [14515] = SMARTDEBUFF_MAGIC,    -- dominate-mind
+      [13338] = SMARTDEBUFF_CURSE,    -- curse-of-tongues
+      [15499] = SMARTDEBUFF_MAGIC,    -- frost-shock
 
       -- DEATH KNIGHT
 
