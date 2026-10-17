@@ -1338,7 +1338,10 @@ local function ReplaceDeprecatedOptions(options)
     options.ShowIF_Old = options.ShowIF
     options.ShowIF = false
   end
-  -- options.UseSound: no code support
+  if options.ShowNotRemov_Old == nil then
+    options.ShowNotRemov_Old = options.ShowNotRemov
+    options.ShowNotRemov = false
+  end
 end
 
 -- Init the KDecurse variables ---------------------------------------------------------------------------------------
@@ -1436,6 +1439,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.ShowRoleIcon == nil) then O.ShowRoleIcon = false; end
   if (O.ShowRoleDpsIcon == nil) then O.ShowRoleDpsIcon = false; end
   if (O.RaidIconSize == nil) then O.RaidIconSize = 12; end
+  if (O.ShowDebuffTooltip == nil) then O.ShowDebuffTooltip = true; end
   if (O.ShowNotRemov == nil) then O.ShowNotRemov = false; end
   if (O.CheckInterval == nil) then O.CheckInterval = 0.1; end
   if (O.ShowBackdrop == nil) then O.ShowBackdrop = true; end
@@ -1446,6 +1450,7 @@ function SMARTDEBUFF_Options_Init()
   if (O.StopCast == nil) then O.StopCast = true; end
   if (O.IgnoreDebuff == nil) then O.IgnoreDebuff = true; end
   if (O.ChatNotif == nil) then O.ChatNotif = true; end
+  if (O.ShowAuraSpellIDs == nil) then O.ShowAuraSpellIDs = false; end
   --O.AutoHide = false;
 
   if (O.ShowMsgNormal == nil) then O.ShowMsgNormal = true; end
@@ -1589,8 +1594,9 @@ function SMARTDEBUFF_Options_Init()
     SMARTDEBUFF_ShowWhatsNew()
   end
 
-  SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
 
+  
+  SMARTDEBUFF_CheckCVars();
   SMARTDEBUFF_CheckWarlockPet();
   SMARTDEBUFF_CheckSF();
   SMARTDEBUFF_CheckForSpellUpgrade();
@@ -1598,6 +1604,10 @@ function SMARTDEBUFF_Options_Init()
   SMARTDEBUFF_CheckAutoHide();
 end
 -- END SMARTDEBUFF_Options_Init
+
+function SMARTDEBUFF_CheckCVars()
+  SetCVar("tooltipShowAuraSpellIDs", (O.Debug or O.ShowAuraSpellIDs) and "1" or "0")
+end
 
 
 function SMARTDEBUFF_SetDefaultColors()
@@ -1980,7 +1990,7 @@ function SMARTDEBUFF_command(msgIn)
     O.Debug = SMARTDEBUFF_toggleBool(O.Debug, "Debug active = ");
     if (O.DebugMagic) then O.DebugMagic = false; SMARTDEBUFF_LinkSpellsToKeys(); SMARTDEBUFF_FilterStringToggle(false) end
     if (O.Debug) then SMARTDEBUFF_AddMsg("Hover buttons with modifier for actions debug"); end
-    SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
+    SMARTDEBUFF_CheckCVars();
 
   elseif (msg == "debugm") then
     ---@deprecated
@@ -1992,7 +2002,7 @@ function SMARTDEBUFF_command(msgIn)
     O.Debug = O.DebugMagic
     SMARTDEBUFF_FilterStringToggle(O.DebugMagic)
     if (O.Debug) then SMARTDEBUFF_AddMsg("Hover buttons with modifier for actions debug"); end
-    SetCVar("tooltipShowAuraSpellIDs", O.Debug and "1" or "0")
+    SMARTDEBUFF_CheckCVars()
     SMARTDEBUFF_LinkSpellsToKeys()
     SMARTDEBUFF_RefreshAOFKeys()
   elseif (msg == "reset") then
@@ -2867,7 +2877,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             initializeFrame = function(auraButton)
               auraButton:SetAllPoints(button);
               auraButton:SetFrameStrata("HIGH")
-              auraButton:EnableMouse(true);
+              auraButton:EnableMouse(O.ShowDebuffTooltip);
 
               local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
               colorOverlay:SetBlendMode("BLEND");
@@ -4014,7 +4024,7 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
           -- Refresh if needed only -- TODO MOVE
           if (btn.spellGuardCompare ~= table.concat(O.SpellGuard, ", ")) then
             btn.spellGuardCompare = table.concat(O.SpellGuard, ", ")
-            SMARTDEBUFF_AddMsgD(COL.YLD.."SpellGuard: Add icons for: "..btn.spellGuardCompare)
+            SMARTDEBUFF_AddMsgDT(COL.YLD.."SpellGuard: Add icons for: "..btn.spellGuardCompare)
             if (btn.sdbSpellGuardSlots == nil) then
               btn.sdbSpellGuardSlots = {};
             end

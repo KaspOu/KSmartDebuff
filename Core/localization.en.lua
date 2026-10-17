@@ -9,10 +9,9 @@ SMARTDEBUFF_UPGRADED = "KDecurse upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-SmartDebuff is now
-
-   |cff00ff00K|r|cffffffff Decurse|r !
-
+|cfffff2cc> New options :|r
+  - Debuff tooltip
+  - Show Aura Spell IDs
 
 |cfffff2cc> Fixed :|r
   - Midnight dungeons sounds
@@ -28,6 +27,12 @@ SmartDebuff is now
 |cffff1010WARNING:|r
 |cfffff2ccBlizzard known issues:|r
 FPS drops (with units far far away...) |cff4f81bd(Midnight)|r
+
+
+
+
+
+             |cff00ff00K|r|cffffffffDecurse|r |cff999999/ SmartDebuff|r
 ]];
 
 --@do-not-package@
@@ -133,6 +138,8 @@ SMARTDEBUFF_OFT_OPACITYNORMAL  = "Opacity in range";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Opacity out of range";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacity debuff";
 SMARTDEBUFF_OFT_NOTREMOVABLE   = "Debuff Guard";
+SMARTDEBUFF_OFT_DEBUFFTOOLTIP  = "Debuff tooltip";
+SMARTDEBUFF_OFT_AURASPELLIDS   = "Show Aura Spell IDs";
 SMARTDEBUFF_OFT_VEHICLE        = "Vehicles";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Raid icons";
 SMARTDEBUFF_OFT_SHOWROLEICON   = "Role icons (tank / heal)";
@@ -164,6 +171,8 @@ SMARTDEBUFF_S_TITLE            = "Debuff Alert Sound";
 SMARTDEBUFF_TT                 = "Shift-Left drag: Move frame\n|cff20d2ff- K button -|r\nLeft click: Show by class, role or group\nShift-Left click: Class colors\nAlt-Left click: Highlight L/R/M\nRight click: Background";
 SMARTDEBUFF_TT_TARGETMODE      = "In normal mode |cff20d2ffLeft click|r dispels unit\n \nIn Target mode |cff20d2ffLeft click|r selects the unit,\nuse |cff20d2ffAlt-Left/Right click|r to dispel,\nand |cff20d2ffRight click|r casts the fastest heal spell.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Displays critical debuffs\nwhich are not removable.";
+SMARTDEBUFF_TT_DEBUFFTOOLTIP   = "Displays debuff tooltip on mouseover.";
+SMARTDEBUFF_TT_AURASPELLIDS    = "|cffffffffBlizzard:|r Displays the spell ID of auras\n(buffs and debuffs) in tooltips..";
 SMARTDEBUFF_TT_HP              = "Displays actual health\npoints of the unit.";
 SMARTDEBUFF_TT_MANA            = "Displays actual mana\npool of the unit.";
 SMARTDEBUFF_TT_HPTEXT          = "Displays actual hp/mana\npool as percentage of\nthe unit as text.";
