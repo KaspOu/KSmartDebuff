@@ -1,3 +1,8 @@
+v12.1.502
+- New options:
+  - Debuff tooltip
+  - Show Aura Spell IDs
+
 v12.1.501
 - Fixed S2 dungeons sounds detection
 - Added: The Unbinding of Kith'ix

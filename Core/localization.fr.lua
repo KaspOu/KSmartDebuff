@@ -6,10 +6,9 @@ SMARTDEBUFF_UPGRADED = "KDecurse mis \195\160 jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
-SmartDebuff devient
-
-   |cff00ff00K|r|cffffffff Decurse|r !
-
+|cfffff2cc> Nouvelles options :|r
+  - Infobulle de débuff
+  - IDs de sort d'aura
 
 |cfffff2cc> Corrigé :|r
   - Son des donjons Midnight
@@ -25,6 +24,12 @@ SmartDebuff devient
 |cffff1010ATTENTION :|r
 |cfffff2ccBugs côté Blizzard :|r
 Chutes de FPS (avec des unités très distantes, ...) |cff4f81bd(Midnight)|r
+
+
+
+
+
+             |cff00ff00K|r|cffffffffDecurse|r |cff999999/ SmartDebuff|r
 ]]
 
 --@do-not-package@
@@ -131,6 +136,8 @@ SMARTDEBUFF_OFT_OPACITYNORMAL  = "Opacit\195\169 \195\160 port\195\169e";
 SMARTDEBUFF_OFT_OPACITYOOR     = "Opacit\195\169 hors de port\195\169e";
 SMARTDEBUFF_OFT_OPACITYDEBUFF  = "Opacit\195\169 des d\195\169buffs";
 SMARTDEBUFF_OFT_NOTREMOVABLE   = "D\195\169buffs critiques";
+SMARTDEBUFF_OFT_DEBUFFTOOLTIP  = "Infobulle de d\195\169buff";
+SMARTDEBUFF_OFT_AURASPELLIDS   = "IDs de sort d'aura";
 SMARTDEBUFF_OFT_VEHICLE        = "V\195\169hicules";
 SMARTDEBUFF_OFT_SHOWRAIDICON   = "Ic\195\180nes de raid";
 SMARTDEBUFF_OFT_SHOWROLEICON   = "Ic\195\180nes de r\195\180le (tank/heal)";
@@ -161,6 +168,8 @@ SMARTDEBUFF_S_TITLE            = "Son d'alerte de d\195\169buff";
 SMARTDEBUFF_TT                 = "Glisser le titre avec Maj-Clic gauche : D\195\169place le cadre\n|cff20d2ff- Bouton K -|r\nClic gauche : Afficher par classe, r\195\180le ou groupe\nMaj-Clic gauche : Couleurs de classe\nAlt-Clic gauche : Mise en avant G/D/M\nClic droit : Arri\195\168re-plan";
 SMARTDEBUFF_TT_TARGETMODE      = "En mode normal, |cff20d2ffClic gauche|r dissipe l'unit\195\169...\n \nEn mode cible, |cff20d2ffClic gauche|r s\195\169lectionne l'unit\195\169,\ndissipez avec |cff20d2ffAlt-Clic|r\net |cff20d2ffClic droit|r lance le sort de soin le plus rapide.|r.";
 SMARTDEBUFF_TT_NOTREMOVABLE    = "Affiche les d\195\169buffs critiques\nqui ne sont pas dissipables.";
+SMARTDEBUFF_TT_DEBUFFTOOLTIP   = "Affiche les infobulles des d\195\169buffs\nau survol.";
+SMARTDEBUFF_TT_AURASPELLIDS    = "|cffffffffBlizzard:|r Affiche le Spell ID des auras\n(buffs et debuffs) dans les infobulles.";
 SMARTDEBUFF_TT_HP              = "Affiche les points de vie\nr\195\169els de l'unit\195\169.";
 SMARTDEBUFF_TT_MANA            = "Affiche la barre de mana\nr\195\169elle de l'unit\195\169.";
 SMARTDEBUFF_TT_HPTEXT          = "Affiche les points de vie/mana\nr\195\169els en pourcentage de\nl'unit\195\169 en texte.";
