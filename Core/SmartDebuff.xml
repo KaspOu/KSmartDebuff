@@ -1147,7 +1147,9 @@
           <OnClick>
             SMARTDEBUFF_Options.ShowPets = not SMARTDEBUFF_Options.ShowPets;
             SMARTDEBUFF_SetPetButtons(true);
-            SMARTDEBUFF_SetAuraSoundsTestMode()
+            if SMARTDEBUFF_SetAuraSoundsTestMode then
+              SMARTDEBUFF_SetAuraSoundsTestMode()
+            end
           </OnClick>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -1181,7 +1183,9 @@
           <OnClick>
             SMARTDEBUFF_Options.ShowPetsWL = not SMARTDEBUFF_Options.ShowPetsWL;
             SMARTDEBUFF_SetPetButtons(true);
-            SMARTDEBUFF_SetAuraSoundsTestMode()
+            if SMARTDEBUFF_SetAuraSoundsTestMode then
+              SMARTDEBUFF_SetAuraSoundsTestMode()
+            end
           </OnClick>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -1218,7 +1222,9 @@
           <OnClick>
             SMARTDEBUFF_Options.ShowPetsDK = not SMARTDEBUFF_Options.ShowPetsDK;
             SMARTDEBUFF_SetPetButtons(true);
-            SMARTDEBUFF_SetAuraSoundsTestMode()
+            if SMARTDEBUFF_SetAuraSoundsTestMode then
+              SMARTDEBUFF_SetAuraSoundsTestMode()
+            end
           </OnClick>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -2086,7 +2092,9 @@
               SMARTDEBUFF_Options.ShowVehicles = not SMARTDEBUFF_Options.ShowVehicles;
               SMARTDEBUFF_CreateButtonsPetsIfEnabled()
               SMARTDEBUFF_SetButtons();
-              SMARTDEBUFF_SetAuraSoundsTestMode()
+              if SMARTDEBUFF_SetAuraSoundsTestMode then
+                SMARTDEBUFF_SetAuraSoundsTestMode()
+              end
             end
           </OnClick>
           <OnEnter>

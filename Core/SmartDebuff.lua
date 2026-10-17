@@ -175,9 +175,8 @@ StaticPopupDialogs["SMARTDEBUFF_RESET_KEYS"] = {
 
 
 -- Rounds a number to the given number of decimal places.
-local r_mult;
 local function Round(num, idp)
-  r_mult = 10^(idp or 0);
+  local r_mult = 10^(idp or 0);
   return math.floor(num * r_mult + 0.5) / r_mult;
 end
 
@@ -588,12 +587,12 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
 end
 -- END SMARTDEBUFF_OnEvent
 
-local ou_time = 0;
 function SMARTDEBUFF_OnUpdate(self, elapsed)
   if (isInit) then
     SMARTDEBUFF_Ticker(false);
     SMARTDEBUFF_CheckDebuffs(false);
   else
+    local ou_time = 0;
     ou_time = ou_time + elapsed;
     if (not isTTreeLoaded and ou_time > 0.5) then
       if SMARTDEBUFF_NO_TALENT then
@@ -2557,14 +2556,14 @@ end
 local cacheTextColorByButtonIndex = {}
 
 local function SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-  local sbs_color = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
-  local k = string.format("%.3f,%.3f,%.3f", sbs_color.r or 0, sbs_color.g or 0, sbs_color.b or 0)
+  local color = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+  local k = string.format("%.3f,%.3f,%.3f", color.r or 0, color.g or 0, color.b or 0)
 
   if cacheTextColorByButtonIndex[k] then
     return cacheTextColorByButtonIndex[k]
   end
 
-  local h, s, l = rgb_to_hsl(sbs_color.r, sbs_color.g, sbs_color.b)
+  local h, s, l = rgb_to_hsl(color.r, color.g, color.b)
 
   -- 1. Booster la luminosité et la saturation
   l = math.min(1, l * .8 + 0.40) -- Éclaircit fortement
@@ -2711,7 +2710,7 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
 
   local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
   local shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(charmCooldown)
-  local sbs_text_dispel, sbs_color = (buttons[buttonIndex] or ""), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+  local sbo_text_dispel, sbo_color = (buttons[buttonIndex] or ""), SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
   if shouldShowDebuff then
     button.colorOverlay:SetColorTexture(1, 1, 1, 1);
     if O.ColDTexture == "-" then
@@ -2719,18 +2718,18 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
     elseif O.ColDTexture ~= "" then
       button.colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
     end
-    button.border:SetVertexColor(sbs_color.r, sbs_color.g, sbs_color.b, 1);
+    button.border:SetVertexColor(sbo_color.r, sbo_color.g, sbo_color.b, 1);
     if (inRange == 1) then
-      button.colorOverlay:SetVertexColor(sbs_color.r, sbs_color.g, sbs_color.b, 1);
+      button.colorOverlay:SetVertexColor(sbo_color.r, sbo_color.g, sbo_color.b, 1);
     else
-      button.colorOverlay:SetVertexColor(sbs_color.r / 2, sbs_color.g / 2, sbs_color.b / 2, 1);
+      button.colorOverlay:SetVertexColor(sbo_color.r / 2, sbo_color.g / 2, sbo_color.b / 2, 1);
     end
     if (O.ShowLR) then
       button.textOverlay:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
       local offsetY = -math.floor((O.BtnH - 20) / 10)
       button.textOverlay:SetPoint("CENTER", button, "CENTER", 0, offsetY);
-      sbs_text_dispel = inRange == 1 and sbs_text_dispel or "-"
-      button.textOverlay:SetText(sbs_text_dispel)
+      sbo_text_dispel = inRange == 1 and sbo_text_dispel or "-"
+      button.textOverlay:SetText(sbo_text_dispel)
       local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
       button.textOverlay:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, 1)
     end
@@ -2738,7 +2737,7 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
   button.btnOverlay:SetAlphaFromBoolean(shouldShowDebuff, O.ADebuff, 0)
   button.btnOverlay:SetShown(UnitIsCharmed(unit))
   if (not forceShown) then
-    SMARTDEBUFF_AddMsgD("Charmed overlay for button " .. buttonIndex.. " ("..(tostring(sbs_text_dispel))..")")
+    SMARTDEBUFF_AddMsgD("Charmed overlay for button " .. buttonIndex.. " ("..(tostring(sbo_text_dispel))..")")
   end
   if (forceShown == true) then
     button.btnOverlay:Show()
@@ -2920,11 +2919,11 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
       end
     end
     if (SMARTDEBUFF_IS_DEV and O.ShowNotRemov ~= false) then
-      local sbs_ln = 5.5
-      local sbs_wd = math.floor(button:GetWidth() / sbs_ln - 1);
+      local ln = 5.5
+      local wd = math.floor(button:GetWidth() / ln - 1);
       local btnTxt = unit and strsub(UnitName(unit), 0, 4) or ""
-      if (string.len(btnTxt) > sbs_wd) then
-        btnTxt = btnTxt:utf8sub(1, sbs_wd);
+      if (string.len(btnTxt) > wd) then
+        btnTxt = btnTxt:utf8sub(1, wd);
       end
 
       local ids, list = {}, {}
@@ -3298,9 +3297,8 @@ local placeholders = {
   "Hella",
 }
 
+local sbs_wd, sbs_ln
 local SMARTDEBUFF_DEBUG_DISPELS = {}
-local sbs_btn, sbs_unit_name, sbs_unit_class, sbs_text, sbs_text_dispel, sbs_fontH, sbs_pre, sbs_ln, sbs_wd, sbs_is_off, sbs_unit, sbs_in_vehicle, sbs_ready, sbs_cd;
-local sbs_color = { r = 0.39, g = 0.42, b = 0.64 };
 --- Sets the visual state of a KDecurse button.
 --- @param unit string The unit ID (e.g., "raid1", "player", "pet1").
 --- @param idx number The index of the button.
@@ -3311,6 +3309,9 @@ local sbs_color = { r = 0.39, g = 0.42, b = 0.64 };
 --- @param spellCD number Spell cooldown (in seconds).
 --- @param spellDuration? userdata Cooldown DurationObject
 function SMARTDEBUFF_SetButtonState(unit, idx, nr, isInRange, remains, isPet, spellCD, spellDuration)
+  local sbs_btn, sbs_unit_name, sbs_unit_class, sbs_text, sbs_text_dispel, sbs_fontH, sbs_pre, sbs_is_off, sbs_unit, sbs_in_vehicle, sbs_ready, sbs_cd;
+  local sbs_color = { r = 0.39, g = 0.42, b = 0.64 };
+
   sbs_btn = nil;
   sbs_unit_name = ""; -- Name (Austin Huxworth)
   sbs_unit_class = "";
@@ -3726,63 +3727,69 @@ end
 -- https://warcraft.wiki.gg/wiki/ScriptObject_ColorCurveObject
 --- @deprecated
 function SMARTDEBUFF_SetButtonState_Curve_Secrets(unit, idx, nr, isInRange, remains, isPet, durationObject, auraInstanceID, auraIcon)
+  local sbsc_btn
+  if (isPet) then
+    sbsc_btn = _G["SmartDebuffPetBtn"..idx];
+  else
+    sbsc_btn = _G["SmartDebuffBtn"..idx];
+  end
+
+  if (not sbsc_btn) then return; end
+
   if (auraInstanceID) then
     if (O.ShowLR) then
-      sbs_btn.text1:SetText(SMARTDEBUFF_KEY_L);
-      sbs_btn.text2:SetText(SMARTDEBUFF_KEY_M);
-      sbs_btn.text3:SetText(SMARTDEBUFF_KEY_R);
+      sbsc_btn.text1:SetText(SMARTDEBUFF_KEY_L);
+      sbsc_btn.text2:SetText(SMARTDEBUFF_KEY_M);
+      sbsc_btn.text3:SetText(SMARTDEBUFF_KEY_R);
     end
     local dispelTypeColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelBG)
     local txtLColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextL)
     local txtMColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextM)
     local txtRColor = C_UnitAuras.GetAuraDispelTypeColor(unit, auraInstanceID, curves.dispelTextR)
-    sbs_btn.textureDispel:SetColorTexture(dispelTypeColor:GetRGBA())
+    sbsc_btn.textureDispel:SetColorTexture(dispelTypeColor:GetRGBA())
     if O.ColDTexture == "-" then
-      sbs_btn.textureDispel:SetTexture(auraIcon)
+      sbsc_btn.textureDispel:SetTexture(auraIcon)
     elseif O.ColDTexture ~= "" then
-      sbs_btn.textureDispel:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
+      sbsc_btn.textureDispel:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
     end
-    sbs_btn.textureDispel:SetVertexColor( dispelTypeColor:GetRGBA())
-    sbs_btn.border:SetVertexColor(dispelTypeColor:GetRGBA())
-    sbs_btn.text1:SetVertexColor(txtLColor:GetRGBA())
-    sbs_btn.text2:SetVertexColor(txtMColor:GetRGBA())
-    sbs_btn.text3:SetVertexColor(txtRColor:GetRGBA())
+    sbsc_btn.textureDispel:SetVertexColor( dispelTypeColor:GetRGBA())
+    sbsc_btn.border:SetVertexColor(dispelTypeColor:GetRGBA())
+    sbsc_btn.text1:SetVertexColor(txtLColor:GetRGBA())
+    sbsc_btn.text2:SetVertexColor(txtMColor:GetRGBA())
+    sbsc_btn.text3:SetVertexColor(txtRColor:GetRGBA())
   else
     -- not detected: show default
-    sbs_btn.text1:SetText("");
-    sbs_btn.textureDispel:SetVertexColor(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
-    sbs_btn.textureDispel:SetColorTexture(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
-    sbs_btn.border:SetVertexColor(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
-    sbs_btn.text1:SetVertexColor(1, 1, 1, 1)
-    sbs_btn.text2:SetVertexColor(1, 1, 1, 0)
-    sbs_btn.text3:SetVertexColor(1, 1, 1, 0)
+    sbsc_btn.text1:SetText("");
+    sbsc_btn.textureDispel:SetVertexColor(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
+    sbsc_btn.textureDispel:SetColorTexture(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
+    sbsc_btn.border:SetVertexColor(O.ColDebuffNR.r, O.ColDebuffNR.g, O.ColDebuffNR.b, 1)
+    sbsc_btn.text1:SetVertexColor(1, 1, 1, 1)
+    sbsc_btn.text2:SetVertexColor(1, 1, 1, 0)
+    sbsc_btn.text3:SetVertexColor(1, 1, 1, 0)
   end
   if (isInRange ~= 1) then
-    sbs_btn.textureDispel:SetVertexColor(.5, .5, .5, 1);
+    sbsc_btn.textureDispel:SetVertexColor(.5, .5, .5, 1);
     if (O.ShowLR) then
-      sbs_btn.text1:SetText("-")
-      sbs_btn.text2:SetText("-")
-      sbs_btn.text3:SetText("-")
+      sbsc_btn.text1:SetText("-")
+      sbsc_btn.text2:SetText("-")
+      sbsc_btn.text3:SetText("-")
     end
   end
-  -- sbs_btn.texture:SetGradient("HORIZONTAL", CreateColor(sbs_color.r, sbs_color.g, sbs_color.b, 1), CreateColor(sbs_color.r, sbs_color.g, sbs_color.b, 1) )
-  sbs_btn:SetAlpha((isInRange == 1) and O.ANormal or O.ANormalOOR);
-  sbs_btn.dispelOverlay:SetAlpha(O.ADebuff)
-  sbs_btn.text:SetAlpha(0)
-  if (O.ShowLR) then
-    sbs_fontH = O.BtnH - 2;
-  end
+  sbsc_btn:SetAlpha((isInRange == 1) and O.ANormal or O.ANormalOOR);
+  sbsc_btn.dispelOverlay:SetAlpha(O.ADebuff)
+  sbsc_btn.text:SetAlpha(0)
 end
 
-local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_nmax, sbb_n, sbb_per, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y, sbb_txtr;
-local sbb_col = { r = 0, g = 1, b = 0 };
 
 function SmartDebuff_SetButtonBars(btn, unit, unitclass)
   if (unit) then -- and btn:IsVisible()
+    local sbb_w, sbb_h, sbb_upt, sbb_cur, sbb_idx, sbb_nmax, sbb_n, sbb_per, sbb_dg, sbb_s, sbb_exp, sbb_gr, sbb_ach, sbb_x, sbb_xo, sbb_y, sbb_txtr;
+    local sbb_col = { r = 0, g = 1, b = 0 };
+
     if (UnitIsDeadOrGhost(unit) or not UnitIsConnected(unit)) then
-      sbb_dg = true;
+      sbb_dg = UnitIsDeadOrGhost(unit) and { r = 1, g = .2, b = .2 } or { r = .5, g = .5, b = .5 } ;
     else
-      sbb_dg = false;
+      sbb_dg = nil;
     end
     sbb_h = O.BarH
     if (O.BarH > (btn:GetHeight() / 2)) then sbb_h = btn:GetHeight() / 2; end
@@ -3799,10 +3806,16 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
 
     if (ST.iTest > 0) then
       sbb_nmax = ST.iTest
-      sbb_cur = tonumber(string.match(unit, "%d+"))
+      sbb_idx = tonumber(string.match(unit, "%d+"))
+      sbb_cur = sbb_idx
       sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
-      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE") and 0 or 1
-      sbb_dg = sbb_cur <= 0
+      sbb_upt = (unitclass == "SHAMAN" or unitclass == "DRUID" or unitclass == "MAGE" or unitclass == "EVOKER") and 0 or 1
+      sbb_dg = math.fmod(sbb_idx, 9) == 0 and { r = 1, g = .2, b = .2 } or nil
+    end
+    if sbb_dg then
+      btn.text:SetTextColor(sbb_dg.r, sbb_dg.g, sbb_dg.b)
+    else
+      btn.text:SetTextColor(1, 1, 1)
     end
 
     if (O.ShowHPText) then
@@ -3863,7 +3876,8 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     end
     if (ST.iTest > 0) then
       sbb_nmax = ST.iTest
-      sbb_cur = tonumber(string.match(unit, "%d+"))
+      -- sbb_idx = tonumber(string.match(unit, "%d+"))
+      sbb_cur = sbb_idx
       sbb_per = tonumber(sbb_nmax > 0 and string.format("%d", (sbb_cur / sbb_nmax) * 100) or "0")
     end
     if (O.Invert) then
@@ -3959,10 +3973,9 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       if (sbb_n == 0) then
         sbb_n = GetRaidTargetIndex(unit);
         if (ST.iTest > 0) then
-          if (math.fmod(sbb_cur, 2) == 0 or sbb_cur > 22) then
-            sbb_n = nil;
-          else
-            sbb_n = math.fmod(math.floor(sbb_cur/2)+1,11);
+          sbb_n = nil;
+          if (math.fmod(sbb_idx, 4) == 0) then
+            sbb_n = math.fmod(math.floor((sbb_idx+1)/3)+1,11);
           end
         end
       end
@@ -4000,8 +4013,9 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
       sbb_gr = UnitGroupRolesAssigned(unit);
       if (ST.iTest > 0) then
         sbb_gr = "DAMAGER";
-        if (sbb_cur <= 6) then sbb_gr = "HEALER"; end
-        if (sbb_cur <= 2) then sbb_gr = "TANK"; end
+        if (sbb_idx <= 6) then sbb_gr = "HEALER"; end
+        if (sbb_idx <= 2) then sbb_gr = "TANK"; end
+
       end
       if sbb_gr ~= "NONE" and ((sbb_gr ~= "DAMAGER" and O.ShowRoleIcon) or (sbb_gr == "DAMAGER" and O.ShowRoleDpsIcon)) then
         sbb_s = IconCoords[sbb_gr];
@@ -4198,9 +4212,9 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
   end
 end
 
-local shl_wd;
 function SMARTDEBUFF_SetHeaderLabels(text, n, btn, icon)
   --SMARTDEBUFF_AddMsgD(n.." "..text);
+  local shl_wd;
   local lbl = _G["SmartDebuffTxt"..n];
   if (btn and btn:IsVisible() and O.ShowHeaders) then
     if (icon ~= nil and IconCoords[text] ~= nil) then
@@ -4224,7 +4238,7 @@ function SMARTDEBUFF_SetHeaderLabels(text, n, btn, icon)
       if (not text) then text = ""; end
       shl_wd = math.floor(btn:GetWidth() / 4 - 2);
       if (string.len(text) > shl_wd) then
-        text = text:utf8sub(1, sbs_wd)
+        text = text:utf8sub(1, shl_wd)
       end
       if (text ~= nil) then
         lbl:SetText(text);
@@ -4334,7 +4348,7 @@ function SMARTDEBUFF_SetStyle()
     sbtn = SecureButton_GetEffectiveButton(btn);
     unit = SecureButton_GetModifiedAttribute(btn, "unit", sbtn, "");
 
-    if (unit and not _G.InCombatLockdown()) then
+    if (unit and not InCombatLockdown()) then
       if (O.SortedByRole and (isRoleSet or ST.iTest > 0)) then
         if (btn:IsVisible()) then
           if (ST.iTest > 0) then
@@ -4623,8 +4637,8 @@ function SMARTDEBUFF_ButtonTooltipOnLeave()
   GameTooltip:Hide();
 end
 
-local gtl_text, gtl_obj;
 function SMARTDEBUFF_GetTooltipLine(line)
+  local gtl_text, gtl_obj;
   gtl_text = nil;
   gtl_obj = _G["SmartDebuffTooltipTextLeft" .. line];
   if (gtl_obj) then
@@ -4633,9 +4647,9 @@ function SMARTDEBUFF_GetTooltipLine(line)
   return gtl_text;
 end
 
-local io_text, io_nl, io_gname, io_i;
 function SMARTDEBUFF_IsOffline(unit)
   if (unit and UnitIsPlayer(unit)) then
+    local io_text, io_nl, io_gname, io_i;
     SmartDebuffTooltip:ClearLines();
     SmartDebuffTooltip:SetUnit(unit);
     io_nl = SmartDebuffTooltip:NumLines();
@@ -4658,11 +4672,11 @@ end
 
 -- KDecurse functions ---------------------------------------------------------------------------------------
 -- Main check function, called by update event
-local cd_i, cd_unit, cd_btn, cd_sbtn, cd_spell;
 function SMARTDEBUFF_CheckDebuffs(force)
   if (not isInit or not canDebuff or (not force and GetTime() < (tDebuff + O.CheckInterval))) then
     return;
   end
+  local cd_i, cd_unit, cd_btn, cd_sbtn, cd_spell;
   tDebuff = GetTime();
   hasDebuff = false;
 
@@ -4822,12 +4836,12 @@ function SMARTDEBUFF_GetFallbackDispelType_Secrets()
 end
 
 
-local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_id, cud_nrd, cud_tlnr, cud_cds;
 
 function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, pet)
   if (not SMARTDEBUFF_UseAuraContainerPath()) then
     return false
   end
+  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_id, cud_nrd, cud_tlnr, cud_cds;
   if (spell == nil) then
     cud_ir = -1;
   elseif (
@@ -4862,6 +4876,7 @@ end
 -- legacy path implementation
 --- @deprecated
 function SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet)
+  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_id, cud_nrd, cud_tlnr, cud_cds;
   cud_n = -1;
   cud_nrd = false;
   if ((spell or O.ShowNotRemov) and isActive) then
@@ -4960,6 +4975,7 @@ end
 -- secrets path implementation
 --- @deprecated
 function SMARTDEBUFF_CheckUnitDebuffs_Secrets(spell, unit, idx, isActive, pet)
+  local cud_name, cud_icon, cud_dtype, cud_uclass, cud_ir, cud_n, cud_dur, cud_tl, cud_id, cud_nrd, cud_tlnr, cud_cds;
   cud_n = -1;
   cud_nrd = false;
   if (spell and isActive) then
@@ -5354,7 +5370,6 @@ local function SetPosScrollButtons(parent, cBtn)
   end
 end
 
-local StartY, EndY;
 local function CreateScrollButton(name, parent, cBtn, onClick, onDragStop)
 	local button = CreateFrame("Button", name, parent);
 	button:SetWidth(parent:GetWidth());
@@ -5363,6 +5378,7 @@ local function CreateScrollButton(name, parent, cBtn, onClick, onDragStop)
 	button:SetScript("OnClick", onClick);
 
   if (onDragStop ~= nil) then
+    local StartY, EndY;
     button:SetMovable(true);
     button:RegisterForDrag("LeftButton");
     button:SetScript("OnDragStart", function(self, b)
