@@ -303,10 +303,10 @@ end
 --- @param i number Row index of the button
 --- @param extractDataOnly? boolean true if you want raw data
 --- @return string type
---- @return string name
+--- @return string? name
 --- @return string rank
 --- @return number spellID
---- @return string link
+--- @return string|number|nil link
 local function GetActionKeyInfo(mode, i, extractDataOnly)
   local aType, aName, aRank, aId, aLink = nil, nil, nil, nil, nil;
   if (O and O.Keys and O.Keys[mode] and SMARTDEBUFF_ORDER_KEYS[i] and O.Keys[mode][SMARTDEBUFF_ORDER_KEYS[i]]) then
@@ -1039,7 +1039,7 @@ function SDB_IsPassiveSpell(spellID, book)
     return C_Spell.IsSpellPassive(spellID)
   else
     -- Classic (was using bookIndex)
-    return IsPassiveSpell(FindSpellBookSlotBySpellID(spellID, book == BOOKTYPE_PET), book);
+    return IsPassiveSpell(FindSpellBookSlotBySpellID(spellID, book == BOOKTYPE_PET), book); ---@diagnostic disable-line: redundant-parameter
   end
 end
 
@@ -1074,7 +1074,7 @@ function SMARTDEBUFF_SetSpells()
           end
 
           -- Dispel found and available for current spec
-          if ns.IsSpellKnownOrInSpellBook(val.Spell_ID, val.Spell_Type == "petaction" and ns.Enum_SpellBookSpellBank_Pet or ns.Enum_SpellBookSpellBank_Player0, true) then
+          if ns.IsSpellKnownOrInSpellBook(val.Spell_ID, val.Spell_Type == "petaction" and ns.Enum_SpellBookSpellBank_Pet or ns.Enum_SpellBookSpellBank_Player0) then
             sName = sSpellInfo.name;
             cSpellList[sName] = val.Spell_List;
             SMARTDEBUFF_AddMsgD("Dispel found: " .. sName.." - "..strjoin(" ",unpack(cSpellList[sName])));
@@ -1157,7 +1157,7 @@ end
 --- @return boolean isSpellTalented returns true if talent is available and talented
 function SDB_IsSpellTalented(spellID)
   if SMARTDEBUFF_NO_TALENT then
-    return ns.IsSpellKnownOrInSpellBook(spellID, ns.Enum_SpellBookSpellBank_Player, true)
+    return ns.IsSpellKnownOrInSpellBook(spellID, ns.Enum_SpellBookSpellBank_Player)
   end
   return not not SDB_cachePlayerTalentsList[spellID]
 end
@@ -5410,7 +5410,7 @@ local function CreateScrollButton(name, parent, cBtn, onClick, onDragStop)
       self:StartMoving();
       end
     );
-    button:SetScript("OnDragStop", function(self, b)
+    button:SetScript("OnDragStop", function(self)
       EndY = self:GetTop();
       local i = tonumber(self:GetID()) + FauxScrollFrame_GetOffset(parent);
       local n = math.floor((StartY - EndY) / ScrBtnHeight);
@@ -5987,7 +5987,7 @@ function SmartDebuffAOFKeys_OnShow(self)
     elseif (aType == "menu") then
       SetATexture(btn, imgMenu);
     elseif (aType == "action" and aId) then
-      SetATexture(btn, ns.GetSpellTexture(aId, BOOKTYPE_PET) or imgMissing);
+      SetATexture(btn, ns.GetSpellTexture(aId) or imgMissing);
     else
       SetATexture(btn, imgActionSlot);
     end
@@ -6181,7 +6181,7 @@ function SMARTDEBUFF_DropAction(self, button)
         aName, aRank, aTexture = aSpellInfo.name,  "", aSpellInfo.iconID;
         SetActionInfo(mode, i, infoType, aName, aRank, spellId, ns.GetSpellLink(spellId));
         -- Spell can still be unpickable once dropped (if picked up before changing pet...)
-        isMovable = SMARTDEBUFF_IsSpellMovable(infoType, aName, aRank, spellId, _);
+        isMovable = SMARTDEBUFF_IsSpellMovable(infoType, aName, aRank, spellId, nil);
         isEnabled = isMovable and not not ns.GetSpellInfo(aName);
         bDroped = true;
       end
@@ -6275,11 +6275,11 @@ end
 
 --- Checks if a spell is movable in the game. If the game is in retail mode, it uses the ns.GetSpellInfo function to check the spell's movability.
 --- If the game is not in retail mode, the function always returns true, assuming all spells are movable.
---- @param spellType "spell"|"petaction" The type of the spell to check
---- @param spellName string The name of the spell to check
+--- @param spellType "spell"|"petaction"|"action"|"spell" The type of the spell to check
+--- @param spellName string|nil The name of the spell to check
 --- @param spellRank string The rank of the spell to check
 --- @param spellID number The ID of the spell to check
---- @param spellLink string The link of the spell to check
+--- @param spellLink string|number|nil The link of the spell to check
 --- @return boolean isSpellMovable true if the spell is movable, else false. If not in retail mode, always returns true.
 function SMARTDEBUFF_IsSpellMovable(spellType, spellName, spellRank, spellID, spellLink)
   -- Not movable if spec not enabled, since Dragonflight (10)

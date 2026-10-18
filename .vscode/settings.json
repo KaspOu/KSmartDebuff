@@ -223,7 +223,13 @@
         "GetSpellInfo",
         "MAP_LEGEND_DELVE",
         "SPELL_ID",
-        "SOUNDKIT"
+        "SOUNDKIT",
+        "SmartDebuffGridSetup_Title",
+        "SmartDebuffMisc",
+        "MISCELLANEOUS",
+        "SmartDebuffGridSetup",
+        "AddonCompartmentFrame",
+        "SmartDebuffMisc_Title"
     ],
     "Lua.diagnostics.disable": [
         "need-check-nil",
