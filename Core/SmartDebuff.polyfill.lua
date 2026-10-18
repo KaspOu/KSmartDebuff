@@ -52,13 +52,13 @@ ns.GetSpellInfo = C_Spell.GetSpellInfo or function (spellnameOrId)
 end
 
 ns.GetSpellName = C_Spell.GetSpellName or function (spellnameOrId)
-  local spellName = ns.GetSpellInfo(spellnameOrId);
-  return spellName
+  local spellInfo = ns.GetSpellInfo(spellnameOrId);
+  return spellInfo and spellInfo.name
 end
 
 ns.GetSpellTexture = C_Spell.GetSpellTexture or function (spellnameOrId)
-  local _, _, iconID = ns.GetSpellInfo(spellnameOrId);
-  return iconID
+  local spellInfo = ns.GetSpellInfo(spellnameOrId);
+  return spellInfo and spellInfo.iconID
 end
 
 -- Check for older API before newest
