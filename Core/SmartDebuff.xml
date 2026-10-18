@@ -2797,7 +2797,7 @@
             end
           </OnShow>
           <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE.."\n|cff1aff1a"..SMARTDEBUFF_TT_RELOADREQUIRED)
+            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE)
           </OnEnter>
           <OnLeave>
             GameTooltip:Hide()
@@ -3123,7 +3123,7 @@
         </Scripts>
       </Button>
 
-      <Button name="$parent_btnReload" inherits="UIPanelButtonTemplate" text="|cff00ffffReload">
+      <Button name="$parent_btnReload" inherits="UIMenuButtonStretchTemplate" text="|cff00ffffReload">
         <Size>
           <AbsDimension x="68" y="20" />
         </Size>
@@ -3182,7 +3182,7 @@
           </OnLeave>
         </Scripts>
       </Button>
-      <Button name="$parent_btnFakeMode" inherits="UIPanelButtonTemplate" text="|cffff5555Toggle">
+      <Button name="$parent_btnFakeMode" inherits="UIMenuButtonStretchTemplate" text="|cffff5555Toggle">
         <Size>
           <AbsDimension x="50" y="20" />
         </Size>
@@ -3730,6 +3730,9 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
+          <OnLoad>
+            self:SetAutoFocus(true);
+          </OnLoad>
 					<OnTabPressed>
 					</OnTabPressed>
 					<OnEnterPressed>
@@ -3739,8 +3742,9 @@
 						  self:SetText(spellInfo.spellID..": "..spellInfo.name)
 						  SMARTDEBUFF_AddTextToTable(self, SMARTDEBUFF_Options.NotRemovableDebuffs);
 						  SMARTDEBUFF_NRDOnScroll();
+            	PlaySound(SOUNDKIT.IG_MAINMENU_OPTION, "master")
 						else
-              PlaySoundFile(SDB_ERROR_SOUND, "master")
+              PlaySound(SDB_ERROR_SOUND, "master")
 						  SMARTDEBUFF_AddMsgErr('Please enter a SpellID')
 						end
 					</OnEnterPressed>
@@ -3880,6 +3884,9 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
+          <OnLoad>
+            self:SetAutoFocus(true);
+          </OnLoad>
 					<OnTabPressed>
 					</OnTabPressed>
 					<OnEnterPressed>
@@ -3889,6 +3896,7 @@
             if (not SMARTDEBUFF_Options.ShowSpellIcon) then
               SmartDebuffOF_cbShowSpellIcon:Click()
             end
+            PlaySound(SOUNDKIT.IG_MAINMENU_OPTION, "master")
 					</OnEnterPressed>
 				</Scripts>
 			</EditBox>

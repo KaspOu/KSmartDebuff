@@ -221,7 +221,9 @@
         "SmartDebuffOF_btnFakeModeText",
         "SmartDebuffOF_cbShowSpellIcon",
         "GetSpellInfo",
-        "MAP_LEGEND_DELVE"
+        "MAP_LEGEND_DELVE",
+        "SPELL_ID",
+        "SOUNDKIT"
     ],
     "Lua.diagnostics.disable": [
         "need-check-nil",
