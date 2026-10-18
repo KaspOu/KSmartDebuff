@@ -34,6 +34,7 @@ local shouldCallSetTalents = false;
 local shouldCallSetMacros = false;
 local shouldCallSetButtons = false;
 local shouldCallRefreshUI = false;
+local shouldCallRefreshTextures = false;
 local isSoundPlayed = false;
 local isSpellActive = true;
 local isLeader = false;
@@ -208,7 +209,7 @@ local COL = {
   GYL = BCC(0.65, 0.65, 0.65),
 };
 
-SDB_ERROR_SOUND = 565853; -- BellTollHorde.ogg
+SDB_ERROR_SOUND = SOUNDKIT.IG_QUEST_LOG_ABANDON_QUEST
 
 -- Global update: Sounds
 if SMARTDEBUFF_DISABLED_SOUNDS ~= "" then
@@ -2888,6 +2889,8 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                 colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
               end
               colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
+              auraButton.colorOverlay = colorOverlay
+              auraButton.ColDTexture = O.ColDTexture
 
               local border = auraButton:CreateTexture(nil, "OVERLAY")
               border:SetTexture("Interface\\Buttons\\CheckButtonHilight") -- Bordure brillante classique d'action bar
@@ -2895,6 +2898,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               border:SetPoint("TOPLEFT", auraButton, "TOPLEFT", -2, 2)
               border:SetPoint("BOTTOMRIGHT", auraButton, "BOTTOMRIGHT", 2, -2)
               border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
+              auraButton.border = border
 
               if (O.ShowLR) then
                 local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -2906,10 +2910,29 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
                 local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
                 text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
                 text:SetText(btnTxt)
+                auraButton.text = text
               end
+              dispelContainer.auraButton = auraButton
             end,
           });
           auraSlotByName[slotKey] = slotButton
+        -- elseif dispelContainer.auraButton:CanBeAccessedInContext() and dispelContainer.auraButton.ColDTexture ~= O.ColDTexture then
+        elseif shouldCallRefreshTextures and dispelContainer.auraButton:CanBeAccessedInContext() then
+            -- Renew
+            local auraButton = dispelContainer.auraButton
+            local colorOverlay, border, text = auraButton.colorOverlay, auraButton.border, auraButton.text
+            colorOverlay:SetColorTexture(1, 1, 1, 1)
+            if O.ColDTexture == "-" then
+              colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
+	            auraButton:SetIcon(colorOverlay)
+            elseif O.ColDTexture ~= "" then
+              colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
+            end
+            colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
+            border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
+            local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+            text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
+            auraButton.ColDTexture = O.ColDTexture
         end
         if unit ~= nil then
           dispelContainer:SetUnit(unit);
@@ -4676,6 +4699,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
   if (not isInit or not canDebuff or (not force and GetTime() < (tDebuff + O.CheckInterval))) then
     return;
   end
+  shouldCallRefreshTextures = force or false;
   local cd_i, cd_unit, cd_btn, cd_sbtn, cd_spell;
   tDebuff = GetTime();
   hasDebuff = false;
@@ -4794,6 +4818,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
   if (not hasDebuff) then
     isSoundPlayed = false;
   end
+  shouldCallRefreshTextures = false;
 end
 
 
@@ -5106,7 +5131,7 @@ function SMARTDEBUFF_OFOnShow()
   SMARTDEBUFF_CheckAutoHide();
   SMARTDEBUFF_CheckAnchorPos();
   SmartDebuffOF_Title:SetText(format("%s %s- %s", SMARTDEBUFF_OPTIONS_TITLE, COL.YLD, SMARTDEBUFF_SPELLS_VERSION));
-  if O.Debug then
+  if O.Debug or SMARTDEBUFF_IS_DEV then
     ShowF(SmartDebuffOF_btnReload);
     if (SMARTDEBUFF_AURACONTAINERS) then
       ShowF(SmartDebuffOF_btnFakeMode);
@@ -5498,6 +5523,7 @@ function SmartDebuff_NRDBtnOnClick(self, button)
     --SMARTDEBUFF_AddMsgD("Remove: "..n);
     if (O.NotRemovableDebuffs[n]) then
       table.remove(O.NotRemovableDebuffs, n);
+      PlaySound(SOUNDKIT.IG_MAINMENU_OPTION, "master")
     end
     SMARTDEBUFF_NRDOnScroll();
   end
@@ -5567,6 +5593,7 @@ function SmartDebuff_SpellGuardBtnOnClick(self, button)
     --SMARTDEBUFF_AddMsgD("Remove: "..n);
     if (O.SpellGuard[n]) then
       table.remove(O.SpellGuard, n);
+      PlaySound(SOUNDKIT.IG_MAINMENU_OPTION, "master")
     end
     SMARTDEBUFF_SpellGuardOnScroll();
     -- AutoDeactivate checkbox
@@ -6018,6 +6045,7 @@ function SMARTDEBUFF_PickAction(self, button)
             ns.PickupSpell(aId);
           else
             -- Do nothing (spell not found: can't move)
+            PlaySound(SDB_ERROR_SOUND, "master");
             return;
           end
         elseif (aType == "petaction") then
@@ -6041,7 +6069,7 @@ function SMARTDEBUFF_PickAction(self, button)
         end
         if (not GetCursorInfo()) then
           -- Unexpected error: Spell not pickable
-          PlaySoundFile(SDB_ERROR_SOUND, "master");
+          PlaySound(SDB_ERROR_SOUND, "master");
           SMARTDEBUFF_AddMsgErr(ChkS(aName).." #"..ChkS(aId)..", "..SMARTDEBUFF_TT_NOTMOVABLE, true)
           return;
         end
@@ -6169,7 +6197,7 @@ function SMARTDEBUFF_DropAction(self, button)
         end
         if (not GetCursorInfo()) then
           -- Unexpected: Spell not pickable
-          PlaySoundFile(SDB_ERROR_SOUND, "master");
+          PlaySound(SDB_ERROR_SOUND, "master");
           SMARTDEBUFF_AddMsgErr(ChkS(aNameOld).." #"..ChkS(aIdOld)..", "..SMARTDEBUFF_TT_NOTMOVABLE, true)
           return;
         end
@@ -6261,6 +6289,10 @@ function SMARTDEBUFF_BtnActionOnEnter(self, motion)
       local isEnabled = isMovable and not not ns.GetSpellInfo(aName);
 
       GameTooltip:SetSpellByID(aId);
+      if SPELL_ID and (O.ShowAuraSpellIDs or O.Debug) then
+        GameTooltip:AddLine(COL.YLD..string.format(SPELL_ID, aId));
+      end
+      GameTooltip:AddLine(isPet and COL.ORL..SMARTDEBUFF_TT_PETACTION.."\n\n" or " ");
       GameTooltip:AddLine(isPet and COL.ORL..SMARTDEBUFF_TT_PETACTION.."\n\n" or " ");
       if (not isMovable) then
         SMARTDEBUFF_GameTooltipDisable();
