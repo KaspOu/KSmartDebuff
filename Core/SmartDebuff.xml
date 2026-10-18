@@ -2762,6 +2762,8 @@
                 info.text = text
                 info.value = value
                 info.justifyH = "LEFT"
+                info.tooltipOnButton = true
+                info.hasArrow = false
 
                 info.func = function(btn)
                   -- Mise à jour lors de la sélection
