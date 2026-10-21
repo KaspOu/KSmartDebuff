@@ -295,6 +295,8 @@ local AURASOUNDS_SCROLL_SIZE = 40
 local auraSoundsTextLines = {}
 local auraSoundsLineCache = {}
 
+local locale = GetLocale()
+
 local function BuildAuraSoundsTextLines()
     wipe(auraSoundsTextLines)
     wipe(auraSoundsLineCache)
@@ -316,7 +318,7 @@ local function BuildAuraSoundsTextLines()
     for _, instanceID in ipairs(instanceIDs) do
         local instanceData = SMARTDEBUFF_DEBUFFS_LIST[instanceID]
         if currentID == -1 or currentID == instanceID and instanceData.__name then
-            local instanceName = instanceData.__name
+            local instanceName = instanceData["__name_" .. locale] or instanceData.__name
             local ext = instanceData.__ext or ""
             local typeLabel = instanceData.__type or ""
 
