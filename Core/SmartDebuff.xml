@@ -1666,12 +1666,12 @@
       </CheckButton>
       <Button name="$parent_btnKeys" inherits="UIPanelButtonTemplate" text="Keys" hidden="false">
         <Size>
-          <AbsDimension x="40" y="16"/>
+          <AbsDimension x="40" y="20"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbTargetMode">
             <Offset>
-              <AbsDimension x="106" y="1"/>
+              <AbsDimension x="106" y="4"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2585,6 +2585,117 @@
           <OnClick>SMARTDEBUFF_GridToggle();</OnClick>
         </Scripts>
       </Button>
+      
+  
+<Frame name="SmartDebuffOF_AdvancedMask" frameStrata="MEDIUM" enableMouse="true">
+  <Anchors>
+    <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_Title" relativePoint="BOTTOMLEFT">
+      <Offset><AbsDimension x="-2" y="-2"/></Offset>
+    </Anchor>
+    <Anchor point="RIGHT" relativeTo="SmartDebuffOF" relativePoint="RIGHT">
+      <Offset><AbsDimension x="-4" y="4"/></Offset>
+    </Anchor>
+    <Anchor point="BOTTOM" relativeTo="$parent_btnGridSetup" relativePoint="TOP">
+      <Offset><AbsDimension x="-4" y="4"/></Offset>
+    </Anchor>
+  </Anchors>
+
+  <Layers>
+    <Layer level="BACKGROUND">
+      <!-- Moitié supérieure : alpha constant à 0.70 -->
+      <Texture name="$parentMainTexture" file="Interface\Buttons\WHITE8X8">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+          <Anchor point="RIGHT"/>
+          <Anchor point="BOTTOM" relativePoint="CENTER"/>
+        </Anchors>
+        <Color r="0" g="0" b="0" a="0.85"/>
+      </Texture>
+
+      <!-- Moitié inférieure : dégradé de 0 à 0.70 -->
+      <Texture name="$parentBottomTexture" file="Interface\Buttons\WHITE8X8">
+        <Anchors>
+          <Anchor point="TOP" relativePoint="CENTER"/>
+          <Anchor point="LEFT"/>
+          <Anchor point="BOTTOMRIGHT"/>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self:SetGradient("VERTICAL",
+              CreateColor(0, 0, 0, 0),
+              CreateColor(0, 0, 0, 0.85)
+            );
+          </OnLoad>
+        </Scripts>
+      </Texture>
+
+    </Layer>
+    
+    <Layer level="OVERLAY">
+      <FontString name="$parentLabel" inherits="GameFontHighlight">
+        <Anchors>
+          <Anchor point="BOTTOM" relativeTo="SmartDebuffOF_btnKeys" relativePoint="TOP">
+            <Offset>
+              <AbsDimension x="0" y="4"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self:SetText(SMARTDEBUFF_OFT_SKILLS);
+          </OnLoad>
+        </Scripts>
+      </FontString>
+    </Layer>
+  </Layers>
+
+  <Frames>
+    <Button name="$parent_btnOptions" inherits="UIPanelButtonTemplate">
+      <Size><AbsDimension x="90" y="20"/></Size>
+      <Anchors>
+        <Anchor point="TOPLEFT">
+          <Offset><AbsDimension x="8" y="-8"/></Offset>
+        </Anchor>
+      </Anchors>
+      <Scripts>
+        <OnLoad>
+          self:SetText(OPTIONS);
+          self:SetNormalFontObject("GameFontNormalSmall");
+          self:SetHighlightFontObject("GameFontHighlightSmall");
+          self:SetAlpha(.9)
+        </OnLoad>
+        <OnClick>
+          SmartDebuffOF_AdvancedMask:Hide();
+        </OnClick>
+        <OnEnter>
+          SMARTDEBUFF_SetGameTooltip(self, OPTIONS, UNLOCK_FRAME);
+        </OnEnter>
+        <OnLeave>
+          GameTooltip:Hide();
+        </OnLeave>
+      </Scripts>
+    </Button>
+  </Frames>
+
+  <Scripts>
+    <OnMouseUp>
+      SmartDebuffOF_AdvancedMask:Hide();
+    </OnMouseUp>
+    <OnLoad>
+      self:SetFrameLevel(SmartDebuffOF:GetFrameLevel() + 20);
+      SmartDebuffOF_btnKeys:SetFrameLevel(self:GetFrameLevel() + 2);
+      self:EnableMouse(true)
+    </OnLoad>
+    <OnEnter>
+      SMARTDEBUFF_SetGameTooltip(self, OPTIONS, UNLOCK_FRAME, "ANCHOR_RIGHT");
+    </OnEnter>
+    <OnLeave>
+      GameTooltip:Hide();
+    </OnLeave>
+  </Scripts>
+</Frame>
+
+
     </Frames>
     <Scripts>
       <OnLoad>
@@ -3251,7 +3362,7 @@
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="12" y="-30"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="12" y="-20"/></Offset></Anchor></Anchors>
       </CheckButton>
       <CheckButton name="SmartDebuffOF_cbVerticalUp" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
@@ -3902,7 +4013,7 @@ SMARTDEBUFF_GridOnShow(self);
           </OnValueChanged>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+            GameTooltip:SetText(OPACITY, SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
           </OnEnter>
           <OnLeave>
             GameTooltip:Hide();

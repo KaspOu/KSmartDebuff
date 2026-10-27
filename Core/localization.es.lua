@@ -78,6 +78,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Gradiente";
 SMARTDEBUFF_OFT_INFOFRAME      = "Mostrar marco de sumario";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Auto ocultar";
 SMARTDEBUFF_OFT_COLUMNS        = "Columnas";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Textura de perjuicio"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Textura"
 SMARTDEBUFF_OFT_INTERVAL       = "Intervalo";
 SMARTDEBUFF_OFT_FONTSIZE       = "Tamaño de fuente";

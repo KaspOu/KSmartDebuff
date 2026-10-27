@@ -80,6 +80,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Градиент";
 SMARTDEBUFF_OFT_INFOFRAME      = "Информационная рамка";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Автоматическое скрытие";
 SMARTDEBUFF_OFT_COLUMNS        = "Столбцы";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Текстура дебаффа"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Текстура"
 SMARTDEBUFF_OFT_INTERVAL       = "Интервал";
 SMARTDEBUFF_OFT_FONTSIZE       = "Размер шрифта";

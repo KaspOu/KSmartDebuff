@@ -79,6 +79,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Farbverlauf";
 SMARTDEBUFF_OFT_INFOFRAME      = "Status-Fenster";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Auto. verbergen";
 SMARTDEBUFF_OFT_COLUMNS        = "Spalten";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Debuff-Textur"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Textur"
 SMARTDEBUFF_OFT_INTERVAL       = "Interval";
 SMARTDEBUFF_OFT_FONTSIZE       = "Schriftgrösse";

@@ -80,6 +80,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Sfumatura";
 SMARTDEBUFF_OFT_INFOFRAME      = "Riquadro riepilogativo";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Nascondi automaticamente";
 SMARTDEBUFF_OFT_COLUMNS        = "Colonne";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Texture debuff"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Trama"
 SMARTDEBUFF_OFT_INTERVAL       = "Intervallo";
 SMARTDEBUFF_OFT_FONTSIZE       = "Dimensione carattere";
