@@ -9,12 +9,11 @@ SMARTDEBUFF_UPGRADED = "KDecurse upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-|cfffff2cc> New options :|r
+|cfffff2cc> Redesign options screen :|r
+  - Debuff Texture applied directly
   - Debuff tooltip
   - Show Aura Spell IDs
-
-|cfffff2cc> Fixed :|r
-  - Midnight dungeons sounds
+  
 
 |cfffff2cc> Sound added for:|r
   - The Unbinding of Kith'ix
@@ -122,7 +121,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Gradient";
 SMARTDEBUFF_OFT_INFOFRAME      = "Summary frame";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Auto hide";
 SMARTDEBUFF_OFT_COLUMNS        = "Columns";
-SMARTDEBUFF_OFT_COLTEXTURE     = "Texture";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Debuff Texture";
 SMARTDEBUFF_OFT_INTERVAL       = "Interval";
 SMARTDEBUFF_OFT_FONTSIZE       = "Font size";
 SMARTDEBUFF_OFT_WIDTH          = "Width";
@@ -153,6 +152,7 @@ SMARTDEBUFF_OFT_ROLE           = "Role";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Anchor Setup";
 SMARTDEBUFF_OFT_ICONSIZE       = "Icon size";
 SMARTDEBUFF_OFT_COLORSETUP     = "Color Setup";
+SMARTDEBUFF_OFT_GRIDSETUP      =  "Grid Setup";
 SMARTDEBUFF_OFT_SPACEX         = "Space X";
 SMARTDEBUFF_OFT_SPACEY         = "Space Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Test Mode";

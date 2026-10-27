@@ -109,6 +109,7 @@ SMARTDEBUFF_OFT_ROLE           = "Rol"; -- ChatGPT
 SMARTDEBUFF_OFT_ADVANCHORS     = "Configurar anclajes"; -- ChatGPT
 SMARTDEBUFF_OFT_ICONSIZE       = "Tamaño de iconos"; -- ChatGPT
 SMARTDEBUFF_OFT_COLORSETUP     = "Configurar colores"; -- ChatGPT
+SMARTDEBUFF_OFT_GRIDSETUP      = "Configurar cuadrícula";
 SMARTDEBUFF_OFT_SPACEX         = "Espaciado X"; -- ChatGPT
 SMARTDEBUFF_OFT_SPACEY         = "Espaciado Y"; -- ChatGPT
 SMARTDEBUFF_OFT_TESTMODE       = "Modo prueba"; -- ChatGPT

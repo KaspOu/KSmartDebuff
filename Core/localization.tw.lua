@@ -114,6 +114,7 @@ SMARTDEBUFF_OFT_ROLE           = "職責";  -- ChatGPT
 SMARTDEBUFF_OFT_ADVANCHORS     = "設定錨點";  -- ChatGPT
 SMARTDEBUFF_OFT_ICONSIZE       = "圖標大小";  -- ChatGPT
 SMARTDEBUFF_OFT_COLORSETUP     = "設定顏色";  -- ChatGPT
+SMARTDEBUFF_OFT_GRIDSETUP      = "网格设置";
 SMARTDEBUFF_OFT_SPACEX         = "X軸間距";  -- ChatGPT
 SMARTDEBUFF_OFT_SPACEY         = "Y軸間距";  -- ChatGPT
 SMARTDEBUFF_OFT_TESTMODE       = "測試模式";  -- ChatGPT

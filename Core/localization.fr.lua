@@ -6,12 +6,10 @@ SMARTDEBUFF_UPGRADED = "KDecurse mis à jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
-|cfffff2cc> Nouvelles options :|r
+|cfffff2cc> Redesign de l'écran options :|r
+  - Texture de débuff directement appliquée
   - Infobulle de débuff
   - IDs de sort d'aura
-
-|cfffff2cc> Corrigé :|r
-  - Son des donjons Midnight
 
 |cfffff2cc> Sons ajoutés pour:|r
   - Le Déliement de Kith'ix
@@ -120,7 +118,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Dégradé";
 SMARTDEBUFF_OFT_INFOFRAME      = "Cadre récapitulatif";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Masquage auto.";
 SMARTDEBUFF_OFT_COLUMNS        = "Colonnes";
-SMARTDEBUFF_OFT_COLTEXTURE     = "Texture"
+SMARTDEBUFF_OFT_COLTEXTURE     = "Texture Débuff"
 SMARTDEBUFF_OFT_INTERVAL       = "Intervalle";
 SMARTDEBUFF_OFT_FONTSIZE       = "Taille de police";
 SMARTDEBUFF_OFT_WIDTH          = "Largeur";
@@ -151,6 +149,7 @@ SMARTDEBUFF_OFT_ROLE           = "Rôle";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Configurer les ancres";
 SMARTDEBUFF_OFT_ICONSIZE       = "Taille des icônes";
 SMARTDEBUFF_OFT_COLORSETUP     = "Configurer les couleurs";
+SMARTDEBUFF_OFT_GRIDSETUP      = "Configurer la grille";
 SMARTDEBUFF_OFT_SPACEX         = "Espacement X";
 SMARTDEBUFF_OFT_SPACEY         = "Espacement Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Mode test";

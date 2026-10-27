@@ -111,6 +111,7 @@ SMARTDEBUFF_OFT_ROLE           = "Ruolo";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Configura ancore";
 SMARTDEBUFF_OFT_ICONSIZE       = "Dimensione icone";
 SMARTDEBUFF_OFT_COLORSETUP     = "Configura colori";
+SMARTDEBUFF_OFT_GRIDSETUP      = "Configura griglia";
 SMARTDEBUFF_OFT_SPACEX         = "Spaziatura X";
 SMARTDEBUFF_OFT_SPACEY         = "Spaziatura Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Modalità test";

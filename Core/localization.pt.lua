@@ -112,6 +112,7 @@ SMARTDEBUFF_OFT_ROLE           = "Funçôo";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Configurar âncoras";
 SMARTDEBUFF_OFT_ICONSIZE       = "Tamanho dos ícones";
 SMARTDEBUFF_OFT_COLORSETUP     = "Configurar Cores";
+SMARTDEBUFF_OFT_GRIDSETUP      = "Configurar grade";
 SMARTDEBUFF_OFT_SPACEX         = "Espaçamento X";
 SMARTDEBUFF_OFT_SPACEY         = "Espaçamento Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Modo Teste";
