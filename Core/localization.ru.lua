@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- Russian localization (ChatGPT)
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_UPGRADED = "KDecurse обновлен: "..SMARTDEBUFF_VERSION;
 
@@ -119,6 +120,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Тест. реж.";
 SMARTDEBUFF_OFT_STOPCAST       = "Прерывание заклинания";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Игнорировать при перезарядке";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Уведомления в чате";
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Область аддонов";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Сбросить заклинания KDecurse по умолчанию?\n\nЭто действие необходимо, если вы считаете, что не все дебаффы определяются корректно.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Порядок классов";
 SMARTDEBUFF_NRDT_TITLE         = "Неснимаемые дебаффы";
@@ -165,6 +167,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Показывает и использует �
 SMARTDEBUFF_TT_STOPCAST        = "Немедленно прерывает текущее\nприменение или поддержание заклинания,\nчтобы применить указанное заклинание.\n(Только для заклинаний рассеивания)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Игнорирует дебафф на юните,\nесли ваше заклинание рассеивания на перезарядке.";
 SMARTDEBUFF_TT_CHATNOTIF       = "Показывает уведомления в чате при загрузке";
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Отображать в области аддонов (вверху справа)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "Требуется перезагрузка интерфейса (напишите /reload)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Эта опция недоступна в этой версии WoW."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Эта опция больше недоступна из-за ограничений Blizzard."

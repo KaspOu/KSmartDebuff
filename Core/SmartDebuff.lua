@@ -5,7 +5,7 @@
 -- Supports you to cast debuff spells on friendly units
 -------------------------------------------------------------------------------
 
-local _, ns = ...
+local addonName, ns = ...
 
 local OG = nil;
 local O = nil;
@@ -990,7 +990,7 @@ function SmartDebuffOFSlider_OnLoad(self, low, high, step)
 end
 
 function SMARTDEBUFF_HideAllButThis(self)
-  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup}
+  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup, SmartDebuffMisc}
 
   for _, element in ipairs(elements) do
     if self ~= element and element:IsVisible() then
@@ -1341,6 +1341,19 @@ local function ReplaceDeprecatedOptions(options)
   end
 end
 
+local _compartmentRegistered = false
+function SMARTDEBUFF_RegisterCompartment()
+    if (AddonCompartmentFrame and KD_Settings.AddonCompartment ~= false and not _compartmentRegistered) then
+        AddonCompartmentFrame:RegisterAddon({
+            text = C_AddOns.GetAddOnMetadata(addonName, "Title"),
+            icon = C_AddOns.GetAddOnMetadata(addonName, "IconTexture"),
+            notCheckable = true,
+            func = SMARTDEBUFF_ToggleOF,
+        })
+		_compartmentRegistered = true
+    end
+end
+
 -- Init the KDecurse variables ----
 function SMARTDEBUFF_Options_Init()
   if (isInit or InCombatLockdown()) then return; end
@@ -1586,6 +1599,8 @@ function SMARTDEBUFF_Options_Init()
   SMARTDEBUFF_CheckForSpellUpgrade();
   --SMARTDEBUFF_SetButtons();
   SMARTDEBUFF_CheckAutoHide();
+
+  SMARTDEBUFF_RegisterCompartment()
 end
 -- END SMARTDEBUFF_Options_Init
 
@@ -5716,7 +5731,6 @@ end
 function SMARTDEBUFF_GridOnShow(self)
   SMARTDEBUFF_HideAllButThis(self);
   SmartDebuffGridSetup_Title:SetText(SMARTDEBUFF_OFT_GRIDSETUP);
-  SMARTDEBUFF_ColorsUpdate(true);
 end
 
 function SMARTDEBUFF_GridToggle()
@@ -5729,6 +5743,24 @@ function SMARTDEBUFF_GridToggle()
 end
 
 function SMARTDEBUFF_GridOnHide(self)
+end
+
+-- Misc setup frame functions ----
+
+function SMARTDEBUFF_MiscOnShow(self)
+  SMARTDEBUFF_HideAllButThis(self);
+  SmartDebuffMisc_Title:SetText(MISCELLANEOUS);
+end
+
+function SMARTDEBUFF_MiscToggle()
+  if (SmartDebuffMisc:IsVisible()) then
+    SmartDebuffMisc:Hide();
+  else
+    SmartDebuffMisc:Show();
+  end
+end
+
+function SMARTDEBUFF_MiscOnHide(self)
 end
 
 

@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- Portuguese localization (ChatGPT)
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_UPGRADED = "KDecurse atualizado: "..SMARTDEBUFF_VERSION;
 
@@ -120,6 +121,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Modo Teste";
 SMARTDEBUFF_OFT_STOPCAST       = "Interromper Feitiço";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorar em recarga";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notificaçôes de Chat";
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Compartimento de addons";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Redefinir os feitiços do KDecurse para o padrão?\n\nEsta açôo é necessária se você sentir que nem todos os debuffs estão sendo detectados corretamente.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordem das Classes";
 SMARTDEBUFF_NRDT_TITLE         = "Debuffs Nôo Removíveis";
@@ -166,6 +168,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Mostra e usa a configuraçôo\navançada dos p
 SMARTDEBUFF_TT_STOPCAST        = "Interrompe imediatamente o\nlançamento ou canalizaçôo em\nandamento para lançar o feitiço definido.\n(Somente para feitiços de remoçôo)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignora o debuff na unidade\nse seu feitiço de remoçôo estiver em tempo de recarga";
 SMARTDEBUFF_TT_CHATNOTIF       = "Mostra notificaçôes de chat ao carregar";
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Exibir no compartimento de addons (canto superior direito)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "É necessário recarregar (digite /reload)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Esta opção não está disponível nesta versão do WoW."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Esta opção não está mais disponível devido às limitações da Blizzard."

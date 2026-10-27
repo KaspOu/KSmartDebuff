@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- Italian localization (ChatGPT)
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_UPGRADED = "KDecurse aggiornato: "..SMARTDEBUFF_VERSION;
 
@@ -119,6 +120,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Modalità test";
 SMARTDEBUFF_OFT_STOPCAST       = "Interrompi lancio";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignora in ricarica";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notifiche chat";
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Compartimento degli addon";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Reimpostare gli incantesimi KDecurse ai valori predefiniti?\n\nQuesta azione è necessaria se ritieni che tutti i debuff non vengano rilevati correttamente.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordine delle classi";
 SMARTDEBUFF_NRDT_TITLE         = "Debuff non rimovibili";
@@ -165,6 +167,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Mostra e usa la configurazione\navanzata dei p
 SMARTDEBUFF_TT_STOPCAST        = "Interrompe immediatamente il\nlancio o la canalizzazione in\ncorso per lanciare l'incantesimo definito.\n(Solo per incantesimi di rimozione)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignora il debuff sull'unità\nse il tuo incantesimo di rimozione è in ricarica";
 SMARTDEBUFF_TT_CHATNOTIF       = "Mostra notifiche chat al caricamento";
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Mostra nel compartimento degli addon (in alto a destra)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "È richiesto un ricaricamento (scrivi /reload)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Questa opzione non è disponibile in questa versione di WoW."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Questa opzione non è più disponibile a causa delle limitazioni di Blizzard."

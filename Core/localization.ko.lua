@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- Korean localization (ChatGPT)
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_FONT = "Fonts\\2002.TTF"
 
@@ -121,6 +122,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "테스트 모드";
 SMARTDEBUFF_OFT_STOPCAST       = "주문 시전 중단";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "재사용 대기 중 무시";
 SMARTDEBUFF_OFT_CHATNOTIF      = "채팅 알림";
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "애드온 보관함";
 SMARTDEBUFF_OFT_RESET_KEYS     = "KDecurse 주문을 기본값으로 재설정하시겠습니까?\n\n모든 디버프가 올바르게 감지되지 않는다고 생각되면 이 작업이 필요합니다.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "직업 정렬 순서";
 SMARTDEBUFF_NRDT_TITLE         = "해제 불가 디버프";
@@ -167,6 +169,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "디버프 프레임의\n고급 앵커 설정�
 SMARTDEBUFF_TT_STOPCAST        = "현재 시전 중이거나 정신 집중 중인\n주문을 즉시 중단하고\n설정된 주문을 시전합니다.\n(해제 주문에만 해당)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "해제 주문이 재사용 대기 중일 경우\n유닛의 디버프를 무시합니다.";
 SMARTDEBUFF_TT_CHATNOTIF       = "불러올 때 채팅 알림을 표시합니다.";
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "애드온 보관함에 표시 (오른쪽 상단)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "재시작이 필요합니다 (/reload 입력)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "이 옵션은 이 WoW 버전에서 사용할 수 없습니다."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "블리자드의 제한으로 인해 이 옵션은 더 이상 사용할 수 없습니다."

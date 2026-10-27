@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- French localization
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_UPGRADED = "KDecurse mis à jour : "..SMARTDEBUFF_VERSION;
 
@@ -158,6 +159,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Mode test";
 SMARTDEBUFF_OFT_STOPCAST       = "Interruption de sort";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorer en recharge";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notifications de chat";
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Compartiment des Add-ons";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Réinitialiser les sorts KDecurse par défaut ?\n\nCette action est nécessaire si vous avez l'impression que tous les débuffs ne sont pas correctement détectés.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordre des classes";
 SMARTDEBUFF_NRDT_TITLE         = "Débuffs non dissipables";
@@ -204,6 +206,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Affiche et utilise la configuration\navancée 
 SMARTDEBUFF_TT_STOPCAST        = "Interrompt immédiatement le\nlancement ou la canalisation en\ncours pour lancer le sort défini.\n(Uniquement pour les sorts de dissipation)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignore le débuff sur l'unité\nsi votre sort de dissipation est en temps de recharge";
 SMARTDEBUFF_TT_CHATNOTIF       = "Affiche des notifications de chat au chargement";
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Afficher dans le compartiment des Add-ons (en haut à droite)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "Un rechargement est requis (tapez /reload)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Cette option n'est pas disponible sur cette version de WoW."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Cette option n'est plus disponible en raison des limitations de Blizzard."

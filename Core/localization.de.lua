@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- German localization
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_UPGRADED = "KDecurse aktualisiert: "..SMARTDEBUFF_VERSION;
 
@@ -118,6 +119,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Test Modus";
 SMARTDEBUFF_OFT_STOPCAST       = "Stoppe Zauber";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Bei Abklingzeit ignorieren";
 SMARTDEBUFF_OFT_CHATNOTIF      = "Chat-Benachrichtigungen"; -- ChatGPT
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Addon-Fach";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Die KDecurse Zauber-Bindings zurücksetzen?\nDies ist nur nötig falls du das Gefühl hast,\ndass nicht alle Debuffs korrekt angezeigt werden.";
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Klassenanordnung";
 SMARTDEBUFF_NRDT_TITLE         = "Unentfernbare Debuffs";
@@ -164,6 +166,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Stellt dar und benutzt das\nerweiterte Anker-S
 SMARTDEBUFF_TT_STOPCAST        = "Stoppt sofort den aktuellen\nZauber, um den definierten\nZauber benutzen zu können.\n(Nur Debuff-Zauber)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignoriert den Debuff auf der Einheit\nwenn der Debuff-Zauber noch Cooldown hat.";
 SMARTDEBUFF_TT_CHATNOTIF       = "Zeigt Chat-Benachrichtigungen beim Laden an."; -- ChatGPT
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Im Addon-Fach anzeigen (oben rechts)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "Ein UI-Reload ist erforderlich (/reload eingeben)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Diese Option ist in dieser WoW-Version nicht verfügbar."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Diese Option ist aufgrund von Einschränkungen durch Blizzard nicht mehr verfügbar."
