@@ -5,6 +5,8 @@ ALL Dispels : https://www.wowhead.com/mop-classic/spells?filter=109;38;0
 Class Dispels only: https://www.wowhead.com/mop-classic/spells/abilities/druid?filter=109;38;0
 https://wago.tools/db2/SpellDispelType
 
+https://docs.wowdb.assemblee-defias.fr/spells
+
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID
   Format: [ClassName] = { { Spell_ID, Spell_List, OnlyIfUsable?, Improved_Talent?, Improved_Spell_List?, } }
   Priority: first active spell > first inactive talent > first item
