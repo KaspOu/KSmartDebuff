@@ -8,6 +8,9 @@ https://wago.tools/db2/SpellDispelType
 
 https://www.wowhead.com/spells/npc-abilities/dispel-type:2?filter=21;2;120105
 
+https://github.com/albvar/mplus-interrupts
+https://nether.wowhead.com/tooltip/spell/474515
+
 SMARTDEBUFF_CLASS_DISPELS_LIST_ID
   Format: [ClassName] = { { Spell_ID, Spell_List, OnlyIfUsable?, Improved_Talent?, Improved_Spell_List?, } }
   Priority: first active spell > first inactive talent > first item
@@ -594,6 +597,7 @@ SMARTDEBUFF_DEBUFFS_LIST = {
       __type = MAP_LEGEND_DUNGEON,
       __ext = "Midnight S1",
       [1277557] = SMARTDEBUFF_MAGIC,    -- Burning Radiance
+      [1249815] = SMARTDEBUFF_MAGIC,    -- Transference
   },
 
   [658] = {
