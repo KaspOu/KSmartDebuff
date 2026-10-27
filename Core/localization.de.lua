@@ -110,6 +110,7 @@ SMARTDEBUFF_OFT_ROLE           = "Rolle";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Anker Setup";
 SMARTDEBUFF_OFT_ICONSIZE       = "Symbolgrösse";
 SMARTDEBUFF_OFT_COLORSETUP     = "Farbeinstellungen";
+SMARTDEBUFF_OFT_GRIDSETUP      = "Raster konfigurieren";
 SMARTDEBUFF_OFT_SPACEX         = "Abstand X";
 SMARTDEBUFF_OFT_SPACEY         = "Abstand Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Test Modus";

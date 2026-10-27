@@ -111,6 +111,7 @@ SMARTDEBUFF_OFT_ROLE           = "Роль";
 SMARTDEBUFF_OFT_ADVANCHORS     = "Настроить привязки";
 SMARTDEBUFF_OFT_ICONSIZE       = "Размер иконок";
 SMARTDEBUFF_OFT_COLORSETUP     = "Настроить цвета";
+SMARTDEBUFF_OFT_GRIDSETUP      = "Настройка сетки";
 SMARTDEBUFF_OFT_SPACEX         = "Отступ по X";
 SMARTDEBUFF_OFT_SPACEY         = "Отступ по Y";
 SMARTDEBUFF_OFT_TESTMODE       = "Тест. реж.";

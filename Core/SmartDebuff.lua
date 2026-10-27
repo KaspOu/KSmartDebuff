@@ -993,7 +993,7 @@ function SmartDebuffOFSlider_OnLoad(self, low, high, step)
 end
 
 function SMARTDEBUFF_HideAllButThis(self)
-  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors}
+  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup}
 
   for _, element in ipairs(elements) do
     if self ~= element and element:IsVisible() then
@@ -5746,6 +5746,25 @@ function SMARTDEBUFF_ColorsToggle()
 end
 
 function SMARTDEBUFF_ColorsOnHide(self)
+end
+
+
+function SMARTDEBUFF_GridOnShow(self)
+  SMARTDEBUFF_HideAllButThis(self);
+  SmartDebuffGridSetup_Title:SetText(SMARTDEBUFF_OFT_GRIDSETUP);
+  SMARTDEBUFF_ColorsUpdate(true);
+end
+
+function SMARTDEBUFF_GridToggle()
+  if (SmartDebuffGridSetup:IsVisible()) then
+    SmartDebuffGridSetup:Hide();
+  else
+    SmartDebuffGridSetup:Show();
+    SMARTDEBUFF_TestModeToggle(true)
+  end
+end
+
+function SMARTDEBUFF_GridOnHide(self)
 end
 
 --[[
