@@ -81,6 +81,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Gradiente";
 SMARTDEBUFF_OFT_INFOFRAME      = "Quadro de Informaçôes";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Ocultar Automaticamente";
 SMARTDEBUFF_OFT_COLUMNS        = "Colunas";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Textura de penalidade"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Textura"
 SMARTDEBUFF_OFT_INTERVAL       = "Intervalo";
 SMARTDEBUFF_OFT_FONTSIZE       = "Tamanho da Fonte";
