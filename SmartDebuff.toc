@@ -23,10 +23,9 @@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## LoadSavedVariablesFirst: 1
-## SavedVariables: SMARTDEBUFF_OptionsGlobal
+## SavedVariables: SMARTDEBUFF_OptionsGlobal, KD_Settings
 ## SavedVariablesPerCharacter: SMARTDEBUFF_Options
 ## IconTexture: Interface\AddOns\SmartDebuff\icon.png
-## AddonCompartmentFunc: SMARTDEBUFF_ToggleOF
 
 ## X-Previous-Title: SmartDebuff
 ## X-Credits: Aeldra (for SmartDebuff), Semi#1287

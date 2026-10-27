@@ -23,6 +23,10 @@ BINDING_HEADER_SMARTDEBUFF = SMARTDEBUFF_TITLE;
 BINDING_NAME_SMARTDEBUFF =  SMARTDEBUFF_TITLE.." options";
 SMARTDEBUFF_BOOK_TYPE_SPELL = "spell";
 
+KD_Settings = KD_Settings or {}
+if KD_Settings.ForceEnglish == nil then KD_Settings.ForceEnglish = false end
+if KD_Settings.AddonCompartment == nil then KD_Settings.AddonCompartment = true end
+
 --@do-not-package@
 -- Development icons
 local devVer = ".|TInterface/PVPFrame/Icons/prestige-icon-8-3:16|t"
