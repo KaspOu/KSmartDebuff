@@ -79,6 +79,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Gradiente";
 SMARTDEBUFF_OFT_INFOFRAME      = "Mostrar marco de sumario";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Auto ocultar";
 SMARTDEBUFF_OFT_COLUMNS        = "Columnas";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Textura de perjuicio"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Textura"
 SMARTDEBUFF_OFT_INTERVAL       = "Intervalo";
 SMARTDEBUFF_OFT_FONTSIZE       = "Tamaño de fuente";
@@ -212,6 +213,12 @@ SMARTDEBUFF_OFT_SKILLS          = "Atajos de ratón"; -- ChatGPT
 SMARTDEBUFF_TT_SKILLS           = "Clic para editar los atajos\n(Clic I/D/M, con Alt/Shift/Ctrl)"; -- ChatGPT
 SMARTDEBUFF_TT_RESET_SKILLS     = "Reinicia los atajos para tu clase"; -- ChatGPT
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Lista de seguimiento de hechizos"; -- ChatGPT
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "Inicio";
+SMARTDEBUFF_MENU_GRID       = "Cuadrícula";
+SMARTDEBUFF_MENU_COLORS     = "Colores";
+SMARTDEBUFF_MENU_HOTS       = "Hechizos HoT";
+SMARTDEBUFF_MENU_CLASSORDER = "Orden de clases";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Clic para editar\nla lista de hechizos a seguir"; -- ChatGPT
 SMARTDEBUFF_TT_SOUNDLIST        = "Clic para seleccionar el sonido.\n(Clic derecho solo para escuchar)"; -- ChatGPT
 

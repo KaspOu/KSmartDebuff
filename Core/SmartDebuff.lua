@@ -990,13 +990,14 @@ function SmartDebuffOFSlider_OnLoad(self, low, high, step)
 end
 
 function SMARTDEBUFF_HideAllButThis(self)
-  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup, SmartDebuffMisc}
+  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup, SmartDebuffMisc, SmartDebuffOF_Home}
 
   for _, element in ipairs(elements) do
     if self ~= element and element:IsVisible() then
       element:Hide()
     end
   end
+  SmartDebuffOF_Infos:Show()
 end
 
 -- IsFeignDeath(unit)
@@ -2415,7 +2416,8 @@ function SMARTDEBUFF_CreateButtons()
   end
 
   local offX = 4;
-  local offY = 24;
+  local initialOffY = 24;
+  local offY = initialOffY;
   local lblW = 96;
   frame = _G["SmartDebuffAOFKeys"];
   if (frame) then
@@ -2430,7 +2432,7 @@ function SMARTDEBUFF_CreateButtons()
     lbl:EnableMouse(false);
     lbl:EnableKeyboard(false);
     lbl:SetAutoFocus(false);
-    lbl:SetPoint("TOPLEFT", frame, "TOPLEFT", offX, -2);
+    lbl:SetPoint("TOPLEFT", frame, "TOPLEFT", offX, -offY+22);
     lbl:SetText(SMARTDEBUFF_FT_MODES);
 
     for i = 1, 24, 1 do
@@ -2446,7 +2448,7 @@ function SMARTDEBUFF_CreateButtons()
         lbl:EnableMouse(false);
         lbl:EnableKeyboard(false);
         lbl:SetAutoFocus(false);
-        lbl:SetPoint("TOPLEFT", frame, "TOPLEFT", offX + lblW, -4);
+        lbl:SetPoint("TOPLEFT", frame, "TOPLEFT", offX + lblW, -offY+18);
         if (i == 1) then
           lbl:SetText(SMARTDEBUFF_FT_MODENORMAL);
         else
@@ -2489,7 +2491,7 @@ function SMARTDEBUFF_CreateButtons()
       offY = offY + 36;
       if (i == 12) then
         offX = offX + 36;
-        offY = 24;
+        offY = initialOffY;
       end
     end
 
@@ -5127,6 +5129,7 @@ end
 
 function SMARTDEBUFF_OFOnShow()
   SMARTDEBUFF_HideAllButThis();
+  SMARTDEBUFF_HomeToggle()
   SMARTDEBUFF_CheckAutoHide();
   SMARTDEBUFF_CheckAnchorPos();
   SmartDebuffOF_Title:SetText(format("%s %s- %s", SMARTDEBUFF_OPTIONS_TITLE, COL.YLD, SMARTDEBUFF_SPELLS_VERSION));
@@ -5436,10 +5439,23 @@ local function CreateScrollButton(name, parent, cBtn, onClick, onDragStop)
 	return button;
 end
 
+local function getMaxScrollBtn(self)
+  local maxVisible = math.min(
+    CFG.maxScrollBtn,
+    math.floor((self:GetHeight() - 2) / ScrBtnHeight)
+  );
+
+  if (CFG.maxScrollBtn <= maxVisible) then
+    numToDisplay = CFG.maxScrollBtn - 1;
+  else
+    numToDisplay = maxVisible;
+  end
+  return numToDisplay;
+end
 
 local function CreateScrollButtons(self, cBtn, sBtnName, onClick, onDragStop)
   local btn, i;
-  for i = 1, CFG.maxScrollBtn, 1 do
+  for i = 1, getMaxScrollBtn(self), 1 do
     btn = CreateScrollButton(sBtnName..i, self, cBtn, onClick, onDragStop);
     btn:SetID(i);
     --[[
@@ -5461,14 +5477,16 @@ local function OnScroll(self, cData, sBtnName)
   local num = #cData;
   local n, numToDisplay;
 
-  if (num <= CFG.maxScrollBtn) then
+  local maxScrollBtn = getMaxScrollBtn(self)
+
+  if (num <= maxScrollBtn) then
     numToDisplay = num-1;
   else
-    numToDisplay = CFG.maxScrollBtn;
+    numToDisplay = maxScrollBtn;
   end
 
   FauxScrollFrame_Update(self, num, numToDisplay, ScrBtnHeight);
-  for i = 1, CFG.maxScrollBtn, 1 do
+  for i = 1, getMaxScrollBtn(self), 1 do
     n = i + FauxScrollFrame_GetOffset(self);
     local btn = _G[sBtnName..i];
     if (btn) then
@@ -5763,6 +5781,22 @@ end
 function SMARTDEBUFF_MiscOnHide(self)
 end
 
+
+function SMARTDEBUFF_HomeOnShow(self)
+  SMARTDEBUFF_HideAllButThis(self);
+  -- SmartDebuffHome_Title:SetText(SMARTDEBUFF_OFT_HOME);
+end
+
+function SMARTDEBUFF_HomeToggle()
+  if (SmartDebuffOF_Home:IsVisible()) then
+    SmartDebuffOF_Home:Hide();
+  else
+    SmartDebuffOF_Home:Show();
+  end
+end
+
+function SMARTDEBUFF_HomeOnHide(self)
+end
 
 -- Color setup frame functions ----
 

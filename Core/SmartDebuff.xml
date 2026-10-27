@@ -334,7 +334,7 @@
   </Frame>
   <Frame name="SmartDebuffOF" movable="true" toplevel="true" frameStrata="MEDIUM" parent="UIParent" hidden="true" enableMouse="true">
     <Size>
-      <AbsDimension x="304" y="540"/>
+      <AbsDimension x="330" y="540"/>
     </Size>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
@@ -373,1874 +373,2105 @@
         <Anchors>
           <Anchor point="TOPRIGHT" relativeTo="$parent">
             <Offset>
-              <AbsDimension x="-3" y="-3"/>
+              <AbsDimension x="3" y="3"/>
             </Offset>
           </Anchor>
         </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-        </Scripts>
       </Button>
-      <CheckButton name="$parent_cbGrp1" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
+      <Frame name="$parent_Home" enableMouse="false">
         <Size>
-          <AbsDimension x="16" y="16"/>
+          <AbsDimension x="304" y="540"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT">
-            <Offset>
-              <AbsDimension x="4" y="-20"/>
-            </Offset>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0"/>
         </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("1");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[1]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(1);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 1", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp2" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp1">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("2");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[2]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(2);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 2", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp3" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp2">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("3");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[3]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(3);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 3", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp4" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp3">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("4");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[4]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(4);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 4", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp5" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp4">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("5");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[5]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(5);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 5", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp6" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp5">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("6");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[6]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(6);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 6", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp7" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp6">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("7");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[7]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(7);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 7", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbGrp8" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbGrp7">
-            <Offset>
-              <AbsDimension x="12" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText("8");
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[8]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_OFToggleGrp(8);
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 8", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon1">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarriorD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Warrior"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbGrp1">
-            <Offset>
-              <AbsDimension x="0" y="-18"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["WARRIOR"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["WARRIOR"] = not SMARTDEBUFF_Options.DebuffClasses["WARRIOR"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["WARRIOR"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon2">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\PriestD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Priest"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon1">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["PRIEST"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["PRIEST"] = not SMARTDEBUFF_Options.DebuffClasses["PRIEST"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["PRIEST"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon3">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DruidD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Druid"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon2">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["DRUID"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["DRUID"] = not SMARTDEBUFF_Options.DebuffClasses["DRUID"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["DRUID"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon4">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\PaladinD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Paladin"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon3">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["PALADIN"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["PALADIN"] = not SMARTDEBUFF_Options.DebuffClasses["PALADIN"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["PALADIN"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon5">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\ShamanD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Shaman"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon4">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["SHAMAN"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["SHAMAN"] = not SMARTDEBUFF_Options.DebuffClasses["SHAMAN"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["SHAMAN"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon6">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\MageD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Mage"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon5">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["MAGE"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["MAGE"] = not SMARTDEBUFF_Options.DebuffClasses["MAGE"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["MAGE"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon7">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Warlock"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon6">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["WARLOCK"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["WARLOCK"] = not SMARTDEBUFF_Options.DebuffClasses["WARLOCK"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["WARLOCK"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon8">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Hunter"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon7">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["HUNTER"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["HUNTER"] = not SMARTDEBUFF_Options.DebuffClasses["HUNTER"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["HUNTER"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon9">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\RogueD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Rogue"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon8">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["ROGUE"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["ROGUE"] = not SMARTDEBUFF_Options.DebuffClasses["ROGUE"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["ROGUE"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon10">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Deathknight"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon9">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            if (not SMARTDEBUFF_CLASSES["DEATHKNIGHT"]) then
-              self:Hide();
-            end
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["DEATHKNIGHT"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["DEATHKNIGHT"] = not SMARTDEBUFF_Options.DebuffClasses["DEATHKNIGHT"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["DEATHKNIGHT"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon11">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\MonkD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Monk"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon10">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            if (not SMARTDEBUFF_CLASSES["MONK"]) then
-              self:Hide();
-            end
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["MONK"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["MONK"] = not SMARTDEBUFF_Options.DebuffClasses["MONK"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["MONK"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon12">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DemonhunterD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Demonhunter"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon11">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            if (not SMARTDEBUFF_CLASSES["DEMONHUNTER"]) then
-              self:Hide();
-            end
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["DEMONHUNTER"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["DEMONHUNTER"] = not SMARTDEBUFF_Options.DebuffClasses["DEMONHUNTER"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["DEMONHUNTER"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon13">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\EvokerD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Evoker"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon12">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            if (not SMARTDEBUFF_CLASSES["EVOKER"]) then
-              self:Hide();
-            end
-            self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["EVOKER"]);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.DebuffClasses["EVOKER"] = not SMARTDEBUFF_Options.DebuffClasses["EVOKER"];
-            SMARTDEBUFF_SetButtons();
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_CLASSES["EVOKER"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon14">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterPetD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterPet"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbClassIcon1">
-            <Offset>
-              <AbsDimension x="0" y="-20"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.ShowPets);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.ShowPets = not SMARTDEBUFF_Options.ShowPets;
-            SMARTDEBUFF_SetPetButtons(true);
-            if SMARTDEBUFF_SetAuraSoundsTestMode then
-              SMARTDEBUFF_SetAuraSoundsTestMode()
-            end
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_HUNTERPETS, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon15">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockPetD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockPet"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon14">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            self:SetChecked(SMARTDEBUFF_Options.ShowPetsWL);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.ShowPetsWL = not SMARTDEBUFF_Options.ShowPetsWL;
-            SMARTDEBUFF_SetPetButtons(true);
-            if SMARTDEBUFF_SetAuraSoundsTestMode then
-              SMARTDEBUFF_SetAuraSoundsTestMode()
-            end
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_WARLOCKPETS, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassIcon16">
-        <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightPetD"/>
-        <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightPet"/>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_cbClassIcon15">
-            <Offset>
-              <AbsDimension x="4" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-          <OnShow>
-            if (not SMARTDEBUFF_CLASSES["DEATHKNIGHT"]) then
-              self:Hide();
-            end
-            self:SetChecked(SMARTDEBUFF_Options.ShowPetsDK);
-          </OnShow>
-          <OnClick>
-            SMARTDEBUFF_Options.ShowPetsDK = not SMARTDEBUFF_Options.ShowPetsDK;
-            SMARTDEBUFF_SetPetButtons(true);
-            if SMARTDEBUFF_SetAuraSoundsTestMode then
-              SMARTDEBUFF_SetAuraSoundsTestMode()
-            end
-          </OnClick>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(SMARTDEBUFF_OFT_DEATHKNIGHTPETS, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbHP" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbClassIcon1">
-            <Offset>
-              <AbsDimension x="0" y="-40"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HP);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowHP);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowHP = not SMARTDEBUFF_Options.ShowHP;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_HP, SMARTDEBUFF_TT_HP);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbMana" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbHP">
-            <Offset>
-              <AbsDimension x="60" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_MANA);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowMana);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowMana = not SMARTDEBUFF_Options.ShowMana;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_MANA, SMARTDEBUFF_TT_MANA);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbHPText" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbMana">
-            <Offset>
-              <AbsDimension x="55" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HPTEXT);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowHPText);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowHPText = not SMARTDEBUFF_Options.ShowHPText;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_HPTEXT, SMARTDEBUFF_TT_HPTEXT);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbInvert" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbHP">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INVERT);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.Invert);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.Invert = not SMARTDEBUFF_Options.Invert;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_INVERT, SMARTDEBUFF_TT_INVERT);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbClassView" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbHP">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CLASSVIEW);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.SortedByClass);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.SortedByClass = not SMARTDEBUFF_Options.SortedByClass;
-              if (SMARTDEBUFF_Options.SortedByClass) then
-                SMARTDEBUFF_Options.SortedByRole = false;
-                _G[self:GetParent():GetName().."_cbRoleView"]:SetChecked(false);
+        <Frames>
+          <CheckButton name="SmartDebuffOF_cbGrp1" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="4" y="-20"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("1");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[1]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(1);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 1", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp2" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp1">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("2");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[2]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(2);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 2", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp3" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp2">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("3");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[3]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(3);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 3", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp4" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp3">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("4");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[4]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(4);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 4", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp5" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp4">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("5");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[5]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(5);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 5", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp6" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp5">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("6");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[6]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(6);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 6", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp7" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp6">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("7");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[7]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(7);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 7", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbGrp8" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbGrp7">
+                <Offset>
+                  <AbsDimension x="12" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText("8");
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffGrp[8]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_OFToggleGrp(8);
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_GROUPNR.." 8", SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon1">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarriorD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Warrior"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp1">
+                <Offset>
+                  <AbsDimension x="0" y="-18"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["WARRIOR"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["WARRIOR"] = not SMARTDEBUFF_Options.DebuffClasses["WARRIOR"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["WARRIOR"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon2">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\PriestD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Priest"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon1">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["PRIEST"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["PRIEST"] = not SMARTDEBUFF_Options.DebuffClasses["PRIEST"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["PRIEST"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon3">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DruidD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Druid"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon2">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["DRUID"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["DRUID"] = not SMARTDEBUFF_Options.DebuffClasses["DRUID"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["DRUID"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon4">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\PaladinD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Paladin"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon3">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["PALADIN"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["PALADIN"] = not SMARTDEBUFF_Options.DebuffClasses["PALADIN"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["PALADIN"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon5">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\ShamanD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Shaman"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon4">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["SHAMAN"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["SHAMAN"] = not SMARTDEBUFF_Options.DebuffClasses["SHAMAN"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["SHAMAN"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon6">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\MageD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Mage"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon5">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["MAGE"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["MAGE"] = not SMARTDEBUFF_Options.DebuffClasses["MAGE"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["MAGE"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon7">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Warlock"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon6">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["WARLOCK"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["WARLOCK"] = not SMARTDEBUFF_Options.DebuffClasses["WARLOCK"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["WARLOCK"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon8">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Hunter"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon7">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["HUNTER"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["HUNTER"] = not SMARTDEBUFF_Options.DebuffClasses["HUNTER"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["HUNTER"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon9">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\RogueD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Rogue"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon8">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["ROGUE"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["ROGUE"] = not SMARTDEBUFF_Options.DebuffClasses["ROGUE"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["ROGUE"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon10">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Deathknight"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon9">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                if (not SMARTDEBUFF_CLASSES["DEATHKNIGHT"]) then
+                  self:Hide();
+                end
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["DEATHKNIGHT"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["DEATHKNIGHT"] = not SMARTDEBUFF_Options.DebuffClasses["DEATHKNIGHT"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["DEATHKNIGHT"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon11">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\MonkD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Monk"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon10">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                if (not SMARTDEBUFF_CLASSES["MONK"]) then
+                  self:Hide();
+                end
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["MONK"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["MONK"] = not SMARTDEBUFF_Options.DebuffClasses["MONK"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["MONK"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon12">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DemonhunterD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Demonhunter"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon11">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                if (not SMARTDEBUFF_CLASSES["DEMONHUNTER"]) then
+                  self:Hide();
+                end
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["DEMONHUNTER"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["DEMONHUNTER"] = not SMARTDEBUFF_Options.DebuffClasses["DEMONHUNTER"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["DEMONHUNTER"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon13">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\EvokerD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Evoker"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon12">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                if (not SMARTDEBUFF_CLASSES["EVOKER"]) then
+                  self:Hide();
+                end
+                self:SetChecked(SMARTDEBUFF_Options.DebuffClasses["EVOKER"]);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.DebuffClasses["EVOKER"] = not SMARTDEBUFF_Options.DebuffClasses["EVOKER"];
+                SMARTDEBUFF_SetButtons();
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_CLASSES["EVOKER"], SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon14">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterPetD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterPet"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon1">
+                <Offset>
+                  <AbsDimension x="0" y="-20"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.ShowPets);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.ShowPets = not SMARTDEBUFF_Options.ShowPets;
+                SMARTDEBUFF_SetPetButtons(true);
+                if SMARTDEBUFF_SetAuraSoundsTestMode then
+                  SMARTDEBUFF_SetAuraSoundsTestMode()
+                end
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_HUNTERPETS, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon15">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockPetD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockPet"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon14">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                self:SetChecked(SMARTDEBUFF_Options.ShowPetsWL);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.ShowPetsWL = not SMARTDEBUFF_Options.ShowPetsWL;
+                SMARTDEBUFF_SetPetButtons(true);
+                if SMARTDEBUFF_SetAuraSoundsTestMode then
+                  SMARTDEBUFF_SetAuraSoundsTestMode()
+                end
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_WARLOCKPETS, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassIcon16">
+            <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightPetD"/>
+            <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightPet"/>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_cbClassIcon15">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+              </OnLoad>
+              <OnShow>
+                if (not SMARTDEBUFF_CLASSES["DEATHKNIGHT"]) then
+                  self:Hide();
+                end
+                self:SetChecked(SMARTDEBUFF_Options.ShowPetsDK);
+              </OnShow>
+              <OnClick>
+                SMARTDEBUFF_Options.ShowPetsDK = not SMARTDEBUFF_Options.ShowPetsDK;
+                SMARTDEBUFF_SetPetButtons(true);
+                if SMARTDEBUFF_SetAuraSoundsTestMode then
+                  SMARTDEBUFF_SetAuraSoundsTestMode()
+                end
+              </OnClick>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText(SMARTDEBUFF_OFT_DEATHKNIGHTPETS, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbHP" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon1">
+                <Offset>
+                  <AbsDimension x="0" y="-40"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HP);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowHP);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowHP = not SMARTDEBUFF_Options.ShowHP;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_HP, SMARTDEBUFF_TT_HP);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbMana" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbHP">
+                <Offset>
+                  <AbsDimension x="60" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_MANA);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowMana);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowMana = not SMARTDEBUFF_Options.ShowMana;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_MANA, SMARTDEBUFF_TT_MANA);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbHPText" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbMana">
+                <Offset>
+                  <AbsDimension x="55" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HPTEXT);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowHPText);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowHPText = not SMARTDEBUFF_Options.ShowHPText;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_HPTEXT, SMARTDEBUFF_TT_HPTEXT);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbInvert" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbHP">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INVERT);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.Invert);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.Invert = not SMARTDEBUFF_Options.Invert;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_INVERT, SMARTDEBUFF_TT_INVERT);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbClassView" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbHP">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CLASSVIEW);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.SortedByClass);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.SortedByClass = not SMARTDEBUFF_Options.SortedByClass;
+                  if (SMARTDEBUFF_Options.SortedByClass) then
+                    SMARTDEBUFF_Options.SortedByRole = false;
+                    _G["SmartDebuffOF_cbRoleView"]:SetChecked(false);
+                  end
+                  SMARTDEBUFF_SetButtons();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSVIEW, SMARTDEBUFF_TT_CLASSVIEW);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <Button name="SmartDebuffOF_btnClassOrder" inherits="UIPanelButtonTemplate" text="C">
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView">
+                <Offset>
+                  <AbsDimension x="130" y="1"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self:SetNormalFontObject("GameFontNormalSmall");
+                self:SetHighlightFontObject("GameFontHighlightSmall");
+              </OnLoad>
+              <OnClick>
+                --SMARTDEBUFF_ToggleAOFOrder(1);
+                SMARTDEBUFF_ClassOrderToggle();
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_MENU_CLASSORDER, SMARTDEBUFF_TT_CLASSSORT);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <CheckButton name="SmartDebuffOF_cbRoleView" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView">
+                <Offset>
+                  <AbsDimension x="87" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ROLE);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.SortedByRole);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.SortedByRole = not SMARTDEBUFF_Options.SortedByRole;
+                  if (SMARTDEBUFF_Options.SortedByRole) then
+                    SMARTDEBUFF_Options.SortedByClass = false;
+                    _G["SmartDebuffOF_cbClassView"]:SetChecked(false);
+                  end
+                  SMARTDEBUFF_SetStyle();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_ROLE, SMARTDEBUFF_TT_ROLE);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbShowLR" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWLR);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowLR);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_ToggleShowLR();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWLR, SMARTDEBUFF_TT_SHOWLR);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbForceLR" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowLR"><Offset><AbsDimension x="115" y="0"/></Offset></Anchor></Anchors>
+            <Scripts>
+              <OnLoad>
+              -- Hide if english
+              if SMARTDEBUFF_OFT_FORCELR == "" then
+                self:Hide()
               end
-              SMARTDEBUFF_SetButtons();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSVIEW, SMARTDEBUFF_TT_CLASSVIEW);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <Button name="$parent_btnOptions" inherits="UIPanelButtonTemplate" text="C">
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbClassView">
-            <Offset>
-              <AbsDimension x="130" y="1"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
-          </OnLoad>
-          <OnClick>
-            --SMARTDEBUFF_ToggleAOFOrder(1);
-            SMARTDEBUFF_ClassOrderToggle();
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSSORT, SMARTDEBUFF_TT_CLASSSORT);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </Button>
-      <CheckButton name="$parent_cbRoleView" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbClassView">
-            <Offset>
-              <AbsDimension x="87" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ROLE);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.SortedByRole);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.SortedByRole = not SMARTDEBUFF_Options.SortedByRole;
-              if (SMARTDEBUFF_Options.SortedByRole) then
-                SMARTDEBUFF_Options.SortedByClass = false;
-                _G[self:GetParent():GetName().."_cbClassView"]:SetChecked(false);
+              if (SMARTDEBUFF_Options) then
+                self:SetAlpha(SMARTDEBUFF_Options.ShowLR and 1 or .5);
               end
-              SMARTDEBUFF_SetStyle();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_ROLE, SMARTDEBUFF_TT_ROLE);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbShowLR" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbClassView">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWLR);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowLR);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_ToggleShowLR();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWLR, SMARTDEBUFF_TT_SHOWLR);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbForceLR" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowLR"><Offset><AbsDimension x="115" y="0"/></Offset></Anchor></Anchors>
-        <Scripts>
-          <OnLoad>
-          -- Hide if english
-          if SMARTDEBUFF_OFT_FORCELR == "" then
-            self:Hide()
-          end
-          if (SMARTDEBUFF_Options) then
-            self:SetAlpha(SMARTDEBUFF_Options.ShowLR and 1 or .5);
-          end
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ForceLR);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ForceLR = not SMARTDEBUFF_Options.ForceLR;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_FORCELR, SMARTDEBUFF_TT_RELOADREQUIRED);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbShowRaidIcon" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowLR">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWRAIDICON);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowRaidIcon);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowRaidIcon = not SMARTDEBUFF_Options.ShowRaidIcon;
-              SMARTDEBUFF_SetButtons();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWRAIDICON, SMARTDEBUFF_TT_SHOWRAIDICON);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbShowAggro" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowLR">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWAGGRO);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowAggro);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowAggro = not SMARTDEBUFF_Options.ShowAggro;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWAGGRO, SMARTDEBUFF_TT_SHOWAGGRO);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbShowHealRange" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowAggro">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEALRANGE);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowHealRange);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowHealRange = not SMARTDEBUFF_Options.ShowHealRange;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_HEALRANGE, SMARTDEBUFF_TT_HEALRANGE);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbTargetMode" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowHealRange">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_TARGETMODE);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.TargetMode);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.TargetMode = not SMARTDEBUFF_Options.TargetMode;
-              SmartDebuffAOFKeys:Show();
-              SmartDebuffAOFKeys_OnShow();
-              SMARTDEBUFF_SetButtons();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_TARGETMODE, SMARTDEBUFF_TT_TARGETMODE);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <Button name="$parent_btnKeys" inherits="UIPanelButtonTemplate" text="Keys" hidden="false">
-        <Size>
-          <AbsDimension x="40" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbTargetMode">
-            <Offset>
-              <AbsDimension x="106" y="1"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
-          </OnLoad>
-          <OnClick>
-            SMARTDEBUFF_ToggleAOFKeys();
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SKILLS, SMARTDEBUFF_TT_SKILLS);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </Button>
-      <CheckButton name="$parent_cbShowSpellIcon" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbTargetMode">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWSPELLICON);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowSpellIcon);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowSpellIcon = not SMARTDEBUFF_Options.ShowSpellIcon;
-              SMARTDEBUFF_SetButtons();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWSPELLICON, SMARTDEBUFF_TT_SHOWSPELLICON);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <Button name="$parent_btnSpellGuard" inherits="UIPanelButtonTemplate" text="W" hidden="false">
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowSpellIcon">
-            <Offset>
-              <AbsDimension x="108" y="1"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then
-              self:Hide()
-              return
-            end
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
-          </OnLoad>
-          <OnClick>
-            SMARTDEBUFF_SpellGuardToggle();
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWDEBUFFGUARD, SMARTDEBUFF_TT_SHOWDEBUFFGUARD);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </Button>
-      <CheckButton name="$parent_cbShowVehicles" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowAggro">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_VEHICLE);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowVehicles);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowVehicles = not SMARTDEBUFF_Options.ShowVehicles;
-              SMARTDEBUFF_CreateButtonsPetsIfEnabled()
-              SMARTDEBUFF_SetButtons();
-              if SMARTDEBUFF_SetAuraSoundsTestMode then
-                SMARTDEBUFF_SetAuraSoundsTestMode()
-              end
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_VEHICLE, SMARTDEBUFF_TT_VEHICLE);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbPlaySound" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowHealRange">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SOUND);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.UseSound);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.UseSound = not SMARTDEBUFF_Options.UseSound;
-              if SMARTDEBUFF_Options.UseSound then
-                SmartDebuffSounds:Show();
-              end
-              SMARTDEBUFF_CheckDebuffs(true);
-              SMARTDEBUFF_SetAuraSoundsDetectTest(true)
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUND);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <Button name="$parent_btnSounds" inherits="UIPanelButtonTemplate" text="S" hidden="false">
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbPlaySound">
-            <Offset>
-              <AbsDimension x="108" y="1"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
-          </OnLoad>
-          <OnClick>
-            SMARTDEBUFF_SoundsToggle();
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </Button>
-      <CheckButton name="$parent_cbShowDebuffTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbTargetMode">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_DEBUFFTOOLTIP);
-            if (not SMARTDEBUFF_AURACONTAINERS) then
-              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_DEBUFFTOOLTIP, SMARTDEBUFF_TT_DISABLED_VERSION);
-              return
-            end
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowDebuffTooltip);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowDebuffTooltip = not SMARTDEBUFF_Options.ShowDebuffTooltip;
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_DEBUFFTOOLTIP, SMARTDEBUFF_TT_DEBUFFTOOLTIP);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbShowTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowDebuffTooltip">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_TOOLTIP);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowTooltip);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowTooltip = not SMARTDEBUFF_Options.ShowTooltip;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_TOOLTIP, SMARTDEBUFF_TT_TOOLTIP);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbAutoHide" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbShowDebuffTooltip">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_AUTOHIDE);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.AutoHide);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.AutoHide = not SMARTDEBUFF_Options.AutoHide;
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_AUTOHIDE, SMARTDEBUFF_TT_AUTOHIDE);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbIgnoreDebuff" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbAutoHide">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_IGNOREDEBUFF);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.IgnoreDebuff);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.IgnoreDebuff = not SMARTDEBUFF_Options.IgnoreDebuff;
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_IGNOREDEBUFF, SMARTDEBUFF_TT_IGNOREDEBUFF);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbAdvAnchors" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbAutoHide">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ADVANCHORS);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.AdvAnchors);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_ToggleAnchors();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_ADVANCHORS, SMARTDEBUFF_TT_ADVANCHORS);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbStopCast" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbAdvAnchors">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_STOPCAST);
-          </OnLoad>
-          <OnShow>
-            if (not SMARTDEBUFF_MACROTEXT) then
-              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_STOPCAST, SMARTDEBUFF_TT_DISABLED_VERSION)
-              return
-            end
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.StopCast);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.StopCast = not SMARTDEBUFF_Options.StopCast;
-              SMARTDEBUFF_SetButtons();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_STOPCAST, SMARTDEBUFF_TT_STOPCAST);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <Slider name="$parent_sldCheckInterval" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbAdvAnchors">
-            <Offset>
-              <AbsDimension x="2" y="-36"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 25, 520, 25);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.CheckInterval*1000);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INTERVAL .. string.format(" %.0fms", self:GetValue()));
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.CheckInterval = self:GetValue()/1000;
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </Slider>
-      <Frame name="SmartDebuffColTextureDropDown" inherits="UIDropDownMenuTemplate">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parent_sldCheckInterval">
-            <Offset>
-              <AbsDimension x="2" y="10"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Layers>
-          <Layer level="BACKGROUND">
-            <!-- Label placé juste au-dessus du menu déroulant -->
-            <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="Texture">
-              <Color r="1" g=".6" b=".3" a="1"/>
-              <Anchors>
-                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="18" y="0"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnLoad>
-            local label = _G[self:GetName().."Label"]
-            if label then
-              label:SetText(SMARTDEBUFF_OFT_COLTEXTURE)
-            end
-            UIDropDownMenu_Initialize(self, function(frame, level)
-              local infoT = UIDropDownMenu_CreateInfo()
-              local info = UIDropDownMenu_CreateInfo()
-
-              infoT.text = SMARTDEBUFF_OFT_COLTEXTURE
-              infoT.isTitle = true;
-              infoT.notCheckable = true;
-              infoT.justifyH = "LEFT";
-              UIDropDownMenu_AddButton(infoT, level)
-              self.infos = {}
-              for _, option in ipairs(SMARTDEBUFF_TEXTURES) do
-                local text = option[1]
-                local value = option[2]
-
-                info.text = text
-                info.value = value
-                info.justifyH = "LEFT"
-
-                info.func = function(btn)
-                  -- Mise à jour lors de la sélection
-                  UIDropDownMenu_SetSelectedValue(frame, btn.value)
-
-                  if SMARTDEBUFF_Options then
-                    SMARTDEBUFF_Options.ColDTexture = btn.value
-                    SMARTDEBUFF_TestModeToggle(true)
-                    SMARTDEBUFF_CheckDebuffs(true)
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ForceLR);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ForceLR = not SMARTDEBUFF_Options.ForceLR;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_FORCELR, SMARTDEBUFF_TT_RELOADREQUIRED);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbShowRaidIcon" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowLR">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWRAIDICON);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowRaidIcon);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowRaidIcon = not SMARTDEBUFF_Options.ShowRaidIcon;
+                  SMARTDEBUFF_SetButtons();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWRAIDICON, SMARTDEBUFF_TT_SHOWRAIDICON);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbShowAggro" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowLR">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWAGGRO);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowAggro);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowAggro = not SMARTDEBUFF_Options.ShowAggro;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWAGGRO, SMARTDEBUFF_TT_SHOWAGGRO);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbShowHealRange" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowAggro">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEALRANGE);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowHealRange);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowHealRange = not SMARTDEBUFF_Options.ShowHealRange;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_HEALRANGE, SMARTDEBUFF_TT_HEALRANGE);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <Button name="SmartDebuffOF_btnKeys" inherits="UIPanelButtonTemplate" text="Keys" hidden="false">
+            <Size>
+              <AbsDimension x="40" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowHealRange">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self:SetNormalFontObject("GameFontNormalSmall");
+                self:SetHighlightFontObject("GameFontHighlightSmall");
+              </OnLoad>
+              <OnClick>
+                SMARTDEBUFF_ToggleAOFKeys();
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SKILLS, SMARTDEBUFF_TT_SKILLS);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <CheckButton name="SmartDebuffOF_cbShowSpellIcon" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_btnKeys">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWSPELLICON);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowSpellIcon);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowSpellIcon = not SMARTDEBUFF_Options.ShowSpellIcon;
+                  SMARTDEBUFF_SetButtons();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWSPELLICON, SMARTDEBUFF_TT_SHOWSPELLICON);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <Button name="SmartDebuffOF_btnSpellGuard" inherits="UIPanelButtonTemplate" text="W" hidden="false">
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowSpellIcon">
+                <Offset>
+                  <AbsDimension x="108" y="1"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then
+                  self:Hide()
+                  return
+                end
+                self:SetNormalFontObject("GameFontNormalSmall");
+                self:SetHighlightFontObject("GameFontHighlightSmall");
+              </OnLoad>
+              <OnClick>
+                SMARTDEBUFF_SpellGuardToggle();
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_MENU_HOTS, SMARTDEBUFF_TT_SHOWDEBUFFGUARD);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <CheckButton name="SmartDebuffOF_cbShowVehicles" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowAggro">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_VEHICLE);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowVehicles);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowVehicles = not SMARTDEBUFF_Options.ShowVehicles;
+                  SMARTDEBUFF_CreateButtonsPetsIfEnabled()
+                  SMARTDEBUFF_SetButtons();
+                  if SMARTDEBUFF_SetAuraSoundsTestMode then
+                    SMARTDEBUFF_SetAuraSoundsTestMode()
                   end
                 end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_VEHICLE, SMARTDEBUFF_TT_VEHICLE);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbPlaySound" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowHealRange">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SOUND);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.UseSound);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.UseSound = not SMARTDEBUFF_Options.UseSound;
+                  if SMARTDEBUFF_Options.UseSound then
+                    SmartDebuffSounds:Show();
+                  end
+                  SMARTDEBUFF_CheckDebuffs(true);
+                  SMARTDEBUFF_SetAuraSoundsDetectTest(true)
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUND);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <Button name="SmartDebuffOF_btnSounds" inherits="UIPanelButtonTemplate" text="S" hidden="false">
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbPlaySound">
+                <Offset>
+                  <AbsDimension x="108" y="1"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self:SetNormalFontObject("GameFontNormalSmall");
+                self:SetHighlightFontObject("GameFontHighlightSmall");
+              </OnLoad>
+              <OnClick>
+                SMARTDEBUFF_SoundsToggle();
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Button>
+          <CheckButton name="SmartDebuffOF_cbShowDebuffTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_btnKeys">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_DEBUFFTOOLTIP);
+                if (not SMARTDEBUFF_AURACONTAINERS) then
+                  SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_DEBUFFTOOLTIP, SMARTDEBUFF_TT_DISABLED_VERSION);
+                  return
+                end
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowDebuffTooltip);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowDebuffTooltip = not SMARTDEBUFF_Options.ShowDebuffTooltip;
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_DEBUFFTOOLTIP, SMARTDEBUFF_TT_DEBUFFTOOLTIP);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbShowTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowDebuffTooltip">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_TOOLTIP);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.ShowTooltip);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.ShowTooltip = not SMARTDEBUFF_Options.ShowTooltip;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_TOOLTIP, SMARTDEBUFF_TT_TOOLTIP);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbAutoHide" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowDebuffTooltip">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_AUTOHIDE);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.AutoHide);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.AutoHide = not SMARTDEBUFF_Options.AutoHide;
+                  SMARTDEBUFF_CheckDebuffs(true);
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_AUTOHIDE, SMARTDEBUFF_TT_AUTOHIDE);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbIgnoreDebuff" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbAutoHide">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_IGNOREDEBUFF);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.IgnoreDebuff);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.IgnoreDebuff = not SMARTDEBUFF_Options.IgnoreDebuff;
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_IGNOREDEBUFF, SMARTDEBUFF_TT_IGNOREDEBUFF);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbAdvAnchors" inherits="InterfaceOptionsCheckButtonTemplate">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbAutoHide">
+                <Offset>
+                  <AbsDimension x="0" y="-16"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ADVANCHORS);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.AdvAnchors);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_ToggleAnchors();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_ADVANCHORS, SMARTDEBUFF_TT_ADVANCHORS);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="SmartDebuffOF_cbStopCast" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
+            <HitRectInsets>
+              <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </HitRectInsets>
+            <Size>
+              <AbsDimension x="16" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbAdvAnchors">
+                <Offset>
+                  <AbsDimension x="152" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_STOPCAST);
+              </OnLoad>
+              <OnShow>
+                if (not SMARTDEBUFF_MACROTEXT) then
+                  SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_STOPCAST, SMARTDEBUFF_TT_DISABLED_VERSION)
+                  return
+                end
+                if (SMARTDEBUFF_Options) then
+                  self:SetChecked(SMARTDEBUFF_Options.StopCast);
+                end
+              </OnShow>
+              <OnClick>
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.StopCast = not SMARTDEBUFF_Options.StopCast;
+                  SMARTDEBUFF_SetButtons();
+                end
+              </OnClick>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_STOPCAST, SMARTDEBUFF_TT_STOPCAST);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <Slider name="SmartDebuffOF_sldCheckInterval" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+            <Size>
+              <AbsDimension x="132" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbAdvAnchors">
+                <Offset>
+                  <AbsDimension x="2" y="-36"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                SmartDebuffOFSlider_OnLoad(self, 25, 520, 25);
+              </OnLoad>
+              <OnShow>
+                if (SMARTDEBUFF_Options) then
+                  self:SetValue(SMARTDEBUFF_Options.CheckInterval*1000);
+                end
+              </OnShow>
+              <OnValueChanged>
+                _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INTERVAL .. string.format(" %.0fms", self:GetValue()));
+                if (SMARTDEBUFF_Options) then
+                  SMARTDEBUFF_Options.CheckInterval = self:GetValue()/1000;
+                end
+              </OnValueChanged>
+              <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Slider>
+          <Frame name="SmartDebuffColTextureDropDown" inherits="UIDropDownMenuTemplate">
+            <Size>
+              <AbsDimension x="132" y="16"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SmartDebuffOF_sldCheckInterval">
+                <Offset>
+                  <AbsDimension x="2" y="10"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="BACKGROUND">
+                <!-- Label placé juste au-dessus du menu déroulant -->
+                <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="Texture">
+                  <Color r="1" g=".6" b=".3" a="1"/>
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="18" y="0"/>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                local label = _G[self:GetName().."Label"]
+                if label then
+                  label:SetText(SMARTDEBUFF_OFT_COLTEXTURE)
+                end
+                UIDropDownMenu_Initialize(self, function(frame, level)
+                  local infoT = UIDropDownMenu_CreateInfo()
+                  local info = UIDropDownMenu_CreateInfo()
 
-                info.checked = (
-                  SMARTDEBUFF_Options
-                  and SMARTDEBUFF_Options.ColDTexture == value
-                )
+                  infoT.text = SMARTDEBUFF_OFT_COLTEXTURE
+                  infoT.isTitle = true;
+                  infoT.notCheckable = true;
+                  infoT.justifyH = "LEFT";
+                  UIDropDownMenu_AddButton(infoT, level)
+                  self.infos = {}
+                  for _, option in ipairs(SMARTDEBUFF_TEXTURES) do
+                    local text = option[1]
+                    local value = option[2]
 
-                UIDropDownMenu_AddButton(info, level)
+                    info.text = text
+                    info.value = value
+                    info.justifyH = "LEFT"
+                    info.tooltipOnButton = true
+                    info.hasArrow = false
 
-                self.infos[value] = text
-              end
-              UIDropDownMenu_JustifyText(self, "LEFT")
-            end)
-          </OnLoad>
+                    info.func = function(btn)
+                      -- Mise à jour lors de la sélection
+                      UIDropDownMenu_SetSelectedValue(frame, btn.value)
+
+                      if SMARTDEBUFF_Options then
+                        SMARTDEBUFF_Options.ColDTexture = btn.value
+                        SMARTDEBUFF_TestModeToggle(true)
+                        SMARTDEBUFF_CheckDebuffs(true)
+                      end
+                    end
+
+                    info.checked = (
+                      SMARTDEBUFF_Options
+                      and SMARTDEBUFF_Options.ColDTexture == value
+                    )
+
+                    UIDropDownMenu_AddButton(info, level)
+
+                    self.infos[value] = text
+                  end
+                  UIDropDownMenu_JustifyText(self, "LEFT")
+                end)
+              </OnLoad>
+              <OnShow>
+                if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColDTexture then
+                  UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColDTexture)
+                  if self.infos and self.infos[SMARTDEBUFF_Options.ColDTexture] then
+                    UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColDTexture])
+                  else
+                    UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColDTexture)
+                  end
+                end
+              </OnShow>
+              <OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE)
+              </OnEnter>
+              <OnLeave>
+                GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </Frame>
+        </Frames>
+        <Scripts>
           <OnShow>
-            if SMARTDEBUFF_Options and SMARTDEBUFF_Options.ColDTexture then
-              UIDropDownMenu_SetSelectedValue(self, SMARTDEBUFF_Options.ColDTexture)
-              if self.infos and self.infos[SMARTDEBUFF_Options.ColDTexture] then
-                UIDropDownMenu_SetText(self, self.infos[SMARTDEBUFF_Options.ColDTexture])
-              else
-                UIDropDownMenu_SetText(self, SMARTDEBUFF_Options.ColDTexture)
-              end
-            end
+            SMARTDEBUFF_HomeOnShow(self);
           </OnShow>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLTEXTURE, SMARTDEBUFF_TT_COLTEXTURE)
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide()
-          </OnLeave>
+          <OnHide>SMARTDEBUFF_HomeOnHide(self);</OnHide>
         </Scripts>
       </Frame>
-      <Button name="$parent_btnColorSetup" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_COLORSETUP">
+      <Frame name="$parent_Infos" hidden="true" enableMouse="false">
         <Size>
-          <AbsDimension x="140" y="20"/>
+          <AbsDimension x="152" y="540"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT"><Offset><AbsDimension x="8" y="28"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0"/>
+        </Anchors>
+      </Frame>
+      <Frame name="$parent_MenuList" enableMouse="false">
+        <Size>
+          <AbsDimension x="148" y="136"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="8" y="6"/>
+        </Anchors>
+        <Frames>
+          <Button name="$parent_Home">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="4" y="-4"/></Offset></Anchor></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_HOME);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffOF_Home";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_HomeToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Keys">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Home" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_OFT_SKILLS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffAOFKeys";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SKILLS, SMARTDEBUFF_TT_SKILLS, "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_ToggleAOFKeys();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Grid">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Keys" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_GRID.."*");
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffGridSetup";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+              SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_GRIDSETUP, "("..SMARTDEBUFF_OFT_TESTMODE..")", "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_GridToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Colors">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Grid" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_COLORS.."*");
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffColors";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+              SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_COLORSETUP, "("..SMARTDEBUFF_OFT_TESTMODE..")", "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_ColorsToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Sounds">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Colors" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_OFT_SOUND);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffSounds";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST, "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_SoundsToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_SpellGuard">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Sounds" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_HOTS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffSpellGuard";
+                if (not SMARTDEBUFF_AURACONTAINERS) then self.disabled = true; return end
+              </OnLoad>
+              <OnEnter>
+                if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWDEBUFFGUARD, SMARTDEBUFF_TT_SHOWDEBUFFGUARD, "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>
+                if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();
+                </OnLeave>
+              <OnClick>
+                SMARTDEBUFF_SpellGuardToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_ClassOrder">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_SpellGuard" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_CLASSORDER);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffClassOrder";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSSORT, SMARTDEBUFF_TT_CLASSSORT, "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                --SMARTDEBUFF_ToggleAOFOrder(1);
+                SMARTDEBUFF_ClassOrderToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Misc">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_ClassOrder" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(MISCELLANEOUS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffMisc";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_MiscToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
         <Scripts>
           <OnLoad>
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
+            if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
+            self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS);
+            self:SetBackdropBorderColor(1, 0.82, 0, 1);
+            self.items = {};
+            for _, ch in ipairs({self:GetChildren()}) do
+              if (ch.panelName) then
+                table.insert(self.items, ch);
+              end
+            end
+            function SmartDebuffOF_MenuList_Refresh()
+              local ml = SmartDebuffOF_MenuList;
+              if (not ml or not ml.items) then
+                return;
+              end
+              for i = 1, #ml.items do
+                local it = ml.items[i];
+                local p = it.panelName and _G[it.panelName] or nil;
+                local act = (p and p:IsShown()) and true or false;
+                if (it.disabled) then
+                 it.Text:SetTextColor(RED_FONT_COLOR:GetRGB());
+                 it.Text:SetAlpha(.6);
+                 it:SetScript("OnEnter", function() SMARTDEBUFF_SetGameTooltip(it, ORANGE_FONT_COLOR:WrapTextInColorCode(it.Text:GetText()), RED_FONT_COLOR:WrapTextInColorCode(SMARTDEBUFF_TT_DISABLED_VERSION), "ANCHOR_RIGHT") end);
+                 it:SetScript("OnClick", nil);
+                else
+                  if (it.active ~= act) then
+                    it.active = act;
+                    if (act) then
+                      it.HL:SetVertexColor(1, 0.82, 0, 0.10);
+                      it.HL:Show();
+                      it.Text:SetTextColor(1, 1, 1);
+                    else
+                      it.HL:SetVertexColor(1, 1, 1, 0.12);
+                      it.HL:Hide();
+                      it.Text:SetTextColor(1, 0.82, 0);
+                    end
+                  end
+                end
+              end
+            end
+            SmartDebuffOF_MenuList_Refresh();
           </OnLoad>
-          <OnClick>
-            SMARTDEBUFF_ColorsToggle();
-          </OnClick>
+          <OnUpdate>
+            self.tick = (self.tick or 0) + elapsed;
+            if (self.tick >= 0.2) then
+              self.tick = 0;
+              SmartDebuffOF_MenuList_Refresh();
+            end
+          </OnUpdate>
         </Scripts>
-      </Button>
+      </Frame>
       <Button name="$parent_btnReload" inherits="UIMenuButtonStretchTemplate" text="|cff00ffffReload">
         <Size>
           <AbsDimension x="68" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-4" y="52"/>
+              <AbsDimension x="0" y="52"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2264,28 +2495,14 @@
           </OnLeave>
         </Scripts>
       </Button>
-      <Button name="$parent_btnMisc" inherits="UIPanelButtonTemplate" text="MISCELLANEOUS">
-        <Size><AbsDimension x="100" y="20"/></Size>
-        <Anchors>
-          <Anchor point="BOTTOMRIGHT">
-            <Offset>
-              <AbsDimension x="-4" y="28"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>self:SetNormalFontObject("GameFontNormalSmall"); self:SetHighlightFontObject("GameFontHighlightSmall"); self:SetText(MISCELLANEOUS);</OnLoad>
-          <OnClick>SMARTDEBUFF_MiscToggle();</OnClick>
-        </Scripts>
-      </Button>
       <Button name="$parent_btnTestMode" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_TESTMODE">
         <Size>
           <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="4" y="4"/>
+              <AbsDimension x="0" y="28"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2310,9 +2527,9 @@
           <AbsDimension x="50" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT">
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="$parent_btnTestMode">
             <Offset>
-              <AbsDimension x="76" y="4"/>
+              <AbsDimension x="-4" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2339,9 +2556,9 @@
           <AbsDimension x="68" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-4" y="4"/>
+              <AbsDimension x="0" y="4"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2397,9 +2614,9 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_btnTestMode">
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MenuList">
             <Offset>
-              <AbsDimension x="0" y="-32"/>
+              <AbsDimension x="0" y="-8"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2510,18 +2727,6 @@
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <Button name="$parent_btnGridSetup" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GRIDSETUP">
-        <Size>
-          <AbsDimension x="140" y="20"/>
-        </Size>
-        <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT"><Offset><AbsDimension x="8" y="54"/></Offset></Anchor></Anchors>
-        <Scripts>
-          <OnLoad>self:SetNormalFontObject("GameFontNormalSmall");
-          self:SetHighlightFontObject("GameFontHighlightSmall");</OnLoad>
-          <OnClick>SMARTDEBUFF_GridToggle();</OnClick>
-        </Scripts>
-      </Button>
     </Frames>
     <Scripts>
       <OnLoad>
@@ -2562,9 +2767,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -2589,7 +2795,7 @@
       </EditBox>
       <ScrollFrame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
         <Size>
-          <AbsDimension x="140" y="470"/>
+          <AbsDimension x="140" y="475"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT">
@@ -2649,12 +2855,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_ClassOrderOnShow(self);
       </OnShow>
       <OnHide>
@@ -2669,9 +2873,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -2718,7 +2923,7 @@
       </EditBox>
       <ScrollFrame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
         <Size>
-          <AbsDimension x="140" y="470"/>
+          <AbsDimension x="140" y="450"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_txtIn" relativePoint="BOTTOMLEFT">
@@ -2758,31 +2963,13 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Button name="$parent_btnClose" inherits="UIPanelCloseButton">
-        <Size>
-          <AbsDimension x="20" y="20"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPRIGHT" relativeTo="$parent">
-            <Offset>
-              <AbsDimension x="2" y="2"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-        </Scripts>
-      </Button>
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_SoundsOnShow(self);
       </OnShow>
       <OnHide>
@@ -2797,9 +2984,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -2856,7 +3044,7 @@
       </EditBox>
       <ScrollFrame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
         <Size>
-          <AbsDimension x="140" y="470"/>
+          <AbsDimension x="140" y="450"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_txtIn" relativePoint="BOTTOMLEFT">
@@ -2922,12 +3110,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_NRDebuffsOnShow(self);
       </OnShow>
       <OnHide>
@@ -2942,9 +3128,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -2997,7 +3184,7 @@
       </EditBox>
       <ScrollFrame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
         <Size>
-          <AbsDimension x="140" y="470"/>
+          <AbsDimension x="140" y="450"/>
         </Size>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_txtIn" relativePoint="BOTTOMLEFT">
@@ -3056,12 +3243,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_SpellGuardOnShow(self);
       </OnShow>
       <OnHide>
@@ -3076,11 +3261,50 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
+      <CheckButton name="SmartDebuffOF_cbTargetMode" inherits="InterfaceOptionsCheckButtonTemplate">
+        <HitRectInsets>
+          <AbsInset left="0" right="0" top="0" bottom="0"/>
+        </HitRectInsets>
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="30" y="40"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_TARGETMODE);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetChecked(SMARTDEBUFF_Options.TargetMode);
+            end
+          </OnShow>
+          <OnClick>
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.TargetMode = not SMARTDEBUFF_Options.TargetMode;
+              SmartDebuffAOFKeys_OnShow();
+              SMARTDEBUFF_SetButtons();
+            end
+          </OnClick>
+          <OnEnter>
+            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_TARGETMODE, SMARTDEBUFF_TT_TARGETMODE, "ANCHOR_RIGHT");
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+      </CheckButton>
       <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
         <Size>
           <AbsDimension x="64" y="20"/>
@@ -3112,12 +3336,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SmartDebuffAOFKeys_OnShow(self);
       </OnShow>
       <OnHide>
@@ -3133,9 +3355,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -3188,7 +3411,7 @@
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="12" y="-30"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="12" y="-20"/></Offset></Anchor></Anchors>
       </CheckButton>
       <CheckButton name="SmartDebuffOF_cbVerticalUp" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
@@ -3763,12 +3986,10 @@
       </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
 if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
 self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
 SMARTDEBUFF_GridOnShow(self);
       </OnShow>
       <OnHide>
@@ -3782,8 +4003,9 @@ SMARTDEBUFF_GridOnShow(self);
     </Size>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
-        <Offset><AbsDimension x="2" y="0"/></Offset>
+        <Offset><AbsDimension x="-172" y="-15"/></Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -3848,12 +4070,10 @@ SMARTDEBUFF_GridOnShow(self);
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_MiscOnShow(self);
       </OnShow>
       <OnHide>SMARTDEBUFF_MiscOnHide(self);</OnHide>
@@ -3866,9 +4086,10 @@ SMARTDEBUFF_GridOnShow(self);
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -3922,7 +4143,7 @@ SMARTDEBUFF_GridOnShow(self);
           </OnValueChanged>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+            GameTooltip:SetText(OPACITY, SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
           </OnEnter>
           <OnLeave>
             GameTooltip:Hide();
@@ -4393,12 +4614,10 @@ SMARTDEBUFF_GridOnShow(self);
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_ColorsOnShow(self);
       </OnShow>
       <OnHide>
@@ -4481,12 +4700,10 @@ SMARTDEBUFF_GridOnShow(self);
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_AuraSoundsOnShow(self);
       </OnShow>
       <OnHide>
@@ -4504,6 +4721,7 @@ SMARTDEBUFF_GridOnShow(self);
           <AbsDimension x="2" y="0"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <!-- GameFontHighlightSmall, GameFontNormalSmall -->
@@ -4553,11 +4771,7 @@ SMARTDEBUFF_GridOnShow(self);
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        if (SmartDebuffAOFKeys:IsVisible()) then
-          self:SetPoint("TOPLEFT", "SmartDebuffAOFKeys", "TOPRIGHT", 2, 0);
-        else
-          self:SetPoint("TOPLEFT", "SmartDebuffOF", "TOPRIGHT", 2, 0);
-        end
+        self:SetPoint("TOPLEFT", "SmartDebuffOF", "TOPRIGHT", 2, 0);
       </OnShow>
       <OnHide>
         if (not InCombatLockdown() and self.IsMoving) then

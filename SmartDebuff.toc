@@ -48,15 +48,15 @@ Core\SmartDebuff_spells_Cata.lua [AllowLoadGameType cata]
 Core\SmartDebuff_spells_Mists.lua [AllowLoadGameType mists]
 Core\SmartDebuff_spells_Forever.lua [ExcludeLoadGameType standard, classic][AllowLoadGameType forever]
 Core\SmartDebuff_spells.lua [AllowLoadGameType standard]
-Core\Localization.en.lua
-Core\Localization.fr.lua [AllowLoadTextLocale frFR]
-Core\Localization.de.lua [AllowLoadTextLocale deDE]
-Core\Localization.es.lua [AllowLoadTextLocale esES, esMX]
-Core\Localization.it.lua [AllowLoadTextLocale itIT]
-Core\Localization.ko.lua [AllowLoadTextLocale koKR]
-Core\Localization.pt.lua [AllowLoadTextLocale ptBR]
-Core\Localization.ru.lua [AllowLoadTextLocale ruRU]
-Core\Localization.tw.lua [AllowLoadTextLocale zhCN, zhTW]
+Core\localization.en.lua
+Core\localization.fr.lua [AllowLoadTextLocale frFR]
+Core\localization.de.lua [AllowLoadTextLocale deDE]
+Core\localization.es.lua [AllowLoadTextLocale esES, esMX]
+Core\localization.it.lua [AllowLoadTextLocale itIT]
+Core\localization.ko.lua [AllowLoadTextLocale koKR]
+Core\localization.pt.lua [AllowLoadTextLocale ptBR]
+Core\localization.ru.lua [AllowLoadTextLocale ruRU]
+Core\localization.tw.lua [AllowLoadTextLocale zhCN, zhTW]
 Core\SmartDebuff.polyfill.lua
 Core\SmartDebuff.sounds.lua
 Core\SmartDebuff.lua

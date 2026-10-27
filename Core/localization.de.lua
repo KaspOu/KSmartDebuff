@@ -80,6 +80,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "Farbverlauf";
 SMARTDEBUFF_OFT_INFOFRAME      = "Status-Fenster";
 SMARTDEBUFF_OFT_AUTOHIDE       = "Auto. verbergen";
 SMARTDEBUFF_OFT_COLUMNS        = "Spalten";
+SMARTDEBUFF_OFT_COLTEXTURE     = "Debuff-Textur"
 SMARTDEBUFF_OFT_COLTEXTURE     = "Textur"
 SMARTDEBUFF_OFT_INTERVAL       = "Interval";
 SMARTDEBUFF_OFT_FONTSIZE       = "Schriftgrösse";
@@ -217,6 +218,12 @@ SMARTDEBUFF_OFT_SKILLS          = "Maus-Verknüpfungen"; -- ChatGPT
 SMARTDEBUFF_TT_SKILLS           = "Klicken, um die Tastenkürzel zu bearbeiten\n(Klick L/R/M, mit Alt/Shift/Strg)"; -- ChatGPT
 SMARTDEBUFF_TT_RESET_SKILLS     = "Setzt die Tastenkürzel für Ihre Klasse zurück"; -- ChatGPT
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Zauber-Verfolgungsliste"; -- ChatGPT
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "Startseite";
+SMARTDEBUFF_MENU_GRID       = "Raster";
+SMARTDEBUFF_MENU_COLORS     = "Farben";
+SMARTDEBUFF_MENU_HOTS       = "HoT-Zauber";
+SMARTDEBUFF_MENU_CLASSORDER = "Klassenreihenfolge";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Klicken, um die Liste der zu verfolgenden Zauber zu bearbeiten"; -- ChatGPT
 SMARTDEBUFF_TT_SOUNDLIST        = "Klicken, um den Sound auszuwählen.\n(Rechtsklick nur zum Anhören)"; -- ChatGPT
 

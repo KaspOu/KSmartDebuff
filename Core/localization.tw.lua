@@ -84,6 +84,7 @@ SMARTDEBUFF_OFT_SHOWGRADIENT   = "漸變";
 SMARTDEBUFF_OFT_INFOFRAME      = "摘要框體";
 SMARTDEBUFF_OFT_AUTOHIDE       = "自動隱藏";
 SMARTDEBUFF_OFT_COLUMNS        = "列";
+SMARTDEBUFF_OFT_COLTEXTURE     = "減益效果材質"
 SMARTDEBUFF_OFT_COLTEXTURE     = "材質"
 SMARTDEBUFF_OFT_INTERVAL       = "間隔";
 SMARTDEBUFF_OFT_FONTSIZE       = "字體大小";
@@ -220,6 +221,12 @@ SMARTDEBUFF_OFT_SKILLS          = "滑鼠快捷鍵";  -- ChatGPT
 SMARTDEBUFF_TT_SKILLS           = "點擊以修改快捷鍵\n(左/右/中鍵點擊，搭配 Alt/Shift/Ctrl)";  -- ChatGPT
 SMARTDEBUFF_TT_RESET_SKILLS     = "重置您的職業快捷鍵";  -- ChatGPT
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "法術守護列表";  -- ChatGPT
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "主頁";
+SMARTDEBUFF_MENU_GRID       = "格線";
+SMARTDEBUFF_MENU_COLORS     = "顏色";
+SMARTDEBUFF_MENU_HOTS       = "HoT 技能";
+SMARTDEBUFF_MENU_CLASSORDER = "職業順序";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "點擊以修改\n追蹤法術列表";  -- ChatGPT
 SMARTDEBUFF_TT_SOUNDLIST        = "點擊以選擇音效。\n(右鍵僅供試聽)";  -- ChatGPT
 
