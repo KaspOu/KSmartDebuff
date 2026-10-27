@@ -2095,83 +2095,6 @@
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_cbChatNotif" inherits="InterfaceOptionsCheckButtonTemplate">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbAdvAnchors">
-            <Offset>
-              <AbsDimension x="0" y="-16"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CHATNOTIF);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ChatNotif);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ChatNotif = not SMARTDEBUFF_Options.ChatNotif;
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CHATNOTIF, SMARTDEBUFF_TT_CHATNOTIF);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_cbShowAuraSpellIDs" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
-        <HitRectInsets>
-          <AbsInset left="0" right="0" top="0" bottom="0"/>
-        </HitRectInsets>
-        <Size>
-          <AbsDimension x="16" y="16"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_cbChatNotif">
-            <Offset>
-              <AbsDimension x="152" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_AURASPELLIDS);
-            if (not SMARTDEBUFF_AURACONTAINERS) then
-              SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_AURASPELLIDS, SMARTDEBUFF_TT_DISABLED_VERSION);
-              return
-            end
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetChecked(SMARTDEBUFF_Options.ShowAuraSpellIDs);
-            end
-          </OnShow>
-          <OnClick>
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.ShowAuraSpellIDs = not SMARTDEBUFF_Options.ShowAuraSpellIDs;
-              SMARTDEBUFF_CheckCVars();
-            end
-          </OnClick>
-          <OnEnter>
-            SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_AURASPELLIDS, SMARTDEBUFF_TT_AURASPELLIDS);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
       <Slider name="$parent_sldCheckInterval" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
@@ -2317,7 +2240,7 @@
         <Anchors>
           <Anchor point="BOTTOMRIGHT">
             <Offset>
-              <AbsDimension x="-4" y="28"/>
+              <AbsDimension x="-4" y="52"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2339,6 +2262,20 @@
           <OnLeave>
             GameTooltip:Hide();
           </OnLeave>
+        </Scripts>
+      </Button>
+      <Button name="$parent_btnMisc" inherits="UIPanelButtonTemplate" text="MISCELLANEOUS">
+        <Size><AbsDimension x="100" y="20"/></Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-4" y="28"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>self:SetNormalFontObject("GameFontNormalSmall"); self:SetHighlightFontObject("GameFontHighlightSmall"); self:SetText(MISCELLANEOUS);</OnLoad>
+          <OnClick>SMARTDEBUFF_MiscToggle();</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_btnTestMode" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_TESTMODE">
@@ -3948,6 +3885,89 @@ SMARTDEBUFF_GridOnShow(self);
       <OnHide>
         SMARTDEBUFF_GridOnHide(self);
       </OnHide>
+    </Scripts>
+  </Frame>
+  <Frame name="SmartDebuffMisc" toplevel="true" frameStrata="MEDIUM" parent="SmartDebuffOF" hidden="true" enableMouse="true">
+    <Size>
+      <AbsDimension x="172" y="520"/>
+    </Size>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
+        <Offset><AbsDimension x="2" y="0"/></Offset>
+      </Anchor>
+    </Anchors>
+    <Frames>
+      <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
+        <Size><AbsDimension x="164" y="20"/></Size>
+        <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="4" y="-4"/></Offset></Anchor></Anchors>
+        <FontString inherits="GameFontHighlightSmall" justifyH="CENTER"/>
+        <Scripts><OnLoad>self:SetAutoFocus(false); self:EnableMouse(false); self:EnableKeyboard(false); self:SetText(MISCELLANEOUS);</OnLoad></Scripts>
+      </EditBox>
+      <CheckButton name="$parent_cbShowAuraSpellIDs" inherits="InterfaceOptionsCheckButtonTemplate">
+        <HitRectInsets><AbsInset left="0" right="0" top="0" bottom="0"/></HitRectInsets>
+        <Size><AbsDimension x="16" y="16"/></Size>
+        <Anchors><Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_Title"><Offset><AbsDimension x="4" y="-24"/></Offset></Anchor></Anchors>
+        <Scripts>
+          <OnLoad>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_AURASPELLIDS);
+            if (not SMARTDEBUFF_AURACONTAINERS) then SMARTDEBUFF_DisableCheckButton(self, SMARTDEBUFF_OFT_AURASPELLIDS, SMARTDEBUFF_TT_DISABLED_VERSION); return end
+          </OnLoad>
+          <OnShow>if (SMARTDEBUFF_Options) then self:SetChecked(SMARTDEBUFF_Options.ShowAuraSpellIDs); end</OnShow>
+          <OnClick>if (SMARTDEBUFF_Options) then SMARTDEBUFF_Options.ShowAuraSpellIDs = not SMARTDEBUFF_Options.ShowAuraSpellIDs; SMARTDEBUFF_CheckCVars(); end</OnClick>
+          <OnEnter>SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_AURASPELLIDS, SMARTDEBUFF_TT_AURASPELLIDS);</OnEnter>
+          <OnLeave>GameTooltip:Hide();</OnLeave>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_cbChatNotif" inherits="InterfaceOptionsCheckButtonTemplate">
+        <HitRectInsets><AbsInset left="0" right="0" top="0" bottom="0"/></HitRectInsets>
+        <Size><AbsDimension x="16" y="16"/></Size>
+        <Anchors><Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowAuraSpellIDs"><Offset><AbsDimension x="0" y="-4"/></Offset></Anchor></Anchors>
+        <Scripts>
+          <OnLoad>_G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CHATNOTIF);</OnLoad>
+          <OnShow>if (SMARTDEBUFF_Options) then self:SetChecked(SMARTDEBUFF_Options.ChatNotif); end</OnShow>
+          <OnClick>if (SMARTDEBUFF_Options) then SMARTDEBUFF_Options.ChatNotif = not SMARTDEBUFF_Options.ChatNotif; end</OnClick>
+          <OnEnter>SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CHATNOTIF, SMARTDEBUFF_TT_CHATNOTIF);</OnEnter>
+          <OnLeave>GameTooltip:Hide();</OnLeave>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_cbAddonCompartment" inherits="InterfaceOptionsCheckButtonTemplate">
+        <HitRectInsets><AbsInset left="0" right="0" top="0" bottom="0"/></HitRectInsets>
+        <Size><AbsDimension x="16" y="16"/></Size>
+        <Anchors><Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbChatNotif"><Offset><AbsDimension x="0" y="-4"/></Offset></Anchor></Anchors>
+        <Scripts>
+          <OnLoad>_G[self:GetName().."Text"]:SetText("|cFFFF994D"..SMARTDEBUFF_OFT_ADDONCOMPARTMENT);
+          if not AddonCompartmentFrame then self:Hide() end
+          </OnLoad>
+          <OnShow>if (KD_Settings) then self:SetChecked(KD_Settings.AddonCompartment); end</OnShow>
+          <OnClick>if (KD_Settings) then KD_Settings.AddonCompartment = not KD_Settings.AddonCompartment; SMARTDEBUFF_RegisterCompartment(); end</OnClick>
+          <OnEnter>SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_ADDONCOMPARTMENT, SMARTDEBUFF_TT_ADDONCOMPARTMENT);</OnEnter>
+          <OnLeave>GameTooltip:Hide();</OnLeave>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_cbForceEnglish" inherits="InterfaceOptionsCheckButtonTemplate">
+        <HitRectInsets><AbsInset left="0" right="0" top="0" bottom="0"/></HitRectInsets>
+        <Size><AbsDimension x="16" y="16"/></Size>
+        <Anchors><Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbAddonCompartment"><Offset><AbsDimension x="0" y="-4"/></Offset></Anchor></Anchors>
+        <Scripts>
+          <OnLoad>_G[self:GetName().."Text"]:SetText("|cFFFF994D".."Force English");</OnLoad>
+          <OnShow>if (KD_Settings) then self:SetChecked(KD_Settings.ForceEnglish); end</OnShow>
+          <OnClick>if (KD_Settings) then KD_Settings.ForceEnglish = not KD_Settings.ForceEnglish; end</OnClick>
+          <OnEnter>SMARTDEBUFF_SetGameTooltip(self, "Force English", "Force english language, will require /reload");</OnEnter>
+          <OnLeave>GameTooltip:Hide();</OnLeave>
+        </Scripts>
+      </CheckButton>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        self:SetHeight(SmartDebuffOF:GetHeight());
+        if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
+        self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
+      </OnLoad>
+      <OnShow>
+        self:SetHeight(SmartDebuffOF:GetHeight());
+        SMARTDEBUFF_MiscOnShow(self);
+      </OnShow>
+      <OnHide>SMARTDEBUFF_MiscOnHide(self);</OnHide>
     </Scripts>
   </Frame>
   <Frame name="SmartDebuffColors" toplevel="true" frameStrata="MEDIUM" parent="SmartDebuffOF" hidden="true" enableMouse="true">

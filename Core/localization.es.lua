@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- Spanish localization
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_UPGRADED = "KDecurse actualizado: "..SMARTDEBUFF_VERSION;
 
@@ -117,6 +118,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Modo prueba"; -- ChatGPT
 SMARTDEBUFF_OFT_STOPCAST       = "Interrumpir lanzamiento"; -- ChatGPT
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignorar en reutilización"; -- ChatGPT
 SMARTDEBUFF_OFT_CHATNOTIF      = "Notificaciones de chat"; -- ChatGPT
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Compartimento de addons";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Reiniciar hechizos de KDecurse a los valores predeterminados?\n\nEsta acción es necesaria si sientes que no todos los perjuicios se detectan correctamente."; -- ChatGPT
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Ordenar por orden de clase";
 SMARTDEBUFF_NRDT_TITLE         = "Debuffs irremovibles";
@@ -163,6 +165,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Muestra y usa la configuración\navanzada de p
 SMARTDEBUFF_TT_STOPCAST        = "Interrumpe inmediatamente el\nlanzamiento o canalización en\ncurso para lanzar el hechizo definido.\n(Solo para hechizos de disipación)"; -- ChatGPT
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignora el perjuicio en la unidad\nsi tu hechizo de disipación está en tiempo de reutilización"; -- ChatGPT
 SMARTDEBUFF_TT_CHATNOTIF       = "Muestra notificaciones de chat al cargar"; -- ChatGPT
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Mostrar en el compartimento de addons (arriba a la derecha)"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "Se requiere recargar la interfaz (escribe /reload)"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "Esta opción no está disponible en esta versión de WoW."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "Esta opción ya no está disponible debido a las limitaciones de Blizzard."

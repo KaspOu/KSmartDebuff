@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- Chinese localization (Taiwan)
 -------------------------------------------------------------------------------
+if KD_Settings and KD_Settings.ForceEnglish then return end;
 
 SMARTDEBUFF_FONT = "Fonts\\ARKai_T.TTF"
 
@@ -122,6 +123,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "測試模式";  -- ChatGPT
 SMARTDEBUFF_OFT_STOPCAST       = "中斷施法";  -- ChatGPT
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "冷却中忽略";  -- ChatGPT
 SMARTDEBUFF_OFT_CHATNOTIF      = "聊天通知";  -- ChatGPT
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "插件收纳区";
 SMARTDEBUFF_OFT_RESET_KEYS     = "重置 KDecurse 法術為預設值？\n\n如果您覺得所有減益效果都未正確偵測，則需要執行此操作。";  -- ChatGPT
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "按職業排序";
 SMARTDEBUFF_NRDT_TITLE         = "不可驅散的Debuffs";
@@ -168,6 +170,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "顯示並使用進階錨點設定\n用於減�
 SMARTDEBUFF_TT_STOPCAST        = "立即中斷當前施法或引導\n以施放指定法術。\n(僅限驅散法術)";  -- ChatGPT
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "如果您的驅散法術正在冷卻中，\n則忽略單位上的減益效果。";  -- ChatGPT
 SMARTDEBUFF_TT_CHATNOTIF       = "載入時顯示聊天通知";  -- ChatGPT
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "显示在插件收纳区（右上角）"
 SMARTDEBUFF_TT_RELOADREQUIRED   = "需要重新載入介面（輸入 /reload）"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "此選項在此版本的《魔獸世界》中無法使用。"
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "由於暴雪的限制，此選項已不再可用。"

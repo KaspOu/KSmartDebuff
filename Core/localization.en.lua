@@ -159,6 +159,7 @@ SMARTDEBUFF_OFT_TESTMODE       = "Test Mode";
 SMARTDEBUFF_OFT_STOPCAST       = "Stop Casting";
 SMARTDEBUFF_OFT_IGNOREDEBUFF   = "Ignore On Cooldown";
 SMARTDEBUFF_OFT_CHATNOTIF        = "Chat notification";
+SMARTDEBUFF_OFT_ADDONCOMPARTMENT = "Addon Compartment";
 SMARTDEBUFF_OFT_RESET_KEYS     = "Reset the KDecurse spell bindings to default?\n\nThis action is necessary if you have the feeling that not all debuffs are correctly detected.";
 
 SMARTDEBUFF_AOFT_SORTBYCLASS   = "Sort by class order";
@@ -206,6 +207,7 @@ SMARTDEBUFF_TT_ADVANCHORS      = "Displays and uses the advanced\nanchoring setu
 SMARTDEBUFF_TT_STOPCAST        = "Stops immediately the current\ncasting or channeling,\nto cast the defined spell.\n(Debuff spells only)";
 SMARTDEBUFF_TT_IGNOREDEBUFF    = "Ignores the debuff on the unit\nif your debuff spell is on cooldown";
 SMARTDEBUFF_TT_CHATNOTIF         = "Displays chat messages on load";
+SMARTDEBUFF_TT_ADDONCOMPARTMENT = "Display in Addon Compartment (on top right)"
 SMARTDEBUFF_TT_RELOADREQUIRED    = "A reload is required ( write /reload )"
 SMARTDEBUFF_TT_DISABLED_VERSION  = "This option is not available in this WoW version."
 SMARTDEBUFF_TT_DISABLED_BLIZZARD = "This option is no longer available due to Blizzard limitations."
