@@ -96,9 +96,6 @@ local ST = {
 local cOrderClass = CLASS_SORT_ORDER;
 local cOrderGrp   = {1, 2, 3, 4, 5, 6, 7, 8};
 
-local imgSDB        = "Interface\\Icons\\Spell_Holy_LayOnHands";
---local imgIconOn     = "Interface\\AddOns\\SmartBuff\\Icons\\MiniMapButtonEnabled";
---local imgIconOff    = "Interface\\AddOns\\SmartBuff\\Icons\\MiniMapButtonDisabled";
 local imgActionSlot = "Interface/Buttons/UI-Quickslot2";
 local imgTarget     = nil;
 local imgMenu       = nil;
@@ -927,7 +924,7 @@ end
 -- END SMARTDEBUFF_SetUnits
 
 
--- Helper functions ---------------------------------------------------------------------------------------
+-- Helper functions ----
 function SMARTDEBUFF_toggleBool(b, msg)
   if (not b or b == nil) then
     b = true;
@@ -1344,7 +1341,7 @@ local function ReplaceDeprecatedOptions(options)
   end
 end
 
--- Init the KDecurse variables ---------------------------------------------------------------------------------------
+-- Init the KDecurse variables ----
 function SMARTDEBUFF_Options_Init()
   if (isInit or InCombatLockdown()) then return; end
 
@@ -1493,19 +1490,6 @@ function SMARTDEBUFF_Options_Init()
     end
   end
 
-
-  -- CTMod support
-  if(CT_RegisterMod) then
-    CT_RegisterMod(
-      SMARTDEBUFF_TITLE,
-      SMARTDEBUFF_SUBTITLE,
-      5,
-      imgSDB,
-      SMARTDEBUFF_DESC,
-      "switch",
-      "",
-      SMARTDEBUFF_ToggleSF);
-  end
 
   if (canDebuff) then
     SMARTDEBUFF_CreateButtons();
@@ -1899,7 +1883,7 @@ function SMARTDEBUFF_SetAuraSoundsDetectTest(force)
 end
 
 
--- KDecurse commandline menu ---------------------------------------------------------------------------------------
+-- KDecurse commandline menu ----
 local function NumCheck(n, min, max, def)
   local i = tonumber(n);
   if (i == nil or i < min or i > max) then
@@ -2040,7 +2024,7 @@ end
 -- END SMARTDEBUFF_command
 
 
--- KDecurse frame functions ---------------------------------------------------------------------------------------
+-- KDecurse frame functions ----
 
 function SMARTDEBUFF_ToggleSF()
   if (not isInit or not canDebuff or InCombatLockdown()) then return; end
@@ -4693,7 +4677,7 @@ end
 -- END KDecurse frame functions
 
 
--- KDecurse functions ---------------------------------------------------------------------------------------
+-- KDecurse functions ----
 -- Main check function, called by update event
 function SMARTDEBUFF_CheckDebuffs(force)
   if (not isInit or not canDebuff or (not force and GetTime() < (tDebuff + O.CheckInterval))) then
@@ -5096,7 +5080,7 @@ end
 -- END KDecurse functions
 
 
--- KDecurse option frame functions ---------------------------------------------------------------------------------------
+-- KDecurse option frame functions ----
 
 function SMARTDEBUFF_SetGameTooltip(self, title, text, anchor)
   if (not anchor) then anchor = "ANCHOR_LEFT"; end
@@ -5382,7 +5366,7 @@ function SMARTDEBUFF_GlobalLoad()
 end
 
 
--- Scroll frame functions ---------------------------------------------------------------------------------------
+-- Scroll frame functions ----
 
 local ScrBtnHeight = 12;
 local function SetPosScrollButtons(parent, cBtn)
@@ -5497,7 +5481,7 @@ function SMARTDEBUFF_AddTextToTable(self, tbl)
 end
 
 
--- DebuffGuard scroll frame functions ---------------------------------------------------------------------------------------
+-- DebuffGuard scroll frame functions ----
 
 local cScrBtnNRD = nil;
 function SMARTDEBUFF_NRDOnScroll(self, arg1)
@@ -5552,7 +5536,7 @@ function SMARTDEBUFF_NRDebuffsOnHide()
 end
 
 
--- SpellGuard scroll frame functions ---------------------------------------------------------------------------------------
+-- SpellGuard scroll frame functions ----
 
 local cScrBtnSG = nil;
 function SMARTDEBUFF_SpellGuardOnScroll(self, arg1)
@@ -5615,7 +5599,7 @@ function SmartDebuff_SpellGuardBtnOnDragStop(i, n)
 end
 
 
--- ClassOrder scroll frame functions ---------------------------------------------------------------------------------------
+-- ClassOrder scroll frame functions ----
 
 local cScrBtnCO = nil;
 function SMARTDEBUFF_ClassOrderOnScroll(self, arg1)
@@ -5664,7 +5648,7 @@ function SmartDebuff_ClassOrderBtnOnDragStop(i, n)
 end
 
 
--- Sound scroll frame functions ---------------------------------------------------------------------------------------
+-- Sound scroll frame functions ----
 
 local cScrBtnS = nil;
 function SMARTDEBUFF_SoundsOnScroll(self, arg1)
@@ -5728,7 +5712,27 @@ function SmartDebuff_SoundsBtnOnClick(self, button)
 end
 
 
--- Color setup frame functions ---------------------------------------------------------------------------------------
+-- Grid setup frame functions ----
+function SMARTDEBUFF_GridOnShow(self)
+  SMARTDEBUFF_HideAllButThis(self);
+  SmartDebuffGridSetup_Title:SetText(SMARTDEBUFF_OFT_GRIDSETUP);
+  SMARTDEBUFF_ColorsUpdate(true);
+end
+
+function SMARTDEBUFF_GridToggle()
+  if (SmartDebuffGridSetup:IsVisible()) then
+    SmartDebuffGridSetup:Hide();
+  else
+    SmartDebuffGridSetup:Show();
+    SMARTDEBUFF_TestModeToggle(true)
+  end
+end
+
+function SMARTDEBUFF_GridOnHide(self)
+end
+
+
+-- Color setup frame functions ----
 
 function SMARTDEBUFF_ColorsOnShow(self)
   SMARTDEBUFF_HideAllButThis(self);
@@ -5746,25 +5750,6 @@ function SMARTDEBUFF_ColorsToggle()
 end
 
 function SMARTDEBUFF_ColorsOnHide(self)
-end
-
-
-function SMARTDEBUFF_GridOnShow(self)
-  SMARTDEBUFF_HideAllButThis(self);
-  SmartDebuffGridSetup_Title:SetText(SMARTDEBUFF_OFT_GRIDSETUP);
-  SMARTDEBUFF_ColorsUpdate(true);
-end
-
-function SMARTDEBUFF_GridToggle()
-  if (SmartDebuffGridSetup:IsVisible()) then
-    SmartDebuffGridSetup:Hide();
-  else
-    SmartDebuffGridSetup:Show();
-    SMARTDEBUFF_TestModeToggle(true)
-  end
-end
-
-function SMARTDEBUFF_GridOnHide(self)
 end
 
 --[[
@@ -5873,7 +5858,7 @@ function SMARTDEBUFF_ColorsUpdate(b)
   SMARTDEBUFF_CheckSFBackdrop();
 end
 
--- KDecurse action binding option frame functions --------------------------------
+-- KDecurse action binding option frame functions ----
 
 -- -- Pickup hook to avoid the GetCursorInfo bug with pet spells
 -- local lastSlot, lastBookType;
