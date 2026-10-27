@@ -3223,294 +3223,6 @@
           </OnLoad>
         </Scripts>
       </EditBox>
-      <Slider name="SmartDebuffOF_sldFontsize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 5, 18, 1);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.Fontsize);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_FONTSIZE .. ": ".. self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.Fontsize = self:GetValue();
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-38"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldIconSize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 4, 32, 1);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.RaidIconSize);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ICONSIZE..": "..self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.RaidIconSize = self:GetValue();
-              --SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-73"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldColumns" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 1, 20, 1);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.Columns);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_COLUMNS .. ": " .. self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.Columns = self:GetValue();
-              SMARTDEBUFF_SetStyle();
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-108"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldBarHeight" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 2, 20, 1);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.BarH);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_BARHEIGHT .. ": ".. self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.BarH = self:GetValue();
-              SMARTDEBUFF_CheckDebuffs(true);
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-143"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldBtnW" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 12, 108, 4);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.BtnW);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_WIDTH .. ": ".. self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.BtnW = self:GetValue();
-              SMARTDEBUFF_SetStyle();
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-178"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldBtnH" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 12, 108, 4);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.BtnH);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEIGHT .. ": ".. self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.BtnH = self:GetValue();
-              SMARTDEBUFF_SetStyle();
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-213"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldSpaceX" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 0, 16, 1);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.BtnSpX);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SPACEX..": "..self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.BtnSpX = self:GetValue();
-              SMARTDEBUFF_SetStyle();
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-248"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
-      <Slider name="SmartDebuffOF_sldSpaceY" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
-        <Size>
-          <AbsDimension x="132" y="16"/>
-        </Size>
-        <Scripts>
-          <OnLoad>
-            SmartDebuffOFSlider_OnLoad(self, 0, 16, 1);
-          </OnLoad>
-          <OnShow>
-            if (SMARTDEBUFF_Options) then
-              self:SetValue(SMARTDEBUFF_Options.BtnSpY);
-            end
-          </OnShow>
-          <OnValueChanged>
-            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SPACEY..": "..self:GetValue());
-            if (SMARTDEBUFF_Options) then
-              SMARTDEBUFF_Options.BtnSpY = self:GetValue();
-              SMARTDEBUFF_SetStyle();
-            end
-          </OnValueChanged>
-          <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
-          </OnEnter>
-          <OnLeave>
-            GameTooltip:Hide();
-          </OnLeave>
-        </Scripts>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffGridSetup">
-            <Offset>
-              <AbsDimension x="12" y="-283"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Slider>
       <CheckButton name="SmartDebuffOF_cbVertical" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
@@ -3541,7 +3253,7 @@
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-318"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="12" y="-30"/></Offset></Anchor></Anchors>
       </CheckButton>
       <CheckButton name="SmartDebuffOF_cbVerticalUp" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
@@ -3574,7 +3286,7 @@
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-334"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbVertical"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
       </CheckButton>
       <CheckButton name="SmartDebuffOF_cbHeaders" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
@@ -3584,7 +3296,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-350"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbVerticalUp"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEADERS);
@@ -3616,7 +3328,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-366"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbHeaders"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_GROUPNR);
@@ -3648,7 +3360,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-382"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbGrpNr"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INFOROW);
@@ -3681,7 +3393,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-398"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowInfoRow"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEADERROW);
@@ -3714,7 +3426,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-414"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowHeaderRow"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_BACKDROP);
@@ -3745,7 +3457,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-430"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowBackdrop"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CLASSCOLOR);
@@ -3777,7 +3489,7 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-446"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbClassColors"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWGRADIENT);
@@ -3831,7 +3543,7 @@
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-462"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowGradient"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
       </CheckButton>
       <CheckButton name="SmartDebuffOF_cbShowRoleDpsIcon" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
@@ -3863,8 +3575,256 @@
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffGridSetup"><Offset><AbsDimension x="12" y="-478"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowRoleIcon"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
       </CheckButton>
+      <Slider name="SmartDebuffOF_sldFontsize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 5, 18, 1);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.Fontsize);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_FONTSIZE .. ": ".. self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.Fontsize = self:GetValue();
+              SMARTDEBUFF_CheckDebuffs(true);
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowRoleDpsIcon"><Offset><AbsDimension x="0" y="-25"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldIconSize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 4, 32, 1);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.RaidIconSize);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ICONSIZE..": "..self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.RaidIconSize = self:GetValue();
+              --SMARTDEBUFF_CheckDebuffs(true);
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldFontsize"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldColumns" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 1, 20, 1);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.Columns);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_COLUMNS .. ": " .. self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.Columns = self:GetValue();
+              SMARTDEBUFF_SetStyle();
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldIconSize"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldBarHeight" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 2, 20, 1);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.BarH);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_BARHEIGHT .. ": ".. self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.BarH = self:GetValue();
+              SMARTDEBUFF_CheckDebuffs(true);
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldColumns"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldBtnW" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 12, 108, 4);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.BtnW);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_WIDTH .. ": ".. self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.BtnW = self:GetValue();
+              SMARTDEBUFF_SetStyle();
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldBarHeight"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldBtnH" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 12, 108, 4);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.BtnH);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEIGHT .. ": ".. self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.BtnH = self:GetValue();
+              SMARTDEBUFF_SetStyle();
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldBtnW"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldSpaceX" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 0, 16, 1);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.BtnSpX);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SPACEX..": "..self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.BtnSpX = self:GetValue();
+              SMARTDEBUFF_SetStyle();
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldBtnH"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
+      <Slider name="SmartDebuffOF_sldSpaceY" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+        <Size>
+          <AbsDimension x="132" y="16"/>
+        </Size>
+        <Scripts>
+          <OnLoad>
+            SmartDebuffOFSlider_OnLoad(self, 0, 16, 1);
+          </OnLoad>
+          <OnShow>
+            if (SMARTDEBUFF_Options) then
+              self:SetValue(SMARTDEBUFF_Options.BtnSpY);
+            end
+          </OnShow>
+          <OnValueChanged>
+            _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SPACEY..": "..self:GetValue());
+            if (SMARTDEBUFF_Options) then
+              SMARTDEBUFF_Options.BtnSpY = self:GetValue();
+              SMARTDEBUFF_SetStyle();
+            end
+          </OnValueChanged>
+          <OnEnter>
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+          </OnLeave>
+        </Scripts>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldSpaceX"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+      </Slider>
       </Frames>
     <Scripts>
       <OnLoad>
