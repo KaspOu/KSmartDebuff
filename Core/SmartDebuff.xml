@@ -2680,10 +2680,20 @@
   </Frames>
 
   <Scripts>
+    <OnMouseUp>
+      SmartDebuffOF_AdvancedMask:Hide();
+    </OnMouseUp>
     <OnLoad>
       self:SetFrameLevel(SmartDebuffOF:GetFrameLevel() + 20);
       SmartDebuffOF_btnKeys:SetFrameLevel(self:GetFrameLevel() + 2);
+      self:EnableMouse(true)
     </OnLoad>
+    <OnEnter>
+      SMARTDEBUFF_SetGameTooltip(self, OPTIONS, UNLOCK_FRAME, "ANCHOR_RIGHT");
+    </OnEnter>
+    <OnLeave>
+      GameTooltip:Hide();
+    </OnLeave>
   </Scripts>
 </Frame>
 
@@ -4005,7 +4015,7 @@ SMARTDEBUFF_GridOnShow(self);
           </OnValueChanged>
           <OnEnter>
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText("", SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
+            GameTooltip:SetText(OPACITY, SMARTDEBUFF_TTC_R, SMARTDEBUFF_TTC_G, SMARTDEBUFF_TTC_B, SMARTDEBUFF_TTC_A);
           </OnEnter>
           <OnLeave>
             GameTooltip:Hide();
