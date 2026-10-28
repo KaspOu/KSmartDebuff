@@ -6,6 +6,9 @@ Class Dispels only: https://www.wowhead.com/spells/specialization?filter=109;38;
 Talents dispels: https://www.wowhead.com/spells/talents?filter=109;38;0
 https://wago.tools/db2/SpellDispelType
 
+https://keystone.guru/compendium/dungeon/altar-of-fangs/spell
+https://www.method.gg/guides/dungeons/altar-of-fangs
+
 https://www.wowhead.com/spells/npc-abilities/dispel-type:2?filter=21;2;120105
 
 https://github.com/albvar/mplus-interrupts

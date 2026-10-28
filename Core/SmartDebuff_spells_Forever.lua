@@ -613,6 +613,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
     --   [19703] = SMARTDEBUFF_CURSE,    -- lucifrons-curse
     --   [19702] = SMARTDEBUFF_MAGIC,    -- impending-doom
       -- [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
+    --   [19365] = SMARTDEBUFF_MAGIC,    -- Ancient Dread    
     -- },
     -- [469] = {
     --   __name = "Blackwing Lair",
