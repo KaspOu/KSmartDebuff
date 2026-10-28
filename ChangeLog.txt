@@ -1,4 +1,5 @@
 v12.1.503
+- Forever: all release dungeons ok
 - Debuff Texture applied directly
 - Rework option screen
   - New Grid Setup

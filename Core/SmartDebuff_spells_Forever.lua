@@ -133,11 +133,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
 
   SMARTDEBUFF_DEBUFFS_LIST = {
     -- 249 - Onyxia /Raid
-
-    -- 389 - Ragefire Chasm - Gouffre de Ragefeu
-    -- 36 - Deadmines - Les Mortemines
-    -- 34 - Stormwind Stockade - 	La Prison
-    -- 90 - Gnomeregan
+    -- 90 - Gnomeregan  24-34?
 
     
     [-2981] = { -- 60
@@ -188,7 +184,9 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __name = "Scholomance",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
+      [2818]  = SMARTDEBUFF_POISON,   -- deadly-poison
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
       [29212] = SMARTDEBUFF_POISON,    -- cripple
       [1224125] = SMARTDEBUFF_MAGIC,    -- silence
       [18327] = SMARTDEBUFF_MAGIC,    -- silence
@@ -218,6 +216,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __ext = "",
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
       [29212] = SMARTDEBUFF_POISON,    -- cripple
       [1224125] = SMARTDEBUFF_MAGIC,    -- silence
@@ -239,10 +238,11 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
     },
     [229] = { -- 55 to 60
       __name = "Blackrock Spire",
-      __name_frFR = "Pic Rochenoire",
+      __name_frFR = "Pic de Rochenoire",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
       [8282] = SMARTDEBUFF_CURSE,    -- curse-of-blood
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
@@ -254,7 +254,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
     },
     [429] = { -- 54 to 60
       __name = "Dire Maul",
-      __name_frFR = "Hache Tripes",
+      __name_frFR = "Hache-Tripes",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
       [5137] = SMARTDEBUFF_CURSE,    -- call-of-the-grave
@@ -273,6 +273,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [8994] = SMARTDEBUFF_MAGIC,    -- banish
       [12096] = SMARTDEBUFF_MAGIC,    -- fear
       [12542] = SMARTDEBUFF_MAGIC,    -- fear
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
     },
     [230] = { -- 52 to 60
       __name = "Blackrock Depths",
@@ -280,8 +281,10 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [8282] = SMARTDEBUFF_CURSE,    -- curse-of-blood
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
@@ -306,6 +309,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __name = "Maraudon",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
+      [2818]  = SMARTDEBUFF_POISON,   -- deadly-poison
       [7964] = SMARTDEBUFF_MAGIC, -- smoke-bomb
       [21687] = SMARTDEBUFF_POISON, -- toxic-volley
       [12747] = SMARTDEBUFF_CURSE, -- entangling-roots
@@ -318,11 +322,14 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [8600]  = SMARTDEBUFF_DISEASE, -- fevered-plague
       [1294626] = SMARTDEBUFF_CURSE,  -- Theka's Last Breath
       [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
     },
     [70] = { -- 41 to 51
       __name = "Uldaman",
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
+      [2818]  = SMARTDEBUFF_POISON,   -- deadly-poison
       [9482]  = SMARTDEBUFF_MAGIC,  -- amplify-flames
       [3356]  = SMARTDEBUFF_MAGIC,  -- flame-lash
       [8053]  = SMARTDEBUFF_MAGIC,  -- flame-shock
@@ -351,11 +358,13 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __type = MAP_LEGEND_DUNGEON,
       __ext = "",
       [9034] = SMARTDEBUFF_MAGIC,    -- immolate
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
       [5137] = SMARTDEBUFF_CURSE,    -- call-of-the-grave
       [9373] = SMARTDEBUFF_MAGIC,    -- soul-siphon
       [7399] = SMARTDEBUFF_MAGIC,    -- terrify
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [3815] = SMARTDEBUFF_POISON,    -- poison-cloud
       [8399] = SMARTDEBUFF_MAGIC,    -- sleep
       [853] = SMARTDEBUFF_MAGIC,    -- hammer-of-justice
@@ -412,6 +421,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [17503] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [16799] = SMARTDEBUFF_MAGIC,    -- frostbolt
       [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [15499] = SMARTDEBUFF_MAGIC,    -- frost-shock
     },
     [33] = { -- 20 to 30
@@ -421,6 +431,13 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       __ext = "",
       [853] = SMARTDEBUFF_MAGIC,     -- Hammer of Justice
       [122] = SMARTDEBUFF_MAGIC,     -- Frost Nova
+    },
+    [34] = { -- 20 to 29?
+      __name = "Stormwind Stockade",
+      __name_frFR = "La Prison",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [7964] = SMARTDEBUFF_MAGIC, -- smoke-bomb
     },
     [2998] = { -- 24 to 29
       __name = "Excavation Site: Wetlands",
@@ -461,6 +478,25 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [26070]  = SMARTDEBUFF_MAGIC,   -- fear
       [12054]  = SMARTDEBUFF_BLEEDING,   -- rend
     },
+    [389] = { -- 13 to 16?
+      __name = "Ragefire Chasm",
+      __name_frFR = "Gouffre de Ragefeu",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
+      [2818]  = SMARTDEBUFF_POISON,   -- deadly-poison
+    },
+    [36] = { -- 15 to 22?
+      __name = "Deadmines",
+      __name_frFR = "Les Mortemines",
+      __type = MAP_LEGEND_DUNGEON,
+      __ext = "",
+      [7399] = SMARTDEBUFF_MAGIC,    -- terrify
+      [5208] = SMARTDEBUFF_POISON,    -- poisoned-harpoon
+    },
   
     -- Generic / Outside instances / PvP
     [0] = {
@@ -477,6 +513,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
       [7399] = SMARTDEBUFF_MAGIC,    -- terrify
       [21007] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [12741] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
+      [18267] = SMARTDEBUFF_CURSE,    -- curse-of-weakness
       [8399] = SMARTDEBUFF_MAGIC,    -- sleep
       [14518] = SMARTDEBUFF_MAGIC,    -- crusader-strike
       [15530] = SMARTDEBUFF_MAGIC,    -- frostbolt
@@ -575,6 +612,7 @@ SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID = {}
     --   [19408] = SMARTDEBUFF_MAGIC,    -- panic
     --   [19703] = SMARTDEBUFF_CURSE,    -- lucifrons-curse
     --   [19702] = SMARTDEBUFF_MAGIC,    -- impending-doom
+      -- [20800]  = SMARTDEBUFF_MAGIC,   -- immolate
     -- },
     -- [469] = {
     --   __name = "Blackwing Lair",
