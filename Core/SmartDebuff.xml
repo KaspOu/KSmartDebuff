@@ -2283,9 +2283,9 @@
           <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT">
+          <Anchor point="BOTTOMRIGHT">
             <Offset>
-              <AbsDimension x="4" y="4"/>
+              <AbsDimension x="-4" y="28"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2310,9 +2310,9 @@
           <AbsDimension x="50" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT">
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="$parent_btnReload">
             <Offset>
-              <AbsDimension x="76" y="4"/>
+              <AbsDimension x="-4" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
