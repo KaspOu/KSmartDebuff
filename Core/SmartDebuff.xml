@@ -334,7 +334,7 @@
   </Frame>
   <Frame name="SmartDebuffOF" movable="true" toplevel="true" frameStrata="MEDIUM" parent="UIParent" hidden="true" enableMouse="true">
     <Size>
-      <AbsDimension x="304" y="540"/>
+      <AbsDimension x="330" y="540"/>
     </Size>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
@@ -2142,6 +2142,13 @@
             </Scripts>
           </Frame>
         </Frames>
+        <Scripts>
+          <OnShow>
+            -- self:SetHeight(SmartDebuffOF:GetHeight());
+            SMARTDEBUFF_HomeOnShow(self);
+          </OnShow>
+          <OnHide>SMARTDEBUFF_HomeOnHide(self);</OnHide>
+        </Scripts>
       </Frame>
       <Frame name="$parent_Infos" hidden="true" enableMouse="false">
         <Size>
@@ -2199,7 +2206,7 @@
                 self.panelName = "SmartDebuffAOFKeys";
               </OnLoad>
               <OnEnter>if (not self.active) then self.HL:Show(); end
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SKILLS, SMARTDEBUFF_TT_SKILLS);</OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SKILLS, SMARTDEBUFF_TT_SKILLS, "ANCHOR_RIGHT");</OnEnter>
               <OnLeave>if (not self.active) then self.HL:Hide(); end
                 GameTooltip:Hide();</OnLeave>
               <OnClick>
@@ -2272,7 +2279,7 @@
                 self.panelName = "SmartDebuffSounds";
               </OnLoad>
               <OnEnter>if (not self.active) then self.HL:Show(); end
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);</OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST, "ANCHOR_RIGHT");</OnEnter>
               <OnLeave>if (not self.active) then self.HL:Hide(); end
                 GameTooltip:Hide();</OnLeave>
               <OnClick>
@@ -2295,11 +2302,15 @@
                 self.Text:SetTextColor(1, 1, 1);
                 self.HL:Hide();
                 self.panelName = "SmartDebuffSpellGuard";
+                if (not SMARTDEBUFF_AURACONTAINERS) then self.disabled = true; return end
               </OnLoad>
-              <OnEnter>if (not self.active) then self.HL:Show(); end
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWDEBUFFGUARD, SMARTDEBUFF_TT_SHOWDEBUFFGUARD);</OnEnter>
-              <OnLeave>if (not self.active) then self.HL:Hide(); end
-                GameTooltip:Hide();</OnLeave>
+              <OnEnter>
+                if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWDEBUFFGUARD, SMARTDEBUFF_TT_SHOWDEBUFFGUARD, "ANCHOR_RIGHT");</OnEnter>
+              <OnLeave>
+                if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();
+                </OnLeave>
               <OnClick>
                 SMARTDEBUFF_SpellGuardToggle();
                 SmartDebuffOF_MenuList_Refresh();
@@ -2322,7 +2333,7 @@
                 self.panelName = "SmartDebuffClassOrder";
               </OnLoad>
               <OnEnter>if (not self.active) then self.HL:Show(); end
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSSORT, SMARTDEBUFF_TT_CLASSSORT);</OnEnter>
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSSORT, SMARTDEBUFF_TT_CLASSSORT, "ANCHOR_RIGHT");</OnEnter>
               <OnLeave>if (not self.active) then self.HL:Hide(); end
                 GameTooltip:Hide();</OnLeave>
               <OnClick>
@@ -2377,16 +2388,23 @@
                 local it = ml.items[i];
                 local p = it.panelName and _G[it.panelName] or nil;
                 local act = (p and p:IsShown()) and true or false;
-                if (it.active ~= act) then
-                  it.active = act;
-                  if (act) then
-                    it.HL:SetVertexColor(1, 0.82, 0, 0.10);
-                    it.HL:Show();
-                    it.Text:SetTextColor(1, 0.82, 0);
-                  else
-                    it.HL:SetVertexColor(1, 1, 1, 0.12);
-                    it.HL:Hide();
-                    it.Text:SetTextColor(1, 1, 1);
+                if (it.disabled) then
+                 it.Text:SetTextColor(RED_FONT_COLOR:GetRGB());
+                 it.Text:SetAlpha(.6);
+                 it:SetScript("OnEnter", function() SMARTDEBUFF_SetGameTooltip(it, RED_FONT_COLOR:WrapTextInColorCode(it.Text:GetText()), SMARTDEBUFF_TT_DISABLED_VERSION, "ANCHOR_RIGHT") end);
+                 it:SetScript("OnClick", nil);
+                else
+                  if (it.active ~= act) then
+                    it.active = act;
+                    if (act) then
+                      it.HL:SetVertexColor(1, 0.82, 0, 0.10);
+                      it.HL:Show();
+                      it.Text:SetTextColor(1, 0.82, 0);
+                    else
+                      it.HL:SetVertexColor(1, 1, 1, 0.12);
+                      it.HL:Hide();
+                      it.Text:SetTextColor(1, 1, 1);
+                    end
                   end
                 end
               end
@@ -2705,7 +2723,7 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>
@@ -2812,7 +2830,7 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>
@@ -2940,7 +2958,7 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>
@@ -3085,7 +3103,7 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>
@@ -3219,7 +3237,7 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>
@@ -3276,7 +3294,7 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>
@@ -3925,7 +3943,7 @@ SMARTDEBUFF_GridOnShow(self);
     </Size>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
-        <Offset><AbsDimension x="2" y="0"/></Offset>
+        <Offset><AbsDimension x="-172" y="0"/></Offset>
       </Anchor>
     </Anchors>
     <Frames>
@@ -4009,7 +4027,7 @@ SMARTDEBUFF_GridOnShow(self);
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="2" y="0"/>
+          <AbsDimension x="-172" y="0"/>
         </Offset>
       </Anchor>
     </Anchors>

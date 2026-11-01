@@ -990,13 +990,14 @@ function SmartDebuffOFSlider_OnLoad(self, low, high, step)
 end
 
 function SMARTDEBUFF_HideAllButThis(self)
-  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup, SmartDebuffMisc}
+  local elements = {SmartDebuffAOFKeys, SmartDebuffClassOrder, SmartDebuffNRDebuffs, SmartDebuffSpellGuard, SmartDebuffSounds, SmartDebuffColors, SmartDebuffGridSetup, SmartDebuffMisc, SmartDebuffOF_Home}
 
   for _, element in ipairs(elements) do
     if self ~= element and element:IsVisible() then
       element:Hide()
     end
   end
+  SmartDebuffOF_Infos:Show()
 end
 
 -- IsFeignDeath(unit)
@@ -5127,6 +5128,7 @@ end
 
 function SMARTDEBUFF_OFOnShow()
   SMARTDEBUFF_HideAllButThis();
+  SMARTDEBUFF_HomeToggle()
   SMARTDEBUFF_CheckAutoHide();
   SMARTDEBUFF_CheckAnchorPos();
   SmartDebuffOF_Title:SetText(format("%s %s- %s", SMARTDEBUFF_OPTIONS_TITLE, COL.YLD, SMARTDEBUFF_SPELLS_VERSION));
@@ -5763,6 +5765,22 @@ end
 function SMARTDEBUFF_MiscOnHide(self)
 end
 
+
+function SMARTDEBUFF_HomeOnShow(self)
+  SMARTDEBUFF_HideAllButThis(self);
+  -- SmartDebuffHome_Title:SetText(SMARTDEBUFF_OFT_HOME);
+end
+
+function SMARTDEBUFF_HomeToggle()
+  if (SmartDebuffOF_Home:IsVisible()) then
+    SmartDebuffOF_Home:Hide();
+  else
+    SmartDebuffOF_Home:Show();
+  end
+end
+
+function SMARTDEBUFF_HomeOnHide(self)
+end
 
 -- Color setup frame functions ----
 
