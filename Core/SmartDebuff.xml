@@ -1379,34 +1379,6 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Button name="SmartDebuffOF_btnClassOrder" inherits="UIPanelButtonTemplate" text="C">
-            <Size>
-              <AbsDimension x="16" y="16"/>
-            </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView">
-                <Offset>
-                  <AbsDimension x="130" y="1"/>
-                </Offset>
-              </Anchor>
-            </Anchors>
-            <Scripts>
-              <OnLoad>
-                self:SetNormalFontObject("GameFontNormalSmall");
-                self:SetHighlightFontObject("GameFontHighlightSmall");
-              </OnLoad>
-              <OnClick>
-                --SMARTDEBUFF_ToggleAOFOrder(1);
-                SMARTDEBUFF_ClassOrderToggle();
-              </OnClick>
-              <OnEnter>
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSSORT, SMARTDEBUFF_TT_CLASSSORT);
-              </OnEnter>
-              <OnLeave>
-                GameTooltip:Hide();
-              </OnLeave>
-            </Scripts>
-          </Button>
           <CheckButton name="SmartDebuffOF_cbRoleView" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
@@ -1736,37 +1708,6 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Button name="SmartDebuffOF_btnSpellGuard" inherits="UIPanelButtonTemplate" text="W" hidden="false">
-            <Size>
-              <AbsDimension x="16" y="16"/>
-            </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbShowSpellIcon">
-                <Offset>
-                  <AbsDimension x="108" y="1"/>
-                </Offset>
-              </Anchor>
-            </Anchors>
-            <Scripts>
-              <OnLoad>
-                if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then
-                  self:Hide()
-                  return
-                end
-                self:SetNormalFontObject("GameFontNormalSmall");
-                self:SetHighlightFontObject("GameFontHighlightSmall");
-              </OnLoad>
-              <OnClick>
-                SMARTDEBUFF_SpellGuardToggle();
-              </OnClick>
-              <OnEnter>
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWDEBUFFGUARD, SMARTDEBUFF_TT_SHOWDEBUFFGUARD);
-              </OnEnter>
-              <OnLeave>
-                GameTooltip:Hide();
-              </OnLeave>
-            </Scripts>
-          </Button>
           <CheckButton name="SmartDebuffOF_cbShowVehicles" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
@@ -1849,33 +1790,6 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Button name="SmartDebuffOF_btnSounds" inherits="UIPanelButtonTemplate" text="S" hidden="false">
-            <Size>
-              <AbsDimension x="16" y="16"/>
-            </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartDebuffOF_cbPlaySound">
-                <Offset>
-                  <AbsDimension x="108" y="1"/>
-                </Offset>
-              </Anchor>
-            </Anchors>
-            <Scripts>
-              <OnLoad>
-                self:SetNormalFontObject("GameFontNormalSmall");
-                self:SetHighlightFontObject("GameFontHighlightSmall");
-              </OnLoad>
-              <OnClick>
-                SMARTDEBUFF_SoundsToggle();
-              </OnClick>
-              <OnEnter>
-                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);
-              </OnEnter>
-              <OnLeave>
-                GameTooltip:Hide();
-              </OnLeave>
-            </Scripts>
-          </Button>
           <CheckButton name="SmartDebuffOF_cbShowDebuffTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
@@ -2237,22 +2151,257 @@
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0"/>
         </Anchors>
       </Frame>
-      <Button name="$parent_btnColorSetup" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_COLORSETUP">
+      <Frame name="$parent_MenuList" enableMouse="false">
         <Size>
-          <AbsDimension x="140" y="20"/>
+          <AbsDimension x="148" y="136"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT"><Offset><AbsDimension x="8" y="28"/></Offset></Anchor></Anchors>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="8" y="6"/>
+        </Anchors>
+        <Frames>
+          <Button name="$parent_Home">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="4" y="-4"/></Offset></Anchor></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_HOME);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffOF_Home";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_HomeToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Keys">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Home" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_OFT_SKILLS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffAOFKeys";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SKILLS, SMARTDEBUFF_TT_SKILLS);</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_ToggleAOFKeys();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Grid">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Keys" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_GRID);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffGridSetup";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_GridToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Colors">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Grid" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_COLORS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffColors";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_ColorsToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Sounds">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Colors" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_OFT_SOUND);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffSounds";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SOUND, SMARTDEBUFF_TT_SOUNDLIST);</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_SoundsToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_SpellGuard">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_Sounds" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_HOTS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffSpellGuard";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_SHOWDEBUFFGUARD, SMARTDEBUFF_TT_SHOWDEBUFFGUARD);</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_SpellGuardToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_ClassOrder">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_SpellGuard" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(SMARTDEBUFF_MENU_CLASSORDER);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffClassOrder";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end
+                SMARTDEBUFF_SetGameTooltip(self, SMARTDEBUFF_OFT_CLASSSORT, SMARTDEBUFF_TT_CLASSSORT);</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                --SMARTDEBUFF_ToggleAOFOrder(1);
+                SMARTDEBUFF_ClassOrderToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+          <Button name="$parent_Misc">
+            <Size><AbsDimension x="140" y="16"/></Size>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="$parent_ClassOrder" relativePoint="BOTTOMLEFT"/></Anchors>
+            <Layers>
+              <Layer level="BACKGROUND"><Texture name="$parentHL" parentKey="HL" file="Interface\Buttons\WHITE8X8"><Color r="1" g="1" b="1" a="0.12"/></Texture></Layer>
+              <Layer level="ARTWORK"><FontString name="$parentText" parentKey="Text" inherits="GameFontHighlight" justifyH="LEFT"><Anchors><Anchor point="LEFT" x="6"/></Anchors></FontString></Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                self:RegisterForClicks(SMARTDEBUFF_KEYFORCLICK);
+                self.Text:SetText(MISCELLANEOUS);
+                self.Text:SetTextColor(1, 1, 1);
+                self.HL:Hide();
+                self.panelName = "SmartDebuffMisc";
+              </OnLoad>
+              <OnEnter>if (not self.active) then self.HL:Show(); end</OnEnter>
+              <OnLeave>if (not self.active) then self.HL:Hide(); end
+                GameTooltip:Hide();</OnLeave>
+              <OnClick>
+                SMARTDEBUFF_MiscToggle();
+                SmartDebuffOF_MenuList_Refresh();
+              </OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
         <Scripts>
           <OnLoad>
-            self:SetNormalFontObject("GameFontNormalSmall");
-            self:SetHighlightFontObject("GameFontHighlightSmall");
+            if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
+            self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS);
+            self:SetBackdropBorderColor(1, 0.82, 0, 1);
+            self.items = {};
+            for _, ch in ipairs({self:GetChildren()}) do
+              if (ch.panelName) then
+                table.insert(self.items, ch);
+              end
+            end
+            function SmartDebuffOF_MenuList_Refresh()
+              local ml = SmartDebuffOF_MenuList;
+              if (not ml or not ml.items) then
+                return;
+              end
+              for i = 1, #ml.items do
+                local it = ml.items[i];
+                local p = it.panelName and _G[it.panelName] or nil;
+                local act = (p and p:IsShown()) and true or false;
+                if (it.active ~= act) then
+                  it.active = act;
+                  if (act) then
+                    it.HL:SetVertexColor(1, 0.82, 0, 0.10);
+                    it.HL:Show();
+                    it.Text:SetTextColor(1, 0.82, 0);
+                  else
+                    it.HL:SetVertexColor(1, 1, 1, 0.12);
+                    it.HL:Hide();
+                    it.Text:SetTextColor(1, 1, 1);
+                  end
+                end
+              end
+            end
+            SmartDebuffOF_MenuList_Refresh();
           </OnLoad>
-          <OnClick>
-            SMARTDEBUFF_ColorsToggle();
-          </OnClick>
+          <OnUpdate>
+            self.tick = (self.tick or 0) + elapsed;
+            if (self.tick >= 0.2) then
+              self.tick = 0;
+              SmartDebuffOF_MenuList_Refresh();
+            end
+          </OnUpdate>
         </Scripts>
-      </Button>
+      </Frame>
       <Button name="$parent_btnReload" inherits="UIMenuButtonStretchTemplate" text="|cff00ffffReload">
         <Size>
           <AbsDimension x="68" y="20"/>
@@ -2282,20 +2431,6 @@
           <OnLeave>
             GameTooltip:Hide();
           </OnLeave>
-        </Scripts>
-      </Button>
-      <Button name="$parent_btnMisc" inherits="UIPanelButtonTemplate" text="MISCELLANEOUS">
-        <Size><AbsDimension x="100" y="20"/></Size>
-        <Anchors>
-          <Anchor point="BOTTOMRIGHT">
-            <Offset>
-              <AbsDimension x="-4" y="28"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>self:SetNormalFontObject("GameFontNormalSmall"); self:SetHighlightFontObject("GameFontHighlightSmall"); self:SetText(MISCELLANEOUS);</OnLoad>
-          <OnClick>SMARTDEBUFF_MiscToggle();</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_btnTestMode" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_TESTMODE">
@@ -2530,18 +2665,6 @@
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <Button name="$parent_btnGridSetup" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GRIDSETUP">
-        <Size>
-          <AbsDimension x="140" y="20"/>
-        </Size>
-        <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT"><Offset><AbsDimension x="8" y="54"/></Offset></Anchor></Anchors>
-        <Scripts>
-          <OnLoad>self:SetNormalFontObject("GameFontNormalSmall");
-          self:SetHighlightFontObject("GameFontHighlightSmall");</OnLoad>
-          <OnClick>SMARTDEBUFF_GridToggle();</OnClick>
-        </Scripts>
-      </Button>
     </Frames>
     <Scripts>
       <OnLoad>

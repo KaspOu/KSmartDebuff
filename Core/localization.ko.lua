@@ -220,6 +220,12 @@ SMARTDEBUFF_OFT_SKILLS          = "마우스 단축키";
 SMARTDEBUFF_TT_SKILLS           = "클릭하여 단축키 수정\n(좌/우/중 클릭, Alt/Shift/Ctrl 포함)";
 SMARTDEBUFF_TT_RESET_SKILLS     = "현재 직업의 단축키를 초기화합니다.";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "주문 추적 목록";
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "홈";
+SMARTDEBUFF_MENU_GRID       = "그리드";
+SMARTDEBUFF_MENU_COLORS     = "색상";
+SMARTDEBUFF_MENU_HOTS       = "HoT 주문";
+SMARTDEBUFF_MENU_CLASSORDER = "직업 순서";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "클릭하여 추적할\n주문 목록 수정";
 SMARTDEBUFF_TT_SOUNDLIST        = "클릭하여 소리 선택.\n(우클릭: 미리 듣기)";
 

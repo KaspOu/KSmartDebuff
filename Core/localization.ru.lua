@@ -218,6 +218,12 @@ SMARTDEBUFF_OFT_SKILLS          = "Горячие клавиши мыши";
 SMARTDEBUFF_TT_SKILLS           = "Нажмите, чтобы изменить горячие клавиши\n(Клик Л/П/С, с Alt/Shift/Ctrl)";
 SMARTDEBUFF_TT_RESET_SKILLS     = "Сбрасывает горячие клавиши для вашего класса";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Список отслеживаемых заклинаний";
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "Главная";
+SMARTDEBUFF_MENU_GRID       = "Сетка";
+SMARTDEBUFF_MENU_COLORS     = "Цвета";
+SMARTDEBUFF_MENU_HOTS       = "Заклинания HoT";
+SMARTDEBUFF_MENU_CLASSORDER = "Порядок классов";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Нажмите, чтобы изменить\nсписок отслеживаемых заклинаний";
 SMARTDEBUFF_TT_SOUNDLIST        = "Нажмите, чтобы выбрать звук.\n(Правый клик только для прослушивания)";
 

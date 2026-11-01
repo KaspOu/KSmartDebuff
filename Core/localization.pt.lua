@@ -219,6 +219,12 @@ SMARTDEBUFF_OFT_SKILLS          = "Atalhos do Mouse";
 SMARTDEBUFF_TT_SKILLS           = "Clique para modificar os atalhos\n(Clique E/D/M, com Alt/Shift/Ctrl)";
 SMARTDEBUFF_TT_RESET_SKILLS     = "Redefine os atalhos para sua classe";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Lista de Monitoramento de Feitiços";
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "Início";
+SMARTDEBUFF_MENU_GRID       = "Grade";
+SMARTDEBUFF_MENU_COLORS     = "Cores";
+SMARTDEBUFF_MENU_HOTS       = "Feitiços HoT";
+SMARTDEBUFF_MENU_CLASSORDER = "Ordem das classes";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Clique para modificar\na lista de feitiços a monitorar";
 SMARTDEBUFF_TT_SOUNDLIST        = "Clique para selecionar o som.\n(Clique Direito para apenas ouvir)";
 

@@ -259,6 +259,12 @@ SMARTDEBUFF_OFT_SKILLS 				= "Mouse keys";
 SMARTDEBUFF_TT_SKILLS				= "Click to edit mouse shortcuts\n(L/R/M clicks with Alt/Shift/Ctrl)";
 SMARTDEBUFF_TT_RESET_SKILLS = "Reset mouse shortcuts for your class";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD 	= "Spell Watch List";
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "Home";
+SMARTDEBUFF_MENU_GRID       = "Grid";
+SMARTDEBUFF_MENU_COLORS     = "Colors";
+SMARTDEBUFF_MENU_HOTS       = "HoT Spells";
+SMARTDEBUFF_MENU_CLASSORDER = "Class Order";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD 		= "Click to Edit\nList of Spells to Track";
 SMARTDEBUFF_TT_SOUNDLIST 			= "Click to select Sound.\n(Right Click: listen sound)";
 

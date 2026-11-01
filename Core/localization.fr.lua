@@ -255,6 +255,12 @@ SMARTDEBUFF_OFT_SKILLS          = "Raccourcis souris";
 SMARTDEBUFF_TT_SKILLS           = "Cliquez pour modifier les raccourcis\n(Clic G/D/M, avec Alt/Maj/Ctrl)";
 SMARTDEBUFF_TT_RESET_SKILLS     = "Réinitialise les raccourcis pour votre classe";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Liste de suivi des sorts";
+-- Main menu (SmartDebuffOF_MenuList)
+SMARTDEBUFF_MENU_HOME       = "Accueil";
+SMARTDEBUFF_MENU_GRID       = "Grille";
+SMARTDEBUFF_MENU_COLORS     = "Couleurs";
+SMARTDEBUFF_MENU_HOTS       = "Sorts de HoT";
+SMARTDEBUFF_MENU_CLASSORDER = "Ordre des classes";
 SMARTDEBUFF_TT_SHOWDEBUFFGUARD  = "Cliquez pour modifier\nla liste des sorts à suivre";
 SMARTDEBUFF_TT_SOUNDLIST        = "Cliquez pour sélectionner le son.\n(Clic droit pour écouter uniquement)";
 
