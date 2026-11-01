@@ -373,14 +373,10 @@
         <Anchors>
           <Anchor point="TOPRIGHT" relativeTo="$parent">
             <Offset>
-              <AbsDimension x="-3" y="-3"/>
+              <AbsDimension x="3" y="3"/>
             </Offset>
           </Anchor>
         </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
-        </Scripts>
       </Button>
       <Frame name="$parent_Home" enableMouse="false">
         <Size>
@@ -2144,7 +2140,6 @@
         </Frames>
         <Scripts>
           <OnShow>
-            -- self:SetHeight(SmartDebuffOF:GetHeight());
             SMARTDEBUFF_HomeOnShow(self);
           </OnShow>
           <OnHide>SMARTDEBUFF_HomeOnHide(self);</OnHide>
@@ -2391,7 +2386,7 @@
                 if (it.disabled) then
                  it.Text:SetTextColor(RED_FONT_COLOR:GetRGB());
                  it.Text:SetAlpha(.6);
-                 it:SetScript("OnEnter", function() SMARTDEBUFF_SetGameTooltip(it, RED_FONT_COLOR:WrapTextInColorCode(it.Text:GetText()), SMARTDEBUFF_TT_DISABLED_VERSION, "ANCHOR_RIGHT") end);
+                 it:SetScript("OnEnter", function() SMARTDEBUFF_SetGameTooltip(it, ORANGE_FONT_COLOR:WrapTextInColorCode(it.Text:GetText()), RED_FONT_COLOR:WrapTextInColorCode(SMARTDEBUFF_TT_DISABLED_VERSION), "ANCHOR_RIGHT") end);
                  it:SetScript("OnClick", nil);
                 else
                   if (it.active ~= act) then
@@ -2425,9 +2420,9 @@
           <AbsDimension x="68" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-4" y="52"/>
+              <AbsDimension x="0" y="52"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2456,9 +2451,9 @@
           <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-4" y="28"/>
+              <AbsDimension x="0" y="28"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2483,7 +2478,7 @@
           <AbsDimension x="50" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="$parent_btnReload">
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="$parent_btnTestMode">
             <Offset>
               <AbsDimension x="-4" y="0"/>
             </Offset>
@@ -2512,9 +2507,9 @@
           <AbsDimension x="68" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-4" y="4"/>
+              <AbsDimension x="0" y="4"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2570,9 +2565,9 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_btnTestMode">
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MenuList">
             <Offset>
-              <AbsDimension x="0" y="-32"/>
+              <AbsDimension x="0" y="-8"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2723,9 +2718,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -2810,12 +2806,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_ClassOrderOnShow(self);
       </OnShow>
       <OnHide>
@@ -2830,9 +2824,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -2938,12 +2933,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_SoundsOnShow(self);
       </OnShow>
       <OnHide>
@@ -2958,9 +2951,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -3083,12 +3077,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_NRDebuffsOnShow(self);
       </OnShow>
       <OnHide>
@@ -3103,9 +3095,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -3217,12 +3210,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_SpellGuardOnShow(self);
       </OnShow>
       <OnHide>
@@ -3237,9 +3228,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <Button name="$parent_btnReset" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_RESET">
@@ -3273,12 +3265,10 @@
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SmartDebuffAOFKeys_OnShow(self);
       </OnShow>
       <OnHide>
@@ -3294,9 +3284,10 @@
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -3924,12 +3915,10 @@
       </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
 if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
 self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
 SMARTDEBUFF_GridOnShow(self);
       </OnShow>
       <OnHide>
@@ -3943,8 +3932,9 @@ SMARTDEBUFF_GridOnShow(self);
     </Size>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
-        <Offset><AbsDimension x="-172" y="0"/></Offset>
+        <Offset><AbsDimension x="-172" y="-15"/></Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -4009,12 +3999,10 @@ SMARTDEBUFF_GridOnShow(self);
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_MiscOnShow(self);
       </OnShow>
       <OnHide>SMARTDEBUFF_MiscOnHide(self);</OnHide>
@@ -4027,9 +4015,10 @@ SMARTDEBUFF_GridOnShow(self);
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="0"/>
+          <AbsDimension x="-172" y="-15"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <EditBox name="$parent_Title" letters="200" multiLine="true" autoFocus="false">
@@ -4554,12 +4543,10 @@ SMARTDEBUFF_GridOnShow(self);
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_ColorsOnShow(self);
       </OnShow>
       <OnHide>
@@ -4642,12 +4629,10 @@ SMARTDEBUFF_GridOnShow(self);
     </Frames>
     <Scripts>
       <OnLoad>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        self:SetHeight(SmartDebuffOF:GetHeight());
         SMARTDEBUFF_AuraSoundsOnShow(self);
       </OnShow>
       <OnHide>
@@ -4665,6 +4650,7 @@ SMARTDEBUFF_GridOnShow(self);
           <AbsDimension x="2" y="0"/>
         </Offset>
       </Anchor>
+      <Anchor point="BOTTOM" relativeTo="SmartDebuffOF" />
     </Anchors>
     <Frames>
       <!-- GameFontHighlightSmall, GameFontNormalSmall -->
@@ -4714,11 +4700,7 @@ SMARTDEBUFF_GridOnShow(self);
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
       </OnLoad>
       <OnShow>
-        if (SmartDebuffAOFKeys:IsVisible()) then
-          self:SetPoint("TOPLEFT", "SmartDebuffAOFKeys", "TOPRIGHT", 2, 0);
-        else
-          self:SetPoint("TOPLEFT", "SmartDebuffOF", "TOPRIGHT", 2, 0);
-        end
+        self:SetPoint("TOPLEFT", "SmartDebuffOF", "TOPRIGHT", 2, 0);
       </OnShow>
       <OnHide>
         if (not InCombatLockdown() and self.IsMoving) then
