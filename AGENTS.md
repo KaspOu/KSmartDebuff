@@ -1,9 +1,9 @@
 # AGENTS.md — KSmartDebuff (KDecurse)
 
 > Guide pour les agents IA (Cline, Cursor, Copilot, hrdr…) et les contributeurs.
-> Architecture détaillée : **`docs/architecture.md`** (référence complète, 2026-11-02).
-> `doc/ARCHITECTURE.md` (ancien) ne conserve plus que le **journal de la refonte UI** (§11) et son
-> historique d'anomalies — ne pas l'utiliser comme référence architecture.
+> Architecture détaillée : **`docs/architecture.md`** (référence complète, 2026-11-02 — fusionne
+> l'ancien `doc/ARCHITECTURE.md`, supprimé à cette date ; son journal de refonte UI y est devenu
+> §13).
 > Dernière mise à jour de ce fichier : 2026-11-02.
 
 ## 1. Identité du projet
