@@ -92,6 +92,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Cible";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Afficher/Masquer les options KDecurse";
+SMARTDEBUFF_OFT_RECAP          = "Détecté :";
+SMARTDEBUFF_OFT_DISPELNONE     = "Aucun dispel disponible";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Familier de Chasseur";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Familier de Démoniste";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Familier de Chevalier de la mort";

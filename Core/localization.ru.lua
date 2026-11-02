@@ -54,6 +54,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Цель";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Показать/Скрыть настройки KDecurse";
+SMARTDEBUFF_OFT_RECAP          = "Обнаружено:";
+SMARTDEBUFF_OFT_DISPELNONE     = "Рассеивание недоступно";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Питомец Охотника";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Питомец Чернокнижника";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Питомец Рыцаря Смерти";

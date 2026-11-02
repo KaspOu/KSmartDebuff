@@ -43,6 +43,8 @@ local isRoleSet = false;
 local tTicker = 0;
 local tDebuff = 0;
 local tSound = 0;
+local tRecap = 0;
+local sRecapText = nil;
 
 local SDB_cachePlayerClass = nil;
 local sAggroList = nil;
@@ -589,6 +591,10 @@ function SMARTDEBUFF_OnUpdate(self, elapsed)
   if (isInit) then
     SMARTDEBUFF_Ticker(false);
     SMARTDEBUFF_CheckDebuffs(false);
+    if (GetTime() > tRecap + 0.2) then
+      tRecap = GetTime();
+      SMARTDEBUFF_UpdateDispelRecap();
+    end
   else
     local ou_time = 0;
     ou_time = ou_time + elapsed;
@@ -5784,7 +5790,9 @@ end
 
 function SMARTDEBUFF_HomeOnShow(self)
   SMARTDEBUFF_HideAllButThis(self);
+  SMARTDEBUFF_UpdateDispelRecap();
   -- SmartDebuffHome_Title:SetText(SMARTDEBUFF_OFT_HOME);
+  SmartDebuffOF_Infos:Hide();
 end
 
 function SMARTDEBUFF_HomeToggle()
@@ -5796,6 +5804,77 @@ function SMARTDEBUFF_HomeToggle()
 end
 
 function SMARTDEBUFF_HomeOnHide(self)
+end
+
+-- Dispel recap (SmartDebuffOF_Home / SmartDebuffOF_Infos) ----
+
+function SMARTDEBUFF_UpdateDispelRecap()
+  if ((SmartDebuffOF_Home:IsVisible()) or (SmartDebuffOF_Infos:IsVisible())) then
+    local lines = { };
+    if (O and O.Keys and cSpellList) then
+      local keys = O.Keys[O.TargetMode and 2 or 1];
+      local recap = {
+        { "L", SMARTDEBUFF_KEYS["L"], O.ColDebuffL },
+        { "M", SMARTDEBUFF_KEYS["M"], O.ColDebuffM },
+        { "R", SMARTDEBUFF_KEYS["R"], O.ColDebuffR },
+        { "SL", SMARTDEBUFF_KEYS["SL"], O.ColDebuffL },
+        { "SM", SMARTDEBUFF_KEYS["SM"], O.ColDebuffM },
+        { "SR", SMARTDEBUFF_KEYS["SR"], O.ColDebuffR },
+        { "AL", SMARTDEBUFF_KEYS["AL"], O.ColDebuffL },
+        { "AM", SMARTDEBUFF_KEYS["AM"], O.ColDebuffM },
+        { "AR", SMARTDEBUFF_KEYS["AR"], O.ColDebuffR },
+        { "CL", SMARTDEBUFF_KEYS["CL"], O.ColDebuffL },
+        { "CM", SMARTDEBUFF_KEYS["CM"], O.ColDebuffM },
+        { "CR", SMARTDEBUFF_KEYS["CR"], O.ColDebuffR },
+      };
+      for _, def in ipairs(recap) do
+        local v = keys and keys[def[1]];
+        if (v and v[1] and v[2] and cSpellList[v[2]] and #cSpellList[v[2]] > 0) then
+          if (cSpellList[v[2]][1] ~= SMARTDEBUFF_HEAL and cSpellList[v[2]][1] ~= SMARTDEBUFF_UTIL and cSpellList[v[2]][1] ~= SMARTDEBUFF_MISDIRECT) then
+            local col = def[3] or { };
+            local colorCode = string.format("|cff%02x%02x%02x",
+              math.floor((col.r or 1) * 255 + 0.5),
+              math.floor((col.g or 1) * 255 + 0.5),
+              math.floor((col.b or 1) * 255 + 0.5));
+            lines[#lines + 1] = colorCode..""..def[2]..":|r\n"
+              .."  ["..v[2].."]\n"
+              .."  "..table.concat(cSpellList[v[2]], ", ");
+          end
+        end
+      end
+    end
+    local text;
+    local r, g, b;
+    if (ST.iTest > 0) then
+      text = ""
+      for i = 0, 5 do
+        text = text..string.rep("  ", i * 2).. SMARTDEBUFF_OFT_TESTMODE .. "\n"
+      end
+      r, g, b = GREEN_FONT_COLOR:GetRGB();
+    elseif (#lines > 0) then
+      text = table.concat(lines, "\n");
+      text = YELLOW_FONT_COLOR:WrapTextInColorCode(SMARTDEBUFF_OFT_RECAP).."\n\n"..text;
+      r, g, b = 1, 1, 1;
+    else
+      text = SMARTDEBUFF_OFT_DISPELNONE;
+      r, g, b = 1, 0, 0;
+    end
+    if (text ~= sRecapText) then
+      sRecapText = text;
+      local lblHome = SmartDebuffOF_Home_DispelRecap;
+      local lblInfos = SmartDebuffOF_Infos_DispelRecap;
+      if (lblHome) then
+        lblHome:SetFont(SMARTDEBUFF_FONT, 12, "")
+        lblHome:SetText(text);
+        lblHome:SetTextColor(r, g, b, 1);
+      end
+      if (lblInfos) then
+        lblInfos:SetFont(SMARTDEBUFF_FONT, 12, "")
+        lblInfos:SetText(text);
+        lblInfos:SetTextColor(r, g, b, 1);
+      end
+    end
+  end
 end
 
 -- Color setup frame functions ----

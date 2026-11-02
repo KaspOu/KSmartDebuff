@@ -1,3 +1,6 @@
+v12.1.504
+- Added: Dispel recap in options Home / Infos (Left/Middle/Right click dispel types + bound spell)
+
 v12.1.503
 - Forever: all release dungeons ok
 - Debuff Texture applied directly

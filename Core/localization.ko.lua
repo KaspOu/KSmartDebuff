@@ -56,6 +56,8 @@ SMARTDEBUFF_FT_MODETARGET      = "대상";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "KDecurse 옵션 표시/숨기기";
+SMARTDEBUFF_OFT_RECAP          = "감지됨:";
+SMARTDEBUFF_OFT_DISPELNONE     = "무력화 기술 없음";
 SMARTDEBUFF_OFT_HUNTERPETS     = "사냥꾼 야수";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "흑마법사 소환수";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "죽음의 기사 소환수";

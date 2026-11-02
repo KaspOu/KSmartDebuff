@@ -57,6 +57,8 @@ SMARTDEBUFF_FT_MODETARGET      = "目標";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "顯示/隱藏選項框體";
+SMARTDEBUFF_OFT_RECAP          = "偵測：";
+SMARTDEBUFF_OFT_DISPELNONE     = "無可用的驅散技能";
 SMARTDEBUFF_OFT_HUNTERPETS     = "獵人寵物";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "術士寵物";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "死亡騎士寵物";

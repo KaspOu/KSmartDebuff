@@ -53,6 +53,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Ziel";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Zeige/verberge KDecurse Optionen";
+SMARTDEBUFF_OFT_RECAP          = "Erkannt:";
+SMARTDEBUFF_OFT_DISPELNONE     = "Kein Dispell verfügbar";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Jäger Pets";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Hexer Pets";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Todesritter Pets";

@@ -55,6 +55,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Alvo";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Mostrar/Ocultar opçôes KDecurse";
+SMARTDEBUFF_OFT_RECAP          = "Detectado:";
+SMARTDEBUFF_OFT_DISPELNONE     = "Nenhum dispel disponível";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotes de Caçador";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotes de Bruxo";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotes de Cavaleiro da Morte";

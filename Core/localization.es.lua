@@ -52,6 +52,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Objet";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Mostrar/ocultar Marco de opciones de KDecurse";
+SMARTDEBUFF_OFT_RECAP          = "Detectado:";
+SMARTDEBUFF_OFT_DISPELNONE     = "No hay disipación disponible";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotas de cazador";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotas de brujo";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotas de Caballero de la Muerte";

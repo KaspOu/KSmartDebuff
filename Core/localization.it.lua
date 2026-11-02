@@ -54,6 +54,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Bers";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Mostra/Nascondi opzioni KDecurse";
+SMARTDEBUFF_OFT_RECAP          = "Rilevato:";
+SMARTDEBUFF_OFT_DISPELNONE     = "Nessuna dissoluzione disponibile";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Mascotte del Cacciatore";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Mascotte dello Stregone";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Mascotte del Cavaliere della Morte";

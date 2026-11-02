@@ -385,6 +385,18 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0"/>
         </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parent_DispelRecap" inherits="GameFontHighlightSmall" justifyH="LEFT" justifyV="TOP" wordWrap="true">
+              <Size>
+                <AbsDimension x="152" y="210"/>
+              </Size>
+              <Anchors>
+                <Anchor point="TOPLEFT" x="170" y="-30" />
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
         <Frames>
           <CheckButton name="SmartDebuffOF_cbGrp1" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
@@ -2192,14 +2204,6 @@
           <OnHide>SMARTDEBUFF_HomeOnHide(self);</OnHide>
         </Scripts>
       </Frame>
-      <Frame name="$parent_Infos" hidden="true" enableMouse="false">
-        <Size>
-          <AbsDimension x="152" y="540"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0"/>
-        </Anchors>
-      </Frame>
       <Frame name="$parent_MenuList" enableMouse="false">
         <Size>
           <AbsDimension x="148" y="136"/>
@@ -2462,6 +2466,33 @@
               SmartDebuffOF_MenuList_Refresh();
             end
           </OnUpdate>
+        </Scripts>
+      </Frame>
+      <Frame name="$parent_Infos" hidden="true" enableMouse="false">
+        <Size>
+          <AbsDimension x="152" y="540"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MenuList" x="0" y="-70"/>
+          <Anchor point="BOTTOM" relativePoint="BOTTOM" x="0" y="0"/>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parent_DispelRecap" inherits="GameFontHighlightSmall" justifyH="LEFT" justifyV="TOP" wordWrap="true">
+              <Size>
+                <AbsDimension x="152" />
+              </Size>
+              <Anchors>
+                <Anchor point="TOPLEFT" x="5" y="-70" />
+                <Anchor point="BOTTOM" />
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnShow>
+            SMARTDEBUFF_UpdateDispelRecap();
+          </OnShow>
         </Scripts>
       </Frame>
       <Button name="$parent_btnReload" inherits="UIMenuButtonStretchTemplate" text="|cff00ffffReload">

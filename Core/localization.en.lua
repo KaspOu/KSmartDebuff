@@ -94,6 +94,8 @@ SMARTDEBUFF_FT_MODETARGET      = "Trgt";
 
 -- Options frame text
 SMARTDEBUFF_OFT                = "Show/Hide KDecurse options frame";
+SMARTDEBUFF_OFT_RECAP          = "Detected:";
+SMARTDEBUFF_OFT_DISPELNONE     = "No dispel available";
 SMARTDEBUFF_OFT_HUNTERPETS     = "Hunter pets";
 SMARTDEBUFF_OFT_WARLOCKPETS    = "Warlock pets";
 SMARTDEBUFF_OFT_DEATHKNIGHTPETS= "Death Knight pets";
