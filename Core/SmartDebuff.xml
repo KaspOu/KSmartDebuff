@@ -396,7 +396,7 @@
             <Anchors>
               <Anchor point="TOPLEFT">
                 <Offset>
-                  <AbsDimension x="4" y="-20"/>
+                  <AbsDimension x="40" y="-250"/>
                 </Offset>
               </Anchor>
             </Anchors>
@@ -2205,7 +2205,7 @@
           <AbsDimension x="148" y="136"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="8" y="6"/>
+          <Anchor point="TOPLEFT" x="8" y="-16"/>
         </Anchors>
         <Frames>
           <Button name="$parent_Home">
@@ -2466,12 +2466,12 @@
       </Frame>
       <Button name="$parent_btnReload" inherits="UIMenuButtonStretchTemplate" text="|cff00ffffReload">
         <Size>
-          <AbsDimension x="68" y="20"/>
+          <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
+          <Anchor point="TOPRIGHT" relativeTo="$parent_MenuList" relativePoint="BOTTOMRIGHT">
             <Offset>
-              <AbsDimension x="0" y="52"/>
+              <AbsDimension x="0" y="-2"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2500,9 +2500,9 @@
           <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_btnReload" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="0" y="28"/>
+              <AbsDimension x="0" y="-45"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2524,7 +2524,7 @@
       </Button>
       <Button name="$parent_btnFakeMode" inherits="UIMenuButtonStretchTemplate" text="|cffff5555Toggle">
         <Size>
-          <AbsDimension x="50" y="20"/>
+          <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
           <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="$parent_btnTestMode">
@@ -2553,12 +2553,12 @@
       </Button>
       <Button name="$parent_btnGlobalSave" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GLOBALSAVE">
         <Size>
-          <AbsDimension x="68" y="20"/>
+          <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
-          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_MenuList" relativePoint="TOPRIGHT">
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parent_btnTestMode" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="0" y="4"/>
+              <AbsDimension x="0" y="-45"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2580,7 +2580,7 @@
       </Button>
       <Button name="$parent_btnGlobalLoad" inherits="UIPanelButtonTemplate" text="SMARTDEBUFF_OFT_GLOBALLOAD">
         <Size>
-          <AbsDimension x="68" y="20"/>
+          <AbsDimension x="72" y="20"/>
         </Size>
         <Anchors>
           <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="$parent_btnGlobalSave">
@@ -2614,9 +2614,9 @@
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MenuList">
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
             <Offset>
-              <AbsDimension x="0" y="-8"/>
+              <AbsDimension x="0" y="-2"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -2834,22 +2834,6 @@
             SMARTDEBUFF_ClassOrderOnScroll();
             SMARTDEBUFF_SetButtons();
           </OnClick>
-        </Scripts>
-      </Button>
-      <Button name="$parent_btnClose" inherits="UIPanelCloseButton">
-        <Size>
-          <AbsDimension x="20" y="20"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPRIGHT" relativeTo="$parent">
-            <Offset>
-              <AbsDimension x="2" y="2"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
         </Scripts>
       </Button>
     </Frames>
@@ -3222,22 +3206,6 @@
             SMARTDEBUFF_SetDefaultSpellGuard();
             SMARTDEBUFF_SpellGuardOnScroll();
           </OnClick>
-        </Scripts>
-      </Button>
-      <Button name="$parent_btnClose" inherits="UIPanelCloseButton">
-        <Size>
-          <AbsDimension x="20" y="20"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPRIGHT" relativeTo="$parent">
-            <Offset>
-              <AbsDimension x="2" y="2"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-          </OnLoad>
         </Scripts>
       </Button>
     </Frames>
