@@ -72,7 +72,7 @@ Périmètre : intégralité du répertoire (arbre git propre en contenu — brui
   `checkForInit` prévient l'utilisateur ; `PopulateCdSpellsOptions`-style sans risque d'ordre.
 - Listes de skip indexées : les indices sont validés à l'usage (`SMARTDEBUFF_DEBUFFSKIP_NAME[val]`,
   1528/1542) avant résolution en noms.
-- XML bien formé (parse ElementTree) ; les 79 fonctions du contrat XML→Lua résolvent (seule la
+- XML bien formé (parse ElementTree) ; les 80 fonctions du contrat XML→Lua résolvent (seule la
   référence commentée `ToggleAOFOrder` pointe vers du vide) ; `SmartDebuffOF_MenuList_Refresh` est
   définie dans le XML par conception.
 - `SetCVar("tooltipShowAuraSpellIDs", …)` : comportement voulu par l'option `ShowAuraSpellIDs`.
