@@ -48,7 +48,7 @@ KSmartDebuff/
 │   ├── SmartDebuff.sounds.lua      # Moteur d'alertes sonores d'auras (C_UnitAuras.AddAuraSound) +
 │   │                               #   panneau SmartDebuffAuraSounds — s'auto-désactive si API absente
 │   ├── SmartDebuff.lua             # MOTEUR PRINCIPAL (~6 539 lignes) — tout le runtime
-│   └── SmartDebuff.xml             # UI XML (~4 758 lignes) — déclaration des frames, voir docs/architecture.md
+│   └── SmartDebuff.xml             # UI XML (~4 781 lignes) — déclaration des frames, voir docs/architecture.md
 ├── UTF8/utf8data.lua, utf8.lua    # Bibliothèque utf8 pour Lua 5.1 (expose `string:utf8sub`)
 ├── Icons/                          # Textures .png (classes, gradient_left, white16x16, 2d…)
 ├── .release/                       # Zips de release (gitignorés : `.release*`, `*.zip`)
@@ -79,7 +79,7 @@ Chargé dans cet ordre strict ; chaque fichier suppose les précédents :
    immédiatement. La seule fonction définie **dans** le XML est `SmartDebuffOF_MenuList_Refresh`.
 
 **Conséquence :** toute fonction référencée dans le XML DOIT exister dans le Lua **avant** l'analyse
-du XML, sinon erreur Lua au chargement de l'UI (79 fonctions du contrat XML→Lua, liste dans
+du XML, sinon erreur Lua au chargement de l'UI (80 fonctions du contrat XML→Lua, liste dans
 `docs/architecture.md` §5).
 
 - `## SavedVariables: SMARTDEBUFF_OptionsGlobal, KD_Settings` (compte)
