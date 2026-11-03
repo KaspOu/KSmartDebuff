@@ -225,7 +225,7 @@ SMARTDEBUFF_TT_SKILLS           = "點擊以修改快捷鍵\n(左/右/中鍵點�
 SMARTDEBUFF_TT_RESET_SKILLS     = "重置您的職業快捷鍵";  -- ChatGPT
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "法術守護列表";  -- ChatGPT
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "主頁";
+SMARTDEBUFF_MENU_HOME       = "综合";
 SMARTDEBUFF_MENU_GRID       = "格線";
 SMARTDEBUFF_MENU_COLORS     = "顏色";
 SMARTDEBUFF_MENU_HOTS       = "HoT 技能";

@@ -268,7 +268,7 @@ SMARTDEBUFF_TT_SKILLS				= "Click to edit mouse shortcuts\n(L/R/M clicks with Al
 SMARTDEBUFF_TT_RESET_SKILLS = "Reset mouse shortcuts for your class";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD 	= "Spell Watch List";
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "Home";
+SMARTDEBUFF_MENU_HOME       = "General";
 SMARTDEBUFF_MENU_GRID       = "Grid";
 SMARTDEBUFF_MENU_COLORS     = "Colors";
 SMARTDEBUFF_MENU_HOTS       = "HoT Spells";

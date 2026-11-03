@@ -222,7 +222,7 @@ SMARTDEBUFF_TT_SKILLS           = "Нажмите, чтобы изменить �
 SMARTDEBUFF_TT_RESET_SKILLS     = "Сбрасывает горячие клавиши для вашего класса";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Список отслеживаемых заклинаний";
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "Главная";
+SMARTDEBUFF_MENU_HOME       = "Общие";
 SMARTDEBUFF_MENU_GRID       = "Сетка";
 SMARTDEBUFF_MENU_COLORS     = "Цвета";
 SMARTDEBUFF_MENU_HOTS       = "Заклинания HoT";

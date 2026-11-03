@@ -222,7 +222,7 @@ SMARTDEBUFF_TT_SKILLS           = "Klicken, um die Tastenkürzel zu bearbeiten\n
 SMARTDEBUFF_TT_RESET_SKILLS     = "Setzt die Tastenkürzel für Ihre Klasse zurück"; -- ChatGPT
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Zauber-Verfolgungsliste"; -- ChatGPT
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "Startseite";
+SMARTDEBUFF_MENU_HOME       = "Allgemein";
 SMARTDEBUFF_MENU_GRID       = "Raster";
 SMARTDEBUFF_MENU_COLORS     = "Farben";
 SMARTDEBUFF_MENU_HOTS       = "HoT-Zauber";

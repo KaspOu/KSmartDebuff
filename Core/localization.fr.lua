@@ -266,7 +266,7 @@ SMARTDEBUFF_TT_SKILLS           = "Cliquez pour modifier les raccourcis\n(Clic G
 SMARTDEBUFF_TT_RESET_SKILLS     = "Réinitialise les raccourcis pour votre classe";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Liste de suivi des sorts";
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "Accueil";
+SMARTDEBUFF_MENU_HOME       = "Général";
 SMARTDEBUFF_MENU_GRID       = "Grille";
 SMARTDEBUFF_MENU_COLORS     = "Couleurs";
 SMARTDEBUFF_MENU_HOTS       = "Sorts de HoT";
