@@ -7,12 +7,19 @@ SMARTDEBUFF_UPGRADED = "KDecurse mis à jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
+
+|cffffffff> Prêt pour Forever|r
+
+
 |cfffff2cc> Redesign de l'écran options :|r
+  - Menu global
+  - Text récap (dispel détectés / raccourcis)
   - Texture de débuff directement appliquée
   - Infobulle de débuff
   - IDs de sort d'aura
 
 |cfffff2cc> Sons ajoutés pour:|r
+  - Forever (JcJ, Donjons & Raids)
   - Le Déliement de Kith'ix
   - Le Labyrinthe de Kindo'jan
 
@@ -179,6 +186,7 @@ SMARTDEBUFF_TT_HPTEXT          = "Affiche les points de vie/mana\nréels en pour
 SMARTDEBUFF_TT_INVERT          = "Affiche les points de vie\net la barre de mana inversés.";
 SMARTDEBUFF_TT_CLASSVIEW       = "Affiche les boutons d'unité\ntriés par classe.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Affiche les boutons d'unité dans\nleurs couleurs de classe respectives.";
+SMARTDEBUFF_TT_GROUPVIEW       = "Affiche les boutons d'unité\ntriés par groupe.";
 SMARTDEBUFF_TT_SHOWLR          = "Affiche le bouton de souris correspondant (G/D/M)\nsi une unité a un débuff.";
 SMARTDEBUFF_TT_HEADERS         = "Affiche le n° de groupe / classe / rôle\ncomme en-tête.";
 SMARTDEBUFF_TT_GROUPNR         = "Affiche le numéro de groupe\ndevant le nom de l'unité.";

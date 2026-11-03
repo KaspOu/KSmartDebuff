@@ -141,6 +141,7 @@ SMARTDEBUFF_TT_HPTEXT          = "Zeigt die aktuellen Lebens-\nund Manapunkte de
 SMARTDEBUFF_TT_INVERT          = "Stellt die Lebenspunkte und\ndas Mana invertiert dar.";
 SMARTDEBUFF_TT_CLASSVIEW       = "Stellt die Knöpfe nach\nKlasse sortiert dar.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Stellt die Knöpfe in der\njeweiligen Klassenfarbe dar.";
+SMARTDEBUFF_TT_GROUPVIEW       = "Stellt die Knöpfe nach\nGruppe sortiert dar.";
 SMARTDEBUFF_TT_SHOWLR          = "Zeigt den zugehörigen\nMausknopf (L/R/M)\nan, wenn jemand\neinen Debuff hat.";
 SMARTDEBUFF_TT_HEADERS         = "Stellt den Klassennamen\nals Zeilentitel dar.";
 SMARTDEBUFF_TT_GROUPNR         = "Blendet die Gruppennummer\nvor dem Spielernamen ein.";

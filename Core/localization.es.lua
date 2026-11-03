@@ -140,6 +140,7 @@ SMARTDEBUFF_TT_HPTEXT          = "Muestra la cantidad de hp/mana\nactual como po
 SMARTDEBUFF_TT_INVERT          = "Muestra los puntos de salud\ny el mana de forma invertida.";
 SMARTDEBUFF_TT_CLASSVIEW       = "Muestra los botones de unidad\nordenados por clase.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Muestra los botones de unidad en\nlos colores correspondientes a su clase.";
+SMARTDEBUFF_TT_GROUPVIEW       = "Muestra los botones de unidad\nordenados por grupo.";
 SMARTDEBUFF_TT_SHOWLR          = "Muestra el botón del mouse correspondiente\n(I/D/M), si una unidad tiene un debuff.";
 SMARTDEBUFF_TT_HEADERS         = "Muestra el nombre de la clase\ncomo fila de encabezado.";
 SMARTDEBUFF_TT_GROUPNR         = "Muestra el número de grupo\nfrente al nombre de la unidad.";

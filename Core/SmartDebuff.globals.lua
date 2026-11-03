@@ -46,6 +46,15 @@ SMARTDEBUFF_BACKDROP_OPTIONS = {
   edgeSize = 8,
   insets = {left = 2, right = 2, top = 2, bottom = 2},
 };
+SMARTDEBUFF_BACKDROP_INSIDE = {
+  -- bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+  edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+  tile = true,
+  tileSize = 8,
+  edge = true,
+  edgeSize = 8,
+  insets = {left = 2, right = 0, top = 2, bottom = 2},
+};
 SMARTDEBUFF_BACKDROP_TOOLTIP = {
   bgFile = "Interface\\Tooltips\\UI-Tooltip-Border",
   edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",

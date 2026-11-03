@@ -144,6 +144,7 @@ SMARTDEBUFF_TT_HPTEXT          = "유닛의 실제 생명력/마나를\n백분�
 SMARTDEBUFF_TT_INVERT          = "생명력과 마나 바를\n반전하여 표시합니다.";
 SMARTDEBUFF_TT_CLASSVIEW       = "직업별로 정렬된\n유닛 버튼을 표시합니다.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "각 직업 색상으로\n유닛 버튼을 표시합니다.";
+SMARTDEBUFF_TT_GROUPVIEW       = "그룹별로 정렬된\n유닛 버튼을 표시합니다.";
 SMARTDEBUFF_TT_SHOWLR          = "유닛에 디버프가 있을 경우\n해당 마우스 버튼 (좌/우/중)을 표시합니다.";
 SMARTDEBUFF_TT_HEADERS         = "그룹 번호 / 직업 / 역할을\n머리글로 표시합니다.";
 SMARTDEBUFF_TT_GROUPNR         = "유닛 이름 앞에\n그룹 번호를 표시합니다.";
