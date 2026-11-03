@@ -217,7 +217,7 @@ SMARTDEBUFF_TT_SKILLS           = "Clic para editar los atajos\n(Clic I/D/M, con
 SMARTDEBUFF_TT_RESET_SKILLS     = "Reinicia los atajos para tu clase"; -- ChatGPT
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Lista de seguimiento de hechizos"; -- ChatGPT
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "Inicio";
+SMARTDEBUFF_MENU_HOME       = "General";
 SMARTDEBUFF_MENU_GRID       = "Cuadrícula";
 SMARTDEBUFF_MENU_COLORS     = "Colores";
 SMARTDEBUFF_MENU_HOTS       = "Hechizos HoT";

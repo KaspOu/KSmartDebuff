@@ -224,7 +224,7 @@ SMARTDEBUFF_TT_SKILLS           = "클릭하여 단축키 수정\n(좌/우/중 �
 SMARTDEBUFF_TT_RESET_SKILLS     = "현재 직업의 단축키를 초기화합니다.";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "주문 추적 목록";
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "홈";
+SMARTDEBUFF_MENU_HOME       = "일반";
 SMARTDEBUFF_MENU_GRID       = "그리드";
 SMARTDEBUFF_MENU_COLORS     = "색상";
 SMARTDEBUFF_MENU_HOTS       = "HoT 주문";

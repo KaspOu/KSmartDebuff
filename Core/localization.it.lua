@@ -222,7 +222,7 @@ SMARTDEBUFF_TT_SKILLS           = "Clicca per modificare le scorciatoie\n(Clic S
 SMARTDEBUFF_TT_RESET_SKILLS     = "Reimposta le scorciatoie per la tua classe";
 SMARTDEBUFF_OFT_SHOWDEBUFFGUARD	= "Elenco incantesimi tracciati";
 -- Main menu (SmartDebuffOF_MenuList)
-SMARTDEBUFF_MENU_HOME       = "Pagina iniziale";
+SMARTDEBUFF_MENU_HOME       = "Generale";
 SMARTDEBUFF_MENU_GRID       = "Griglia";
 SMARTDEBUFF_MENU_COLORS     = "Colori";
 SMARTDEBUFF_MENU_HOTS       = "Incantesimi HoT";
