@@ -9,13 +9,18 @@ SMARTDEBUFF_UPGRADED = "KDecurse upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
-|cfffff2cc> Redesign options screen :|r
+|cffffffff> Ready for Forever|r
+
+|cfffff2cc> Options screen reworked :|r
+  - Global menu
+  - Summary text (detected dispel / keys)
   - Debuff Texture applied directly
   - Debuff tooltip
   - Show Aura Spell IDs
   
 
 |cfffff2cc> Sound added for:|r
+  - Forever (PvP, Dungeons & Raids)
   - The Unbinding of Kith'ix
   - Labyrinth of Kindo'jan
 
@@ -182,6 +187,7 @@ SMARTDEBUFF_TT_HPTEXT          = "Displays actual hp/mana\npool as percentage of
 SMARTDEBUFF_TT_INVERT          = "Displays health points\nand mana pool inverted.";
 SMARTDEBUFF_TT_CLASSVIEW       = "Displays the unit buttons\norder by class.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Displays the unit buttons in\ntheir corresponding class colors.";
+SMARTDEBUFF_TT_GROUPVIEW       = "Displays the unit buttons\nsorted by group.";
 SMARTDEBUFF_TT_SHOWLR          = "Displays the corresponding\nmouse button (L/R/M), if\na unit has a debuff.";
 SMARTDEBUFF_TT_HEADERS         = "Displays the group number / class name / role\nas header row.";
 SMARTDEBUFF_TT_GROUPNR         = "Displays the group number\nin front of the unit name.";

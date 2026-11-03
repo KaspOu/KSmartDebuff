@@ -145,6 +145,7 @@ SMARTDEBUFF_TT_HPTEXT          = "以文字顯示單位真實生命/魔法百分
 SMARTDEBUFF_TT_INVERT          = "反轉顯示生命魔法";
 SMARTDEBUFF_TT_CLASSVIEW       = "按職業顯示單位按鈕";
 SMARTDEBUFF_TT_CLASSCOLOR      = "單位按鈕上顯示職業顏色";
+SMARTDEBUFF_TT_GROUPVIEW       = "按群組顯示單位按鈕";
 SMARTDEBUFF_TT_SHOWLR          = "有debuff時\n顯示對應的按鈕 (左/右/中), ";
 SMARTDEBUFF_TT_HEADERS         = "顯示職業名稱\n作為行標題";
 SMARTDEBUFF_TT_GROUPNR         = "顯示小組編號\n在單位名字前";

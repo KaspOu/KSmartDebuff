@@ -1,5 +1,6 @@
 v12.1.504
-- Added: Dispel recap in options Home / Infos (Left/Middle/Right click dispel types + bound spell)
+- General panel
+- Added summary: Dispel (Left/Middle/Right click dispel types) + Bindings
 
 v12.1.503
 - Forever: all release dungeons ok

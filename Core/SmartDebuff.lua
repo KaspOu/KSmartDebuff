@@ -5607,11 +5607,7 @@ function SMARTDEBUFF_SpellGuardOnShow(self)
 end
 
 function SMARTDEBUFF_SpellGuardToggle()
-  if (SmartDebuffSpellGuard:IsVisible()) then
-    SmartDebuffSpellGuard:Hide();
-  else
-    SmartDebuffSpellGuard:Show();
-  end
+  SmartDebuffSpellGuard:Show();
 end
 
 function SMARTDEBUFF_SpellGuardOnHide(self)
@@ -5677,11 +5673,7 @@ function SMARTDEBUFF_ClassOrderOnShow(self)
 end
 
 function SMARTDEBUFF_ClassOrderToggle()
-  if (SmartDebuffClassOrder:IsVisible()) then
-    SmartDebuffClassOrder:Hide();
-  else
-    SmartDebuffClassOrder:Show();
-  end
+  SmartDebuffClassOrder:Show();
 end
 
 function SMARTDEBUFF_ClassOrderOnHide(self)
@@ -5734,12 +5726,7 @@ function SMARTDEBUFF_SoundsOnShow(self)
 end
 
 function SMARTDEBUFF_SoundsToggle()
-  -- SmartDebuffAuraSounds OnHide / OnShow
-  if (SmartDebuffSounds:IsVisible()) then
-    SmartDebuffSounds:Hide();
-  else
-    SmartDebuffSounds:Show();
-  end
+  SmartDebuffSounds:Show();
 end
 
 function SMARTDEBUFF_SoundsOnHide(self)
@@ -5768,12 +5755,8 @@ function SMARTDEBUFF_GridOnShow(self)
 end
 
 function SMARTDEBUFF_GridToggle()
-  if (SmartDebuffGridSetup:IsVisible()) then
-    SmartDebuffGridSetup:Hide();
-  else
-    SmartDebuffGridSetup:Show();
-    SMARTDEBUFF_TestModeToggle(true)
-  end
+  SmartDebuffGridSetup:Show();
+  SMARTDEBUFF_TestModeToggle(true);
 end
 
 function SMARTDEBUFF_GridOnHide(self)
@@ -5787,11 +5770,7 @@ function SMARTDEBUFF_MiscOnShow(self)
 end
 
 function SMARTDEBUFF_MiscToggle()
-  if (SmartDebuffMisc:IsVisible()) then
-    SmartDebuffMisc:Hide();
-  else
-    SmartDebuffMisc:Show();
-  end
+  SmartDebuffMisc:Show();
 end
 
 function SMARTDEBUFF_MiscOnHide(self)
@@ -5801,26 +5780,20 @@ end
 function SMARTDEBUFF_HomeOnShow(self)
   SMARTDEBUFF_HideAllButThis(self);
   SMARTDEBUFF_UpdateDispelRecap();
-  -- SmartDebuffHome_Title:SetText(SMARTDEBUFF_OFT_HOME);
-  SmartDebuffOF_Infos:Hide();
 end
 
 function SMARTDEBUFF_HomeToggle()
-  if (SmartDebuffOF_Home:IsVisible()) then
-    SmartDebuffOF_Home:Hide();
-  else
-    SmartDebuffOF_Home:Show();
-  end
+  SmartDebuffOF_Home:Show();
 end
 
 function SMARTDEBUFF_HomeOnHide(self)
 end
 
--- Dispel recap (SmartDebuffOF_Home / SmartDebuffOF_Infos) ----
+-- Dispel recap (SmartDebuffOF_Home) ----
 
 function SMARTDEBUFF_UpdateDispelRecap()
-  if ((SmartDebuffOF_Home:IsVisible()) or (SmartDebuffOF_Infos:IsVisible())) then
     local lines = { };
+    local linesOther = { };
     if (O and O.Keys and cSpellList) then
       local keys = O.Keys[O.TargetMode and 2 or 1];
       local recap = {
@@ -5839,52 +5812,55 @@ function SMARTDEBUFF_UpdateDispelRecap()
       };
       for _, def in ipairs(recap) do
         local v = keys and keys[def[1]];
-        if (v and v[1] and v[2] and cSpellList[v[2]] and #cSpellList[v[2]] > 0) then
-          if (cSpellList[v[2]][1] ~= SMARTDEBUFF_HEAL and cSpellList[v[2]][1] ~= SMARTDEBUFF_UTIL and cSpellList[v[2]][1] ~= SMARTDEBUFF_MISDIRECT) then
+        if (v and v[1] and v[2]) then -- and cSpellList[v[2]] and #cSpellList[v[2]] > 0) then
+          if (cSpellList[v[2]] and #cSpellList[v[2]] > 0 and cSpellList[v[2]][1] ~= SMARTDEBUFF_HEAL and cSpellList[v[2]][1] ~= SMARTDEBUFF_UTIL and cSpellList[v[2]][1] ~= SMARTDEBUFF_MISDIRECT) then
             local col = def[3] or { };
             local colorCode = string.format("|cff%02x%02x%02x",
               math.floor((col.r or 1) * 255 + 0.5),
               math.floor((col.g or 1) * 255 + 0.5),
               math.floor((col.b or 1) * 255 + 0.5));
-            lines[#lines + 1] = colorCode..""..def[2]..":|r\n"
-              .."  ["..v[2].."]\n"
-              .."  "..table.concat(cSpellList[v[2]], ", ");
+            lines[#lines + 1] = colorCode.." "..def[2]..":|r\n"
+              ..GOLD_FONT_COLOR:WrapTextInColorCode("   ["..v[2].."]\n")
+              .."   "..table.concat(cSpellList[v[2]], ", ");
+          else
+            local info
+            if (v[1] == "menu") then
+              info = "-"..SMARTDEBUFF_TT_MENU.."-"
+            elseif (v[1] == "target") then
+              info = "-"..SMARTDEBUFF_TT_TARGET.."-"
+            elseif (v[1] == "macro") then
+              info = "<"..v[2]..">"
+            elseif (v[1] == "spell" or v[1] == "petaction") and not ns.GetSpellInfo(v[2]) then
+              info = GRAY_FONT_COLOR:WrapTextInColorCode("["..v[2].."]")
+            else
+              info = "["..v[2].."]";
+            end
+            linesOther[#linesOther + 1] = " "..def[1]..": "..info
           end
         end
       end
     end
     local text;
-    local r, g, b;
+    local textOthers = NORMAL_FONT_COLOR:WrapTextInColorCode(SMARTDEBUFF_OFT_SKILLS) .. "\n\n" .. GOLD_FONT_COLOR:WrapTextInColorCode(table.concat(linesOther, "\n"))
     if (ST.iTest > 0) then
       text = ""
       for i = 0, 5 do
-        text = text..string.rep("  ", i * 2).. SMARTDEBUFF_OFT_TESTMODE .. "\n"
+        text = text..GREEN_FONT_COLOR:WrapTextInColorCode(string.rep("  ", i * 2).. SMARTDEBUFF_OFT_TESTMODE .. "\n")
       end
-      r, g, b = GREEN_FONT_COLOR:GetRGB();
     elseif (#lines > 0) then
       text = table.concat(lines, "\n");
       text = YELLOW_FONT_COLOR:WrapTextInColorCode(SMARTDEBUFF_OFT_RECAP).."\n\n"..text;
-      r, g, b = 1, 1, 1;
+      text = text .. "\n\n\n" .. textOthers;
     else
-      text = SMARTDEBUFF_OFT_DISPELNONE;
-      r, g, b = 1, 0, 0;
+      text = RED_FONT_COLOR:WrapTextInColorCode(SMARTDEBUFF_OFT_DISPELNONE);
+      text = text .. "\n\n\n" .. textOthers;
     end
     if (text ~= sRecapText) then
       sRecapText = text;
-      local lblHome = SmartDebuffOF_Home_DispelRecap;
       local lblInfos = SmartDebuffOF_Infos_DispelRecap;
-      if (lblHome) then
-        lblHome:SetFont(SMARTDEBUFF_FONT, 12, "")
-        lblHome:SetText(text);
-        lblHome:SetTextColor(r, g, b, 1);
-      end
-      if (lblInfos) then
-        lblInfos:SetFont(SMARTDEBUFF_FONT, 12, "")
-        lblInfos:SetText(text);
-        lblInfos:SetTextColor(r, g, b, 1);
-      end
+      lblInfos:SetFont(SMARTDEBUFF_FONT, 12, "")
+      lblInfos:SetText(text);
     end
-  end
 end
 
 -- Color setup frame functions ----
@@ -5896,12 +5872,8 @@ function SMARTDEBUFF_ColorsOnShow(self)
 end
 
 function SMARTDEBUFF_ColorsToggle()
-  if (SmartDebuffColors:IsVisible()) then
-    SmartDebuffColors:Hide();
-  else
-    SmartDebuffColors:Show();
-    SMARTDEBUFF_TestModeToggle(true)
-  end
+  SmartDebuffColors:Show();
+  SMARTDEBUFF_TestModeToggle(true)
 end
 
 function SMARTDEBUFF_ColorsOnHide(self)
@@ -6025,11 +5997,7 @@ end
 
 
 function SMARTDEBUFF_ToggleAOFKeys()
-  if (SmartDebuffAOFKeys:IsVisible()) then
-    SmartDebuffAOFKeys:Hide();
-  else
-    SmartDebuffAOFKeys:Show();
-  end
+  SmartDebuffAOFKeys:Show();
 end
 
 function SMARTDEBUFF_RefreshAOFKeys()

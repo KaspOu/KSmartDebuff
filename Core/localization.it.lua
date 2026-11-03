@@ -142,6 +142,7 @@ SMARTDEBUFF_TT_HPTEXT          = "Mostra i punti vita/mana\nreali in percentuale
 SMARTDEBUFF_TT_INVERT          = "Mostra i punti vita\ne la barra mana invertiti.";
 SMARTDEBUFF_TT_CLASSVIEW       = "Mostra i pulsanti unità\nordinati per classe.";
 SMARTDEBUFF_TT_CLASSCOLOR      = "Mostra i pulsanti unità nei\nrispettivi colori di classe.";
+SMARTDEBUFF_TT_GROUPVIEW       = "Mostra i pulsanti unità\nordinati per gruppo.";
 SMARTDEBUFF_TT_SHOWLR          = "Mostra il pulsante del mouse corrispondente (S/D/C)\nse un'unità ha un debuff.";
 SMARTDEBUFF_TT_HEADERS         = "Mostra il nð di gruppo / classe / ruolo\ncome intestazione.";
 SMARTDEBUFF_TT_GROUPNR         = "Mostra il numero di gruppo\ndavanti al nome dell'unità.";
