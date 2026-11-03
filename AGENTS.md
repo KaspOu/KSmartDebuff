@@ -4,7 +4,7 @@
 > Architecture détaillée : **`docs/architecture.md`** (référence complète, 2026-11-02 — fusionne
 > l'ancien `doc/ARCHITECTURE.md`, supprimé à cette date ; son journal de refonte UI y est devenu
 > §13).
-> Dernière mise à jour de ce fichier : 2026-11-02.
+> Dernière mise à jour de ce fichier : 2026-11-03.
 
 ## 1. Identité du projet
 
@@ -48,7 +48,7 @@ KSmartDebuff/
 │   ├── SmartDebuff.sounds.lua      # Moteur d'alertes sonores d'auras (C_UnitAuras.AddAuraSound) +
 │   │                               #   panneau SmartDebuffAuraSounds — s'auto-désactive si API absente
 │   ├── SmartDebuff.lua             # MOTEUR PRINCIPAL (~6 539 lignes) — tout le runtime
-│   └── SmartDebuff.xml             # UI XML (~4 781 lignes) — déclaration des frames, voir docs/architecture.md
+│   └── SmartDebuff.xml             # UI XML (~4 566 lignes) — déclaration des frames, voir docs/architecture.md
 ├── UTF8/utf8data.lua, utf8.lua    # Bibliothèque utf8 pour Lua 5.1 (expose `string:utf8sub`)
 ├── Icons/                          # Textures .png (classes, gradient_left, white16x16, 2d…)
 ├── .release/                       # Zips de release (gitignorés : `.release*`, `*.zip`)
@@ -98,10 +98,12 @@ du XML, sinon erreur Lua au chargement de l'UI (80 fonctions du contrat XML→Lu
   Les traduire de travers casse des comportements, pas seulement l'affichage.
 - **Les fichiers de sorts remplacent des globales** : ne jamais s'attendre à ce que
   `SMARTDEBUFF_MACROTEXT`, `SMARTDEBUFF_DEBUFFS_LIST` etc. gardent la valeur de `globals.lua`.
-- **Noms de frames XML** : `$parent_xxx` → nom global relatif au parent ; beaucoup de contrôles sont
-  référencés côté Lua via `_G[self:GetName().."Text"]` ou `_G["SmartDebuffOF_cb…"]`. **Ne pas
-  renommer/déplacer** un contrôle sans grep du nom complet résolu côté Lua. Attention : plusieurs
-  contrôles portent un préfixe `SmartDebuffOF_` alors qu'ils sont parentés à GridSetup/AOFKeys.
+- **Noms de frames XML** : tous les contrôles sont déclarés en `$parent_xxx` → nom global résolu
+  = nom du parent résolu + suffixe (ex. `$parent_cbGrp1` dans `SmartDebuffOF_Home` →
+  `SmartDebuffOF_Home_cbGrp1`), et beaucoup de libellés passent par
+  `_G[self:GetName().."Text"]`. **Ne pas renommer/déplacer** un contrôle sans grep du nom complet
+  résolu côté Lua : le renommage du 2026-11-03 a déjà laissé des références Lua sur d'anciens noms
+  (voir `docs/backlog.md`, section du 2026-11-03).
 - **Chaînes d'ancrage** : dans `SmartDebuffOF_Home` et `SmartDebuffGridSetup`, les cases cochables
   sont ancrées les unes aux autres. Insérer au milieu décale tout le reste → privilégier une
   insertion en fin de chaîne ou un ancrage explicite.
