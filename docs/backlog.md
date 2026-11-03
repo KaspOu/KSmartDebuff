@@ -114,3 +114,34 @@ fonctionnalités sont silencieusement mortes ou trahies (affichage AFK ; préfé
 IgnoreDebuff/ChatNotif via Global Save/Load). Priorités : ① ajouter le `=` manquant ligne 3440,
 ② corriger les `or true` de `GlobalLoadSave` (5365-5366), ③ revoir la frontière de pages macros
 (`MAX_ACCOUNT_MACROS`). Toute correction reste à valider en jeu (`AGENTS.md` §6).
+
+## KSmartDebuff renommage frames audit 2026-11-03
+
+Contexte : retour à `$parent_xxx` dans tout le XML (commit `10a7d61 Fix names`) après
+l'harmonisation du panneau `_Home`. Les noms résolus ont changé ; le Lua n'a pas été mis à jour.
+
+### Medium
+
+1. **`Core/SmartDebuff.lua:2139, 4612, 4620, 4621, 4628, 5620, 5632` — références Lua sur des
+   frames qui n'existent plus sous ces noms.** Scénario tracé : l'OF est ouvert
+   (`SmartDebuffOF:IsVisible()` vrai) → clic sur l'option « L / R / M » →
+   `SMARTDEBUFF_ToggleShowLR` exécute `SmartDebuffOF_cbShowLR:SetChecked(...)` → `SmartDebuffOF_cbShowLR`
+   vaut `nil` (la frame s'appelle désormais `SmartDebuffColors_cbShowLR`) → erreur Lua
+   « attempt to index a nil value ». Même mécanisme pour :
+   - `SmartDebuffOF_cbForceLR` → `SmartDebuffColors_cbForceLR` (`ToggleForceLR`, lignes 4621/4628) ;
+   - `SmartDebuffOF_cbShowSpellIcon` → `SmartDebuffOF_Home_cbShowSpellIcon` (auto-deactivation
+     SpellGuard, 5620/5632 : `nil:Click()`) ;
+   - `SmartDebuffOF_cbShowBackdrop` → `SmartDebuffGridSetup_cbShowBackdrop` (2139,
+     `ToggleSFBackdrop`) ;
+   - `SmartDebuffOF_cbClassColors` → `SmartDebuffGridSetup_cbClassColors` (4612,
+     `ToggleClassColors`).
+   Correctif : remplacer ces 7 références par les noms résolus actuels (grep
+   `SmartDebuffOF_cb` dans le Lua avant/après). Non appliqué : hors périmètre « documentation ».
+
+### Notes
+
+- Les libellés `_G[self:GetName().."Text"]` sont sûrs (ils suivent automatiquement le nom réel).
+- `SmartDebuffOF_btnTestModeText` / `btnFakeModeText` / `SmartDebuffOFSlider_OnLoad` détectés par le
+  même grep sont des faux positifs (régions dynamiques et fonction, pas des frames).
+- Vérifié par résolution `$parent` de tout le XML : aucune autre référence Lua ne pend.
+

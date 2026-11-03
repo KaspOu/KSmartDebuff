@@ -23,7 +23,7 @@ Deux piliers, plus trois bibliothèques de support :
                         │ handlers OnLoad/      │ lecture/écriture
                         │ OnClick/OnShow        │ SMARTDEBUFF_Options…
         ┌───────────────┴───────────────────────▼────────────────┐
-        │  Core/SmartDebuff.xml  (UI — 4 781 lignes)             │
+        │  Core/SmartDebuff.xml  (UI — 4 566 lignes)             │
         │  17 frames, templates, handlers inline qui délèguent   │
         │  aux fonctions SMARTDEBUFF_* (chargé EN DERNIER)       │
         └────────────────────────────────────────────────────────┘
@@ -191,16 +191,17 @@ une fonction manquante échoue silencieusement à l'exécution du handler. Famil
 
 Frames : `SmartDebuffFrame` (driver caché : OnLoad/OnUpdate), `SmartDebuffSF` (barre principale
 déplaçable : Titre, btnClose/btnStyle/btnOptions), `SmartDebuffIF` (info), `SmartDebuffOF` (options
-: `Home` = 49 contrôles, `Infos`, `MenuList` = menu 8 entrées, boutons dev), `SmartDebuffClassOrder`,
+: `Home` = 47 enfants (dont `_Title` « Accueil »), `Infos`, `MenuList` = menu 8 entrées, boutons
+dev), `SmartDebuffClassOrder`,
 `SmartDebuffSounds`, `SmartDebuffNRDebuffs`, `SmartDebuffSpellGuard`, `SmartDebuffAOFKeys`,
 `SmartDebuffGridSetup` (11 cases + 8 sliders), `SmartDebuffMisc`, `SmartDebuffColors` (5 sélecteurs
 + sliders d'opacité), `SmartDebuffAuraSounds`, `SmartDebuffWNF` (What's New), plus le template
 `SmartDebuffOptionsSliderTemplate`, 6 fonts virtuels et le tooltip partagé `SmartDebuffTooltip`
 (déclaré en double — piège connu).
 
-### 5.1 Carte structurelle du XML (lignes relevées le 2026-11-02 — volatiles)
+### 5.1 Carte structurelle du XML (lignes relevées le 2026-11-03 — volatiles)
 
-Racine `<Ui>` (namespace Blizzard WoW UI), 4 781 lignes ; enfants de premier niveau dans l'ordre
+Racine `<Ui>` (namespace Blizzard WoW UI), 4 566 lignes ; enfants de premier niveau dans l'ordre
 du fichier :
 
 | Lignes | Élément | Rôle |
@@ -212,42 +213,59 @@ du fichier :
 | 77–82 | `GameTooltip` **SmartDebuffTooltip** (2/2) | **Doublon exact** (constat §10) |
 | 84–247 | `Frame` **SmartDebuffSF** | Panneau compact flottant : `_btnClose`, `_btnStyle` ("K" : clics Alt/Shift/Droit), `_btnOptions` ("O"), `_Title` |
 | 248–334 | `Frame` **SmartDebuffIF** | Frame d'info (`_lblInfo`, `_lblOut`) — déplacée Shift+glisser |
-| 335–2785 | `Frame` **SmartDebuffOF** | Panneau d'options — 13 enfants dont **Home / Infos / MenuList** (détail §5.2) |
-| 2786–2875 | `Frame` **SmartDebuffClassOrder** | Ordre des classes (`FauxScrollFrameTemplate` + Reset) |
-| 2876–2986 | `Frame` **SmartDebuffSounds** | Liste des sons (`_txtIn`, scroll, Reset) |
-| 2987–3130 | `Frame` **SmartDebuffNRDebuffs** | Debuffs non retirables — saisie `SpellID` (`C_Spell.GetSpellInfo`) |
-| 3131–3247 | `Frame` **SmartDebuffSpellGuard** | Sorts de HoT / Spell Guard (liste de suivi) |
-| 3248–3341 | `Frame` **SmartDebuffAOFKeys** | Raccourcis/clés — contenu **généré en Lua** (`SmartDebuffAOFKeys_OnShow`) |
-| 3342–3990 | `Frame` **SmartDebuffGridSetup** | Cases + sliders de mise en page grille |
-| 3991–4072 | `Frame` **SmartDebuffMisc** | AuraSpellIDs, ChatNotif, **AddonCompartment**, **Force English** (`KD_Settings`) |
-| 4073–4618 | `Frame` **SmartDebuffColors** | Couleurs/opaçités : 6 boutons test + 5 `ColorSelect`, sliders `sldADebuff`/`sldNormal`/`sldNormalOOR` |
-| 4619–4704 | `Frame` **SmartDebuffAuraSounds** | Sons d'auras (ancré sur `SmartDebuffSounds`) |
-| 4705–fin | `Frame` **SmartDebuffWNF** | « What's New » (`_lblText`, repositionnement dynamique) |
+| 335–2374 | `Frame` **SmartDebuffOF** | Panneau d'options — 13 enfants dont **Home / Infos / MenuList** (détail §5.2) |
+| 2375–2464 | `Frame` **SmartDebuffClassOrder** | Ordre des classes (`FauxScrollFrameTemplate` + Reset) |
+| 2465–2575 | `Frame` **SmartDebuffSounds** | Liste des sons (`_txtIn`, scroll, Reset) |
+| 2576–2719 | `Frame` **SmartDebuffNRDebuffs** | Debuffs non retirables — saisie `SpellID` (`C_Spell.GetSpellInfo`) |
+| 2720–2836 | `Frame` **SmartDebuffSpellGuard** | Sorts de HoT / Spell Guard (liste de suivi) |
+| 2837–2930 | `Frame` **SmartDebuffAOFKeys** | Raccourcis/clés — contenu **généré en Lua** (`SmartDebuffAOFKeys_OnShow`) |
+| 2931–3579 | `Frame` **SmartDebuffGridSetup** | Cases + sliders de mise en page grille (dont `_cbShowBackdrop`, `_cbClassColors`) |
+| 3580–3693 | `Frame` **SmartDebuffMisc** | AuraSpellIDs, **Auto hide**, ChatNotif, **AddonCompartment**, **Force English** (`KD_Settings`) |
+| 3694–4402 | `Frame` **SmartDebuffColors** | Couleurs/opaçités : 6 boutons test + 5 `ColorSelect`, sliders, **`_cbShowLR`**, **`_cbForceLR`**, **Texture dropdown** |
+| 4403–4488 | `Frame` **SmartDebuffAuraSounds** | Sons d'auras (ancré sur `SmartDebuffSounds`) |
+| 4489–fin | `Frame` **SmartDebuffWNF** | « What's New » (`_lblText`, repositionnement dynamique) |
 
-Tous les panneaux sauf `SmartDebuffSF/IF/WNF` sont `parent="SmartDebuffOF"`, `hidden="true"`,
-ancrés `TOPLEFT → SmartDebuffOF TOPRIGHT (+2, 0)` et calent leur hauteur sur
-`SmartDebuffOF:GetHeight()` en OnLoad/OnShow.
+Tous les panneaux sauf `SmartDebuffSF/IF/WNF` (et le bandeau `SmartDebuffOF_Infos`, ancré sous le
+menu) sont `parent="SmartDebuffOF"`, `hidden="true"`, **ancrés `TOPLEFT → SmartDebuffOF TOPRIGHT
+(−172, −15)` + `BOTTOM → SmartDebuffOF`** (hauteur calée sur l'OF, largeur 172) et ont un cadre posé
+en `OnLoad` (`BackdropTemplateMixin` + `SMARTDEBUFF_BACKDROP_OPTIONS` ; **Home utilise
+`SMARTDEBUFF_BACKDROP_INSIDE`**).
 
 ### 5.2 Détail de `SmartDebuffOF` (refonte du 2026-11-01)
 
 **13 enfants directs** : `_Title` (titre éditable, `EditBox` multi-lignes 300×20), `_btnClose`
-(`UIPanelCloseButton`), **`_Home`** (conteneur des options, 304×540, `enableMouse="false"`, ancré
-`TOPLEFT (0,0)` de l'OF → origine identique, coordonnées internes inchangées), **`_Infos`**
-(152×540, `hidden`, 1 enfant : `_DispelRecap` (récapitulatif dispels, voir ci-dessous) — la
-bascule « afficher Infos masque Home » n'est pas implémentée), **`_MenuList`** (menu principal, 148×136, `BOTTOMLEFT (8, 6)` de l'OF,
+(`UIPanelCloseButton`), **`_Home`** (panneau d'options harmonisé avec les panneaux latéraux —
+détail ci-dessous), **`_Infos`** (bandeau `hidden` sous le menu : `TOPLEFT → MenuList BOTTOMLEFT
+(0, −70)` + `BOTTOM → OF`, 1 enfant : `_DispelRecap`, récapitulatif dispels — détail ci-dessous),
+**`_MenuList`** (menu principal, 148×136, `BOTTOMLEFT (8, 6)` de l'OF,
 `enableMouse="false"`), `_btnReload`, `_btnTestMode`, `_btnFakeMode`, `_btnGlobalSave`,
 `_btnGlobalLoad`, puis la chaîne dev `_cbShowNotRemov` / `_btnNotRemov` / `_cbShowInfoFrame` (zone
 `IS_DEV`). Supprimés lors de la refonte (remplacés par le menu) : `_btnGridSetup`,
-`_btnColorSetup`, `_btnMisc`, et dans Home : `_btnClassOrder`, `_btnSpellGuard`, `_btnSounds`.
+`_btnColorSetup`, `_btnMisc`.
 
-- **`_Home`** (début ligne 381) : 49 enfants directs — les 50 anciens contrôles `cbGrp1` →
-  `sldCheckInterval` + `SmartDebuffColTextureDropDown`, moins les 3 boutons supprimés.
-  `SmartDebuffOF_btnKeys` **conservé en doublon volontaire** avec l'item « Keys » du menu.
-  Renommages de la refonte : `name="$parent_X"` → **`name="SmartDebuffOF_X"`** (×50, noms globaux
-  résolus identiques, Lua non impacté), `relativeTo` en absolu, 2 `GetParent():GetName()` réécrits
-  en `_G["SmartDebuffOF_cbRoleView"]` / `_G["SmartDebuffOF_cbClassView"]`. Seule racine «
-  orpheline » : `cbGrp1` (`TOPLEFT 4/−20`, ré-ancré sur Home — coïncide avec l'OF).
-- **`_MenuList`** (début ligne 2 226) : contour `BackdropTemplateMixin` +
+- **`_Home`** (début ligne 381) — harmonisé le 2026-11-03, **corrections visuelles du 2026-11-03
+  incluses** : emplacement des panneaux latéraux (`TOPLEFT → OF TOPRIGHT (−172, −15)` +
+  `BOTTOM → OF`), taille **172×520**, cadre `SMARTDEBUFF_BACKDROP_INSIDE` en `OnLoad`,
+  `enableMouse="false"`, **pas d'attribut `hidden`** (visible dès l'ouverture de l'OF ;
+  `OFOnShow` → `SMARTDEBUFF_HideAllButThis()` puis `SMARTDEBUFF_HomeToggle()` le ré-affiche après
+  un autre panneau), et **`_Title` « Accueil »** (`SMARTDEBUFF_MENU_HOME`, 164×20). **47 enfants**,
+  tous déclarés en **`$parent_xxx`** (résolus `SmartDebuffOF_Home_xxx`) :
+  - `cbGrp1–8` : **2 rangées × 4** (pas 38 ; rangée 2 par wrap `(−114, −20)`) ;
+  - `cbClassIcon1–16` : **3 rangées de 7 / 6 / 3** — 13 classes puis les 3 pets (pas 22 ; wraps
+    `(−132, −20)` et `(−110, −20)`) ;
+  - `cbHP` + `cbMana` (74) sur une ligne ; `cbHPText` (%) + `cbInvert` dessous ;
+  - ligne de tri : `cbClassView` + `btnClassOrder` ('C', +86) + `cbRoleView` (+105) +
+    `cbGroupView` (+145 — option ajoutée lors des corrections) ;
+  - liste verticale (pas 20) : Ignore on Cooldown, Stop Casting, Sound (+ `btnSounds` 'S'), HoT
+    icons (`cbShowSpellIcon` + `btnSpellGuard` 'W'), Raid icons, Aggro, Heal range, Tooltip, Debuff
+    tooltip, Vehicles, Anchor Setup, puis Interval (`sldCheckInterval`, ancre `−44`).
+  N'y sont plus : `cbShowLR` + `cbForceLR` et le dropdown Texture (**renommé**
+  `SmartDebuffColors_DebuffColTextureDropDown`) → `SmartDebuffColors` ; `cbAutoHide` →
+  `SmartDebuffMisc` (sous `cbShowAuraSpellIDs`, chaîne `cbChatNotif → cbAddonCompartment →
+  cbForceEnglish` re-ancrée dessous) ; `btnKeys` et `_DispelRecap` supprimés. Scripts inline,
+  libellés et `hidden` des nœuds déplacés inchangés — mais **leurs noms résolus ont changé** avec
+  le retour à `$parent_` : le Lua doit suivre (constat §10.8).
+- **`_MenuList`** (début ligne 1 788) : contour `BackdropTemplateMixin` +
   `SMARTDEBUFF_BACKDROP_OPTIONS` + `SetBackdropBorderColor(1, 0.82, 0, 1)` (or) ; **8 items**
   `Button` **sans template**, 140×16, empilés `TOPLEFT → BOTTOMLEFT` depuis `(4, −4)` (padding
   4 px, pas de scroll) ; texte `GameFontHighlight`, highlight blanc α0.12 au survol, **état actif =
@@ -271,26 +289,31 @@ Les 5 libellés `SMARTDEBUFF_MENU_*` sont traduits dans les 9 fichiers `localiza
 `-- Main menu (SmartDebuffOF_MenuList)`) ; tooltips des items = constantes `OFT_*/TT_*`
 d'origine.
 
-- **Récapitulatif dispels** (ajouté le 2026-11-02) : une FontString
-  `SmartDebuffOF_Home_DispelRecap` (300×84) dans `_Home` et `SmartDebuffOF_Infos_DispelRecap`
-  (148×140) dans `_Infos`, centrées (position provisoire, à repositionner), texte identique dans
-  les deux panneaux : par clic L/M/R assigné, un carré `■` en `|cff` de la couleur
-  `O.ColDebuffL/M/R`, les types dispels du sort, puis `Spell binded: [nom]` ; sinon
-  `No dispel available` en rouge. Constantes `SMARTDEBUFF_OFT_DISPEL*` (locale `en`, repli pour
-  toutes les langues). Mise à jour par `SMARTDEBUFF_UpdateDispelRecap()` : `OnUpdate` throttlé à
-  0,2 s (`tRecap`, seulement si l'un des deux panneaux est visible) + appel direct à l'ouverture
-  (`HomeOnShow`, `OnShow` d'Infos) ; le texte n'est réécrit que s'il change (`sRecapText`).
+- **Récapitulatif dispels — toujours affiché** (ajouté 2026-11-02 ; copie `_Home` supprimée et
+  fonction rendue inconditionnelle le 2026-11-03) : une FontString `SmartDebuffOF_Infos_DispelRecap`
+  dans `_Infos` (152 de large, ancrée `TOPLEFT (5, −70)` + `BOTTOM`, `SetFont(SMARTDEBUFF_FONT, 12)`).
+  `SMARTDEBUFF_UpdateDispelRecap()` **ne teste plus la visibilité des panneaux** : il reconstruit le
+  texte toutes les 0,2 s (`tRecap`, dans `SMARTDEBUFF_OnUpdate`) et `_Infos` est montré par
+  `HideAllButThis()` à chaque ouverture de panneau → le récap reste affiché quel que soit le
+  panneau ouvert (il disparaît seulement avec l'OF fermé). Contenu : en-tête
+  `SMARTDEBUFF_OFT_RECAP` en jaune, puis les touches assignées sur les 12 (`L/M/R` + `SL/…/CR`,
+  libellés `SMARTDEBUFF_KEYS`, couleur `O.ColDebuffL/M/R` par touche, `[sort]` en or, types
+  dispels — HEAL/UTIL/MISDIRECT exclus) ; les touches non-dispel passent dans une **section
+  `SMARTDEBUFF_OFT_SKILLS`** (menu / target / macro / sort gris) ; sinon
+  `SMARTDEBUFF_OFT_DISPELNONE` en rouge ; en mode test (`ST.iTest`), `OFT_TESTMODE` en vert.
+  Écriture seulement si le texte change (`sRecapText`), en `SetTextColor`-libre (couleurs par
+  échappements `|cff`). Appels : `OnUpdate` + `HomeOnShow` + `OnShow` d'Infos.
 - **Boutons bas** (ancrés **au-dessus du menu**) : `btnGlobalSave` `BOTTOMRIGHT → TOPRIGHT de
   MenuList (0, 4)`, `btnTestMode` `(0, 28)`, `btnReload` `(0, 52)` (écart 24 px entre rangées) ;
   `btnGlobalLoad` à gauche de `btnGlobalSave` ; `btnFakeMode` à gauche de `btnTestMode`
   (`BOTTOMRIGHT → BOTTOMLEFT`, −4/0). **La chaîne dev suit `btnTestMode`** → recouvrements
   partiels en mode `IS_DEV` (constat §10).
-- **Ancrages à connaître** : dans Home, chaînes inchangées `_cbGrp1→…→_cbGrp8`,
-  `_cbClassIcon1→…→16`, `_cbHP→_cbMana→_cbHPText` (+ `_cbInvert`), colonne gauche
-  `_cbClassView→_cbShowLR→_cbShowAggro→_cbShowHealRange→_cbTargetMode→_cbShowDebuffTooltip→
-  _cbAutoHide→_cbAdvAnchors` (doublons `x=+152` / `+87/+106/+108/+115/+130`) ; GridSetup : chaîne
-  verticale `_cbVertical → … → _cbShowRoleDpsIcon` puis sliders `sldFontsize → … → sldSpaceY` ;
-  boutons bas relativement au menu (suivent s'il bouge). **Insérer un contrôle au milieu d'une
+- **Ancrages à connaître** : Home (chaînes posées par les corrections du 2026-11-03) : groupes
+  `TOPLEFT` en chaîne horizontale **+38**, rangée 2 par wrap `(−114, −20)` ; icônes **+22** avec
+  wraps `(−132, −20)` / `(−110, −20)` ; boutons raccourcis `+104` sur la ligne de leur case ;
+  liste verticale à `−20` (sections tri/Interval à `−44`). GridSetup : chaîne verticale
+  `cbVertical → … → cbShowRoleDpsIcon` (`−2`), puis sliders `sldFontsize → … → sldSpaceY` (`−18`).
+  Boutons bas relativement au menu (suivent s'il bouge). **Insérer un contrôle au milieu d'une
   chaîne décale tout ce qui suit** (régression silencieuse).
 
 ### 5.3 Drapeaux conditionnels appliqués par le XML
@@ -396,7 +419,7 @@ Constats complets (sévérités, traces) : **`docs/backlog.md`**, section audit 
    `SmartDebuff.lua:6461` — exports `ns.O`/`ns.cSpells` morts (nil/périmés).
 6. XML : `SmartDebuffTooltip` déclaré 2× (36/77) ; `SmartDebuffWNF` « movable » mais handlers de
    drag vides et sans `RegisterForDrag` ; `--SMARTDEBUFF_ToggleAOFOrder` commenté vers une fonction
-   inexistante ; contrôles nommés `SmartDebuffOF_*` mais parentés ailleurs ; `txtIn` du panneau
+   inexistante ; `txtIn` du panneau
    Sounds non éditable (contrairement à NRDebuffs/SpellGuard) ; handlers vides (SF/IF/OF/WNF) ;
    indentation hétérogène.
 7. Résidus de la refonte UI du 2026-11-01 (journal §13) : la chaîne dev
@@ -408,8 +431,15 @@ Constats complets (sévérités, traces) : **`docs/backlog.md`**, section audit 
    (`if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then self:Hide() end`) — à
    réintégrer si ce comportement client-compat doit être conservé ; textes en dur dans le XML malgré
    la localisation (`"Reload (Debug)"`, `"Toggle filterString"`, `"Force English"`,
-   `MISCELLANEOUS`/`OPTIONS`/`UNLOCK_FRAME` — globals Blizzard) ; `SmartDebuffColTextureDropDown` :
-   seul enfant de Home à porter un nom global absolu.
+   `MISCELLANEOUS`/`OPTIONS`/`UNLOCK_FRAME` — globals Blizzard).
+8. **Références Lua sur d'anciens noms après le renommage du 2026-11-03** (régression, non
+   corrigée) : le retour à `$parent_` a fait passer `cbShowLR`/`cbForceLR` de `SmartDebuffOF_*` à
+   `SmartDebuffColors_*`, `cbShowSpellIcon` à `SmartDebuffOF_Home_cbShowSpellIcon`,
+   `cbShowBackdrop`/`cbClassColors` à `SmartDebuffGridSetup_*` — le Lua les appelle encore sous les
+   anciens noms (`SmartDebuff.lua:2139`, `:4612`, `:4620-4621`, `:4628`, `:5620`, `:5632`) →
+   `nil:SetChecked`/`nil:Click()` (erreur Lua dès que la fonction tourne avec l'OF ouvert) :
+   `ToggleSFBackdrop`, `ToggleClassColors`, `ToggleShowLR`, `ToggleForceLR`, auto-deactivation
+   SpellGuard. Détail : `docs/backlog.md`, section du 2026-11-03.
 
 Redondances structurelles : les 3 implémentations du scan de debuffs partagent ~80 % de leur
 squelette ; les chemins SpellGuard existent en 3 copies (AuraContainer/secrets/classic) ;
@@ -446,11 +476,11 @@ attribut. À considérer avant toute refactorisation lourde (règle §5 de l'AGE
    premier chargement).
 6. **Drapeaux §5.3** : un contrôle désactivé/masqué est fonctionnel sur d'autres clients — ne pas
    le supprimer « parce qu'il ne s'affiche pas ».
-7. **`SmartDebuffOF_btnKeys`** : doublon volontaire (bouton conservé dans Home + item « Keys » du
-   menu) — ne pas le supprimer sans demande.
-8. **Noms absolus dans Home** : `SmartDebuffOF_cb*`/`sld*` sont codés en dur depuis la refonte — un
-   retour à `$parent_` recasserait le Lua.
-9. **Validation** : voir `AGENTS.md` §6 (parse XML + cohérence TOC + test en jeu `/kd`, `/kdo`).
+7. **Convention de noms** : tout le XML est passé en `$parent_xxx` le 2026-11-03 — les noms résolus
+   dépendent du parent (`SmartDebuffOF_Home_*`, `SmartDebuffColors_*`, `SmartDebuffGridSetup_*`).
+   Toute ultérieure modification de nom/de parent impose un grep des références Lua **et** des
+   libellés `_G[self:GetName().."Text"]` ; la régression §10.8 en est l'exemple concret.
+8. **Validation** : voir `AGENTS.md` §6 (parse XML + cohérence TOC + test en jeu `/kd`, `/kdo`).
 
 ## 13. Journal des évolutions UI (refonte du 2026-11-01)
 
