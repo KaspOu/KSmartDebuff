@@ -394,7 +394,7 @@
             <FontString inherits="GameFontHighlightSmall" justifyH="CENTER"/>
             <Scripts><OnLoad>self:SetAutoFocus(false); self:EnableMouse(false); self:EnableKeyboard(false); self:SetText(SMARTDEBUFF_MENU_HOME);</OnLoad></Scripts>
           </EditBox>
-          <CheckButton name="SmartDebuffOF_cbGrp1" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp1" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -422,7 +422,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp2" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp2" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -430,7 +430,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp1" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp1" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("2");
@@ -450,7 +450,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp3" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp3" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -458,7 +458,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp2" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp2" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("3");
@@ -478,7 +478,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp4" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp4" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -486,7 +486,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp3" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp3" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("4");
@@ -506,7 +506,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp5" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp5" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -514,7 +514,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp4" relativePoint="TOPLEFT"><Offset><AbsDimension x="-114" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp4" relativePoint="TOPLEFT"><Offset><AbsDimension x="-114" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("5");
@@ -534,7 +534,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp6" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp6" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -542,7 +542,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp5" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp5" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("6");
@@ -562,7 +562,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp7" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp7" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -570,7 +570,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp6" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp6" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("7");
@@ -590,7 +590,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGrp8" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGrp8" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -598,7 +598,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp7" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp7" relativePoint="TOPLEFT"><Offset><AbsDimension x="38" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText("8");
@@ -618,14 +618,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon1">
+          <CheckButton name="$parent_cbClassIcon1">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarriorD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Warrior"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbGrp8" relativePoint="TOPLEFT"><Offset><AbsDimension x="-114" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbGrp8" relativePoint="TOPLEFT"><Offset><AbsDimension x="-114" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -645,14 +645,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon2">
+          <CheckButton name="$parent_cbClassIcon2">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\PriestD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Priest"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon1" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon1" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -672,14 +672,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon3">
+          <CheckButton name="$parent_cbClassIcon3">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DruidD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Druid"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon2" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon2" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -699,14 +699,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon4">
+          <CheckButton name="$parent_cbClassIcon4">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\PaladinD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Paladin"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon3" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon3" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -726,14 +726,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon5">
+          <CheckButton name="$parent_cbClassIcon5">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\ShamanD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Shaman"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon4" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon4" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -753,14 +753,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon6">
+          <CheckButton name="$parent_cbClassIcon6">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\MageD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Mage"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon5" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon5" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -780,14 +780,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon7">
+          <CheckButton name="$parent_cbClassIcon7">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Warlock"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon6" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon6" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -807,14 +807,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon8">
+          <CheckButton name="$parent_cbClassIcon8">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Hunter"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon7" relativePoint="TOPLEFT"><Offset><AbsDimension x="-132" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon7" relativePoint="TOPLEFT"><Offset><AbsDimension x="-132" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -834,14 +834,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon9">
+          <CheckButton name="$parent_cbClassIcon9">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\RogueD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Rogue"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon8" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon8" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -861,14 +861,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon10">
+          <CheckButton name="$parent_cbClassIcon10">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Deathknight"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon9" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon9" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -891,14 +891,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon11">
+          <CheckButton name="$parent_cbClassIcon11">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\MonkD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Monk"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon10" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon10" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -921,14 +921,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon12">
+          <CheckButton name="$parent_cbClassIcon12">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DemonhunterD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Demonhunter"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon11" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon11" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -951,14 +951,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon13">
+          <CheckButton name="$parent_cbClassIcon13">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\EvokerD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\Evoker"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon12" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon12" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -981,14 +981,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon14">
+          <CheckButton name="$parent_cbClassIcon14">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterPetD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\HunterPet"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon13" relativePoint="TOPLEFT"><Offset><AbsDimension x="-110" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon13" relativePoint="TOPLEFT"><Offset><AbsDimension x="-110" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -1011,14 +1011,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon15">
+          <CheckButton name="$parent_cbClassIcon15">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockPetD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\WarlockPet"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon14" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon14" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -1041,14 +1041,14 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassIcon16">
+          <CheckButton name="$parent_cbClassIcon16">
             <NormalTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightPetD"/>
             <CheckedTexture alphaMode="BLEND" file="Interface\AddOns\SmartDebuff\Icons\DeathknightPet"/>
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon15" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon15" relativePoint="TOPLEFT"><Offset><AbsDimension x="22" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               </OnLoad>
@@ -1074,7 +1074,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbHP" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbHP" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1082,7 +1082,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassIcon16" relativePoint="TOPLEFT"><Offset><AbsDimension x="-44" y="-26"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassIcon16" relativePoint="TOPLEFT"><Offset><AbsDimension x="-44" y="-26"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HP);
@@ -1106,7 +1106,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbMana" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbMana" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1114,7 +1114,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbHP" relativePoint="TOPLEFT"><Offset><AbsDimension x="74" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbHP" relativePoint="TOPLEFT"><Offset><AbsDimension x="74" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_MANA);
@@ -1138,7 +1138,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbHPText" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbHPText" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1146,7 +1146,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbHP" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbHP" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HPTEXT);
@@ -1170,7 +1170,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbInvert" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbInvert" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1178,7 +1178,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbMana" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbMana" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INVERT);
@@ -1202,7 +1202,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbClassView" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbClassView" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1210,7 +1210,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbHP" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-44"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbHP" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-44"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CLASSVIEW);
@@ -1224,9 +1224,10 @@
                 if (SMARTDEBUFF_Options) then
                   SMARTDEBUFF_Options.SortedByClass = true;
                   SMARTDEBUFF_Options.SortedByRole = false;
-                  _G["SmartDebuffOF_cbClassView"]:SetChecked(true);
-                  _G["SmartDebuffOF_cbRoleView"]:SetChecked(false);
-                  _G["SmartDebuffOF_cbGroupView"]:SetChecked(false);
+                  local parentName = self:GetParent():GetName();
+                  _G[parentName .. "_cbClassView"]:SetChecked(true);
+                  _G[parentName .. "_cbRoleView"]:SetChecked(false);
+                  _G[parentName .. "_cbGroupView"]:SetChecked(false);
                   SMARTDEBUFF_SetStyle();
                 end
               </OnClick>
@@ -1238,12 +1239,12 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Button name="SmartDebuffOF_btnClassOrder" inherits="UIPanelButtonTemplate" text="C">
+          <Button name="$parent_btnClassOrder" inherits="UIPanelButtonTemplate" text="C">
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="86" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="86" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 self:SetNormalFontObject("GameFontNormalSmall");
@@ -1261,7 +1262,7 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <CheckButton name="SmartDebuffOF_cbRoleView" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbRoleView" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1269,7 +1270,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="105" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="105" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ROLE);
@@ -1283,9 +1284,10 @@
                 if (SMARTDEBUFF_Options) then
                   SMARTDEBUFF_Options.SortedByClass = false;
                   SMARTDEBUFF_Options.SortedByRole = true;
-                  _G["SmartDebuffOF_cbClassView"]:SetChecked(false);
-                  _G["SmartDebuffOF_cbRoleView"]:SetChecked(true);
-                  _G["SmartDebuffOF_cbGroupView"]:SetChecked(false);
+                  local parentName = self:GetParent():GetName();
+                  _G[parentName.."_cbClassView"]:SetChecked(false);
+                  _G[parentName.."_cbRoleView"]:SetChecked(true);
+                  _G[parentName.."_cbGroupView"]:SetChecked(false);
                   SMARTDEBUFF_SetStyle();
                 end
               </OnClick>
@@ -1297,7 +1299,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbGroupView" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbGroupView" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1305,7 +1307,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="145" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="145" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 -- _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ROLE);
@@ -1319,9 +1321,10 @@
                 if (SMARTDEBUFF_Options) then
                   SMARTDEBUFF_Options.SortedByClass = false;
                   SMARTDEBUFF_Options.SortedByRole = false;
-                  _G["SmartDebuffOF_cbClassView"]:SetChecked(false);
-                  _G["SmartDebuffOF_cbRoleView"]:SetChecked(false);
-                  _G["SmartDebuffOF_cbGroupView"]:SetChecked(true);
+                  local parentName = self:GetParent():GetName();
+                  _G[parentName .. "_cbClassView"]:SetChecked(false);
+                  _G[parentName .. "_cbRoleView"]:SetChecked(false);
+                  _G[parentName .. "_cbGroupView"]:SetChecked(true);
                   SMARTDEBUFF_SetStyle();
                 end
               </OnClick>
@@ -1333,7 +1336,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbIgnoreDebuff" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
+          <CheckButton name="$parent_cbIgnoreDebuff" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1341,7 +1344,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbClassView" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_IGNOREDEBUFF);
@@ -1364,7 +1367,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbStopCast" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
+          <CheckButton name="$parent_cbStopCast" inherits="InterfaceOptionsCheckButtonTemplate" hidden="false">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1372,7 +1375,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbIgnoreDebuff" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbIgnoreDebuff" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_STOPCAST);
@@ -1400,7 +1403,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbPlaySound" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbPlaySound" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1408,7 +1411,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbStopCast" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbStopCast" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SOUND);
@@ -1436,12 +1439,12 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Button name="SmartDebuffOF_btnSounds" inherits="UIPanelButtonTemplate" text="S" hidden="false">
+          <Button name="$parent_btnSounds" inherits="UIPanelButtonTemplate" text="S" hidden="false">
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbPlaySound" relativePoint="TOPLEFT"><Offset><AbsDimension x="104" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbPlaySound" relativePoint="TOPLEFT"><Offset><AbsDimension x="104" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 self:SetNormalFontObject("GameFontNormalSmall");
@@ -1458,7 +1461,7 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <CheckButton name="SmartDebuffOF_cbShowSpellIcon" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowSpellIcon" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1466,7 +1469,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_btnSounds" relativePoint="TOPLEFT"><Offset><AbsDimension x="-104" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_btnSounds" relativePoint="TOPLEFT"><Offset><AbsDimension x="-104" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWSPELLICON);
@@ -1490,12 +1493,12 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Button name="SmartDebuffOF_btnSpellGuard" inherits="UIPanelButtonTemplate" text="W" hidden="false">
+          <Button name="$parent_btnSpellGuard" inherits="UIPanelButtonTemplate" text="W" hidden="false">
             <Size>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowSpellIcon" relativePoint="TOPLEFT"><Offset><AbsDimension x="104" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowSpellIcon" relativePoint="TOPLEFT"><Offset><AbsDimension x="104" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 if (SMARTDEBUFF_HASSECRETS and not SMARTDEBUFF_AURACONTAINERS) then
@@ -1516,7 +1519,7 @@
               </OnLeave>
             </Scripts>
           </Button>
-          <CheckButton name="SmartDebuffOF_cbShowRaidIcon" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowRaidIcon" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1524,7 +1527,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_btnSpellGuard" relativePoint="TOPLEFT"><Offset><AbsDimension x="-104" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_btnSpellGuard" relativePoint="TOPLEFT"><Offset><AbsDimension x="-104" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWRAIDICON);
@@ -1548,7 +1551,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbShowAggro" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowAggro" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1556,7 +1559,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowRaidIcon" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowRaidIcon" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWAGGRO);
@@ -1580,7 +1583,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbShowHealRange" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowHealRange" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1588,7 +1591,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowAggro" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowAggro" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEALRANGE);
@@ -1612,7 +1615,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbShowTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1620,7 +1623,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowHealRange" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowHealRange" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_TOOLTIP);
@@ -1644,7 +1647,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbShowDebuffTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowDebuffTooltip" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1652,7 +1655,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowTooltip" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowTooltip" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_DEBUFFTOOLTIP);
@@ -1679,7 +1682,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbShowVehicles" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowVehicles" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1687,7 +1690,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowDebuffTooltip" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowDebuffTooltip" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_VEHICLE);
@@ -1715,7 +1718,7 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbAdvAnchors" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbAdvAnchors" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -1723,7 +1726,7 @@
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowVehicles" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowVehicles" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-20"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_ADVANCHORS);
@@ -1746,12 +1749,12 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <Slider name="SmartDebuffOF_sldCheckInterval" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+          <Slider name="$parent_sldCheckInterval" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
             <Size>
               <AbsDimension x="132" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbAdvAnchors" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-44"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbAdvAnchors" relativePoint="TOPLEFT"><Offset><AbsDimension x="0" y="-44"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
                 SmartDebuffOFSlider_OnLoad(self, 25, 520, 25);
@@ -2847,7 +2850,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
     </Anchors>
     <Frames>
-      <CheckButton name="SmartDebuffOF_cbTargetMode" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbTargetMode" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -2961,7 +2964,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLoad>
         </Scripts>
       </EditBox>
-      <CheckButton name="SmartDebuffOF_cbVertical" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbVertical" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -2993,7 +2996,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT"><Offset><AbsDimension x="12" y="-20"/></Offset></Anchor></Anchors>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbVerticalUp" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbVerticalUp" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3024,9 +3027,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbVertical"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbVertical"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbHeaders" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbHeaders" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3034,7 +3037,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbVerticalUp"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbVerticalUp"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEADERS);
@@ -3058,7 +3061,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbGrpNr" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbGrpNr" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3066,7 +3069,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbHeaders"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbHeaders"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_GROUPNR);
@@ -3090,7 +3093,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbShowInfoRow" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbShowInfoRow" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3098,7 +3101,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbGrpNr"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbGrpNr"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_INFOROW);
@@ -3123,7 +3126,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbShowHeaderRow" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbShowHeaderRow" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3131,7 +3134,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowInfoRow"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowInfoRow"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_HEADERROW);
@@ -3156,7 +3159,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbShowBackdrop" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbShowBackdrop" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3164,7 +3167,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowHeaderRow"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowHeaderRow"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_BACKDROP);
@@ -3187,7 +3190,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbClassColors" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbClassColors" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3195,7 +3198,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowBackdrop"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowBackdrop"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_CLASSCOLOR);
@@ -3219,7 +3222,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbShowGradient" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbShowGradient" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3227,7 +3230,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <AbsDimension x="16" y="16"/>
         </Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbClassColors"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbClassColors"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
         <Scripts>
           <OnLoad>
             _G[self:GetName().."Text"]:SetText(SMARTDEBUFF_OFT_SHOWGRADIENT);
@@ -3251,7 +3254,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
       </CheckButton>
-    <CheckButton name="SmartDebuffOF_cbShowRoleIcon" inherits="InterfaceOptionsCheckButtonTemplate">
+    <CheckButton name="$parent_cbShowRoleIcon" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3281,9 +3284,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowGradient"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowGradient"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
       </CheckButton>
-      <CheckButton name="SmartDebuffOF_cbShowRoleDpsIcon" inherits="InterfaceOptionsCheckButtonTemplate">
+      <CheckButton name="$parent_cbShowRoleDpsIcon" inherits="InterfaceOptionsCheckButtonTemplate">
         <HitRectInsets>
           <AbsInset left="0" right="0" top="0" bottom="0"/>
         </HitRectInsets>
@@ -3313,9 +3316,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowRoleIcon"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowRoleIcon"><Offset><AbsDimension x="0" y="-2"/></Offset></Anchor></Anchors>
       </CheckButton>
-      <Slider name="SmartDebuffOF_sldFontsize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldFontsize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3344,9 +3347,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_cbShowRoleDpsIcon"><Offset><AbsDimension x="0" y="-25"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_cbShowRoleDpsIcon"><Offset><AbsDimension x="0" y="-25"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldIconSize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldIconSize" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3375,9 +3378,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldFontsize"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldFontsize"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldColumns" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldColumns" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3406,9 +3409,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldIconSize"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldIconSize"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldBarHeight" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldBarHeight" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3437,9 +3440,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldColumns"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldColumns"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldBtnW" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldBtnW" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3468,9 +3471,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldBarHeight"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldBarHeight"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldBtnH" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldBtnH" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3499,9 +3502,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldBtnW"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldBtnW"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldSpaceX" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldSpaceX" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3530,9 +3533,9 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldBtnH"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldBtnH"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
-      <Slider name="SmartDebuffOF_sldSpaceY" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
+      <Slider name="$parent_sldSpaceY" inherits="SmartDebuffOptionsSliderTemplate" hidden="false">
         <Size>
           <AbsDimension x="132" y="16"/>
         </Size>
@@ -3561,7 +3564,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           </OnLeave>
         </Scripts>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SmartDebuffOF_sldSpaceX"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_sldSpaceX"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
       </Slider>
       </Frames>
     <Scripts>
@@ -4312,7 +4315,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
               </OnLeave>
             </Scripts>
           </Frame>
-          <CheckButton name="SmartDebuffOF_cbShowLR" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbShowLR" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -4348,7 +4351,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
               </OnLeave>
             </Scripts>
           </CheckButton>
-          <CheckButton name="SmartDebuffOF_cbForceLR" inherits="InterfaceOptionsCheckButtonTemplate">
+          <CheckButton name="$parent_cbForceLR" inherits="InterfaceOptionsCheckButtonTemplate">
             <HitRectInsets>
               <AbsInset left="0" right="0" top="0" bottom="0"/>
             </HitRectInsets>
@@ -4356,7 +4359,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
               <AbsDimension x="16" y="16"/>
             </Size>
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF_cbShowLR" relativePoint="TOPRIGHT"><Offset><AbsDimension x="100" y="0"/></Offset></Anchor></Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent_cbShowLR" relativePoint="TOPRIGHT"><Offset><AbsDimension x="100" y="0"/></Offset></Anchor></Anchors>
             <Scripts>
               <OnLoad>
               -- Hide if english

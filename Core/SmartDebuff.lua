@@ -527,7 +527,6 @@ function SMARTDEBUFF_OnEvent(self, event, ...)
   if (event == "GROUP_ROSTER_UPDATE") then
     shouldCallSetUnits = true;
     shouldCallSetButtons = true;
-    SMARTDEBUFF_SetAuraSounds()
 
   elseif (event == "UNIT_FACTION" or event == "UNIT_ENTERED_VEHICLE" or event == "UNIT_EXITED_VEHICLE" or event == "PLAYER_ROLES_ASSIGNED") then
     shouldCallSetUnits = true;
@@ -671,6 +670,9 @@ function SMARTDEBUFF_Ticker(force)
     if (shouldCallSetButtons) then
       shouldCallSetButtons = false;
       SMARTDEBUFF_SetButtons();
+      if SMARTDEBUFF_SetAuraSounds then
+        SMARTDEBUFF_SetAuraSounds()
+      end
     end
 
     if (shouldCallRefreshUI) then
@@ -1599,7 +1601,7 @@ function SMARTDEBUFF_Options_Init()
   end
 
 
-  
+
   SMARTDEBUFF_CheckCVars();
   SMARTDEBUFF_CheckWarlockPet();
   SMARTDEBUFF_CheckSF();
@@ -2136,7 +2138,7 @@ function SMARTDEBUFF_ToggleSFBackdrop()
   if (SmartDebuffSF) then
     O.ShowBackdrop = not O.ShowBackdrop;
     if (SmartDebuffOF:IsVisible()) then
-      SmartDebuffOF_cbShowBackdrop:SetChecked(O.ShowBackdrop);
+      SmartDebuffGridSetup_cbShowBackdrop:SetChecked(O.ShowBackdrop);
     end
     SMARTDEBUFF_CheckSFBackdrop();
   end
@@ -4617,15 +4619,15 @@ end
 function SMARTDEBUFF_ToggleShowLR()
   O.ShowLR = SMARTDEBUFF_toggleBool(O.ShowLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
   if (SmartDebuffOF:IsVisible()) then
-    SmartDebuffOF_cbShowLR:SetChecked(O.ShowLR);
-    SmartDebuffOF_cbForceLR:SetAlpha(O.ShowLR and 1 or .5);
+    SmartDebuffColors_cbShowLR:SetChecked(O.ShowLR);
+    SmartDebuffColors_cbForceLR:SetAlpha(O.ShowLR and 1 or .5);
   end
   SMARTDEBUFF_CheckDebuffs(true);
 end
 function SMARTDEBUFF_ToggleForceLR()
   O.ForceLR = SMARTDEBUFF_toggleBool(O.ForceLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
   if (SmartDebuffOF:IsVisible()) then
-    SmartDebuffOF_cbForceLR:SetChecked(O.ForceLR);
+    SmartDebuffColors_cbForceLR:SetChecked(O.ForceLR);
   end
   SMARTDEBUFF_CheckDebuffs(true);
 end
@@ -5130,7 +5132,7 @@ end
 function SMARTDEBUFF_OFToggleGrp(i)
   O.DebuffGrp[i] = not O.DebuffGrp[i];
   shouldCallSetUnits = true;
-  SMARTDEBUFF_SetAuraSoundsTestMode()
+  shouldCallSetButtons = true;
 end
 
 function SMARTDEBUFF_OFOnShow()
@@ -6563,7 +6565,7 @@ Spell in CD = (scd.isActive == true) and not (scd.isOnGCD == true)
 
 HARMFUL|RAID = you can dispel it
 HARMFUL|RAID_PLAYER_DISPELLABLE = someone in your group can dispel it
-HARMFUL|DISPELLABLE = it is a dispellable debuff, but doesn't say anything about if anyone can dispel it 
+HARMFUL|DISPELLABLE = it is a dispellable debuff, but doesn't say anything about if anyone can dispel it
 
 >> Garder un cache des unités lors de la boucle, si pas possible:
 /dump UnitIsUnit(CompactPartyFrameMember1.displayedUnit, "Gally")
