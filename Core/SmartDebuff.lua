@@ -4903,6 +4903,32 @@ function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, 
       return;
     end
   end
+  if (UnitIsUnit(unit, "player") and C_LossOfControl) then
+    local count = C_LossOfControl.GetActiveLossOfControlDataCount()
+    for i = 1, count do
+      local locData = C_LossOfControl.GetActiveLossOfControlData(i)
+
+      if locData and (locData.locType == "ROOT") then -- attempt to compare field 'locType' (a secret string value, while execution tainted by 'SmartDebuff')
+        cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_ROOT)
+
+        if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+          hasDebuff = true;
+          SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_ROOT][2], cud_ir, cud_tl, pet, cud_cds);
+          SMARTDEBUFF_PlaySound();
+          return;
+        end
+      elseif locData and (locData.locType == "SNARE") then
+        cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_SNARE)
+
+        if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+          hasDebuff = true;
+          SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_SNARE][2], cud_ir, cud_tl, pet, cud_cds);
+          SMARTDEBUFF_PlaySound();
+          return;
+        end
+      end
+    end
+  end
 
   local container = SMARTDEBUFF_SetAuraContainerForButton(idx, unit, cud_ir, pet);
 
@@ -5006,6 +5032,34 @@ function SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet)
       end
     end
 
+    if (UnitIsUnit(unit, "player") and C_LossOfControl) then
+
+      local count = C_LossOfControl.GetActiveLossOfControlDataCount()
+      for i = 1, count do
+        local locData = C_LossOfControl.GetActiveLossOfControlData(i)
+
+        if locData and (locData.locType == "ROOT") then
+          cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_ROOT)
+
+          if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+            hasDebuff = true;
+            SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_ROOT][2], cud_ir, cud_tl, pet, cud_cds);
+            SMARTDEBUFF_PlaySound();
+            return;
+          end
+        elseif locData and (locData.locType == "SNARE") then
+          cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_SNARE)
+
+          if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+            hasDebuff = true;
+            SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_SNARE][2], cud_ir, cud_tl, pet, cud_cds);
+            SMARTDEBUFF_PlaySound();
+            return;
+          end
+        end
+      end
+    end
+
     if (cud_nrd) then
       hasDebuff = true;
       SMARTDEBUFF_SetButtonState(unit, idx, 10, 1, cud_tlnr, pet, 0);
@@ -5083,6 +5137,33 @@ function SMARTDEBUFF_CheckUnitDebuffs_Secrets(spell, unit, idx, isActive, pet)
         SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, -1);
         SMARTDEBUFF_PlaySound();
         return;
+      end
+    end
+
+    if (UnitIsUnit(unit, "player") and C_LossOfControl) then
+      local count = C_LossOfControl.GetActiveLossOfControlDataCount()
+      for i = 1, count do
+        local locData = C_LossOfControl.GetActiveLossOfControlData(i)
+
+        if locData and (locData.locType == "ROOT") then
+          cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_ROOT)
+
+          if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+            hasDebuff = true;
+            SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_ROOT][2], cud_ir, cud_tl, pet, cud_cds);
+            SMARTDEBUFF_PlaySound();
+            return;
+          end
+        elseif locData and (locData.locType == "SNARE") then
+          cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_SNARE)
+
+          if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+            hasDebuff = true;
+            SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_SNARE][2], cud_ir, cud_tl, pet, cud_cds);
+            SMARTDEBUFF_PlaySound();
+            return;
+          end
+        end
       end
     end
 

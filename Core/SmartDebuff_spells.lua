@@ -179,6 +179,9 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
     { Spell_ID = 774,   Button = "AL", Types = {SMARTDEBUFF_HEAL} }, -- Rejuvenation (1+)
     -- 8946 - Cure Poison (1-3)
     -- 2893 - Abolish Poison (1-3)
+    { Spell_ID = 768,   Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Cat Form
+    { Spell_ID = 5487,  Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Bear Form
+    { Spell_ID = 783,   Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Travel Form
   },
   ["EVOKER"]  = {
     { Spell_ID = 374251, Button = "R", Types = {SMARTDEBUFF_CURSE, SMARTDEBUFF_POISON, SMARTDEBUFF_DISEASE, SMARTDEBUFF_BLEEDING} }, -- Cauterizing flame (10+)
@@ -189,11 +192,13 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
     { Spell_ID = 115078, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Paralysis (5+)
     { Spell_ID = 115151, Button = "M", Types = {SMARTDEBUFF_HEAL} }, -- Renewing Mist (5+)
     { Spell_ID = 116670, Button = "AL", Types = {SMARTDEBUFF_HEAL} }, -- Vivify (5+)
+    { Spell_ID = 116841, Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Tiger's Lust
   },
   ["PALADIN"]  = {
     { Spell_ID = 20066, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Repentance (1+)
     { Spell_ID = 1022,  Button = "M", Types = {SMARTDEBUFF_UTIL} }, --  Blessing of protection (1+)
     { Spell_ID = 19750, Button = "AL", Types = {SMARTDEBUFF_HEAL} }, --  Flash of light (1+)
+    { Spell_ID = 1044,  Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, --  Blessing of Freedom (1+)
     -- 633 - Lay on Hands (1+)?
   },
   ["PRIEST"]  = {
@@ -206,6 +211,7 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
     -- 552 - Abolish Disease (1-3)
     -- 2061 - Flash heal (1+)
     -- 64044 -- Psychic horror? (3+)
+    { Spell_ID = 586, Button = "", Types = {}, Improved_Talent = 108942, Improved_Spell_List = {SMARTDEBUFF_SNARE} }, -- Fade + Phantasm
   },
   ["SHAMAN"]  = {
     { Spell_ID = 51514, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Hex (3+)
@@ -213,6 +219,8 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
     { Spell_ID = 8004,  Button = "AL", Types = {SMARTDEBUFF_HEAL} }, -- Healing surge (1+)
     -- 2870 - Cure Disease (1-2)
     -- 331 - Healing wave (1-4)
+    { Spell_ID = 58875, Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Spirit Walk
+    { Spell_ID = 2645,  Button = "", Types = {}, Improved_Talent = 378075, Improved_Spell_List = {SMARTDEBUFF_SNARE} }, -- Ghost Wolf + Thunderous Paws
   },
 
   ["DEATHKNIGHT"]  = {
@@ -221,24 +229,35 @@ SMARTDEBUFF_CLASS_SKILLS_LIST_ID = {
   },
   ["DEMONHUNTER"]  = {
     { Spell_ID = 217832, Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Imprison (7+)
+    { Spell_ID = 198793, Button = "", Types = {SMARTDEBUFF_SNARE} }, -- Vengeful Retreat
   },
   ["HUNTER"]  = {
     { Spell_ID = 34477, Button = "M", Types = {SMARTDEBUFF_MISDIRECT} }, -- Misdirection (2+)
+    { Spell_ID = 53271, Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Master's Call
+    { Spell_ID = 781,   Button = "", Types = {}, Improved_Talent = 109215, Improved_Spell_List = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Disengage + Posthaste
   },
   ["MAGE"]  = {
     { Spell_ID = 118,   Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Polymorph (1+)
     { Spell_ID = 130,   Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Slow fall (1+)
+    { Spell_ID = 1953,  Button = "", Types = {SMARTDEBUFF_ROOT} }, -- Blink
+    { Spell_ID = 45438, Button = "", Types = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Ice Block
+    { Spell_ID = 235313, Button = "", Types = {}, Improved_Talent = 386828, Improved_Spell_List = {SMARTDEBUFF_SNARE} }, -- Blazing Barrier + Energized Barriers
+    { Spell_ID = 11426,  Button = "", Types = {}, Improved_Talent = 386828, Improved_Spell_List = {SMARTDEBUFF_SNARE} }, -- Ice Barrier + Energized Barriers
+    { Spell_ID = 235450, Button = "", Types = {}, Improved_Talent = 386828, Improved_Spell_List = {SMARTDEBUFF_SNARE} }, -- Prismatic Barrier + Energized Barriers
   },
   ["ROGUE"]  = {
     { Spell_ID = 2094,  Button = "R", Types = {SMARTDEBUFF_CHARMED} }, -- Blind (1+)
     { Spell_ID = 57934, Button = "M", Types = {SMARTDEBUFF_MISDIRECT} }, -- Tricks of the Trade (3+)
+    { Spell_ID = 1856,  Button = "", Types = {SMARTDEBUFF_SNARE} }, -- Vanish
   },
   ["WARLOCK"]  = {
     { Spell_ID = 20707,  Button = "R", Types = {SMARTDEBUFF_UTIL} }, -- Soulstone (1+)
     { Spell_ID = 5697,  Button = "M", Types = {SMARTDEBUFF_UTIL} }, -- Unending Breath (1+)
+    { Spell_ID = 48020, Button = "", Types = {}, Improved_Talent = 428911, Improved_Spell_List = {SMARTDEBUFF_ROOT, SMARTDEBUFF_SNARE} }, -- Demonic Circle: Teleport + Soul-Etched Circles
   },
   ["WARRIOR"]  = {
     { Spell_ID = 3411,  Button = "R", Types = {SMARTDEBUFF_UTIL} }, -- Intervene (2+)
+    { Spell_ID = 18499, Button = "", Types = {}, Improved_Talent = 1271925, Improved_Spell_List = {SMARTDEBUFF_SNARE} }, -- Berserker Rage + Fearless
   },
 }
 
@@ -651,3 +670,33 @@ SMARTDEBUFF_DEBUFFS_LIST = {
     [425974] = SMARTDEBUFF_MAGIC, -- Ground Pound
   },
 }
+
+
+-- https://github.com/Korbrawr/DruidMacroHelper/blob/master/DruidMacroHelper.lua
+SLASH_SMARTDEBUFFLOC1 = "/sdloc"
+
+SlashCmdList["SMARTDEBUFFLOC"] = function()
+    if not C_LossOfControl then
+        print("C_LossOfControl unavailable")
+        return
+    end
+
+    local count = C_LossOfControl.GetActiveLossOfControlDataCount()
+
+    print("Active LoC count:", count)
+
+    for i = 1, count do
+        local data = C_LossOfControl.GetActiveLossOfControlData(i)
+
+        if data then
+            print(
+                i,
+                "Type:", data.locType,
+                "Spell:", data.spellID,
+                "Duration:", data.duration,
+                "Remaining:", data.timeRemaining
+            )
+        end
+    end
+end
+-- 1 Type: ROOT, Spell: 12023 Duration : 3 Remaining: 0.5
