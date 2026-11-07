@@ -4886,6 +4886,16 @@ function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, 
     cud_ir = 0;
   end
 
+  if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+    cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
+    if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
+      hasDebuff = true;
+      SMARTDEBUFF_SetButtonState(unit, idx, cSpells[SMARTDEBUFF_CHARMED][2], cud_ir, cud_tl, pet, cud_cds);
+      SMARTDEBUFF_PlaySound();
+      return;
+    end
+  end
+
   local container = SMARTDEBUFF_SetAuraContainerForButton(idx, unit, cud_ir, pet);
 
   if (not container) then
