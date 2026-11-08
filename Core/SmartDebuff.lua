@@ -1138,6 +1138,10 @@ function SMARTDEBUFF_SetSpells()
         local hasSpell = not not FindSpellBookSlotBySpellID(val.Spell_ID);
         if (not cSpellDefault[val.Button] or #cSpellDefault[val.Button] == 0 or hasSpell) then
           cSpellList[sSpellInfo.name] = hasSpell and val.Types or {};
+          if (hasSpell and val.Improved_Talent and SDB_IsSpellTalented(val.Improved_Talent)) then
+            cSpellList[sSpellInfo.name] = val.Improved_Types;
+            SMARTDEBUFF_AddMsgD("Dispel improved! - : "..strjoin(" ",unpack(cSpellList[sName])));
+          end
           SMARTDEBUFF_AddMsgD("Class spell added [" ..val.Button.. "]: ".. sSpellInfo.name.." - "..strjoin(" ",unpack(cSpellList[sSpellInfo.name])));
           cSpellDefault[val.Button] = {_, val.Spell_Type or "spell", sSpellInfo.name, sSpellInfo.spellID};
         end

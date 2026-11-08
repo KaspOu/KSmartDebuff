@@ -19,7 +19,7 @@ SMARTDEBUFF_CLASS_DISPELS_LIST_ID
   Priority: first active spell > first inactive talent > first item
 
 SMARTDEBUFF_CLASS_SKILLS_LIST_ID
-  Format: [ClassName] = { Spell_ID, Button, Types }
+  Format: [ClassName] = { Spell_ID, Button, Types, Improved_Talent?, Improved_Types? }
   You can declare multiple lines with the same Button,
   first spell will only be overloaded if the following spell is active
   Priority: last active > first item
