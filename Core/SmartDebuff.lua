@@ -5838,8 +5838,14 @@ function SMARTDEBUFF_UpdateDispelRecap()
               info = "-"..SMARTDEBUFF_TT_TARGET.."-"
             elseif (v[1] == "macro") then
               info = "<"..v[2]..">"
-            elseif (v[1] == "spell" or v[1] == "petaction") and not ns.GetSpellInfo(v[2]) then
-              info = GRAY_FONT_COLOR:WrapTextInColorCode("["..v[2].."]")
+            elseif (v[1] == "spell" or v[1] == "petaction") then
+              local spellInfo = ns.GetSpellInfo(v[2])
+              local isMovable = spellInfo and SMARTDEBUFF_IsSpellMovable(v[1], spellInfo.name, "", spellInfo.spellID, "")
+              if (isMovable) then
+                info = "["..v[2].."]";
+              else
+                info = GRAY_FONT_COLOR:WrapTextInColorCode("["..v[2].."]")
+              end
             else
               info = "["..v[2].."]";
             end
