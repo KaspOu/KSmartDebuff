@@ -4277,8 +4277,8 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
 
                       if SMARTDEBUFF_Options then
                         SMARTDEBUFF_Options.ColDTexture = btn.value
-                        SMARTDEBUFF_TestModeToggle(true)
                         SMARTDEBUFF_CheckDebuffs(true)
+                        SMARTDEBUFF_SetButtons()
                       end
                     end
 

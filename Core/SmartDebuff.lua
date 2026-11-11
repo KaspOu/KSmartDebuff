@@ -2907,18 +2907,17 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
               border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
               auraButton.border = border
 
-              if (O.ShowLR) then
-                local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
-                local offsetY = -math.floor((O.BtnH - 20) / 10)
-                text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
-                -- 20 : 0 , 40 : 2
-                text:SetText("")
-                local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-                text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
-                text:SetText(btnTxt)
-                auraButton.text = text
-              end
+              local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+              text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
+              local offsetY = -math.floor((O.BtnH - 20) / 10)
+              text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
+              -- 20 : 0 , 40 : 2
+              text:SetText("")
+              local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+              text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
+              text:SetText(btnTxt)
+              text:SetShown(O.ShowLR)
+              auraButton.text = text
               dispelContainer.auraButton = auraButton
             end,
           });
@@ -2937,6 +2936,7 @@ function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
             end
             colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
             border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
+            text:SetShown(O.ShowLR)
             local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
             text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
             auraButton.ColDTexture = O.ColDTexture
@@ -4621,6 +4621,7 @@ function SMARTDEBUFF_ToggleShowLR()
     SmartDebuffOF_cbForceLR:SetAlpha(O.ShowLR and 1 or .5);
   end
   SMARTDEBUFF_CheckDebuffs(true);
+  SMARTDEBUFF_SetButtons()
 end
 function SMARTDEBUFF_ToggleForceLR()
   O.ForceLR = SMARTDEBUFF_toggleBool(O.ForceLR, SMARTDEBUFF_OFT_SHOWLR.." = ");
@@ -4628,6 +4629,7 @@ function SMARTDEBUFF_ToggleForceLR()
     SmartDebuffOF_cbForceLR:SetChecked(O.ForceLR);
   end
   SMARTDEBUFF_CheckDebuffs(true);
+  SMARTDEBUFF_SetButtons()
 end
 
 function SMARTDEBUFF_ToggleSortedByClass()
