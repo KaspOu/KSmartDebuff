@@ -308,6 +308,7 @@
         self:SetMovable(true);
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
+        self:SetBackdropBorderColor(1, 0.82, 0, 1)
       </OnLoad>
       <OnShow>
       </OnShow>
@@ -382,7 +383,7 @@
         <Size>
           <AbsDimension x="172" y="520"/></Size>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT"><Offset><AbsDimension x="-172" y="-15"/></Offset></Anchor><Anchor point="BOTTOM" relativeTo="SmartDebuffOF" relativePoint="BOTTOM"/></Anchors>
+          <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT"><Offset><AbsDimension x="-172" y="-16"/></Offset></Anchor><Anchor point="BOTTOM" relativeTo="SmartDebuffOF" relativePoint="BOTTOM"/></Anchors>
         <Layers>
           <Layer level="ARTWORK">
             </Layer>
@@ -2004,7 +2005,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
           <OnLoad>
             if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
             self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS);
-            self:SetBackdropBorderColor(1, 0.82, 0, 1);
+            self:SetBackdropBorderColor(1, 0.82, 0, 1)
             self.items = {};
             for _, ch in ipairs({self:GetChildren()}) do
               if (ch.panelName) then
@@ -2349,6 +2350,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
         self:EnableMouse(true);
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
+        self:SetBackdropBorderColor(1, 0.82, 0, 1);
       </OnLoad>
       <OnShow>
         SMARTDEBUFF_OFOnShow();
@@ -2382,7 +2384,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -2472,7 +2474,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -2583,7 +2585,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -2727,7 +2729,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -2844,7 +2846,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -2938,7 +2940,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -3586,7 +3588,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     </Size>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
-        <Offset><AbsDimension x="-172" y="-15"/></Offset>
+        <Offset><AbsDimension x="-172" y="-16"/></Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
     </Anchors>
@@ -3701,7 +3703,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
     <Anchors>
       <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
-          <AbsDimension x="-172" y="-15"/>
+          <AbsDimension x="-172" y="-16"/>
         </Offset>
       </Anchor>
       <Anchor point="BOTTOM" relativeTo="SmartDebuffOF"/>
@@ -4405,10 +4407,10 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
   </Frame>
   <Frame name="SmartDebuffAuraSounds" toplevel="true" frameStrata="MEDIUM" parent="SmartDebuffOF" hidden="true" enableMouse="true">
     <Size>
-      <AbsDimension x="272" y="520"/>
+      <AbsDimension x="272" y="540"/>
     </Size>
     <Anchors>
-      <Anchor point="TOPLEFT" relativeTo="SmartDebuffSounds" relativePoint="TOPRIGHT">
+      <Anchor point="TOPLEFT" relativeTo="SmartDebuffOF" relativePoint="TOPRIGHT">
         <Offset>
           <AbsDimension x="2" y="0"/>
         </Offset>
@@ -4480,6 +4482,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
       <OnLoad>
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
+        self:SetBackdropBorderColor(1, 0.82, 0, 1)
       </OnLoad>
       <OnShow>
         SMARTDEBUFF_AuraSoundsOnShow(self);
@@ -4547,6 +4550,7 @@ self:SetBackdrop(SMARTDEBUFF_BACKDROP_INSIDE)</OnLoad><OnShow>
         self:SetHeight(SmartDebuffOF:GetHeight());
         if (BackdropTemplateMixin) then Mixin(self, BackdropTemplateMixin) end
         self:SetBackdrop(SMARTDEBUFF_BACKDROP_OPTIONS)
+        self:SetBackdropBorderColor(1, 0.82, 0, 1)
       </OnLoad>
       <OnShow>
         self:SetPoint("TOPLEFT", "SmartDebuffOF", "TOPRIGHT", 2, 0);
