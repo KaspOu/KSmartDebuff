@@ -3,6 +3,29 @@
 Travail ouvert et constats d'audit pour KDecurse (SmartDebuff). Audit report-only : aucun code n'a
 été modifié.
 
+## Travail en cours
+
+### KD-lazy-auras — gestion lazy des AuraContainer (2026-11-22)
+
+Spec et plan d'implémentation validés (revue `kaspou-plan-reviewer` : Approved) :
+`.kaspou/work/KD-lazy-auras/spec.md` + `.kaspou/work/KD-lazy-auras/plan.md` (workspace
+`_KaspOu`). **Implémentation livrée** sur la branche `AGENTS` (5 commits `KD-lazy-auras`, les 6
+tâches du plan exécutées et vérifiées : gate syntaxe + greps de non-régression verts). Reste à
+faire : tests manuels en jeu (retail 12) — checklist Task 6 du plan — et validation humaine du
+diff avant merge. Note d'arbitrage : le plan réserve les 3 conditions de création aux **slots**
+(`AddAuraSlot`, lecture littérale de spec §Création) ; les containers suivent « hors combat +
+unité affichée + bouton shown », pour préserver la mise à jour de `SMARTDEBUFF_SetButtonState`
+sans dispel assigné — tension mineure avec la phrase « Objectif » du spec, à confirmer par le
+mainteneur.
+
+### Constats 2026-11-22 (KD-lazy-auras)
+
+- `UTF8/utf8data.lua` démarre par un BOM UTF-8 — `python3 tools/validate_lua.py` (workspace
+  complet) : `file starts with a UTF-8 BOM (WoW refuses to parse it)`. BOM présent dans HEAD, hors
+  diff KD-lazy-auras, **non corrigé**. Le gate workspace complet est donc rouge (5 fichiers BOM au
+  total : celui-ci, `KRaidFade/Core/localization.en.lua` et 3 fichiers de référence
+  `Wow/BlizzardInterfaceCode/`) ; le gate ciblé sur les fichiers KD-lazy-auras est vert.
+
 ## KSmartDebuff audit 2026-11-02
 
 Périmètre : intégralité du répertoire (arbre git propre en contenu — bruit EOL seul), profondeur
@@ -135,8 +158,8 @@ l'harmonisation du panneau `_Home`. Les noms résolus ont changé ; le Lua n'a p
      `ToggleSFBackdrop`) ;
    - `SmartDebuffOF_cbClassColors` → `SmartDebuffGridSetup_cbClassColors` (4612,
      `ToggleClassColors`).
-   Correctif : remplacer ces 7 références par les noms résolus actuels (grep
-   `SmartDebuffOF_cb` dans le Lua avant/après). Non appliqué : hors périmètre « documentation ».
+     Correctif : remplacer ces 7 références par les noms résolus actuels (grep
+     `SmartDebuffOF_cb` dans le Lua avant/après). Non appliqué : hors périmètre « documentation ».
 
 ### Notes
 
@@ -144,4 +167,3 @@ l'harmonisation du panneau `_Home`. Les noms résolus ont changé ; le Lua n'a p
 - `SmartDebuffOF_btnTestModeText` / `btnFakeModeText` / `SmartDebuffOFSlider_OnLoad` détectés par le
   même grep sont des faux positifs (régions dynamiques et fonction, pas des frames).
 - Vérifié par résolution `$parent` de tout le XML : aucune autre référence Lua ne pend.
-
