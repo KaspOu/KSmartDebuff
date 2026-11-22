@@ -133,6 +133,9 @@ function SDA:_createContainers(idx, unit, isPet, button, buttonName)
       dispelContainer:SetPoint("BOTTOMLEFT", button, "TOPLEFT", 0, 2);
       dispelContainer:SetWidth(button:GetWidth());
       dispelContainer:SetHeight(math.max(8, button:GetHeight() * 0.26));
+      dispelContainer.HasAuraSlot = dispelContainer.HasAuraSlot or function(self, slotKey)
+        return self['__'..slotKey] ~= nil;
+      end
       entry[buttonIndex] = dispelContainer;
     end
     button.dispelContainers = { entry[1], entry[2], entry[3] };
@@ -181,6 +184,7 @@ function SDA:_createSlot(idx, unit, isPet, button, buttonIndex, dispelContainer,
   }
   local slotButton = nil;
   local ok = GuardCreate(function()
+    dispelContainer['__'..slotKey] = true
     slotButton = dispelContainer:AddAuraSlot(slotKey, SMARTDEBUFF_GetFilterString(), {
       candidateFilters = candidateFilters,
       initializeFrame = function(auraButton)
