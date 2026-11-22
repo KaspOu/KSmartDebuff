@@ -9,12 +9,15 @@
 -- docs/architecture.md et le spec .kaspou/work/KD-lazy-auras/spec.md.
 -------------------------------------------------------------------------------
 
+local _, ns = ...
+
 SDA = {};
 
 -- Registres (unique propriétaire)
 SDA.containersByButton = {};   -- [buttonName] = { [1..3] = dispelContainer, facade = facade }
 SDA.slotsByKey = {};           -- [slotKey] = { container = dispelContainer, slotButton = slotButton }
 SDA.lastCandidateFilters = {}; -- [slotKey] = derniers candidateFilters appliqués
+SDA.lastAppliedState = {};     -- [slotKey] = derniers états appliqués (unit, filterString, slotEnabled, showContainer)
 SDA.initFailed = 0;
 
 local labels = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M};
@@ -89,6 +92,7 @@ function SDA:Reset()
   self.slotsByKey = {};
   self.containersByButton = {};
   self.lastCandidateFilters = {};
+  self.lastAppliedState = {};
 end
 
 function SDA:RefreshTextures(force)
@@ -182,10 +186,11 @@ function SDA:_createSlot(idx, unit, isPet, button, buttonIndex, dispelContainer,
     includeDispelTypes = includeDispelTypes,
     excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
   }
+  local filterString = SMARTDEBUFF_GetFilterString();
   local slotButton = nil;
   local ok = GuardCreate(function()
     dispelContainer['__'..slotKey] = true
-    slotButton = dispelContainer:AddAuraSlot(slotKey, SMARTDEBUFF_GetFilterString(), {
+    slotButton = dispelContainer:AddAuraSlot(slotKey, filterString, {
       candidateFilters = candidateFilters,
       initializeFrame = function(auraButton)
         auraButton:SetAllPoints(button);
@@ -231,6 +236,8 @@ function SDA:_createSlot(idx, unit, isPet, button, buttonIndex, dispelContainer,
   if (ok) then
     self.slotsByKey[slotKey] = { container = dispelContainer, slotButton = slotButton };
     self.lastCandidateFilters[slotKey] = candidateFilters;
+    -- AddAuraSlot vient d'appliquer filterString : pas d'appel de suivi au prochain sync
+    self.lastAppliedState[slotKey] = { filterString = filterString };
   end
 end
 
@@ -271,11 +278,12 @@ function SDA:SyncButton(idx, unit, inRange, isPet)
       slotExists = dispelContainer:HasAuraSlot(slotKey);
     end
     local shouldShowDebuff = unit ~= nil and buttonShown and not not includeDispelTypes;
+    local firstDispelType = ""
     if (shouldShowDebuff and playerClass == "HUNTER") then
       shouldShowDebuff = UnitIsUnit(unit, "player")
     end
     if (shouldShowDebuff and O.IgnoreDebuff) then
-      local firstDispelType = next(includeDispelTypes)
+      firstDispelType = next(includeDispelTypes)
       local dispelCD = SMARTDEBUFF_GetDispelCooldownByType(firstDispelType)
       if lastDispelCD[buttonIndex] ~= dispelCD then
         SMARTDEBUFF_SetAuraSoundsDetectTest()
@@ -284,23 +292,48 @@ function SDA:SyncButton(idx, unit, inRange, isPet)
       shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(dispelCD)
     end
     if (slotExists) then
+      local state = self.lastAppliedState[slotKey];
+      local slotEnabled = false
+      if (state == nil) then
+        state = {};
+        self.lastAppliedState[slotKey] = state;
+      end
       if (shouldShowDebuff) then
-        dispelContainer:SetUnit(unit);
-        dispelContainer:SetAuraSlotFilterString(slotKey, SMARTDEBUFF_GetFilterString());
+        -- SetUnit : unit non secrète et différente de la précédente uniquement
+        if (not ns.IsSecretValue(unit) and unit ~= state.unit) then
+          dispelContainer:SetUnit(unit);
+          state.unit = unit;
+        end
+        local filterString = SMARTDEBUFF_GetFilterString();
         local candidateFilters = {
           includeDispelTypes = includeDispelTypes,
           excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
         };
-        if (not FiltersEqual(candidateFilters, self.lastCandidateFilters[slotKey])) then
+        local filtersChanged = not FiltersEqual(candidateFilters, self.lastCandidateFilters[slotKey]);
+        -- SetAuraSlotFilterString : avec SetAuraSlotCandidateFilters, et si filterString a changé
+        if (filterString ~= state.filterString) then
+          dispelContainer:SetAuraSlotFilterString(slotKey, filterString);
+          SMARTDEBUFF_AddMsgDT(ns.COL.ORD.."SetAuraSlotFilterString changed: "..string.gsub(filterString, "|", "||"));
+          state.filterString = filterString;
+        end
+        if (filtersChanged) then
           dispelContainer:SetAuraSlotCandidateFilters(slotKey, candidateFilters);
           self.lastCandidateFilters[slotKey] = candidateFilters;
+          SMARTDEBUFF_AddMsgDT(ns.COL.ORD.."SetAuraSlotCandidateFilters changed: "..firstDispelType.."...");
         end
-        dispelContainer:SetAuraSlotEnabled(slotKey, true);
-      else
-        dispelContainer:SetAuraSlotEnabled(slotKey, false);
+        slotEnabled = true
       end
-      dispelContainer:SetEnabled(shouldShowDebuff);
-      dispelContainer:SetShown(shouldShowDebuff);
+      if (state.slotEnabled ~= slotEnabled) then
+        dispelContainer:SetAuraSlotEnabled(slotKey, slotEnabled);
+        state.slotEnabled = slotEnabled;
+        SMARTDEBUFF_AddMsgDT(ns.COL.ORD.."SetAuraSlotEnabled changed: "..tostring(slotEnabled));
+      end
+      if (state.showContainer ~= shouldShowDebuff) then
+        dispelContainer:SetEnabled(shouldShowDebuff);
+        dispelContainer:SetShown(shouldShowDebuff);
+        state.showContainer = shouldShowDebuff;
+        SMARTDEBUFF_AddMsgDT(ns.COL.ORD.."Container SetShown changed: "..tostring(shouldShowDebuff));
+      end
     end
   end
   return entry.facade;

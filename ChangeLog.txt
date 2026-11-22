@@ -1,6 +1,7 @@
 v12.1.504
 - General panel
 - Added summary: Dispel (Left/Middle/Right click dispel types) + Bindings
+- Perf enhancements (aura container updates limited to state changes)
 
 v12.1.503
 - Forever: all release dungeons ok
