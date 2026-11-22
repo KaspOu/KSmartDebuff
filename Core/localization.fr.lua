@@ -7,6 +7,7 @@ SMARTDEBUFF_UPGRADED = "KDecurse mis à jour : "..SMARTDEBUFF_VERSION;
 
 SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
+|cffffffff> Optimisations des performances|r
 
 |cffffffff> Prêt pour Forever|r
 
@@ -27,9 +28,7 @@ SMARTDEBUFF_WHATSNEW = [[|cffffffffNouveautés :|r
 
 
 
-|cffff1010ATTENTION :|r
-|cfffff2ccBugs côté Blizzard :|r
-Chutes de FPS (avec des unités très distantes, ...) |cff4f81bd(Midnight)|r
+
 
 
 

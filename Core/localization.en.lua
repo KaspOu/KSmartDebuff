@@ -9,6 +9,8 @@ SMARTDEBUFF_UPGRADED = "KDecurse upgraded to "..SMARTDEBUFF_VERSION;
 -- Whats new info
 SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
+|cffffffff> Perf enhancements|r
+
 |cffffffff> Ready for Forever|r
 
 |cfffff2cc> Options screen reworked :|r
@@ -28,9 +30,7 @@ SMARTDEBUFF_WHATSNEW = [[|cffffffffWhat's new:|r
 
 
 
-|cffff1010WARNING:|r
-|cfffff2ccBlizzard known issues:|r
-FPS drops (with units far far away...) |cff4f81bd(Midnight)|r
+
 
 
 

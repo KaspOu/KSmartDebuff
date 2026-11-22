@@ -1,6 +1,6 @@
 ## Interface: 120100, 120105, 16001, 50504, 38002, 20506, 11509
 ## Title: |cff00ff00K|rDecurse|cff999999 (SmartDebuff)|r
-## Version: 12.1.504
+## Version: 12.1.505
 ## Author: |cff00ff00Kallye|r (EU-Elune)
 ## Notes: Show party buttons with debuffs easy tracking and dispel actions. Use << |cff00ff00/kd|r >> for debuff frame.
 ## Notes-frFR: Affiche des boutons pour tracker les debuffs avec des actions de dispel. Écrivez << |cff00ff00/kd|r >> pour avoir la fenêtre de débuff.
@@ -51,5 +51,6 @@ Core\localization.ru.lua [AllowLoadTextLocale ruRU]
 Core\localization.tw.lua [AllowLoadTextLocale zhCN, zhTW]
 Core\SmartDebuff.polyfill.lua
 Core\SmartDebuff.sounds.lua
+Core\SmartDebuff.auras.lua
 Core\SmartDebuff.lua
 Core\SmartDebuff.xml
