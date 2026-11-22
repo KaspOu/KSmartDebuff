@@ -76,7 +76,6 @@ local hasDebuff = false;
 local auraContainerInitFailed = 0;
 local auraContainerByIndex = {};
 local auraSlotByName = {};
-local SMARTDEBUFF_ResetAuraContainers = nil;
 local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
 
 local ST = {
@@ -1889,7 +1888,7 @@ function SMARTDEBUFF_LinkSpellsToKeys()
     SMARTDEBUFF_AddMsgD(COL.ORD.."DEBUG MAGIC FORCED!");
   end
 
-  SMARTDEBUFF_ResetAuraContainers();
+  SDA:Reset();
   SMARTDEBUFF_InitCurves_Secrets()
 
   SMARTDEBUFF_SetAuraSoundsDetectTest()
@@ -2516,6 +2515,10 @@ function SMARTDEBUFF_UseAuraContainerPath()
   return SMARTDEBUFF_AURACONTAINERS and auraContainerInitFailed == 0;
 end
 
+function SMARTDEBUFF_GetFilterString()
+  return CFG.filterString;
+end
+
 
 -- Fonctions de conversion RGB (0-1) <-> HSL (0-1)
 local function rgb_to_hsl(r, g, b)
@@ -2557,7 +2560,7 @@ local function hsl_to_rgb(h, s, l)
   end
 end
 
-local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
+function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
   if (buttonIndex == 1) then
     return O.ColDebuffL;
   elseif (buttonIndex == 2) then
@@ -2569,7 +2572,7 @@ local function SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
 end
 local cacheTextColorByButtonIndex = {}
 
-local function SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
+function SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
   local color = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex)
   local k = string.format("%.3f,%.3f,%.3f", color.r or 0, color.g or 0, color.b or 0)
 
@@ -2620,7 +2623,7 @@ end
 local excludeSpellIDsGlobalCache = nil;
 local excludeSpellIDsByClassCache = {};
 
-local function SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit)
+function SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit)
   if (not excludeSpellIDsGlobalCache) then
     excludeSpellIDsGlobalCache = {};
     for _, skipIndex in ipairs(SMARTDEBUFF_DEBUFFSKIPLIST_ID) do
@@ -2660,23 +2663,6 @@ local function SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit)
   end
   excludeSpellIDsByClassCache[unitClass] = cached;
   return cached;
-end
-
--- function SMARTDEBUFF_HasVisibleAuraInContainer(container)
---   if (not container or not container.sdbAuraSlots) then
---     return false;
---   end
---   return false;
--- end
-
-
-SMARTDEBUFF_ResetAuraContainers = function()
-  for _, container in pairs(auraContainerByIndex) do
-    if (container and container.Hide) then
-      container:Hide();
-    end
-  end
-  auraContainerByIndex = {};
 end
 
 --- Set Btn Overlay:
