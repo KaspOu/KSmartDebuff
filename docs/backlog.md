@@ -9,14 +9,22 @@ Travail ouvert et constats d'audit pour KDecurse (SmartDebuff). Audit report-onl
 
 Spec et plan d'implémentation validés (revue `kaspou-plan-reviewer` : Approved) :
 `.kaspou/work/KD-lazy-auras/spec.md` + `.kaspou/work/KD-lazy-auras/plan.md` (workspace
-`_KaspOu`). Reste à faire : exécuter le plan (6 tâches : module `Core/SmartDebuff.auras.lua`,
-plomberie moteur, bascule du scan sur `SDA`, suppression des slots SpellGuard AuraContainer, mise
-à jour de `docs/architecture.md`, vérification finale), puis tests manuels en jeu (retail 12)
-listés en Task 6 du plan. Branche `AGENTS`. Note d'arbitrage : le plan réserve les 3 conditions
-de création aux **slots** (`AddAuraSlot`, lecture littérale de spec §Création) ; les containers
-suivent « hors combat + unité affichée + bouton shown », pour préserver la mise à jour de
-`SMARTDEBUFF_SetButtonState` sans dispel assigné — tension mineure avec la phrase « Objectif » du
-spec, à confirmer par le mainteneur.
+`_KaspOu`). **Implémentation livrée** sur la branche `AGENTS` (5 commits `KD-lazy-auras`, les 6
+tâches du plan exécutées et vérifiées : gate syntaxe + greps de non-régression verts). Reste à
+faire : tests manuels en jeu (retail 12) — checklist Task 6 du plan — et validation humaine du
+diff avant merge. Note d'arbitrage : le plan réserve les 3 conditions de création aux **slots**
+(`AddAuraSlot`, lecture littérale de spec §Création) ; les containers suivent « hors combat +
+unité affichée + bouton shown », pour préserver la mise à jour de `SMARTDEBUFF_SetButtonState`
+sans dispel assigné — tension mineure avec la phrase « Objectif » du spec, à confirmer par le
+mainteneur.
+
+### Constats 2026-11-22 (KD-lazy-auras)
+
+- `UTF8/utf8data.lua` démarre par un BOM UTF-8 — `python3 tools/validate_lua.py` (workspace
+  complet) : `file starts with a UTF-8 BOM (WoW refuses to parse it)`. BOM présent dans HEAD, hors
+  diff KD-lazy-auras, **non corrigé**. Le gate workspace complet est donc rouge (5 fichiers BOM au
+  total : celui-ci, `KRaidFade/Core/localization.en.lua` et 3 fichiers de référence
+  `Wow/BlizzardInterfaceCode/`) ; le gate ciblé sur les fichiers KD-lazy-auras est vert.
 
 ## KSmartDebuff audit 2026-11-02
 
