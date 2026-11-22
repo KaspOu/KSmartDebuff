@@ -51,5 +51,6 @@ Core\localization.ru.lua [AllowLoadTextLocale ruRU]
 Core\localization.tw.lua [AllowLoadTextLocale zhCN, zhTW]
 Core\SmartDebuff.polyfill.lua
 Core\SmartDebuff.sounds.lua
+Core\SmartDebuff.auras.lua
 Core\SmartDebuff.lua
 Core\SmartDebuff.xml

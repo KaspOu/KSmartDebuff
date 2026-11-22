@@ -90,6 +90,7 @@
         "RED_FONT_COLOR",
         "ReloadUI",
         "SCENARIOS",
+        "SDA",
         "SecureButton_GetEffectiveButton",
         "SecureButton_GetModifiedAttribute",
         "ShowUIPanel",
