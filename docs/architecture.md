@@ -16,7 +16,7 @@ Deux piliers, plus trois bibliothèques de support :
 
 ```
         ┌────────────────────────────────────────────────────────┐
-        │  Core/SmartDebuff.lua  (MOTEUR — 6 539 lignes)         │
+        │  Core/SmartDebuff.lua  (MOTEUR — 6 202 lignes)         │
         │  init/options, événements, scan d'unités, dispel,      │
         │  boutons sécurisés, drag&drop, test mode, slash cmds   │
         └───────────────▲───────────────────────┬────────────────┘
@@ -29,7 +29,8 @@ Deux piliers, plus trois bibliothèques de support :
         └────────────────────────────────────────────────────────┘
    supports : globals.lua (constantes) · spells_<flavor>.lua (données par client)
               localization.* (textes + valeurs logiques) · polyfill.lua (ns.*)
-              sounds.lua (alertes d'auras) · UTF8/ (troncature utf8)
+              sounds.lua (alertes d'auras) · auras.lua (cycle de vie lazy des AuraContainer)
+              UTF8/ (troncature utf8)
 ```
 
 - Le XML ne contient **pas** de logique métier : agencement + handlers qui appellent des fonctions
@@ -42,17 +43,18 @@ Deux piliers, plus trois bibliothèques de support :
 
 Source de vérité : `SmartDebuff.toc` (multi-flavor). Chaque fichier suppose les précédents.
 
-| # | Fichier | Rôle | Ce qu'il définit / remplace |
-|---|---|---|---|
-| 1 | `UTF8/utf8data.lua` | Tables de cas Unicode (données) | — |
-| 2 | `UTF8/utf8.lua` | Implémentation utf8 pour Lua 5.1 | `string:utf8sub` (utilisé 5× dans le moteur pour tronquer les noms) |
-| 3 | `Core/SmartDebuff.globals.lua` | Constantes globales | `SMARTDEBUFF_VERSION(_NR)`, `SMARTDEBUFF_BREAKINGVERSION`, titres, backdrops, types de debuffs (`SMARTDEBUFF_MAGIC/CURSE/DISEASE/POISON/BLEEDING/CHARMED`, `HEAL/UTIL/MISDIRECT`), `KD_Settings` (+ défauts), flags (`SMARTDEBUFF_IS_RETAIL`, `SMARTDEBUFF_MACROTEXT=false`, `SMARTDEBUFF_HASSECRETS=true`, `SMARTDEBUFF_AURACONTAINERS`, `SMARTDEBUFF_KEYFORCLICK`), listes `SMARTDEBUFF_DEBUFFSKIP_ID` / `…SKIPLIST_ID` / `…CLASSSKIPLIST_ID` (**indexées**), `SMARTDEBUFF_NOTREMOVABLE_ID`, catalogues `SMARTDEBUFF_SOUNDS` / `SMARTDEBUFF_TEXTURES`, tables vides `…CLASS_DISPELS_LIST_ID` / `…CLASS_SKILLS_LIST_ID` / `…OVERRIDE_PICKUP_LIST_ID` (remplacées ensuite) |
-| 4 | `Core/SmartDebuff_spells.lua` (standard) et `SmartDebuff_spells_{Vanilla,TBC,Wrath,Cata,Mists,Forever}.lua` | Données de sorts **par client** (`[AllowLoadGameType …]` ; `forever` exclut `standard, classic`) | **Redéfinissent** `SMARTDEBUFF_CLASS_DISPELS_LIST_ID` (dispels par classe : `Spell_ID`, `Spell_List`, `Improved_Talent`, `Improved_Spell_List`, `OnlyIfUsable`, `Spell_Type`), `SMARTDEBUFF_CLASS_SKILLS_LIST_ID` (`Spell_ID`, `Button`, `Types` — surcharge par ordre), `SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID`, `SMARTDEBUFF_DEBUFFS_LIST` (base par instance : `[instanceID] = { [spellID] = dispelType, __name, __name_<locale>, __ext, __type }`, `[0]` = défaut), `SMARTDEBUFF_SPELLS_VERSION`, `SMARTDEBUFF_MACROTEXT` (`true` côté standard) ; Mists ajoute `SMARTDEBUFF_NO_TALENT` et réduit `…DISABLED_SOUNDS/TEXTURES` |
-| 5 | `Core/localization.<lang>.lua` (9 : en, fr, de, es, it, ko, pt, ru, tw) | Textes **et valeurs logiques** | Constantes globales plates : `SMARTDEBUFF_OFT_*`/`TT_*`/`MENU_*`/`MSG_*`, `SMARTDEBUFF_WHATSNEW`, mais aussi `SMARTDEBUFF_HUMANOID = BATTLE_PET_NAME_1`, `SMARTDEBUFF_IMP`, `SMARTDEBUFF_FONT`, `SMARTDEBUFF_KEY_L/R/M`, `SMARTDEBUFF_KEYS`. `en` charge toujours (fallback) ; le fichier de la langue active (`[AllowLoadTextLocale …]`) écrase ses clés |
-| 6 | `Core/SmartDebuff.polyfill.lua` | Compat API inter-versions | Dans la table privée `ns` : `IsSecretValue`, `PickupSpell`, `GetSpellLink`, `GetSpellInfo/Name/Texture`, `GetSpellCooldown` (forme tableau), `IsSpellInRange`, `UnitInRange` (repli secret-safe), `PickupSpellBookItem`, `GetTalentInfo`, `UnitAura`/`UnitBuff` (dépréciés), `IsSpellInSpellBook`, `FindBaseSpellByID`, `Enum_SpellBookSpellBank_*`. Schéma : `legacy or moderne` |
-| 7 | `Core/SmartDebuff.sounds.lua` | Alertes sonores d'auras | S'**auto-désactive** (return ligne 1) si `C_UnitAuras.AddAuraSound` absent. API : `SMARTDEBUFF_SetAuraSounds`, `…SetAuraSoundsOnKeySet`, `…SetAuraSoundsTestMode`, handlers du panneau `SmartDebuffAuraSounds`. Voir §8 |
-| 8 | `Core/SmartDebuff.lua` | **Moteur** | Toutes les fonctions `SMARTDEBUFF_*`/`SDB_*` (détail §4–§6) |
-| 9 | `Core/SmartDebuff.xml` | **UI** | 17 frames + templates ; handlers → fonctions du moteur (détail §7) |
+| #   | Fichier                                                                                                     | Rôle                                                                                             | Ce qu'il définit / remplace                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| --- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `UTF8/utf8data.lua`                                                                                         | Tables de cas Unicode (données)                                                                  | —                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 2   | `UTF8/utf8.lua`                                                                                             | Implémentation utf8 pour Lua 5.1                                                                 | `string:utf8sub` (utilisé 5× dans le moteur pour tronquer les noms)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 3   | `Core/SmartDebuff.globals.lua`                                                                              | Constantes globales                                                                              | `SMARTDEBUFF_VERSION(_NR)`, `SMARTDEBUFF_BREAKINGVERSION`, titres, backdrops, types de debuffs (`SMARTDEBUFF_MAGIC/CURSE/DISEASE/POISON/BLEEDING/CHARMED`, `HEAL/UTIL/MISDIRECT`), `KD_Settings` (+ défauts), flags (`SMARTDEBUFF_IS_RETAIL`, `SMARTDEBUFF_MACROTEXT=false`, `SMARTDEBUFF_HASSECRETS=true`, `SMARTDEBUFF_AURACONTAINERS`, `SMARTDEBUFF_KEYFORCLICK`), listes `SMARTDEBUFF_DEBUFFSKIP_ID` / `…SKIPLIST_ID` / `…CLASSSKIPLIST_ID` (**indexées**), `SMARTDEBUFF_NOTREMOVABLE_ID`, catalogues `SMARTDEBUFF_SOUNDS` / `SMARTDEBUFF_TEXTURES`, tables vides `…CLASS_DISPELS_LIST_ID` / `…CLASS_SKILLS_LIST_ID` / `…OVERRIDE_PICKUP_LIST_ID` (remplacées ensuite) |
+| 4   | `Core/SmartDebuff_spells.lua` (standard) et `SmartDebuff_spells_{Vanilla,TBC,Wrath,Cata,Mists,Forever}.lua` | Données de sorts **par client** (`[AllowLoadGameType …]` ; `forever` exclut `standard, classic`) | **Redéfinissent** `SMARTDEBUFF_CLASS_DISPELS_LIST_ID` (dispels par classe : `Spell_ID`, `Spell_List`, `Improved_Talent`, `Improved_Spell_List`, `OnlyIfUsable`, `Spell_Type`), `SMARTDEBUFF_CLASS_SKILLS_LIST_ID` (`Spell_ID`, `Button`, `Types` — surcharge par ordre), `SMARTDEBUFF_OVERRIDE_PICKUP_LIST_ID`, `SMARTDEBUFF_DEBUFFS_LIST` (base par instance : `[instanceID] = { [spellID] = dispelType, __name, __name_<locale>, __ext, __type }`, `[0]` = défaut), `SMARTDEBUFF_SPELLS_VERSION`, `SMARTDEBUFF_MACROTEXT` (`true` côté standard) ; Mists ajoute `SMARTDEBUFF_NO_TALENT` et réduit `…DISABLED_SOUNDS/TEXTURES`                                            |
+| 5   | `Core/localization.<lang>.lua` (9 : en, fr, de, es, it, ko, pt, ru, tw)                                     | Textes **et valeurs logiques**                                                                   | Constantes globales plates : `SMARTDEBUFF_OFT_*`/`TT_*`/`MENU_*`/`MSG_*`, `SMARTDEBUFF_WHATSNEW`, mais aussi `SMARTDEBUFF_HUMANOID = BATTLE_PET_NAME_1`, `SMARTDEBUFF_IMP`, `SMARTDEBUFF_FONT`, `SMARTDEBUFF_KEY_L/R/M`, `SMARTDEBUFF_KEYS`. `en` charge toujours (fallback) ; le fichier de la langue active (`[AllowLoadTextLocale …]`) écrase ses clés                                                                                                                                                                                                                                                                                                                  |
+| 6   | `Core/SmartDebuff.polyfill.lua`                                                                             | Compat API inter-versions                                                                        | Dans la table privée `ns` : `IsSecretValue`, `PickupSpell`, `GetSpellLink`, `GetSpellInfo/Name/Texture`, `GetSpellCooldown` (forme tableau), `IsSpellInRange`, `UnitInRange` (repli secret-safe), `PickupSpellBookItem`, `GetTalentInfo`, `UnitAura`/`UnitBuff` (dépréciés), `IsSpellInSpellBook`, `FindBaseSpellByID`, `Enum_SpellBookSpellBank_*`. Schéma : `legacy or moderne`                                                                                                                                                                                                                                                                                          |
+| 7   | `Core/SmartDebuff.sounds.lua`                                                                               | Alertes sonores d'auras                                                                          | S'**auto-désactive** (return ligne 1) si `C_UnitAuras.AddAuraSound` absent. API : `SMARTDEBUFF_SetAuraSounds`, `…SetAuraSoundsOnKeySet`, `…SetAuraSoundsTestMode`, handlers du panneau `SmartDebuffAuraSounds`. Voir §8                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| 8   | `Core/SmartDebuff.auras.lua`                                                                                | **AuraContainer (lazy)**                                                                         | Objet global `SDA` : cycle de vie lazy des containers/slots de dispel (`CustomAuraContainerTemplate`), registres `containersByButton`/`slotsByKey`/`lastCandidateFilters`, anti-refresh de `SetAuraSlotCandidateFilters`, compteur d'échec d'init (`SDA:HasInitFailed`). Voir §4.6                                                                                                                                                                                                                                                                                                                                                                                         |
+| 9   | `Core/SmartDebuff.lua`                                                                                      | **Moteur**                                                                                       | Toutes les fonctions `SMARTDEBUFF_*`/`SDB_*` (détail §4–§6)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| 10  | `Core/SmartDebuff.xml`                                                                                      | **UI**                                                                                           | 17 frames + templates ; handlers → fonctions du moteur (détail §7)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 Transverse : `Bindings.xml` (binding `SMARTDEBUFF` → `SMARTDEBUFF_ToggleOF()`), `.pkgmeta`
 (packaging), `ChangeLog.txt` (manuel, en accord avec le TOC : 12.1.503), `.vscode/settings.json`
@@ -124,7 +126,7 @@ génération de `SMARTDEBUFF_DEBUFFS_LIST` Forever).
 - `SMARTDEBUFF_LinkSpellsToKeys` : mappe `O.Keys[mode][touche]` → `cSpells[dispelType]` puis
   réinitialise les conteneurs d'auras et les courbes. `GetActionKeyInfo`/`SetActionInfo` lisent/
   écrivent `O.Keys` (format `{type, name, rank, id, link}` ; touches `L R M SL SR SM AL AR AM CL
-  CR CM` = bouton × modificateur, 2 modes : normal / target).
+CR CM` = bouton × modificateur, 2 modes : normal / target).
 
 ### 4.4 Boutons et affichage des debuffs
 
@@ -136,10 +138,12 @@ génération de `SMARTDEBUFF_DEBUFFS_LIST` Forever).
   (`type1/2/3`, `spell1/2`, `macro`, `togglemenu`, `target`) à partir de `O.Keys` — avec macro
   `"/stopcasting\n/cast [@unit] sort"` si `SMARTDEBUFF_MACROTEXT` et `O.StopCast`. Gardé en combat.
 - **Trois implémentations du scan** (`SMARTDEBUFF_CheckUnitDebuffs`, dispatch à 5080) :
-  1. `_AuraContainer` (retail 12, actif si `SMARTDEBUFF_AURACONTAINERS`) : conteneurs d'auras
-     sécurisés (`CustomAuraContainerTemplate`) par bouton/dispelType, filtres
-     `includeDispelTypes`/`excludeSpellIDs`, slot « non retirable » (`sdb_…_nr`), overlay
-     d'esclavage (CHARMED). L'init est enveloppée d'`xpcall` avec compteur d'erreurs.
+  1. `_AuraContainer` (retail 12, actif si `SMARTDEBUFF_AURACONTAINERS`) : délègue au module
+     `Core/SmartDebuff.auras.lua` (objet `SDA`, voir §4.6) — 3 containers de dispel par bouton
+     (`dispelContainers[1..3]`), un slot plein bouton chacun, filtres
+     `includeDispelTypes`/`excludeSpellIDs`, overlay d'esclavage (CHARMED). Création lazy : hors
+     combat, unités affichées, boutons assignés à un dispel ; plus aucun slot NR ni SpellGuard sur
+     ce chemin. La création est enveloppée d'`xpcall` avec compteur d'erreurs.
   2. `_Secrets` (dépréciée) : `C_UnitAuras.GetAuraDataByIndex` avec garde `ns.IsSecretValue` et
      couleur via `SMARTDEBUFF_SetButtonState_Curve_Secrets` (`C_CurveUtil`).
   3. `_Legacy` (dépréciée) : `ns.UnitAura` en boucle.
@@ -149,8 +153,8 @@ génération de `SMARTDEBUFF_DEBUFFS_LIST` Forever).
   (`O.ColDebuffL/R/M/NR`), textes `SMARTDEBUFF_KEY_*`.
 - `SmartDebuff_SetButtonBars` : barres HP/mana (avec chemins `UnitHealthPercent`/`UnitPowerPercent`
   secrets-safe et replis), aggro (`UnitThreatSituation`), icônes raid/ready-check/rôle, et
-  **SpellGuard** (3 chemins : slots AuraContainer, boucle `C_UnitAuras` secrets, boucle
-  `GetAuraDataBySpellName` classic).
+  **SpellGuard** (2 chemins : boucle `C_UnitAuras` secrets, boucle `GetAuraDataBySpellName`
+  classic ; le chemin AuraContainer n'affiche plus SpellGuard depuis KD-lazy-auras).
 
 ### 4.5 Options, drag&drop, macros
 
@@ -166,6 +170,35 @@ génération de `SMARTDEBUFF_DEBUFFS_LIST` Forever).
   `MAX_CHARACTER_MACROS`).
 - Couleurs : `SMARTDEBUFF_ColorsBackdrop` avec les deux widgets ColorPicker (moderne
   `SetupColorPickerAndShow` / classic `OpacitySliderFrame`).
+
+### 4.6 Module `Core/SmartDebuff.auras.lua` (objet `SDA`)
+
+Gestion lazy des frames AuraContainer (retail 12), extraite du moteur (KD-lazy-auras). Objet
+procédural global `SDA` (table-espace de noms, sans métatables), unique propriétaire des registres
+`containersByButton[buttonName]`, `slotsByKey[slotKey]`, `lastCandidateFilters[slotKey]` et du
+compteur d'échec d'init.
+
+- **Interface** : `SDA:SyncButton(idx, unit, inRange, isPet)` (retourne une façade
+  `Show()`/`Hide()` propagée aux 3 containers, ou `nil` si création impossible),
+  `SDA:Reset()` (désactive tous les slots puis vide les registres — les frames restent attachées
+  aux boutons et sont **ré-adoptées** au scan suivant via `button.dispelContainers` et
+  `HasAuraSlot`), `SDA:RefreshTextures(force)` (garde `force` côté module),
+  `SDA:HasInitFailed()`.
+- **Création lazy** (décidée dans `SDA:SyncButton`) : uniquement hors combat
+  (`InCombatLockdown()`), pour les unités affichées (`unit ~= nil` + bouton shown) et les boutons
+  assignés à un dispel (`SMARTDEBUFF_GetAuraContainerDispelFiltersByButton`). L'existence d'un slot
+  est testée par `HasAuraSlot(slotKey)` — plus aucun `pcall` sur le chemin AuraContainer.
+- **Anti-refresh** : `SetAuraSlotCandidateFilters` n'est appelé que si les candidate filters ont
+  changé (comparaison ensembliste par champ, cache `lastCandidateFilters` ; `AddAuraSlot` remplit
+  le cache sans appel de suivi). `SetUnit`/`SetEnabled`/`SetShown`/`SetAuraSlotEnabled` restent
+  appelés à chaque sync.
+- **Désactivation** : unité plus affichée, bouton désassigné ou `SMARTDEBUFF_ShouldShowDebuff`
+  faux → `SetAuraSlotEnabled(slotKey, false)` (rien n'est détruit pendant la session).
+- **Erreurs** : `xpcall` autour de la seule création (`CreateFrame`/`AddAuraSlot`), compteur +
+  `SMARTDEBUFF_AddMsgErrT` ; dès la première erreur, `SMARTDEBUFF_UseAuraContainerPath()` bascule
+  définitivement à `false`.
+- Les options `O.ShowNotRemov`/`O.NotRemovableDebuffs`/`O.SpellGuard`/`O.ShowSpellIcon` restent
+  visibles dans l'UI sans effet sur ce chemin (décision KD-lazy-auras).
 
 ## 5. Contrat XML ↔ Lua
 
@@ -195,35 +228,36 @@ déplaçable : Titre, btnClose/btnStyle/btnOptions), `SmartDebuffIF` (info), `Sm
 dev), `SmartDebuffClassOrder`,
 `SmartDebuffSounds`, `SmartDebuffNRDebuffs`, `SmartDebuffSpellGuard`, `SmartDebuffAOFKeys`,
 `SmartDebuffGridSetup` (11 cases + 8 sliders), `SmartDebuffMisc`, `SmartDebuffColors` (5 sélecteurs
-+ sliders d'opacité), `SmartDebuffAuraSounds`, `SmartDebuffWNF` (What's New), plus le template
-`SmartDebuffOptionsSliderTemplate`, 6 fonts virtuels et le tooltip partagé `SmartDebuffTooltip`
-(déclaré en double — piège connu).
+
+- sliders d'opacité), `SmartDebuffAuraSounds`, `SmartDebuffWNF` (What's New), plus le template
+  `SmartDebuffOptionsSliderTemplate`, 6 fonts virtuels et le tooltip partagé `SmartDebuffTooltip`
+  (déclaré en double — piège connu).
 
 ### 5.1 Carte structurelle du XML (lignes relevées le 2026-11-03 — volatiles)
 
 Racine `<Ui>` (namespace Blizzard WoW UI), 4 566 lignes ; enfants de premier niveau dans l'ordre
 du fichier :
 
-| Lignes | Élément | Rôle |
-|---|---|---|
-| 3–24 | `Slider` virtuel `SmartDebuffOptionsSliderTemplate` | Template réutilisé par les ~15 sliders |
-| 25–34 | `Frame` **SmartDebuffFrame** | Boucle principale : `OnLoad` → `SMARTDEBUFF_OnLoad`, `OnUpdate` → `SMARTDEBUFF_OnUpdate` |
-| 36–42 | `GameTooltip` **SmartDebuffTooltip** (1/2) | Tooltip interne, `SetOwner(SmartDebuffFrame, "ANCHOR_NONE")` |
-| 44–75 | 6 × `Font` virtuels | `…NormalMini` (9px), `…HighlightMini`, `…NormalMicro` (8px), `…HighlightMicro`, `SmartDebuff_Font`, `SmartDebuff_FontHP` |
-| 77–82 | `GameTooltip` **SmartDebuffTooltip** (2/2) | **Doublon exact** (constat §10) |
-| 84–247 | `Frame` **SmartDebuffSF** | Panneau compact flottant : `_btnClose`, `_btnStyle` ("K" : clics Alt/Shift/Droit), `_btnOptions` ("O"), `_Title` |
-| 248–334 | `Frame` **SmartDebuffIF** | Frame d'info (`_lblInfo`, `_lblOut`) — déplacée Shift+glisser |
-| 335–2374 | `Frame` **SmartDebuffOF** | Panneau d'options — 13 enfants dont **Home / Infos / MenuList** (détail §5.2) |
-| 2375–2464 | `Frame` **SmartDebuffClassOrder** | Ordre des classes (`FauxScrollFrameTemplate` + Reset) |
-| 2465–2575 | `Frame` **SmartDebuffSounds** | Liste des sons (`_txtIn`, scroll, Reset) |
-| 2576–2719 | `Frame` **SmartDebuffNRDebuffs** | Debuffs non retirables — saisie `SpellID` (`C_Spell.GetSpellInfo`) |
-| 2720–2836 | `Frame` **SmartDebuffSpellGuard** | Sorts de HoT / Spell Guard (liste de suivi) |
-| 2837–2930 | `Frame` **SmartDebuffAOFKeys** | Raccourcis/clés — contenu **généré en Lua** (`SmartDebuffAOFKeys_OnShow`) |
-| 2931–3579 | `Frame` **SmartDebuffGridSetup** | Cases + sliders de mise en page grille (dont `_cbShowBackdrop`, `_cbClassColors`) |
-| 3580–3693 | `Frame` **SmartDebuffMisc** | AuraSpellIDs, **Auto hide**, ChatNotif, **AddonCompartment**, **Force English** (`KD_Settings`) |
-| 3694–4402 | `Frame` **SmartDebuffColors** | Couleurs/opaçités : 6 boutons test + 5 `ColorSelect`, sliders, **`_cbShowLR`**, **`_cbForceLR`**, **Texture dropdown** |
-| 4403–4488 | `Frame` **SmartDebuffAuraSounds** | Sons d'auras (ancré sur `SmartDebuffSounds`) |
-| 4489–fin | `Frame` **SmartDebuffWNF** | « What's New » (`_lblText`, repositionnement dynamique) |
+| Lignes    | Élément                                             | Rôle                                                                                                                     |
+| --------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| 3–24      | `Slider` virtuel `SmartDebuffOptionsSliderTemplate` | Template réutilisé par les ~15 sliders                                                                                   |
+| 25–34     | `Frame` **SmartDebuffFrame**                        | Boucle principale : `OnLoad` → `SMARTDEBUFF_OnLoad`, `OnUpdate` → `SMARTDEBUFF_OnUpdate`                                 |
+| 36–42     | `GameTooltip` **SmartDebuffTooltip** (1/2)          | Tooltip interne, `SetOwner(SmartDebuffFrame, "ANCHOR_NONE")`                                                             |
+| 44–75     | 6 × `Font` virtuels                                 | `…NormalMini` (9px), `…HighlightMini`, `…NormalMicro` (8px), `…HighlightMicro`, `SmartDebuff_Font`, `SmartDebuff_FontHP` |
+| 77–82     | `GameTooltip` **SmartDebuffTooltip** (2/2)          | **Doublon exact** (constat §10)                                                                                          |
+| 84–247    | `Frame` **SmartDebuffSF**                           | Panneau compact flottant : `_btnClose`, `_btnStyle` ("K" : clics Alt/Shift/Droit), `_btnOptions` ("O"), `_Title`         |
+| 248–334   | `Frame` **SmartDebuffIF**                           | Frame d'info (`_lblInfo`, `_lblOut`) — déplacée Shift+glisser                                                            |
+| 335–2374  | `Frame` **SmartDebuffOF**                           | Panneau d'options — 13 enfants dont **Home / Infos / MenuList** (détail §5.2)                                            |
+| 2375–2464 | `Frame` **SmartDebuffClassOrder**                   | Ordre des classes (`FauxScrollFrameTemplate` + Reset)                                                                    |
+| 2465–2575 | `Frame` **SmartDebuffSounds**                       | Liste des sons (`_txtIn`, scroll, Reset)                                                                                 |
+| 2576–2719 | `Frame` **SmartDebuffNRDebuffs**                    | Debuffs non retirables — saisie `SpellID` (`C_Spell.GetSpellInfo`)                                                       |
+| 2720–2836 | `Frame` **SmartDebuffSpellGuard**                   | Sorts de HoT / Spell Guard (liste de suivi)                                                                              |
+| 2837–2930 | `Frame` **SmartDebuffAOFKeys**                      | Raccourcis/clés — contenu **généré en Lua** (`SmartDebuffAOFKeys_OnShow`)                                                |
+| 2931–3579 | `Frame` **SmartDebuffGridSetup**                    | Cases + sliders de mise en page grille (dont `_cbShowBackdrop`, `_cbClassColors`)                                        |
+| 3580–3693 | `Frame` **SmartDebuffMisc**                         | AuraSpellIDs, **Auto hide**, ChatNotif, **AddonCompartment**, **Force English** (`KD_Settings`)                          |
+| 3694–4402 | `Frame` **SmartDebuffColors**                       | Couleurs/opaçités : 6 boutons test + 5 `ColorSelect`, sliders, **`_cbShowLR`**, **`_cbForceLR`**, **Texture dropdown**   |
+| 4403–4488 | `Frame` **SmartDebuffAuraSounds**                   | Sons d'auras (ancré sur `SmartDebuffSounds`)                                                                             |
+| 4489–fin  | `Frame` **SmartDebuffWNF**                          | « What's New » (`_lblText`, repositionnement dynamique)                                                                  |
 
 Tous les panneaux sauf `SmartDebuffSF/IF/WNF` (et le bandeau `SmartDebuffOF_Infos`, ancré sous le
 menu) sont `parent="SmartDebuffOF"`, `hidden="true"`, **ancrés `TOPLEFT → SmartDebuffOF TOPRIGHT
@@ -259,12 +293,12 @@ détail ci-dessous), **`_Infos`** (bandeau `hidden` sous le menu : `TOPLEFT → 
   - liste verticale (pas 20) : Ignore on Cooldown, Stop Casting, Sound (+ `btnSounds` 'S'), HoT
     icons (`cbShowSpellIcon` + `btnSpellGuard` 'W'), Raid icons, Aggro, Heal range, Tooltip, Debuff
     tooltip, Vehicles, Anchor Setup, puis Interval (`sldCheckInterval`, ancre `−44`).
-  N'y sont plus : `cbShowLR` + `cbForceLR` et le dropdown Texture (**renommé**
-  `SmartDebuffColors_DebuffColTextureDropDown`) → `SmartDebuffColors` ; `cbAutoHide` →
-  `SmartDebuffMisc` (sous `cbShowAuraSpellIDs`, chaîne `cbChatNotif → cbAddonCompartment →
-  cbForceEnglish` re-ancrée dessous) ; `btnKeys` et `_DispelRecap` supprimés. Scripts inline,
-  libellés et `hidden` des nœuds déplacés inchangés — mais **leurs noms résolus ont changé** avec
-  le retour à `$parent_` : le Lua doit suivre (constat §10.8).
+    N'y sont plus : `cbShowLR` + `cbForceLR` et le dropdown Texture (**renommé**
+    `SmartDebuffColors_DebuffColTextureDropDown`) → `SmartDebuffColors` ; `cbAutoHide` →
+    `SmartDebuffMisc` (sous `cbShowAuraSpellIDs`, chaîne `cbChatNotif → cbAddonCompartment →
+cbForceEnglish` re-ancrée dessous) ; `btnKeys` et `_DispelRecap` supprimés. Scripts inline,
+    libellés et `hidden` des nœuds déplacés inchangés — mais **leurs noms résolus ont changé** avec
+    le retour à `$parent_` : le Lua doit suivre (constat §10.8).
 - **`_MenuList`** (début ligne 1 788) : contour `BackdropTemplateMixin` +
   `SMARTDEBUFF_BACKDROP_OPTIONS` + `SetBackdropBorderColor(1, 0.82, 0, 1)` (or) ; **8 items**
   `Button` **sans template**, 140×16, empilés `TOPLEFT → BOTTOMLEFT` depuis `(4, −4)` (padding
@@ -274,16 +308,16 @@ détail ci-dessous), **`_Infos`** (bandeau `hidden` sous le menu : `TOPLEFT → 
   `self.panelName` → `_G[…]:IsShown()` via un `OnUpdate` throttlé à 0,2 s, + appel immédiat en
   `OnClick` — aucun panneau existant n'est modifié.
 
-| Item (`SmartDebuffOF_MenuList_…`) | Libellé (constante) | `OnClick` | `panelName` suivi |
-|---|---|---|---|
-| `_Home` | `SMARTDEBUFF_MENU_HOME` (« Accueil »…) | `SMARTDEBUFF_HomeToggle()` | `SmartDebuffOF_Home` |
-| `_Keys` | `SMARTDEBUFF_OFT_SKILLS` | `SMARTDEBUFF_ToggleAOFKeys()` | `SmartDebuffAOFKeys` |
-| `_Grid` | `SMARTDEBUFF_MENU_GRID` | `SMARTDEBUFF_GridToggle()` | `SmartDebuffGridSetup` |
-| `_Colors` | `SMARTDEBUFF_MENU_COLORS` | `SMARTDEBUFF_ColorsToggle()` | `SmartDebuffColors` |
-| `_Sounds` | `SMARTDEBUFF_OFT_SOUND` | `SMARTDEBUFF_SoundsToggle()` | `SmartDebuffSounds` |
-| `_SpellGuard` | `SMARTDEBUFF_MENU_HOTS` | `SMARTDEBUFF_SpellGuardToggle()` | `SmartDebuffSpellGuard` |
-| `_ClassOrder` | `SMARTDEBUFF_MENU_CLASSORDER` | `SMARTDEBUFF_ClassOrderToggle()` | `SmartDebuffClassOrder` |
-| `_Misc` | `MISCELLANEOUS` | `SMARTDEBUFF_MiscToggle()` | `SmartDebuffMisc` |
+| Item (`SmartDebuffOF_MenuList_…`) | Libellé (constante)                    | `OnClick`                        | `panelName` suivi       |
+| --------------------------------- | -------------------------------------- | -------------------------------- | ----------------------- |
+| `_Home`                           | `SMARTDEBUFF_MENU_HOME` (« Accueil »…) | `SMARTDEBUFF_HomeToggle()`       | `SmartDebuffOF_Home`    |
+| `_Keys`                           | `SMARTDEBUFF_OFT_SKILLS`               | `SMARTDEBUFF_ToggleAOFKeys()`    | `SmartDebuffAOFKeys`    |
+| `_Grid`                           | `SMARTDEBUFF_MENU_GRID`                | `SMARTDEBUFF_GridToggle()`       | `SmartDebuffGridSetup`  |
+| `_Colors`                         | `SMARTDEBUFF_MENU_COLORS`              | `SMARTDEBUFF_ColorsToggle()`     | `SmartDebuffColors`     |
+| `_Sounds`                         | `SMARTDEBUFF_OFT_SOUND`                | `SMARTDEBUFF_SoundsToggle()`     | `SmartDebuffSounds`     |
+| `_SpellGuard`                     | `SMARTDEBUFF_MENU_HOTS`                | `SMARTDEBUFF_SpellGuardToggle()` | `SmartDebuffSpellGuard` |
+| `_ClassOrder`                     | `SMARTDEBUFF_MENU_CLASSORDER`          | `SMARTDEBUFF_ClassOrderToggle()` | `SmartDebuffClassOrder` |
+| `_Misc`                           | `MISCELLANEOUS`                        | `SMARTDEBUFF_MiscToggle()`       | `SmartDebuffMisc`       |
 
 Les 5 libellés `SMARTDEBUFF_MENU_*` sont traduits dans les 9 fichiers `localization.*.lua` (bloc
 `-- Main menu (SmartDebuffOF_MenuList)`) ; tooltips des items = constantes `OFT_*/TT_*`
@@ -304,7 +338,7 @@ d'origine.
   Écriture seulement si le texte change (`sRecapText`), en `SetTextColor`-libre (couleurs par
   échappements `|cff`). Appels : `OnUpdate` + `HomeOnShow` + `OnShow` d'Infos.
 - **Boutons bas** (ancrés **au-dessus du menu**) : `btnGlobalSave` `BOTTOMRIGHT → TOPRIGHT de
-  MenuList (0, 4)`, `btnTestMode` `(0, 28)`, `btnReload` `(0, 52)` (écart 24 px entre rangées) ;
+MenuList (0, 4)`, `btnTestMode` `(0, 28)`, `btnReload` `(0, 52)` (écart 24 px entre rangées) ;
   `btnGlobalLoad` à gauche de `btnGlobalSave` ; `btnFakeMode` à gauche de `btnTestMode`
   (`BOTTOMRIGHT → BOTTOMLEFT`, −4/0). **La chaîne dev suit `btnTestMode`** → recouvrements
   partiels en mode `IS_DEV` (constat §10).
@@ -318,23 +352,23 @@ d'origine.
 
 ### 5.3 Drapeaux conditionnels appliqués par le XML
 
-| Drapeau | Origine | Effet dans le XML |
-|---|---|---|
-| `SMARTDEBUFF_AURACONTAINERS` | `globals.lua` (`AuraContainerSortDirection`) | Désactive `_cbShowDebuffTooltip` et `_cbShowAuraSpellIDs` |
-| `SMARTDEBUFF_MACROTEXT` | `globals.lua` | Désactive `_cbStopCast` |
-| `SMARTDEBUFF_HASSECRETS` | `globals.lua` | Plus aucun effet XML direct : l'ancien masquage de `_btnSpellGuard` n'a pas été réintégré dans l'item menu (constat §10) |
-| `SMARTDEBUFF_IS_DEV` | `globals.lua` (`--@do-not-package@`) | Seul moyen d'afficher `_cbShowNotRemov`, `_btnNotRemov`, `_cbShowInfoFrame` ; `_btnReload`, `_btnFakeMode` affichés en dev |
-| `SMARTDEBUFF_CLASSES["<CLASS>"]` | Lua | Auto-masquage icônes DK/Monk/DH/Evoker + pets DK |
-| `SMARTDEBUFF_OFT_FORCELR == ""` | localisation | Masque `_cbForceLR` en anglais |
+| Drapeau                          | Origine                                      | Effet dans le XML                                                                                                          |
+| -------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `SMARTDEBUFF_AURACONTAINERS`     | `globals.lua` (`AuraContainerSortDirection`) | Désactive `_cbShowDebuffTooltip` et `_cbShowAuraSpellIDs`                                                                  |
+| `SMARTDEBUFF_MACROTEXT`          | `globals.lua`                                | Désactive `_cbStopCast`                                                                                                    |
+| `SMARTDEBUFF_HASSECRETS`         | `globals.lua`                                | Plus aucun effet XML direct : l'ancien masquage de `_btnSpellGuard` n'a pas été réintégré dans l'item menu (constat §10)   |
+| `SMARTDEBUFF_IS_DEV`             | `globals.lua` (`--@do-not-package@`)         | Seul moyen d'afficher `_cbShowNotRemov`, `_btnNotRemov`, `_cbShowInfoFrame` ; `_btnReload`, `_btnFakeMode` affichés en dev |
+| `SMARTDEBUFF_CLASSES["<CLASS>"]` | Lua                                          | Auto-masquage icônes DK/Monk/DH/Evoker + pets DK                                                                           |
+| `SMARTDEBUFF_OFT_FORCELR == ""`  | localisation                                 | Masque `_cbForceLR` en anglais                                                                                             |
 
 ## 6. Événements WoW utilisés
 
-| Porteur | Événements | Effet |
-|---|---|---|
-| `SmartDebuffFrame` (OnEvent) | `ADDON_LOADED`, `CVAR_UPDATE`, `PLAYER_ENTERING_WORLD`, `ZONE_CHANGED_NEW_AREA`, `UNIT_NAME_UPDATE` | gates d'init ; `CVAR_UPDATE("ActionButtonUseKeyDown")` → message « reload requis » |
-| idem | `PLAYER_ROLES_ASSIGNED`, `GROUP_ROSTER_UPDATE`, `UNIT_FACTION`, `UNIT_ENTERED_VEHICLE`, `UNIT_EXITED_VEHICLE`, `UNIT_PET` | `shouldCallSetUnits/SetButtons` (+ `SetAuraSounds` pour le roster) |
-| idem | `PLAYER_REGEN_ENABLED/DISABLED` | auto-hide, gel du déplacement, refresh |
-| idem | `SPELLS_CHANGED`, `UPDATE_MACROS`, `BAG_UPDATE`, `TRAIT_CONFIG_UPDATED`, `PLAYER_TALENT_UPDATE`, `CHARACTER_POINTS_CHANGED` | travaux différés (`SetSpells`, `SetTalents`, macros, UI) |
+| Porteur                      | Événements                                                                                                                  | Effet                                                                              |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `SmartDebuffFrame` (OnEvent) | `ADDON_LOADED`, `CVAR_UPDATE`, `PLAYER_ENTERING_WORLD`, `ZONE_CHANGED_NEW_AREA`, `UNIT_NAME_UPDATE`                         | gates d'init ; `CVAR_UPDATE("ActionButtonUseKeyDown")` → message « reload requis » |
+| idem                         | `PLAYER_ROLES_ASSIGNED`, `GROUP_ROSTER_UPDATE`, `UNIT_FACTION`, `UNIT_ENTERED_VEHICLE`, `UNIT_EXITED_VEHICLE`, `UNIT_PET`   | `shouldCallSetUnits/SetButtons` (+ `SetAuraSounds` pour le roster)                 |
+| idem                         | `PLAYER_REGEN_ENABLED/DISABLED`                                                                                             | auto-hide, gel du déplacement, refresh                                             |
+| idem                         | `SPELLS_CHANGED`, `UPDATE_MACROS`, `BAG_UPDATE`, `TRAIT_CONFIG_UPDATED`, `PLAYER_TALENT_UPDATE`, `CHARACTER_POINTS_CHANGED` | travaux différés (`SetSpells`, `SetTalents`, macros, UI)                           |
 
 Aucun event AceEvent : le moteur utilise un frame nu + un routeur maison (les modules Ace3 ne sont
 pas utilisés par ce projet).
@@ -368,7 +402,7 @@ Fonctionne uniquement avec `C_UnitAuras.AddAuraSound` (sinon le fichier ne charg
 - **`KD_Settings`** (compte, **partagé avec KCursorCooldown**) : `ForceEnglish`, `AddonCompartment`.
 - **Migrations** : `ReplaceDeprecatedOptions` (`IgnoreDebuff_Old`, `ShowIF_Old`, `ShowNotRemov_Old`),
   format `id: nom` des `NotRemovableDebuffs`, reset des touches si `O.VersionNr <
-  SMARTDEBUFF_BREAKINGVERSION` ou nouvelle extension, `CleanMem()` (tables de sorts des autres
+SMARTDEBUFF_BREAKINGVERSION` ou nouvelle extension, `CleanMem()` (tables de sorts des autres
   classes remises à nil en mémoire).
 - **Listes de skip indexées** : `…SKIPLIST_ID`/`…CLASSSKIPLIST_ID` contiennent des **index** dans
   `SMARTDEBUFF_DEBUFFSKIP_ID` (résolus en noms localisés à l'init). Tout réordonnements de
@@ -379,7 +413,9 @@ Fonctionne uniquement avec `C_UnitAuras.AddAuraSound` (sinon le fichier ne charg
 **Internes** : table privée `ns` (polyfill + `ns.O`/`ns.cSpells`, sans consommateur actuel),
 `cSpells`/`cSpellDefault` partagés moteur↔sounds, callbacks `SMARTDEBUFF_GetAuraContainer*` et
 `SMARTDEBUFF_GetDispelCooldownByType` utilisés par sounds.lua (appels runtime, ordre de chargement
-sans effet).
+sans effet). Le module `Core/SmartDebuff.auras.lua` (objet global `SDA`) consomme de même en
+runtime les callbacks `SMARTDEBUFF_GetAuraContainer*`, `SMARTDEBUFF_GetFilterString`,
+`SMARTDEBUFF_SetBtnOverlay`, `SMARTDEBUFF_ShouldShowDebuff` et les helpers de couleurs.
 
 **Bibliothèques embarquées** : aucune (contrairement aux autres addons K) — seules `UTF8/utf8.lua`
 (+ `utf8data.lua`) sont tierces. Pas de LibStub/Ace3.
@@ -442,7 +478,7 @@ Constats complets (sévérités, traces) : **`docs/backlog.md`**, section audit 
    SpellGuard. Détail : `docs/backlog.md`, section du 2026-11-03.
 
 Redondances structurelles : les 3 implémentations du scan de debuffs partagent ~80 % de leur
-squelette ; les chemins SpellGuard existent en 3 copies (AuraContainer/secrets/classic) ;
+squelette ; les chemins SpellGuard existent en 2 copies (secrets/classic) ;
 `GetActionKeyInfo`/`SetActionInfo` et les 24 slots dupliquent la logique de mapping touche →
 attribut. À considérer avant toute refactorisation lourde (règle §5 de l'AGENTS.md).
 
@@ -487,14 +523,14 @@ attribut. À considérer avant toute refactorisation lourde (règle §5 de l'AGE
 Refonte de l'écran d'options, étape par étape (règles appliquées : `AGENTS.md` §5) — reprise du
 journal de l'ancien `doc/ARCHITECTURE.md` :
 
-| # | Étape | Commit | Détail |
-|---|---|---|---|
-| 1 | Suppression du masque | `6f10a91` | `SmartDebuffOF_AdvancedMask` + son bouton `btnOptions` supprimés (−111 lignes). Aucune référence Lua/ancrage existante. |
-| 2 | Re positionnement boutons bas | `4478b7c` | `btnTestMode` → ex-emplacement de `btnMisc` (colonne droite) ; `btnFakeMode` → à gauche de `btnReload`. |
-| 3 | Cadres **Home + Infos** | `e6717e8` | **51 contrôles** (`cbGrp1` → `SmartDebuffColTextureDropDown`) déplacés dans `SmartDebuffOF_Home` : renommages `name="$parent_X"` → **`SmartDebuffOF_X`** (noms globaux préservés), `relativeTo` absolus, 2 `GetParent()` → `_G[…]`. `SmartDebuffOF_Infos` créé (152×540, `hidden`). |
-| 4 | **Menu de navigation** | `4f5ad75` | `SmartDebuffOF_MenuList` créé (7 items puis 8). **6 boutons supprimés** : `btnGridSetup`, `btnColorSetup`, `btnMisc`, `btnSounds`, `btnSpellGuard`, `btnClassOrder` (0 réf. Lua/ancres vérifiées). **`btnKeys` conservé en doublon**. Items = boutons sans template, `OnClick` recopiés à l'identique. |
-| 5 | Design, **Accueil**, libellés | `4f5ad75`/`d950625` | Texte `GameFontHighlight` (items 140×16, conteneur **148×136**), **contour** `SMARTDEBUFF_BACKDROP_OPTIONS` + bordure or. Item **Accueil** → `SMARTDEBUFF_HomeToggle()`. 5 libellés → **`SMARTDEBUFF_MENU_*` traduits dans les 9 `localization.*.lua`** : *Accueil / Grille / Couleurs / Sorts de HoT / Ordre des classes* (Keys/Sounds/Misc inchangés). |
-| 6 | Boutons **au-dessus du menu** | `34be62a` | `btnGlobalSave`/`btnTestMode`/`btnReload` ré-ancrés `TOPRIGHT de MenuList (0, 4/28/52)` (mêmes écarts), `btnFakeMode` → à gauche de `btnTestMode`, `btnGlobalLoad` inchangé. |
+| #   | Étape                         | Commit              | Détail                                                                                                                                                                                                                                                                                                                                                   |
+| --- | ----------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Suppression du masque         | `6f10a91`           | `SmartDebuffOF_AdvancedMask` + son bouton `btnOptions` supprimés (−111 lignes). Aucune référence Lua/ancrage existante.                                                                                                                                                                                                                                  |
+| 2   | Re positionnement boutons bas | `4478b7c`           | `btnTestMode` → ex-emplacement de `btnMisc` (colonne droite) ; `btnFakeMode` → à gauche de `btnReload`.                                                                                                                                                                                                                                                  |
+| 3   | Cadres **Home + Infos**       | `e6717e8`           | **51 contrôles** (`cbGrp1` → `SmartDebuffColTextureDropDown`) déplacés dans `SmartDebuffOF_Home` : renommages `name="$parent_X"` → **`SmartDebuffOF_X`** (noms globaux préservés), `relativeTo` absolus, 2 `GetParent()` → `_G[…]`. `SmartDebuffOF_Infos` créé (152×540, `hidden`).                                                                      |
+| 4   | **Menu de navigation**        | `4f5ad75`           | `SmartDebuffOF_MenuList` créé (7 items puis 8). **6 boutons supprimés** : `btnGridSetup`, `btnColorSetup`, `btnMisc`, `btnSounds`, `btnSpellGuard`, `btnClassOrder` (0 réf. Lua/ancres vérifiées). **`btnKeys` conservé en doublon**. Items = boutons sans template, `OnClick` recopiés à l'identique.                                                   |
+| 5   | Design, **Accueil**, libellés | `4f5ad75`/`d950625` | Texte `GameFontHighlight` (items 140×16, conteneur **148×136**), **contour** `SMARTDEBUFF_BACKDROP_OPTIONS` + bordure or. Item **Accueil** → `SMARTDEBUFF_HomeToggle()`. 5 libellés → **`SMARTDEBUFF_MENU_*` traduits dans les 9 `localization.*.lua`** : _Accueil / Grille / Couleurs / Sorts de HoT / Ordre des classes_ (Keys/Sounds/Misc inchangés). |
+| 6   | Boutons **au-dessus du menu** | `34be62a`           | `btnGlobalSave`/`btnTestMode`/`btnReload` ré-ancrés `TOPRIGHT de MenuList (0, 4/28/52)` (mêmes écarts), `btnFakeMode` → à gauche de `btnTestMode`, `btnGlobalLoad` inchangé.                                                                                                                                                                             |
 
 **Effets de bord connus / résidus** : `btnMisc` supprimé → le chevauchement temporaire de l'étape 2
 est résolu ; chaîne dev en recouvrement partiel en mode `IS_DEV` (§10) ; `OFT_GRIDSETUP`/
