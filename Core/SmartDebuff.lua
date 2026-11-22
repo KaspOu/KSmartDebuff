@@ -20,7 +20,6 @@ local CFG = {
   filterString = "HARMFUL|RAID",
   filterStringNR = "HARMFUL"
 };
-local ERRS = {}
 
 local isLoaded = false;
 local isPlayer = false;
@@ -3727,77 +3726,8 @@ function SmartDebuff_SetButtonBars(btn, unit, unitclass)
     --Semi #1287 - Edited Code for Spell Guard to show  -begin
     if (O.ShowSpellIcon) then
       if (SMARTDEBUFF_AURACONTAINERS) then
-        -- Since AuraContainers
-        if (btn.auraContainer and #O.SpellGuard > 0) then
-          -- Refresh if needed only -- TODO MOVE
-          if (btn.spellGuardCompare ~= table.concat(O.SpellGuard, ", ")) then
-            btn.spellGuardCompare = table.concat(O.SpellGuard, ", ")
-            SMARTDEBUFF_AddMsgDT(COL.YLD.."SpellGuard: Add icons for: "..btn.spellGuardCompare)
-            if (btn.sdbSpellGuardSlots == nil) then
-              btn.sdbSpellGuardSlots = {};
-            end
-            for loop2 = 1, math.min(#O.SpellGuard + 1, CFG.maxSpellIcons), 1 do
-              local slotKey = "sdb_spellguard_" .. btn:GetName() .. "_" .. loop2
-              local slotButton = auraSlotByName[slotKey]
-              if loop2 > #O.SpellGuard then
-                -- detach last spell removed
-                pcall(function() btn.auraContainer:SetAuraSlotCandidateFilters(slotKey, {includeSpellIDs = { [-1] = true }}) end)
-                return
-              end
-              local spellID = C_Spell.GetSpellIDForSpellIdentifier(O.SpellGuard[loop2]);
-              if (not spellID or spellID <= 0) then
-                if (not ERRS[O.SpellGuard[loop2]]) then
-                  SMARTDEBUFF_AddMsgD(COL.RD.."SpellGuard: Error spellID not found for "..O.SpellGuard[loop2])
-                end
-                ERRS[O.SpellGuard[loop2]] = true
-              else
-                local candidateFilters = {
-                  includeSpellIDs = { [spellID] = true },
-                }
-                sbb_n = btn:GetHeight() / 3;
-                sbb_ach = "TOPLEFT";
-                sbb_y = 2;
-                if (loop2 % 2 == 0) then
-                  sbb_ach = "BOTTOMLEFT";
-                  sbb_y = -2+sbb_n;
-                end
-                if (loop2 <= 2) then
-                  sbb_x = sbb_w/2;
-                else
-                  sbb_xo = math.ceil(loop2/2);
-                  if (sbb_xo % 2 == 0) then
-                    sbb_x = sbb_w/2 - sbb_xo*sbb_n/2;
-                  else
-                    sbb_x = sbb_w/2 + sbb_xo*sbb_n/2 - sbb_n/2;
-                  end
-                end
-                sbb_xo = sbb_n/2;
-                local ok = pcall(function() btn.auraContainer:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
-                if not ok then
-                    local slotButton = btn.auraContainer:AddAuraSlot(slotKey, "HELPFUL", {
-                      candidateFilters = candidateFilters,
-                      initializeFrame = function(auraButton)
-                        auraButton:SetSize(sbb_n, sbb_n);
-                        auraButton:ClearAllPoints();
-                        auraButton:SetPoint("TOPLEFT", btn, sbb_ach, sbb_x - sbb_xo, sbb_y);
-                        local icon = auraButton:CreateTexture(nil, "ARTWORK");
-                        icon:SetAllPoints();
-                        auraButton:SetIcon(icon);
-                        auraButton:EnableMouse(false);
-                        auraButton:Show()
-                      end,
-                    });
-                    btn.sdbSpellGuardSlots[loop2] = slotButton;
-                    auraSlotByName[slotKey] = slotButton
-                else
-                  slotButton:SetSize(sbb_n, sbb_n);
-                  slotButton:ClearAllPoints();
-                  slotButton:SetPoint("TOPLEFT", btn, sbb_ach, sbb_x - sbb_xo, sbb_y);
-                end
-              end
-            end
-          end
-        end
+        -- Since AuraContainers : aucun slot SpellGuard sur ce chemin (KD-lazy-auras),
+        -- le filtrage par sorts n'est plus possible sur le chemin AuraContainer.
       elseif (SMARTDEBUFF_HASSECRETS) then
         -- Since Midnight (12)
         local i = 0
