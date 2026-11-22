@@ -34,7 +34,6 @@ local shouldCallSetTalents = false;
 local shouldCallSetMacros = false;
 local shouldCallSetButtons = false;
 local shouldCallRefreshUI = false;
-local shouldCallRefreshTextures = false;
 local isSoundPlayed = false;
 local isSpellActive = true;
 local isLeader = false;
@@ -73,9 +72,6 @@ local cRaidicons = {};
 local canDebuff = false;
 local hasDebuff = false;
 
-local auraContainerInitFailed = 0;
-local auraContainerByIndex = {};
-local auraSlotByName = {};
 local buttons = {SMARTDEBUFF_KEY_L, SMARTDEBUFF_KEY_R, SMARTDEBUFF_KEY_M}
 
 local ST = {
@@ -2506,13 +2502,12 @@ function SMARTDEBUFF_CreateButtons()
       end
     end
 
-    SMARTDEBUFF_SetAuraContainers();
   end
 
 end
 
 function SMARTDEBUFF_UseAuraContainerPath()
-  return SMARTDEBUFF_AURACONTAINERS and auraContainerInitFailed == 0;
+  return SMARTDEBUFF_AURACONTAINERS and not SDA:HasInitFailed();
 end
 
 function SMARTDEBUFF_GetFilterString()
@@ -2744,331 +2739,8 @@ function SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex, forc
   end
 end
 
-local lastDispelCD = {}
-
-function SMARTDEBUFF_SetAuraContainerForButton(idx, unit, inRange, isPet)
-
-  local buttonName = isPet and ("SmartDebuffPetBtn" .. idx) or ("SmartDebuffBtn" .. idx)
-  local button = _G[buttonName];
-  local slotKeyPrefix = isPet and "sdb_pet_" or "sdb_"
-
-  if (auraContainerByIndex[buttonName]) then
-    if (button:IsShown()) then
-        -- FIXME: Hide / Show BUTTONS / SetTexture + Text (distance)
-        if unit ~= nil then
-          auraContainerByIndex[buttonName]:SetUnit(unit);
-        end
-        auraContainerByIndex[buttonName]:SetEnabled(unit ~= nil)
-        for buttonIndex = 1, 3, 1 do
-          SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex)
-
-          local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
-          local slotButton = auraSlotByName[slotKey]
-          if slotButton then
-            local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
-            local shouldShowDebuff = unit ~= nil and not not includeDispelTypes
-            if (shouldShowDebuff and SDB_cachePlayerClass == "HUNTER") then
-              shouldShowDebuff = UnitIsUnit(unit, "player")
-            end
-            if (shouldShowDebuff and O.IgnoreDebuff) then
-                local firstDispelType = next(includeDispelTypes)
-                local dispelCD = SMARTDEBUFF_GetDispelCooldownByType(firstDispelType)
-                if lastDispelCD[buttonIndex] ~= dispelCD then
-                  SMARTDEBUFF_SetAuraSoundsDetectTest()
-                  lastDispelCD[buttonIndex] = dispelCD
-                end
-                shouldShowDebuff = SMARTDEBUFF_ShouldShowDebuff(dispelCD)
-            end
-            local dispelContainer = button.dispelContainers[buttonIndex]
-            if shouldShowDebuff then
-              dispelContainer:SetUnit(unit)
-              dispelContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
-              dispelContainer:SetAuraSlotCandidateFilters(slotKey, {
-                includeDispelTypes = includeDispelTypes or {},
-                excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
-              });
-            end
-            dispelContainer:SetEnabled(shouldShowDebuff)
-            dispelContainer:SetShown(shouldShowDebuff)
-          end
-        end
-        if (button.auraContainer.sdbAuraSlots[10]) then
-          local slotKey = slotKeyPrefix .. idx .. "_nr"
-          -- container:SetUnit(unit)
-          button.auraContainer:SetAuraSlotFilterString(slotKey, CFG.filterStringNR)
-          -- excludeDispelTypes = allIncludeDispelTypes,
-        end
-    end
-    return auraContainerByIndex[buttonName];
-  end
-  if (InCombatLockdown()) then
-    return nil;
-  end
-
-  if (not button) then
-    return nil;
-  end
-
-  ---comment
-  ---@param button any
-  ---@return Frame? auraContainerFrame
-  local safeInit = function(button)
-    local frame = button.auraContainer
-    if not frame then
-      frame = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
-      button.auraContainer = frame
-      frame:SetFrameStrata("TOOLTIP");
-      button.dispelContainers = {}
-      button.dispelContainers[1] = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
-      button.dispelContainers[2] = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
-      button.dispelContainers[3] = CreateFrame("AuraContainer", nil, button, "CustomAuraContainerTemplate");
-    end
-    frame:SetPoint("BOTTOMLEFT", button, "TOPLEFT", 0, 2);
-    frame:SetWidth(button:GetWidth());
-    frame:SetHeight(math.max(8, button:GetHeight() * 0.26));
-    for buttonIndex = 1, 3, 1 do
-      local dispelContainer = button.dispelContainers[buttonIndex]
-      dispelContainer:SetPoint("BOTTOMLEFT", button, "TOPLEFT", 0, 2);
-      dispelContainer:SetWidth(button:GetWidth());
-      dispelContainer:SetHeight(math.max(8, button:GetHeight() * 0.26));
-    end
-
-    frame.sdbAuraSlots = {};
-
-    local allIncludeDispelTypes = {}
-
-    for buttonIndex = 1, 3, 1 do
-      SMARTDEBUFF_SetBtnOverlay(idx, unit, inRange, button, buttonIndex)
-      local dispelContainer = button.dispelContainers[buttonIndex]
-      local includeDispelTypes = SMARTDEBUFF_GetAuraContainerDispelFiltersByButton(buttonIndex);
-      if (not includeDispelTypes) then
-        -- remove existing auraSlot (on config changed)
-        local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
-        pcall(function()
-          dispelContainer:SetAuraSlotFilterString(slotKey, CFG.filterString)
-          dispelContainer:SetAuraSlotCandidateFilters(slotKey, {includeDispelTypes = {}});
-        end)
-      else
-        for dispelType, _ in pairs(includeDispelTypes) do
-          allIncludeDispelTypes[dispelType] = true
-        end
-        local btnTxt = buttons[buttonIndex] or "?"
-
-        if (idx == 1 and O and O.Debug) then
-            local list = ""
-            for dispelType, _ in pairs(includeDispelTypes) do
-              list = list.. " " .. dispelType
-            end
-            SMARTDEBUFF_AddMsgDT(COL.GR.."AuraContainers for button " .. buttonIndex.. " ("..(btnTxt ).."): ", list)
-        end
-        local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(buttonIndex);
-        local slotKey = slotKeyPrefix .. idx .. "_" .. buttonIndex
-        local slotButton = auraSlotByName[slotKey]
-        local candidateFilters = {
-          includeDispelTypes = includeDispelTypes,
-          excludeSpellIDs = SMARTDEBUFF_GetAuraContainerExcludeSpellIDs(unit),
-        }
-        local ok = pcall(function() dispelContainer:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
-        if not ok then
-          --- Set Btn Overlay: L R M
-          slotButton = dispelContainer:AddAuraSlot(slotKey, CFG.filterString, {
-            candidateFilters = candidateFilters,
-            initializeFrame = function(auraButton)
-              auraButton:SetAllPoints(button);
-              auraButton:SetFrameStrata("HIGH")
-              auraButton:EnableMouse(O.ShowDebuffTooltip);
-
-              local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
-              colorOverlay:SetBlendMode("BLEND");
-              colorOverlay:SetAllPoints();
-              colorOverlay:SetColorTexture(1, 1, 1, 1);
-              if O.ColDTexture == "-" then
-	              auraButton:SetIcon(colorOverlay)
-              elseif O.ColDTexture ~= "" then
-                colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
-              end
-              colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
-              auraButton.colorOverlay = colorOverlay
-              auraButton.ColDTexture = O.ColDTexture
-
-              local border = auraButton:CreateTexture(nil, "OVERLAY")
-              border:SetTexture("Interface\\Buttons\\CheckButtonHilight") -- Bordure brillante classique d'action bar
-              border:SetBlendMode("ADD") -- Rend la bordure plus lumineuse
-              border:SetPoint("TOPLEFT", auraButton, "TOPLEFT", -2, 2)
-              border:SetPoint("BOTTOMRIGHT", auraButton, "BOTTOMRIGHT", 2, -2)
-              border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
-              auraButton.border = border
-
-              local text = auraButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-              text:SetFont(SMARTDEBUFF_FONT, O.BtnH - 2, "");
-              local offsetY = -math.floor((O.BtnH - 20) / 10)
-              text:SetPoint("CENTER", auraButton, "CENTER", 0, offsetY);
-              -- 20 : 0 , 40 : 2
-              text:SetText("")
-              local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-              text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
-              text:SetText(btnTxt)
-              text:SetShown(O.ShowLR)
-              auraButton.text = text
-              dispelContainer.auraButton = auraButton
-            end,
-          });
-          auraSlotByName[slotKey] = slotButton
-        -- elseif dispelContainer.auraButton:CanBeAccessedInContext() and dispelContainer.auraButton.ColDTexture ~= O.ColDTexture then
-        elseif shouldCallRefreshTextures and dispelContainer.auraButton:CanBeAccessedInContext() then
-            -- Renew
-            local auraButton = dispelContainer.auraButton
-            local colorOverlay, border, text = auraButton.colorOverlay, auraButton.border, auraButton.text
-            colorOverlay:SetColorTexture(1, 1, 1, 1)
-            if O.ColDTexture == "-" then
-              colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
-	            auraButton:SetIcon(colorOverlay)
-            elseif O.ColDTexture ~= "" then
-              colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
-            end
-            colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
-            border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff)
-            text:SetShown(O.ShowLR)
-            local sbs_coltext = SMARTDEBUFF_GetAuraContainerTextColorByButtonIndex(buttonIndex)
-            text:SetTextColor(sbs_coltext.r, sbs_coltext.g, sbs_coltext.b, O.ADebuff)
-            auraButton.ColDTexture = O.ColDTexture
-        end
-        if unit ~= nil then
-          dispelContainer:SetUnit(unit);
-        end
-        dispelContainer:SetEnabled(unit ~= nil);
-        frame.sdbAuraSlots[buttonIndex] = slotButton;
-      end
-    end
-    if (SMARTDEBUFF_IS_DEV and O.ShowNotRemov ~= false) then
-      local ln = 5.5
-      local wd = math.floor(button:GetWidth() / ln - 1);
-      local btnTxt = unit and strsub(UnitName(unit), 0, 4) or ""
-      if (string.len(btnTxt) > wd) then
-        btnTxt = btnTxt:utf8sub(1, wd);
-      end
-
-      local ids, list = {}, {}
-      for _, spellIDAndName in pairs(O.NotRemovableDebuffs) do
-        local id, _ = strsplit(":", spellIDAndName)
-        if C_Spell.DoesSpellExist(id) then
-          ids[tonumber(id)] = true
-          table.insert(list, tonumber(id))
-        end
-      end
-      if (#list == 0) then
-          if (idx == 1 and O and O.Debug) then
-            SMARTDEBUFF_AddMsgDT(COL.OR.."No not removable spell found")
-          end
-      else
-          local buttonColor = SMARTDEBUFF_GetAuraContainerColorByButtonIndex(0);
-          local slotKey = slotKeyPrefix .. idx .. "_nr"
-          local slotButton = auraSlotByName[slotKey]
-          local candidateFilters = {
-            includeSpellIDs = ids,
-            excludeSpellIDs = {},
-            -- excludeDispelTypes = allIncludeDispelTypes,
-          }
-          if (idx == 1 and O and O.Debug) then
-            local listDispels = ""
-            for dispelType, _ in pairs(allIncludeDispelTypes) do
-              listDispels = listDispels.. " " .. dispelType
-            end
-            local except = candidateFilters.excludeDispelTypes and COL.OR.." EXCEPT: "..listDispels or ""
-            SMARTDEBUFF_AddMsgDT(COL.GRD.."AuraContainer for "..#list.." not removable spells added: ", table.concat(list, ", "):sub(1, 47).."... "..except)
-            _G.SMARTDEBUFF_NR = { candidateFilters }
-          end
-          local ok = pcall(function() frame:SetAuraSlotCandidateFilters(slotKey, candidateFilters);  end)
-          if not ok then
-            -- --- Set Btn Overlay: NR
-              slotButton = frame:AddAuraSlot(slotKey, CFG.filterStringNR, {
-                candidateFilters = candidateFilters,
-                initializeFrame = function(auraButton)
-                  auraButton:SetAllPoints(button);
-                  auraButton:SetFrameStrata("HIGH")
-                  auraButton:EnableMouse(true);
-
-                  local colorOverlay = auraButton:CreateTexture(nil, "BACKGROUND");
-                  colorOverlay:SetBlendMode("BLEND");
-                  colorOverlay:SetAllPoints();
-                  colorOverlay:SetColorTexture(1, 1, 1, 1);
-                  if O.ColDTexture == "-" then
-                    auraButton:SetIcon(colorOverlay)
-                  elseif O.ColDTexture ~= "" then
-                    colorOverlay:SetTexture(SMARTDEBUFF_GetIcon(O.ColDTexture))
-                  end
-                  colorOverlay:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
-
-                  local border = auraButton:CreateTexture(nil, "OVERLAY")
-                  border:SetTexture("Interface\\Buttons\\CheckButtonHilight") -- Bordure brillante classique d'action bar
-                  border:SetBlendMode("ADD") -- Rend la bordure plus lumineuse
-                  border:SetPoint("TOPLEFT", auraButton, "TOPLEFT", -2, 2)
-                  border:SetPoint("BOTTOMRIGHT", auraButton, "BOTTOMRIGHT", 2, -2)
-                  border:SetVertexColor(buttonColor.r, buttonColor.g, buttonColor.b, O.ADebuff);
-                end,
-              });
-              auraSlotByName[slotKey] = slotButton
-          end
-          frame.sdbAuraSlots[10] = slotButton;
-      end
-    end
-    if unit ~= nil then
-      frame:SetUnit(unit)
-    end
-    frame:SetEnabled(unit ~= nil)
-    return frame
-  end
-
-  local ok, container = xpcall(safeInit,
-      function(err)
-        auraContainerInitFailed = auraContainerInitFailed + 1;
-        -- SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
-        SMARTDEBUFF_AddMsgErrT("CRITICAL ERROR: ", tostring(err), true) -- .. "\n" .. debugstack())
-        local un, uc = "?", "?"
-        if (unit ~= nil) then
-          un = UnitName(unit); uc = UnitClass(unit);
-        end
-        SMARTDEBUFF_AddMsgErrT("Init failed for container, please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
-        return err
-      end,
-      button
-  )
-  if (ok and not container) then
-    auraContainerInitFailed = auraContainerInitFailed + 1;
-    local un, uc = "?", "?"
-    if (unit ~= nil) then
-      un = UnitName(unit); uc = UnitClass(unit);
-    end
-    SMARTDEBUFF_AddMsgErrT("No container? Please report the issue... >", auraContainerInitFailed.. " errors.. ("..UnitClass("player")..", "..idx..", "..un..", "..uc..", "..tostring(isPet)..")", true)
-  end
-  if (not ok) then
-    -- if O.Debug then error(container) end
-    container = nil
-  end
-
-  auraContainerByIndex[buttonName] = container;
-  return container;
-end
-
-function SMARTDEBUFF_SetAuraContainers()
-  if (not SMARTDEBUFF_UseAuraContainerPath() or InCombatLockdown()) then
-    return;
-  end
-
-  for i = 1, CFG.maxRaid, 1 do
-    SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, false);
-  end
-  if (O.ShowPets or O.ShowPetsWL or O.ShowPetsDK or O.ShowVehicles) then
-    for i = 1, CFG.maxPets, 1 do
-      SMARTDEBUFF_SetAuraContainerForButton(i, nil, 1, true);
-    end
-  end
-end
-
 function SMARTDEBUFF_SetButtons()
   if (not isInit or not canDebuff or InCombatLockdown()) then return; end
-
-  SMARTDEBUFF_SetAuraContainers();
 
   -- reset all buttons
   for i = 1, CFG.maxRaid, 1 do
@@ -4700,7 +4372,7 @@ function SMARTDEBUFF_CheckDebuffs(force)
   if (not isInit or not canDebuff or (not force and GetTime() < (tDebuff + O.CheckInterval))) then
     return;
   end
-  shouldCallRefreshTextures = force or false;
+  SDA:RefreshTextures(force);
   local cd_i, cd_unit, cd_btn, cd_sbtn, cd_spell;
   tDebuff = GetTime();
   hasDebuff = false;
@@ -4755,6 +4427,9 @@ function SMARTDEBUFF_CheckDebuffs(force)
             --SMARTDEBUFF_AddMsgD("Unit found: " .. unit .. ", " .. UnitName(unit) .. ", " .. i);
             SMARTDEBUFF_CheckUnitDebuffs(cd_spell, cd_unit, cd_i, isSpellActive);
           else
+            if (SMARTDEBUFF_UseAuraContainerPath()) then
+              SDA:SyncButton(cd_i, nil, 0, false);
+            end
             SMARTDEBUFF_SetButtonState(cd_unit, cd_i, -99, 0, -1, false, 0);
           end
         end
@@ -4805,6 +4480,9 @@ function SMARTDEBUFF_CheckDebuffs(force)
               --SMARTDEBUFF_AddMsgD("Pet found: " .. unit .. ", " .. UnitName(unit) .. ", " .. i);
               SMARTDEBUFF_CheckUnitDebuffs(cd_spell, cd_unit, cd_i, isSpellActive, 1);
             else
+              if (SMARTDEBUFF_UseAuraContainerPath()) then
+                SDA:SyncButton(cd_i, nil, 0, true);
+              end
               SMARTDEBUFF_SetButtonState(cd_unit, cd_i, -99, 0, -1, true, 0);
             end
           end
@@ -4819,7 +4497,6 @@ function SMARTDEBUFF_CheckDebuffs(force)
   if (not hasDebuff) then
     isSoundPlayed = false;
   end
-  shouldCallRefreshTextures = false;
 end
 
 
@@ -4890,7 +4567,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, 
     end
   end
 
-  local container = SMARTDEBUFF_SetAuraContainerForButton(idx, unit, cud_ir, pet);
+  local container = SDA:SyncButton(idx, unit, cud_ir, pet);
 
   if (not container) then
     return;
