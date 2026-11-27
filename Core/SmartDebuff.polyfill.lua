@@ -2,6 +2,13 @@
 local _, ns = ...
 -- Since Midnight (12)
 ns.IsSecretValue = issecretvalue or function(_) return false end
+-- UnitIsCharmed can return a secret boolean (seen on Forever, interface 16001); a boolean test on it errors.
+-- An unreadable answer counts as not charmed.
+ns.UnitIsCharmedSafe = function(unit)
+  local v = UnitIsCharmed(unit)
+  if ns.IsSecretValue(v) then return false end
+  return v
+end
 
 -- Since The War Within (11)
 ns.PickupSpell = C_Spell.PickupSpell or PickupSpell;

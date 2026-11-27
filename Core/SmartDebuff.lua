@@ -4462,7 +4462,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_AuraContainer(spell, unit, idx, isActive, 
     cud_ir = 0;
   end
 
-  if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+  if (cSpells[SMARTDEBUFF_CHARMED] and ns.UnitIsCharmedSafe(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
     cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
     if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
       hasDebuff = true;
@@ -4531,7 +4531,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet)
       if (spell and cud_name and cud_dtype) then
         _, cud_uclass = UnitClass(unit);
         if (cSpells[cud_dtype]
-            and (not UnitCanAttack("player", unit) or UnitIsCharmed(unit))
+            and (not UnitCanAttack("player", unit) or ns.UnitIsCharmedSafe(unit))
             and not SMARTDEBUFF_DEBUFFSKIPLIST[cud_name]
             and not (SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass] and SMARTDEBUFF_DEBUFFCLASSSKIPLIST[cud_uclass][cud_name])) then
           cud_cds = GetSpellCD(cSpells[cud_dtype][1]);
@@ -4564,7 +4564,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_Legacy(spell, unit, idx, isActive, pet)
       cud_n = cud_n + 1;
     end
 
-    if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+    if (cSpells[SMARTDEBUFF_CHARMED] and ns.UnitIsCharmedSafe(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
       cud_cds = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED)
       if (SMARTDEBUFF_ShouldShowDebuff(cud_cds)) then
         hasDebuff = true;
@@ -4644,7 +4644,7 @@ function SMARTDEBUFF_CheckUnitDebuffs_Secrets(spell, unit, idx, isActive, pet)
       end
     end
 
-    if (cSpells[SMARTDEBUFF_CHARMED] and UnitIsCharmed(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
+    if (cSpells[SMARTDEBUFF_CHARMED] and ns.UnitIsCharmedSafe(unit) and UnitCanAttack("player", unit) and UnitCreatureType(unit) == SMARTDEBUFF_HUMANOID) then
       local charmCooldown = SMARTDEBUFF_GetDispelCooldownByType(SMARTDEBUFF_CHARMED);
       if (SMARTDEBUFF_ShouldShowDebuff(charmCooldown)) then
         hasDebuff = true;
